@@ -323,7 +323,7 @@ html[dir="rtl"] .row .go{transform:scaleX(-1)}
   font:800 .82rem/1 var(--display);display:grid;place-items:center;cursor:pointer;padding:0}
 .sub[aria-pressed="true"]{background:var(--gold-metal);border-color:var(--gold-metal)}
 .subs > li > span{flex:1 1 auto}
-.tick[aria-pressed="true"]::after{content:"";position:absolute;inset:0;
+.tick[aria-pressed="true"]::after{content:"";position:absolute;top:0;right:0;bottom:0;left:0;inset:0;
   border-radius:50%;box-shadow:0 0 0 3px var(--gold-metal)}
 .tick{position:absolute}
 .prog{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 20px;
@@ -1080,7 +1080,7 @@ html[data-font="nastaliq"] .prog .nextb,html[data-font="naskh"] .prog .nextb,htm
 @media (min-width:700px){
   .mast .switch{order:2;margin-inline-start:auto}
   .mast .sbtn{order:3;margin:0 0 8px 0}}
-.sheet{position:fixed;inset:0;z-index:60;overflow:auto;background:var(--ink);
+.sheet{position:fixed;top:0;right:0;bottom:0;left:0;inset:0;z-index:60;overflow:auto;background:var(--ink);
   padding:max(14px,env(safe-area-inset-top)) 16px 28px}
 @supports (background:color-mix(in srgb,red 50%,transparent)){
   .sheet{background:color-mix(in srgb,var(--ink) 86%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}}
@@ -1361,7 +1361,7 @@ window.addEventListener("error", function(){
   if(document.getElementById("jsfeil")) return;
   document.documentElement.removeAttribute("aria-busy");
   const d = document.createElement("div"); d.id = "jsfeil"; d.setAttribute("role", "alert");
-  d.style.cssText = "position:fixed;inset:auto 0 0 0;z-index:99;padding:14px 16px;background:#14101C;color:#F2EFEA;border-top:1px solid #FFD166;font:15px/1.5 system-ui,sans-serif;display:flex;gap:12px;align-items:center;flex-wrap:wrap";
+  d.style.cssText = "position:fixed;left:0;right:0;bottom:0;inset:auto 0 0 0;z-index:99;padding:14px 16px;background:#14101C;color:#F2EFEA;border-top:1px solid #FFD166;font:15px/1.5 system-ui,sans-serif;display:flex;gap:12px;align-items:center;flex-wrap:wrap";
   const t = document.createElement("span"); t.textContent = "Something went wrong. Reload the page. \u2014 \u06a9\u0686\u06be \u063a\u0644\u0637 \u06c1\u0648 \u06af\u06cc\u0627\u06d4 \u0635\u0641\u062d\u06c1 \u062f\u0648\u0628\u0627\u0631\u06c1 \u06a9\u06be\u0648\u0644\u06cc\u06ba\u06d4";
   const b = document.createElement("button"); b.type = "button"; b.textContent = "Reload";
   b.style.cssText = "margin-inline-start:auto;padding:9px 16px;min-height:40px;border:0;border-radius:999px;background:#FFD166;color:#14101C;font-weight:700;cursor:pointer";
@@ -1399,8 +1399,13 @@ function sameOrigin(u){
 }
 function validRef(raw){
   if(!raw) return null;
+  const rs = String(raw).trim();
+  /* Usynlige tegn (zero-width fra WhatsApp-kopiering), ikke-ASCII og #fragment:
+     skjemaet avviser dem stille, og megleren mister koblingen (gjennomgang 17.10, funn 5). */
+  if(/[^\x21-\x7E]/.test(rs)) return null;
   let u;
-  try{ u = new URL(String(raw).trim()); }catch(e){ return null; }
+  try{ u = new URL(rs); }catch(e){ return null; }
+  if(u.hash) return null;
   if(u.protocol !== "https:") return null;
   if(REF_ALLOWED_HOSTS.indexOf(u.hostname) === -1) return null;
   /* Founder 16.10 (#49): bare partnerlenken slik IB Portal -> Profile gir den,
@@ -1461,7 +1466,13 @@ function leaderById(id){ return id ? REG.find(function(x){ return x.id === id; }
 /* Lagret kopi foerst (rask start, virker uten nett), saa ferske lista. */
 try{ REG = parseReg(JSON.parse(localStorage.getItem("aimpire.reg") || '""')); }catch(e){}
 function loadReg(){
-  const timeout = new Promise(function(res){ setTimeout(function(){ res(null); }, 6000); });
+  /* Med kode i lenka og ingen husket liste: vent lenger (tregt nett i Pakistan
+     maalt 1,5-3 s paa bredbaand, mer paa 3G). Kommer lista etter fristen, brukes
+     den straks likevel - foer ble den kastet og medlemmet saa «ingen sponsor»
+     (gjennomgang 17.10, funn 1). */
+  let harKode = false; try{ harKode = !!new URLSearchParams(location.search).get("l"); }catch(e){}
+  const budsjett = (harKode && !REG.length) ? 12000 : 6000;
+  const timeout = new Promise(function(res){ setTimeout(function(){ res(undefined); }, budsjett); });
   /* To kilder, slaatt sammen: Google-arket (founder huker av) og ledere.txt
      (reserve, for haand). En av dem nede = den andre gjelder. */
   const one = function(u, maaVaereCsv){ return fetch(u, { cache: "no-store" })
@@ -1481,11 +1492,21 @@ function loadReg(){
       if(LS.approved_csv && r[1] === null) return null;
       return r[0] === null && r[1] === null ? null : (r[0] || "") + "\n" + (r[1] || "");
     });
-  return Promise.race([get, timeout]).then(function(text){
-    if(text === null) return false;
+  const bruk = function(text){
+    if(text === null || text === undefined) return false;
     store("aimpire.reg", JSON.stringify(text));
     REG = parseReg(text); REG_FRESH = true;
     return true;
+  };
+  return Promise.race([get, timeout]).then(function(text){
+    if(text === undefined){
+      get.then(function(sen){
+        if(!bruk(sen)) return;
+        try{ initSponsor(); render(); }catch(e){}
+      });
+      return false;
+    }
+    return bruk(text);
   });
 }
 
@@ -1503,8 +1524,11 @@ function initSponsor(){
      kode gjelder fortsatt foerste sponsor (B-015). */
   const fraUrl = leaderById(q.get("l")), husket = leaderById(load("aimpire.leader"));
   /* B-023 (founder 16.10 21:37): kobling bare via lenken en leder sender. Er en annen
-     leder husket fra foer, SPOERRES det hvem som inviterte - ingen vinner stille. */
-  pendingConflict = (fraUrl && husket && husket.id !== fraUrl.id) ? { a: husket, b: fraUrl } : null;
+     leder husket fra foer, SPOERRES det hvem som inviterte - ingen vinner stille.
+     Unntak: lederen aapner sin EGEN lenke (e-posten ber om det) - da er det ikke en
+     invitasjon, og selvvarselet under sponsoren sier fra (gjennomgang 17.10, funn 3). */
+  const egen = !!(fraUrl && load("aimpire.me") && fraUrl.id === load("aimpire.me"));
+  pendingConflict = (fraUrl && husket && husket.id !== fraUrl.id && !egen) ? { a: husket, b: fraUrl } : null;
   const lr = fraUrl && !pendingConflict ? fraUrl : null;
   if(lr){
     sponsorUrl = validRef(lr.link); sponsorName = lr.name; sponsorVerified = true;
