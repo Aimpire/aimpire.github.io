@@ -1578,8 +1578,22 @@ function render(){
   const pr = $("prog");
   pr.hidden = false;
   const total = G.steps.length, left = total - nDone;
-  $("prog-t").textContent = U.progress.replace("{done}", nDone).replace("{total}", total) +
+  /* Ti steg i ett tall foeles langt. Etappen man staar i er kort og naaelig:
+     «Kom i gang · 2 av 4». Hele tallet staar fortsatt ved siden av. */
+  let topp = U.progress.replace("{done}", nDone).replace("{total}", total) +
     (left && U.left ? " \u00b7 " + U.left.replace("{n}", left) : "");
+  if(G.phases && G.phases.length){
+    const foerste = G.steps.findIndex(function(_, i){ return !done.has(String(i)); });
+    const i = foerste === -1 ? G.steps.length - 1 : foerste;
+    const f = G.phases.find(function(p){ return i >= p[1] && i <= p[2]; });
+    if(f){
+      const iAlt = f[2] - f[1] + 1;
+      let gjort = 0;
+      for(let k = f[1]; k <= f[2]; k++) if(done.has(String(k))) gjort++;
+      topp = f[0] + " \u00b7 " + U.progress.replace("{done}", gjort).replace("{total}", iAlt);
+    }
+  }
+  $("prog-t").textContent = topp;
   $("prog-i").style.width = Math.round((nDone / total) * 100) + "%";
   /* Toppstripa: samme tall, alltid synlig mens man scroller. */
   const mp = $("minip");
