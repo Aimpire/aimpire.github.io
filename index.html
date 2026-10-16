@@ -28,7 +28,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet" crossorigin="anonymous">
 
 <style>
 /* Samplet fra founders egne Canva-dokumenter 14.10.2026, ikke oppfunnet:
@@ -1713,8 +1713,10 @@ function makeLinkNow(){
         /* Spraaket lederen leser siden paa foelger med, saa e-posten kommer paa
            det samme spraaket. Romanisert urdu/arabisk regnes som urdu/arabisk. */
         if(F.lang_field) body.set(F.lang_field, baseOf(lang));
+        window.__ldSending = true;
         fetch(F.form, { method: "POST", mode: "no-cors", body: body })
           .then(function(){
+            window.__ldSending = false;
             /* Lenken finnes allerede: koden regnes ut av partnerlenka. Lederen
                faar den med én gang og trenger ingen e-post - den begynner aa
                virke i det founder huker av. */
@@ -3161,7 +3163,9 @@ function ensurePack(L){
   const c = cachedPack(L);
   if(c){ mergePack(L, c); return Promise.resolve(true); }
   const timeout = new Promise(function(res){ setTimeout(function(){ res(null); }, 8000); });
-  const get = fetch("lang/" + L + ".json?v=" + C.packs[L])
+  /* Hashen ligger i filnavnet, ikke i ?v=: GitHub Pages' kant ignorerer spoerrestrengen,
+     saa ?v= kunne gi en gammel pakke under ny hash (gjennomgang 17.10, funn C2). */
+  const get = fetch("lang/" + L + "." + C.packs[L] + ".json")
     .then(function(r){ return r.ok ? r.json() : null; })
     .catch(function(){ return null; });
   return Promise.race([get, timeout]).then(function(d){
@@ -3258,7 +3262,7 @@ function toggleTheme(){
     /* Ledersiden: feltene overlever en omlasting (16.10: en leder satt paa en gammel
        versjon av siden i en halvtime og fikk soeknaden stille avvist av Google). */
     const LD_FELT = ["ld-in", "ld-name", "ld-mail", "ld-spons"], LD_KEY = "aimpire.ld.stash";
-    const erLedere = !!document.getElementById("ld-in");
+    const erLedere = PAGE === "leaders";   /* feltet ld-in finnes skjult paa medlemssiden ogsaa (gjennomgang 17.10, funn C1) */
     if(erLedere){
       try{
         const st = JSON.parse(sessionStorage.getItem(LD_KEY) || "null");
@@ -3269,13 +3273,18 @@ function toggleTheme(){
     navigator.serviceWorker.addEventListener("controllerchange", function(){
       if(!haddeKontroll){ haddeKontroll = true; return; }   /* foerste installasjon (ingen gammel SW): ikke last om */
       if(!erLedere) return;                                  /* medlemssiden: neste aapning er ny nok */
+      if(window.__ldSending) return;                         /* midt i en innsending: aldri avbryt den */
+      const harInnhold = LD_FELT.some(function(id){ const el = document.getElementById(id); return !!(el && el.value); });
+      let lagret = false;
       try{
         const sist = Number(sessionStorage.getItem("aimpire.sw.reloadedAt") || 0);
         if(Date.now() - sist < 15000) return;                /* aldri omlastingsloekke */
         sessionStorage.setItem("aimpire.sw.reloadedAt", String(Date.now()));
         const st = {}; LD_FELT.forEach(function(id){ const el = document.getElementById(id); if(el && el.value) st[id] = el.value; });
         sessionStorage.setItem(LD_KEY, JSON.stringify(st));
+        lagret = true;
       }catch(e){}
+      if(harInnhold && !lagret) return;                      /* kunne ikke ta vare paa feltene (sessionStorage sperret): la lederen sende foerst */
       location.reload();
     });
     const regSw = function(){
