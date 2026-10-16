@@ -2896,8 +2896,11 @@ function toggleTheme(){
     l = hit ? hit.code : C.langs[0].code;
   }
   let h0 = (location.hash || "").replace(/^#/, "");
+  const raa0 = h0;
   h0 = ALIAS[h0] || h0;
   if(CATS.indexOf(h0) !== -1) view = h0;
+  /* En delt lenke til en FANE (#calc) skal aapne fanen, ikke bare visningen. */
+  if(TABS[h0] && TABS[h0].indexOf(raa0) !== -1) tab = raa0;
   const go = function(){ initSponsor(); buildSwitch(); setLang(l); };
   /* Har lenka eller telefonen en leder, ventes det paa den ferske lista (liten
      fil), saa en leder founder nettopp har lagt til eller fjernet gjelder straks. */
