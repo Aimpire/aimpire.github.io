@@ -552,7 +552,16 @@ html[dir="rtl"] .ib .flag{border-radius:5px 0 0 5px}
 .tool .hint{font-size:.82rem;color:var(--chalk-dim);margin:0 0 14px}
 /* Founder 16.10: navnet paa den som inviterte, i gull og stoerre - det er det
    foerste medlemmet skal kjenne igjen. Resten av linja er stille. */
-.spon .who{color:var(--gold-ink);font-weight:800;font-size:1.08rem;letter-spacing:.01em}
+/* Founder 16.10 (andre runde): gult navn var stygt. Navnet i hvitt som foer,
+   blikkfanget er en gradient-ring med forbokstaven - samme sprak som resten. */
+.spon .avi{width:34px;height:34px;border-radius:50%;background:var(--grad);color:#08080B;
+  display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+  font-family:var(--display);font-weight:900;font-size:.95rem;line-height:1;text-transform:uppercase}
+.spon .who{color:var(--chalk);font-weight:800;font-size:1.02rem;letter-spacing:.01em}
+/* Registrer-handlingen er primaer-flaten (samme som «Open your account»), ikke en hvit knapp. */
+.spon .slab.reg{flex:1 1 100%;margin:8px 0 0;padding:16px 18px;border-radius:var(--r-btn)}
+.spon .slab.reg .t{font-size:1.12rem}
+.spon .slab.reg .s{margin-top:3px;font-size:.86rem}
 .tool button{width:100%;background:var(--chalk);color:var(--ink);border:0;padding:15px;
   font:inherit;font-weight:700;font-size:.98rem;cursor:pointer;font-family:"Montserrat",sans-serif}
 .out{margin-top:14px;padding:14px 15px;background:var(--ink-deep);border:1px solid var(--rule);
@@ -1140,7 +1149,7 @@ html[data-font="nastaliq"] :is(.switch button,.jump button,.cper button){line-he
    Dobbeltsjekken og «egen lenke» hoerer til der registreringen skjer - start-
    visningen - og tok 345 px paa en 640 px skjerm (maalt 16.10). */
 .shell[data-view="menu"] #spon .dcheck{display:none}
-#spon .joinbtn.reg{margin-top:10px}
+.shell[data-view="menu"] .spon{align-items:center}
 @media (prefers-reduced-motion:reduce){
   .out .apply,.nextb,.joinbtn,.back,.menu .share,#notice-none .dlink,#spon .dlink,.plate{transition:none}
   .out .apply:active,.nextb:active,.joinbtn:active{transform:none}}
@@ -1735,6 +1744,8 @@ function render(){
   if(dest.host){
     sp.hidden = false;
     if(sponsorName){
+      const av = el("span","avi", Array.from(sponsorName.trim())[0] || ""); av.setAttribute("aria-hidden","true");
+      sp.appendChild(av);
       sp.appendChild(el("strong","who", S.by.replace("{N}", sponsorName)));
       if(sponsorVerified){ const v = el("span","ok","\u2713"); v.setAttribute("aria-hidden","true"); sp.appendChild(v); }
       sp.appendChild(document.createTextNode(" \u00b7 "));
@@ -1749,8 +1760,10 @@ function render(){
        lederen staar paa sin egen lenke (selvhenvisning), se under. */
     const meReg = load("aimpire.me"), curReg = leaderById(load("aimpire.leader"));
     if(S.register && safeUrl(dest.url) && !(meReg && curReg && curReg.id === meReg)){
-      const rb = el("a","joinbtn reg", S.register);
+      const rb = el("a","slab reg");
       rb.href = dest.url; rb.target = "_blank"; rb.rel = "noopener noreferrer";
+      rb.appendChild(el("span","t", S.register));
+      if(sponsorName && S.via) rb.appendChild(el("span","s", S.via.replace("{N}", sponsorName)));
       sp.appendChild(rb);
     }
     /* Founder 16.10: den som selv inviterer andre, skal ikke registrere seg
