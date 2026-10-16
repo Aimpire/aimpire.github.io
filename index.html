@@ -915,6 +915,139 @@ html[data-font="nastaliq"] .qa summary{font-weight:400}
   .plate:nth-of-type(3){animation-delay:.10s}
   .plate:nth-of-type(4){animation-delay:.15s}
 }
+
+/* ============================================================
+   KNAPPESYSTEM OG HIERARKI (16.10). Én signatur: «siktelinja» - merkevarens
+   gradient som tynn strek - er det eneste som sier «aktiv/viktig». Tre
+   knappenivaaer, én regel for aktive brikker (fylt jet), to fremhevede kort
+   paa menyen og resten som liste. Bare CSS + menyens gruppering; ingen tekst.
+   ============================================================ */
+:root{--aim:var(--grad-ink);--r-card:16px;--r-btn:14px;--r-chip:999px;--r-in:12px}
+
+/* --- Nivaa 1: hovedhandling. Fylt jet, siktelinje under teksten. --- */
+.out .apply,.nextb,.joinbtn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:52px;padding:14px 22px 16px;border:0;border-radius:var(--r-btn);
+  background:var(--jet);color:var(--jet-on);font:800 1rem/1.15 var(--display);
+  letter-spacing:0;text-decoration:none;cursor:pointer;filter:none;
+  transition:transform .12s ease,filter .18s ease}
+.out .apply::after,.nextb::after,.joinbtn::after{content:"";position:absolute;inset-inline:18px;bottom:8px;height:2px;
+  border-radius:2px;background:var(--aim);opacity:.95}
+.out .apply:hover,.nextb:hover,.joinbtn:hover,.joinbtn:focus-visible{filter:brightness(1.07)}
+.out .apply:active,.nextb:active,.joinbtn:active{transform:scale(.985)}
+.out .apply{width:100%;margin-top:14px}
+.nextb{width:100%;margin-top:4px}
+.joinbtn{display:flex;width:100%;margin-top:12px}
+:root[data-theme="dark"] .out .apply::after,:root[data-theme="dark"] .nextb::after,:root[data-theme="dark"] .joinbtn::after{opacity:.85}
+
+/* --- Nivaa 2: sekundaer. Omriss, samme hoeyde og radius, aldri understrek. --- */
+.back,.menu .share,#notice-none .dlink,#spon .dlink{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:46px;padding:11px 18px;border:1px solid var(--edge-ui);border-radius:var(--r-btn);
+  background:transparent;color:var(--chalk);font:700 .95rem/1.15 var(--display);
+  text-decoration:none;cursor:pointer;transition:border-color .18s ease,transform .12s ease}
+.back:hover,.menu .share:hover,#notice-none .dlink:hover,#spon .dlink:hover,
+.back:focus-visible,.menu .share:focus-visible,#notice-none .dlink:focus-visible,#spon .dlink:focus-visible{border-color:var(--gold-soft);outline:none}
+.back:active,.menu .share:active,#notice-none .dlink:active,#spon .dlink:active{transform:scale(.985)}
+#notice-none .dlink{width:100%;margin-top:14px}
+#spon .dlink{margin-top:8px}
+.back{min-height:40px;padding:8px 14px;font-size:.9rem;border-color:var(--rule)}
+.menu .share{margin-top:16px;padding-inline:18px 20px}
+
+/* --- Nivaa 3: tekstknapp. Farge, ingen strek foer hover. --- */
+.prog button,.ordb{color:var(--gold-soft);text-decoration:none;font-family:var(--face)}
+.prog button:hover,.prog button:focus-visible{text-decoration:underline;text-underline-offset:3px}
+
+/* --- Brikker: spraak, faner, perioder, beloep. Aktiv = fylt jet. Én regel. --- */
+.switch button,.jump button,.cper button,.cpre button,.langs a{
+  min-height:40px;padding:8px 14px;border:1px solid var(--rule);border-radius:var(--r-chip);
+  background:transparent;color:var(--chalk);font:700 .84rem/1 var(--display);cursor:pointer;
+  transition:border-color .15s ease,background-color .15s ease}
+.switch button{background:var(--ink-deep);padding:8px clamp(6px,2vw,14px)}
+.switch{gap:3px}
+/* Skriftvalget (Roman Urdu / اردو) foelger samme brikkeregel: aktiv = fylt jet. */
+.script button{min-height:40px;border:1px solid var(--rule);background:transparent;color:var(--chalk)}
+.script button[aria-pressed="true"]{background:var(--jet);border-color:var(--jet);color:var(--jet-on)}
+.script button:hover,.script button:focus-visible{border-color:var(--gold-soft);outline:none}
+/* Spraakraden maa aldri skyve siden sidelengs (maalt 16.10: 13 px i engelsk, 37 px i
+   urdu paa 390 px). Blir den for bred, ruller den innenfor seg selv. */
+.switch{max-width:100%;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.switch::-webkit-scrollbar{display:none}
+.cpre button{border-style:solid;color:var(--chalk-dim)}
+.switch button:hover,.jump button:hover,.cper button:hover,.cpre button:hover,.langs a:hover,
+.switch button:focus-visible,.jump button:focus-visible,.cper button:focus-visible,.cpre button:focus-visible{border-color:var(--gold-soft);outline:none}
+.switch button[aria-pressed="true"],.jump button[aria-selected="true"],.cper button[aria-pressed="true"],.cpre button[aria-pressed="true"]{
+  background:var(--jet);border-color:var(--jet);color:var(--jet-on);box-shadow:none}
+.switch .thm{border-style:dashed;color:var(--chalk-dim)}
+.jump{padding:10px 0 4px}
+
+/* --- Fokus for alle som bruker tastatur/skjermleser. --- */
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--gold-soft);outline-offset:2px}
+
+/* --- Framdrift i guiden: ikke konsoll-tekst. Linje, stolpe, hovedknapp. --- */
+.prog{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px 14px;margin:0 0 22px;
+  font-family:var(--face);font-size:.9rem;color:var(--chalk-dim)}
+#prog-t{grid-area:1/1;color:var(--chalk);font-weight:600}
+#prog-r{grid-area:1/2;justify-self:end;font-size:.84rem}
+.prog .bar{grid-area:2/1/3/3;height:5px;border-radius:999px}
+.prog .bar i{background:var(--aim)}
+.progn{grid-area:3/1/4/3;display:block}
+.progn .alld{display:block;margin:0 0 8px}
+
+/* --- Klebefeltet: hårstrek under, saa det har en kant naar det ligger over tekst. --- */
+.topbar{box-shadow:0 1px 0 var(--rule)}
+
+/* --- Varselboksen (ingen sponsor): rolig flate med siktelinje oeverst, ikke tykk marg. --- */
+.notice{position:relative;overflow:hidden;border:1px solid var(--rule);border-radius:var(--r-card);
+  border-inline-start:1px solid var(--rule)}
+.notice::before{content:"";position:absolute;inset-inline:0;top:0;height:3px;background:var(--aim)}
+.notice.alert{border-color:var(--ember)}
+.notice.alert::before{background:var(--ember)}
+
+/* --- Menyen: to fremhevede kort, resten som liste. Ingen regnbuestriper. --- */
+.menu{gap:12px}
+.plate{grid-template-columns:1fr 24px;gap:0 14px;padding:0 20px;border-radius:var(--r-card);position:relative}
+.plate > .stripe{display:none}
+.plate > .bd{padding:20px 0}
+.plate > .go{margin-inline-end:0;color:var(--chalk-dim)}
+.plate[data-cat]{--cat:transparent;background:var(--ink-deep);border-color:var(--rule)}
+:root:not([data-theme="dark"]) .plate[data-cat]:not([data-cat="start"]){background:var(--ink-deep);border-color:var(--rule)}
+.plate.feat{overflow:hidden}
+.plate.feat::before{content:"";position:absolute;inset-inline:0;top:0;height:3px;background:var(--aim)}
+.plate.feat .t{font-size:1.32rem}
+.plate.feat > .go{color:var(--chalk)}
+.plate[data-cat="start"]{border-color:var(--rule)}
+:root[data-theme="dark"] .plate[data-cat="start"]{border-color:var(--rule)}
+.plate:hover{border-color:var(--edge-ui);box-shadow:none}
+.plate.feat:hover{border-color:var(--gold-soft)}
+.mlist{display:grid;gap:0;border:1px solid var(--rule);border-radius:var(--r-card);overflow:hidden;background:var(--ink-deep)}
+.mlist .plate{border:0;border-radius:0;background:transparent}
+.mlist .plate + .plate{border-top:1px solid var(--rule)}
+.mlist .plate > .bd{padding:15px 0}
+.mlist .plate .t{font-size:1.06rem;margin-bottom:3px}
+.mlist .plate .d{font-size:.9rem;line-height:1.45}
+.mlist .plate:hover{background:var(--ink-raise)}
+.plate .pg i > b{background:var(--aim)}
+
+/* Lista er ikke direkte barn av menyen, saa inntoningen treffer den ikke - vis den rett. */
+.mlist .plate{opacity:1;animation:none;transform:none}
+/* .prog button slaar .nextb paa spesifisitet - hovedknappen maa vinne. */
+.prog .nextb{background:var(--jet);color:var(--jet-on);border:0;padding:14px 22px 16px;min-height:52px;
+  border-radius:var(--r-btn);font:800 1rem/1.15 var(--display);text-decoration:none}
+.prog .nextb:hover,.prog .nextb:focus-visible{text-decoration:none;filter:brightness(1.07)}
+html[data-font="nastaliq"] .prog .nextb,html[data-font="naskh"] .prog .nextb,html[data-font="deva"] .prog .nextb{font-family:var(--face);line-height:1.6}
+
+/* --- Skrift paa knapper for deva/naskh/nastaliq: morsmaalets font, mer luft. --- */
+html[data-font="deva"] :is(.out .apply,.nextb,.joinbtn,.back,.menu .share,#notice-none .dlink,#spon .dlink,.switch button,.jump button,.cper button),
+html[data-font="naskh"] :is(.out .apply,.nextb,.joinbtn,.back,.menu .share,#notice-none .dlink,#spon .dlink,.switch button,.jump button,.cper button),
+html[data-font="nastaliq"] :is(.out .apply,.nextb,.joinbtn,.back,.menu .share,#notice-none .dlink,#spon .dlink,.switch button,.jump button,.cper button){
+  font-family:var(--face);letter-spacing:0;line-height:1.5}
+html[data-font="nastaliq"] :is(.out .apply,.nextb,.joinbtn){padding-block:12px 16px;line-height:1.7}
+html[data-font="nastaliq"] :is(.switch button,.jump button,.cper button){line-height:1.7;padding-block:6px}
+
+@media (prefers-reduced-motion:reduce){
+  .out .apply,.nextb,.joinbtn,.back,.menu .share,#notice-none .dlink,#spon .dlink,.plate{transition:none}
+  .out .apply:active,.nextb:active,.joinbtn:active{transform:none}}
 </style>
 </head>
 <body>
@@ -2483,9 +2616,12 @@ function renderMenu(){
   nav.textContent = "";
   nav.appendChild(el("p","mlede", M.lede));
   const done = doneSet(), steps = (C.guide[lang] || C.guide.en).steps.length;
+  /* To fremhevede kort (Sonic og Kom i gang), resten som én liste. */
+  const FEAT = { earn: 1, start: 1 };
+  const list = el("div","mlist");
   M.items.forEach(function(it){
     const cat = it[0];
-    const b = el("button","plate");
+    const b = el("button", FEAT[cat] ? "plate feat" : "plate");
     b.type = "button";
     b.setAttribute("data-cat", cat);
     b.appendChild(el("span","stripe"));
@@ -2507,8 +2643,9 @@ function renderMenu(){
     go.setAttribute("aria-hidden","true");
     b.appendChild(go);
     b.onclick = JUMPTO[cat] ? function(){ location.hash = "#" + cat; } : function(){ if(TABS[cat]) tab = TABS[cat][0]; setView(cat); };
-    nav.appendChild(b);
+    if(FEAT[cat]) nav.appendChild(b); else list.appendChild(b);
   });
+  if(list.childNodes.length) nav.appendChild(list);
   /* Delingsknapp: medlemmet sender videre den lenken det selv kom inn paa, saa
      sponsoren foelger med (privat deling, aldri et offentlig innlegg). Uten
      sponsor deles den rene adressen. navigator.share gir det innebygde
