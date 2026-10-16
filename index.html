@@ -730,6 +730,11 @@ html[data-font="nastaliq"] .vs .vsnote{line-height:2}
 .acts.subs > li::before{content:none}
 /* Kort sjekk: to valg, og forklaringen kommer uansett hva man svarer. */
 /* Foldet avsnitt: overskriften er knappen, og pilen sier at det er mer. */
+/* Fagord i teksten: en stiplet strek sier at det finnes en forklaring. */
+.ordb{display:inline;padding:0;border:0;background:none;color:inherit;font:inherit;
+  cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px;
+  text-decoration-color:var(--gold-soft)}
+.ordb:hover,.ordb:focus-visible{color:var(--gold-soft)}
 .fold > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;
   min-height:44px;margin:0 -4px;padding:0 4px}
 .fold > summary::-webkit-details-marker{display:none}
@@ -1825,7 +1830,7 @@ function render(){
     $("learn-lede").textContent = LN.intro[lang] || LN.intro.en;
     const lab = LN.labels[lang] || LN.labels.en;
     const host = $("learn"); host.textContent = ""; host.className = "learn";
-    (LN.terms[lang] || LN.terms.en).forEach(function(t){
+    (LN.terms[lang] || LN.terms.en).forEach(function(t, i){
       const dt = document.createElement("details");
       const sm = el("summary", null, t[0]);
       dt.appendChild(sm);
@@ -1848,6 +1853,7 @@ function render(){
         if(made){ lf.appendChild(made); bd.appendChild(lf); }
       }
       dt.appendChild(bd);
+      dt.id = "ord-" + i;
       host.appendChild(dt);
     });
   } else { ls.hidden = true; }
@@ -1951,6 +1957,7 @@ function render(){
   renderFaq();
   renderMenu();
   markUiLabels();
+  markTerms();
   isolateFigures();
   applyView();
 }
@@ -1996,6 +2003,54 @@ function isolateFigures(){
    hindi/urdu/arabisk faar den foerste forekomsten i hvert avsnitt en kort
    forklaring i parentes. Selve oversettelsene endres ikke. */
 const UI_ROOTS = "#s-guide, #s-withdraw, #s-amplify, #s-faq";
+/* Fagordene staar paa engelsk i alle spraak (sidens egen regel), saa de kan
+   finnes likt overalt. Foerste gang et ord dukker opp i et avsnitt, blir det
+   trykkbart og aapner forklaringen i Laer. Ingen nye tekster: forklaringene
+   finnes allerede paa fem spraak. */
+const ORD = { pip: 0, pips: 0, point: 1, points: 1, spread: 2, lot: 3, lots: 3,
+  leverage: 4, margin: 4, balance: 5, equity: 5, "stop-loss": 7, drawdown: 10 };
+function markTerms(){
+  const L = C.learn && (C.learn.terms[lang] || C.learn.terms.en); if(!L) return;
+  const rx = new RegExp("(^|[^A-Za-z0-9-])(" + Object.keys(ORD).sort(function(a, b){ return b.length - a.length; }).join("|") + ")(?![A-Za-z0-9-])", "gi");
+  document.querySelectorAll("#s-guide, #s-amplify, #s-withdraw").forEach(function(root){
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(n){
+        const p = n.parentNode;
+        if(!p || p.closest("h2, h3, summary, button, a, .ui, .gl, .codes, .qz, svg")) return NodeFilter.FILTER_REJECT;
+        rx.lastIndex = 0;
+        return rx.test(n.data) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    const nodes = []; while(w.nextNode()) nodes.push(w.currentNode);
+    nodes.forEach(function(n){
+      const blokk = n.parentNode.closest("li, p, dd, div") || n.parentNode;
+      const sett = blokk.__ord || (blokk.__ord = new Set());
+      const frag = document.createDocumentFragment(); let sist = 0, m;
+      rx.lastIndex = 0;
+      while((m = rx.exec(n.data))){
+        const at = m.index + m[1].length, ord = m[2], nokkel = ord.toLowerCase();
+        if(sett.has(nokkel)){ continue; }
+        sett.add(nokkel);
+        frag.appendChild(document.createTextNode(n.data.slice(sist, at)));
+        const b = el("button", "ordb", ord); b.type = "button";
+        b.onclick = function(){ apneOrd(ORD[nokkel]); };
+        frag.appendChild(b);
+        sist = at + ord.length;
+      }
+      if(!sist) return;
+      frag.appendChild(document.createTextNode(n.data.slice(sist)));
+      n.parentNode.replaceChild(frag, n);
+    });
+  });
+}
+function apneOrd(i){
+  setView("learn");
+  setTimeout(function(){
+    const d = $("ord-" + i); if(!d) return;
+    d.open = true;
+    d.scrollIntoView({ block: "center" });
+  }, 60);
+}
 function markUiLabels(){
   const U = C.ui_labels; if(!U || !U.labels || !U.labels.length) return;
   const G = (U.gloss && U.gloss[lang]) || {};
