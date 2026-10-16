@@ -259,6 +259,10 @@ html[data-font="deva"] .slab .t,html[data-font="nastaliq"] .slab .t,html[data-fo
   font-family:var(--face);text-transform:none;letter-spacing:0;line-height:1.7}
 .slab .s{display:block;margin-top:5px;font-size:.9rem;opacity:.72;font-weight:600}
 .slab:hover,.slab:focus-visible{filter:brightness(1.12)}
+/* Egen lenke: samme slab-form, men omriss - sekundaer handling, aldri doed flate. */
+.slab.own{background:transparent;color:var(--chalk);border:1.5px solid var(--gold-soft)}
+.slab.own .t{font-size:1.05rem}
+.slab.own:hover,.slab.own:focus-visible{filter:none;border-color:var(--gold)}
 
 /* ruled link rows */
 /* Rader paa blaa grunn saa ut som tekst. Naa er de et hvitt kort med
@@ -563,6 +567,8 @@ html[dir="rtl"] .ib .flag{border-radius:5px 0 0 5px}
 .spon .slab.reg{flex:1 1 100%;margin:8px 0 0;padding:16px 18px;border-radius:var(--r-btn)}
 .spon .slab.reg .t{font-size:1.12rem}
 .spon .slab.reg .s{margin-top:3px;font-size:.86rem}
+.spon .slab.own{flex:1 1 100%;margin:10px 0 0;padding:13px 18px;border-radius:var(--r-btn)}
+.ib .slab.own{display:block;margin:12px 0 0;padding:13px 18px;border-radius:var(--r-btn)}
 .tool button{width:100%;background:var(--chalk);color:var(--ink);border:0;padding:15px;
   font:inherit;font-weight:700;font-size:.98rem;cursor:pointer;font-family:"Montserrat",sans-serif}
 .out{margin-top:14px;padding:14px 15px;background:var(--ink-deep);border:1px solid var(--rule);
@@ -979,6 +985,14 @@ html[data-font="nastaliq"] .qa summary{font-weight:400}
 .back:active,.menu .share:active,#notice-none .dlink:active,#spon .dlink:active{transform:scale(.985)}
 #notice-none .dlink{width:100%;margin-top:14px}
 #spon .dlink{margin-top:8px}
+/* Founder 17.10: lenke-knappene saa «hvite og doede» ut. Full bredde, gullkant,
+   fast retningspil - samme hoeyde og radius som resten av knappene. */
+#spon .dlink,#notice-none .dlink,.ib .dlink{display:flex;width:100%;min-height:48px;
+  border-color:var(--gold-soft);font-weight:800}
+#spon .dlink::after,#notice-none .dlink::after,.ib .dlink::after{content:"\203A";
+  color:var(--gold-soft);font-size:1.2em;font-weight:800;line-height:1}
+html[dir="rtl"] #spon .dlink::after,html[dir="rtl"] #notice-none .dlink::after,
+html[dir="rtl"] .ib .dlink::after{content:"\2039"}
 .back{min-height:40px;padding:8px 14px;font-size:.9rem;border-color:var(--rule)}
 .menu .share{margin-top:16px;padding-inline:18px 20px}
 .ldlink{display:inline-flex;min-height:36px;margin:4px 0;padding:6px 12px;font-size:.9rem}
@@ -1851,6 +1865,14 @@ function render(){
       const sw = el("p", "dcheck selfw", S.self_warn);
       sw.setAttribute("role", "alert");
       sp.appendChild(sw);
+      /* Founder 17.10: aldri et hull der knappen pleier aa staa. Paa egen lenke er
+         handlingen ledersiden - der ligger lenken hans, klar til aa sendes videre. */
+      if(S.own_link){
+        const ob = el("a", "slab own");
+        ob.href = "ledere.html";
+        ob.appendChild(el("span", "t", S.own_link));
+        sp.appendChild(ob);
+      }
     } else if(S.short_check || S.double_check){
       /* Founder 16.10 (#50): kort linje her - feilen kan bare stoppes idet man
          registrerer seg. Den fulle forklaringen ligger under IB. */
@@ -2436,8 +2458,12 @@ function render(){
         if(bl[2] === "ladder") sec.appendChild(el("p","flag", B.unverified));
       }
       if(bl[2] === "ledere"){
+        /* Founder 17.10: soeknaden om egen lenke skal vaere en ekte handling ogsaa
+           her, i samme form som resten - ikke en naken tekstlenke. */
         const SP = C.sponsor && (C.sponsor[lang] || C.sponsor.en);
-        const a = el("a","dlink", (SP && SP.own_link) || "ledere"); a.href = "ledere.html"; sec.appendChild(a);
+        const a = el("a","slab own"); a.href = "ledere.html";
+        a.appendChild(el("span","t", (SP && SP.own_link) || "ledere"));
+        sec.appendChild(a);
       }
       ih.appendChild(sec);
     });
