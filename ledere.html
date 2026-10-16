@@ -1,0 +1,2456 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aimpire</title>
+<meta name="description" content="Open your account in about two minutes. English, Norsk, हिन्दी, اردو.">
+<meta name="theme-color" content="#08080B">
+
+<!-- SKJUL FRA GOOGLE: slett de fire tegnene foran og de tre bak meta-linjen under.
+     Siden er fortsatt aapen for alle som har lenken; dette skjuler den bare fra soek. -->
+<!-- <meta name="robots" content="noindex, nofollow"> -->
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aimpire">
+<meta property="og:description" content="Open your account in about two minutes. English, Norsk, हिन्दी, اردو.">
+<meta property="og:image" content="assets/ap-gradient.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/ap-gradient.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* Samplet fra founders egne Canva-dokumenter 14.10.2026, ikke oppfunnet:
+   kjerneblaa #006EFD, gradient som lysner mot hvitt, svart display-serif.
+   Lys er standard - merkevaren er hvit-dominert (31-45 % av pikslene).
+   Variabelnavnene er beholdt fra den moerke paletten, saa de ~90
+   bruksstedene ikke maatte roeres. Kontrasttall i kommentar per linje. */
+:root{
+  /* Aimpires egne farger, fra logoen: svart + gradienten blaa -> turkis ->
+     magenta -> gul. IKKE AiTech (marine + himmelblaa) og IKKE Tag (lime).
+     Lys modus: hvit med farge, ikke graa. Kontrast maalt mot #FFFFFF. */
+  --ink:#FBFAFD;            /* sideflate: nesten hvit, et snev fiolett     */
+  --ink-deep:#FFFFFF;
+  --ink-raise:#FFFFFF;
+  --gold:#A3159F;           /* FLATE: knapp, aktiv fane, marg - magenta 10:1 med hvit tekst */
+  --gold-soft:#0B7C72;      /* TEKSTaksent: dyp turkis, 5,1:1              */
+  --gold-deep:#A3159F;
+  --lime:#0F7A4A; --red:#C0392B;
+  --chalk:#14101C;          /* broedtekst: 18:1                            */
+  --chalk-dim:#4D4858;      /* guidetekst: 8,6:1                           */
+  --rule:#E7E2EE;
+  --edge-ui:#827C8E;
+  --ember:#C24F15;
+  --gold-metal:#FBE16B;     /* FLATE: markoerer og stegtall - merke-gult   */
+  --on-gold:#14101C;        /* tekst PAA gult, samme i begge temaer: 15:1  */
+  --gold-ink:#7A5410;
+  --jet:#14101C;
+  --jet-on:#FFFFFF;
+  --v1:#1B4FD8; --v2:#0E8F86; --v3:#A3159F; --v4:#C99A00;
+  --grad:linear-gradient(118deg,#1B4FD8 0%,#15D8C4 33%,#C21FBF 68%,#FBE16B 100%);
+  /* Samme familie, men uten de to trinnene som forsvinner paa hvitt:
+     #15D8C4 gir 1,9:1 og #FBE16B gir 1,3:1 mot hvit flate. */
+  --grad-ink:linear-gradient(110deg,#1B4FD8 0%,#0E8F86 40%,#A3159F 100%);
+  --measure:36rem;
+  --face:"Montserrat",system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --display:"Archivo","Montserrat",system-ui,sans-serif;
+}
+:root[data-theme="dark"]{
+  --ink:#08080B; --ink-deep:#121217; --ink-raise:#1A1A22;
+  --gold:#C21FBF; --gold-soft:#5EE6D6; --gold-deep:#E04DDE;
+  --chalk:#F4F2F7; --chalk-dim:#A9A4B5; --rule:#27242F;
+  --edge-ui:#6F6A7C; --ember:#F08A4B;
+  --v1:#5B8BFF; --v2:#2FE0CC; --v3:#E04DDE; --v4:#FBE16B;
+  --gold-metal:#FBE16B; --gold-ink:#FBE16B; --jet:#F4F2F7; --jet-on:#08080B;
+  --grad-ink:var(--grad);
+}
+html[data-font="deva"]{ --face:"Noto Sans Devanagari","Montserrat",sans-serif }
+html[data-font="nastaliq"]{ --face:"Noto Nastaliq Urdu","Montserrat",serif }
+html[data-font="naskh"]{ --face:"Noto Naskh Arabic","Montserrat",serif }
+
+/* «Himmelen over bruksanvisningen». Merkevarens egen gradient som et fast
+   lag bak innholdet, saa siden har noe aa staa under i stedet for et moerkt
+   lokk over seg. Driver bare MENS du scroller: animation-timeline gjoer at
+   den har posisjon, ikke tid, saa det tegnes ingen ramme naar siden ligger
+   stille. Kun transform animeres - laget males én gang, GPU-en flytter
+   teksturen. Ingen background-attachment:fixed (jank i Android Chrome) og
+   ingen backdrop-filter (dyr paa Mali/Adreno). ~0,3 KB gzipet. */
+.sky{position:fixed;inset-block-start:0;inset-inline:0;height:46vh;z-index:-1;
+  pointer-events:none;transform:translate3d(0,0,0);
+  background:
+    radial-gradient(90% 60% at 12% -10%, rgba(21,216,196,.34) 0%, rgba(21,216,196,0) 62%),
+    radial-gradient(80% 60% at 92% -12%, rgba(194,31,191,.26) 0%, rgba(194,31,191,0) 60%),
+    radial-gradient(60% 40% at 50% -18%, rgba(251,225,107,.40) 0%, rgba(251,225,107,0) 60%)}
+html[dir="rtl"] .sky{background:
+    radial-gradient(90% 60% at 88% -10%, rgba(21,216,196,.34) 0%, rgba(21,216,196,0) 62%),
+    radial-gradient(80% 60% at 8% -12%, rgba(194,31,191,.26) 0%, rgba(194,31,191,0) 60%),
+    radial-gradient(60% 40% at 50% -18%, rgba(251,225,107,.40) 0%, rgba(251,225,107,0) 60%)}
+:root[data-theme="dark"] .sky{background:
+    radial-gradient(100% 70% at 14% -14%, rgba(27,79,216,.38) 0%, rgba(27,79,216,0) 62%),
+    radial-gradient(80% 60% at 92% -16%, rgba(194,31,191,.24) 0%, rgba(194,31,191,0) 60%),
+    linear-gradient(180deg, rgba(8,8,11,0) 0%, rgba(8,8,11,0) 100%)}
+:root[data-theme="dark"][dir="rtl"] .sky{background:
+    radial-gradient(100% 70% at 86% -14%, rgba(27,79,216,.38) 0%, rgba(27,79,216,0) 62%),
+    radial-gradient(80% 60% at 8% -16%, rgba(194,31,191,.24) 0%, rgba(194,31,191,0) 60%),
+    linear-gradient(180deg, rgba(8,8,11,0) 0%, rgba(8,8,11,0) 100%)}
+@keyframes drift{
+  from{transform:translate3d(-2%,0,0) scale(1.04)}
+  to{transform:translate3d(2%,-1.5%,0) scale(1.12)}}
+@media (prefers-reduced-motion:no-preference){
+  @supports (animation-timeline:scroll()){
+    .sky{animation:drift 1s linear both;animation-timeline:scroll(root block)}}}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--ink);color:var(--chalk);font-family:var(--face);
+  font-size:1.0625rem;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* Nastaliq stabler bokstavformer vertikalt INNE i linja, saa 14px nastaliq
+   har omtrent samme detaljnivaa som 10px latinsk. Maalt foer endring:
+   guidetekst 15,2px, markoerforklaringer 14,08px — saa vidt lesbart.
+   Roten loeftes per skriftsystem, og alle rem-verdier foelger med. */
+html[data-font="nastaliq"]{font-size:18px}
+html[data-font="naskh"]{font-size:18px}
+html[data-font="deva"]{font-size:17.5px}
+html[data-font="nastaliq"] body{line-height:1.9}
+html[data-font="naskh"] body{line-height:1.9}
+html[data-font="deva"] body{line-height:1.8}
+/* Noto Nastaliq Urdu finnes i 400 og 700. Ber vi om 800 eller 900, lager
+   nettleseren syntetisk fet — og paa en skrift der strekene allerede
+   overlapper, smoerer det teksten ut i stedet for aa framheve den. */
+html[data-font="nastaliq"] h1,html[data-font="nastaliq"] h2,
+html[data-font="nastaliq"] h3,html[data-font="nastaliq"] .t{font-weight:500}
+html[data-font="nastaliq"] strong,html[data-font="nastaliq"] b,
+html[data-font="nastaliq"] .wm{font-weight:700}
+/* Overskriftene skal IKKE foelge den loeftede roten - da blir de vegger.
+   Egne tak, i em av seg selv, saa brodteksten kan vaere lesbar uten at
+   titlene roper. */
+html[data-font="nastaliq"] .sec > h2{font-size:1.16rem;line-height:1.5}
+html[data-font="nastaliq"] .plate .t{font-size:1.04rem;line-height:1.55}
+html[data-font="nastaliq"] .plate[data-cat="start"] .t{font-size:1.12rem}
+html[data-font="nastaliq"] .plate .d{font-size:.92rem;line-height:1.85}
+.shell{max-width:46rem;margin:0 auto;padding:0 clamp(18px,5vw,40px) 72px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
+[hidden]{display:none !important}
+/* Mens en spraakpakke hentes foerste gang: ingen engelsk som blinker forbi. */
+html[aria-busy="true"] .shell{visibility:hidden}
+
+/* masthead */
+.mast{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding:26px 0 0;border-bottom:1px solid var(--rule)}
+.wordmark{display:flex;align-items:center;gap:11px;padding-bottom:12px}
+.mono{width:40px;height:40px;flex:0 0 auto;display:block}
+.wordmark .wm{display:block;font-family:var(--display);font-weight:800;font-size:18px;
+  font-variation-settings:"wdth" 94;letter-spacing:.11em;text-transform:uppercase;
+  line-height:1;color:var(--chalk)}
+/* «AIM» er fortsatt poenget i navnet, men det baeres av vekt, ikke av en
+   andre farge. Ett ordmerke skal ha én farge naar det staar inntil en
+   gradient - ellers konkurrerer de. */
+.wordmark .wm em{font-style:normal;font-weight:500;color:inherit}
+.wordmark .tag{display:block;margin-top:5px;font-size:10px;letter-spacing:.22em;
+  color:var(--chalk-dim);font-weight:600;font-family:var(--display);text-transform:uppercase}
+/* Alle fem skal paa én linje ogsaa paa 360px, ellers havner urdu til
+   venstre paa linje to - stikk motsatt av hensikten med aa sette den sist. */
+.switch{display:flex;gap:4px;padding-bottom:8px;align-items:center}
+.switch button{background:var(--ink-deep);border:1px solid var(--rule);border-radius:999px;
+  color:var(--chalk);font:inherit;font-size:13px;font-weight:700;
+  padding:8px clamp(8px,2.6vw,14px);
+  cursor:pointer;font-family:var(--display);min-height:40px;line-height:1;
+  white-space:nowrap;transition:none}
+.switch button:hover{border-color:var(--gold)}
+/* Aktivt spraak: svart flate med gull understrek. Svart baerer kontrasten,
+   gullet sier hvilken. Begge deler leses paa en billig skjerm i dagslys. */
+.switch button[aria-pressed="true"]{background:var(--jet);border-color:var(--jet);
+  color:var(--jet-on);box-shadow:inset 0 -3px 0 0 var(--gold-metal)}
+/* Lys/moerk er en KONTROLL, ikke et spraak - den skilles ut. */
+.switch .thm{font-size:15px;margin-inline-start:auto;padding:7px 11px;min-width:40px;
+  border-style:dashed;color:var(--chalk-dim);flex:0 0 auto}
+.switch .thm:hover{color:var(--chalk);border-color:var(--gold-metal)}
+
+/* hero */
+.hero{padding:52px 0 40px}
+.hero h1{margin:0;font-family:var(--display);font-weight:800;
+  font-variation-settings:"wdth" 88;
+  font-size:clamp(2.5rem,10.5vw,4.6rem);line-height:.94;letter-spacing:-.028em;
+  text-transform:none;text-wrap:balance}
+html[data-font="deva"] .hero h1,html[data-font="nastaliq"] .hero h1,html[data-font="naskh"] .hero h1{
+  font-family:var(--face);text-transform:none;letter-spacing:0;line-height:1.3;
+  font-size:clamp(2rem,8vw,3.4rem)}
+/* Maa staa ETTER den felles regelen over - samme spesifisitet, saa det er
+   rekkefoelgen som avgjoer. Foerste forsoek laa foran og ble overstyrt:
+   maalt 36px i stedet for 28,8. */
+html[data-font="nastaliq"] .hero h1{font-size:clamp(1.6rem,6.4vw,2.5rem);line-height:1.42}
+.hero h1 span{display:block}
+/* Gradienten bor i logoen og i regelstreken under hver h2. Paa overskriften
+   ble den dekorasjon — og halvt usynlig paa hvitt. Dyp blaa i stedet: 9,33:1,
+   og to toner leser som ett utsagn i stedet for to. */
+/* Andre linje i logoens egen gradient - lys modus uten den gule, som forsvinner paa hvitt. */
+.hero h1 span:last-child{background:var(--grad-ink);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin:26px 0 0;max-width:var(--measure);color:var(--chalk-dim);font-size:1.02rem}
+@media (prefers-reduced-motion:no-preference){
+  .hero h1 span{animation:rise .55s cubic-bezier(.2,.7,.3,1) backwards}
+  .hero h1 span:nth-child(2){animation-delay:.07s}
+}
+@keyframes rise{from{opacity:0;transform:translateY(.35em)}to{opacity:1;transform:none}}
+
+/* sections */
+.sec{padding:50px 0 0}
+.sec > h2{margin:0 0 22px;font-size:1.42rem;font-weight:700;letter-spacing:-.015em;
+  color:var(--chalk);font-family:var(--display);font-variation-settings:"wdth" 92}
+html[data-font="deva"] .sec > h2,html[data-font="nastaliq"] .sec > h2,html[data-font="naskh"] .sec > h2{
+  font-family:var(--face);letter-spacing:0}
+.sec > h2 b{display:block;width:46px;height:3px;background:var(--grad);margin-top:11px}
+.lede{max-width:var(--measure);color:var(--chalk-dim);margin:0 0 26px}
+
+/* sponsor */
+.spon{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;margin:30px 0 0;
+  padding:12px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  font-size:.86rem;color:var(--chalk-dim)}
+.spon strong{color:var(--chalk);font-weight:700}
+.spon .fp{font-family:var(--mono);font-size:.82rem;color:var(--gold-soft);font-weight:700;
+  letter-spacing:.04em;background:var(--ink-deep);border:1px solid var(--rule);
+  border-radius:4px;padding:2px 7px}
+.guide > li::before,.rail > li::before,.pin,.keys li::before{font-variant-numeric:tabular-nums}
+.spon button{background:none;border:0;color:var(--gold-soft);font:inherit;font-size:.86rem;
+  text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:0}
+
+/* primary action */
+.slab{display:block;background:var(--grad);color:#08080B;text-decoration:none;
+  border-radius:2px;
+  padding:22px 24px;margin:0 0 2px;border:0}
+.slab .t{display:block;font-family:"Montserrat",sans-serif;font-weight:900;font-size:1.4rem;
+  letter-spacing:.01em;line-height:1.12;text-transform:uppercase}
+html[data-font="deva"] .slab .t,html[data-font="nastaliq"] .slab .t,html[data-font="naskh"] .slab .t{
+  font-family:var(--face);text-transform:none;letter-spacing:0;line-height:1.7}
+.slab .s{display:block;margin-top:5px;font-size:.9rem;opacity:.72;font-weight:600}
+.slab:hover,.slab:focus-visible{filter:brightness(1.12)}
+
+/* ruled link rows */
+/* Rader paa blaa grunn saa ut som tekst. Naa er de et hvitt kort med
+   egne rader, tittelen i lenkefargen og et stoerre, tydeligere maal. */
+.rows{background:var(--ink-deep);border:1px solid var(--rule);border-radius:8px;
+  overflow:hidden}
+/* Tittel OVER undertekst, som en listerad i en app. Side om side presset
+   underteksten ned i en smal soeyle med ett ord per linje paa mobil. */
+.row{display:grid;grid-template-columns:1fr auto;grid-template-areas:"t go" "s go";
+  column-gap:12px;row-gap:2px;align-items:center;padding:14px 16px;
+  border-top:1px solid var(--rule);text-decoration:none;color:inherit;min-height:60px}
+.row.ico{grid-template-columns:30px 1fr auto;grid-template-areas:"ico t go" "ico s go"}
+.row:first-child{border-top:0}
+.row .ri{grid-area:ico;width:30px;height:30px;border-radius:8px;object-fit:cover}
+.row .t{grid-area:t;font-weight:700;font-size:1.04rem;letter-spacing:-.01em;color:var(--gold-soft)}
+.row .s{grid-area:s;color:var(--chalk-dim);font-size:.88rem;line-height:1.4}
+.row:hover,.row:focus-visible{background:#F6F0FA}
+.row .go{color:var(--gold);font-weight:800;font-size:1.25rem;font-family:var(--display);
+  grid-area:go;line-height:1}
+html[dir="rtl"] .row .go{transform:scaleX(-1)}
+:root[data-theme="dark"] .row:hover,:root[data-theme="dark"] .row:focus-visible{
+  background:var(--ink-raise)}
+
+/* short list */
+.rail{list-style:none;margin:0;padding:0;position:relative;counter-reset:n}
+.rail::before{content:"";position:absolute;inset-block:14px;inset-inline-start:13px;
+  width:1px;background:var(--rule)}
+.rail > li{position:relative;padding:0 0 26px;padding-inline-start:46px;max-width:var(--measure)}
+.rail > li:last-child{padding-bottom:0}
+.rail > li::before{content:counter(n);counter-increment:n;position:absolute;inset-inline-start:0;
+  top:-1px;width:27px;height:27px;border:1px solid var(--rule);border-radius:50%;
+  background:var(--ink);color:var(--chalk-dim);display:grid;place-items:center;
+  font-size:.8rem;font-weight:700;font-family:"Montserrat",sans-serif}
+
+/* step-by-step guide */
+.guide{list-style:none;counter-reset:g;margin:0;padding:0;position:relative}
+.guide::before{content:"";position:absolute;inset-block:16px;inset-inline-start:15px;
+  width:1px;background:var(--rule)}
+.guide::before{inset-inline-start:19.5px}
+.guide > li{counter-increment:g;position:relative;padding:0 0 26px;padding-inline-start:52px;
+  max-width:var(--measure)}
+.guide > li:last-child{padding-bottom:0}
+/* Stegtallet ER avhukingen. Ett trykk, stort nok maal, og ingressen sitt
+   loefte om aa «stoppe etter hvert steg og komme tilbake» blir ekte. */
+.tick{position:absolute;inset-inline-start:0;top:-6px;width:40px;height:40px;
+  border-radius:50%;background:var(--gold-metal);border:1.5px solid var(--on-gold);
+  color:var(--on-gold);display:grid;place-items:center;font:800 .85rem/1 var(--display);
+  font-variant-numeric:tabular-nums;cursor:pointer;padding:0}
+.tick[aria-pressed="true"]{background:var(--jet);color:var(--jet-on);border-color:var(--jet)}
+/* Dimming av avhukede steg var feil paa to maater: paa nastaliq og naskh
+   blir allerede fine streker uleselige ved 50 % opasitet, og man maa kunne
+   lese om igjen et steg man har gjort. Fullfoeringen vises paa sirkelen
+   alene — teksten staar i full styrke. */
+.guide > li.done h3{color:var(--chalk-dim)}
+/* Delhaker: hver linje i et steg er en handling man kan krysse av. */
+.subs{list-style:none;margin:10px 0 0;padding:0}
+
+.subs > li{display:flex;gap:10px;align-items:flex-start;padding:5px 0}
+.subs > li.on > span{color:var(--chalk-dim)}
+.sub{flex:0 0 auto;width:26px;height:26px;margin-top:1px;border-radius:7px;
+  border:1.5px solid var(--edge-ui);background:transparent;color:var(--on-gold);
+  font:800 .82rem/1 var(--display);display:grid;place-items:center;cursor:pointer;padding:0}
+.sub[aria-pressed="true"]{background:var(--gold-metal);border-color:var(--gold-metal)}
+.subs > li > span{flex:1 1 auto}
+.tick[aria-pressed="true"]::after{content:"";position:absolute;inset:0;
+  border-radius:50%;box-shadow:0 0 0 3px var(--gold-metal)}
+.tick{position:absolute}
+.prog{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 20px;
+  font-family:var(--mono);font-size:.82rem;color:var(--chalk-dim)}
+.prog .bar{flex:1 1 120px;height:4px;background:var(--rule);border-radius:999px;
+  overflow:hidden;min-width:90px}
+.prog .bar i{display:block;height:100%;background:var(--gold-metal);
+  transition:width .18s linear}
+.prog button{background:none;border:0;color:var(--gold-soft);font:inherit;
+  text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:0}
+
+/* Koder som maa skrives EKSAKT hoerer ikke hjemme i loepende tekst. */
+.codes{display:flex;flex-wrap:wrap;gap:8px;margin:13px 0 0}
+.codes button{display:inline-flex;align-items:center;gap:9px;background:var(--ink-deep);
+  border:1px solid var(--rule);border-radius:6px;padding:9px 12px;cursor:pointer;
+  font:inherit;font-size:.84rem;color:var(--chalk);text-align:start}
+.codes button:hover{border-color:var(--gold-metal)}
+.codes .k{color:var(--chalk-dim);font-size:.78rem}
+/* «#Aitech» begynner med et noeytralt tegn. I en RTL-setning flyttes
+   «#» til hoeyre for de latinske bokstavene og koden VISES som «Aitech#»,
+   selv om verdien som kopieres er riktig. Isolering laaser visningen. */
+.codes .v{font-family:var(--mono);font-weight:700;letter-spacing:.03em;
+  direction:ltr;unicode-bidi:isolate;display:inline-block}
+.codes .c{color:var(--gold-soft);font-size:.74rem;font-family:var(--face)}
+
+/* Riktig app, riktig plattform. To store maal - ingen gjetting. */
+.apps{display:flex;gap:8px;margin:13px 0 0;flex-wrap:wrap}
+.apps a{flex:1 1 130px;display:flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--jet);color:var(--jet-on);border:1px solid var(--jet);border-radius:6px;
+  padding:13px 14px;text-decoration:none;font-weight:700;font-size:.92rem;
+  font-family:var(--display);min-height:46px}
+.apps a:hover,.apps a:focus-visible{filter:brightness(1.25)}
+.joinbtn{display:block;margin:9px 0 0;background:var(--grad);color:#08080B;
+  text-decoration:none;padding:15px 16px;border-radius:6px;text-align:center;
+  font-weight:800;font-size:1rem;font-family:var(--display);min-height:50px}
+.joinbtn:hover,.joinbtn:focus-visible{filter:brightness(1.12)}
+
+/* Ordlista. Lukket til man trykker, saa den som bare vil la Sonic gaa
+   slipper aa scrolle forbi tolv begreper. */
+.learn{display:grid;gap:2px}
+.learn details{background:var(--ink-deep);border:1px solid var(--rule);border-radius:6px}
+.learn summary{cursor:pointer;padding:14px 16px;font-weight:700;font-size:1rem;
+  font-family:var(--display);list-style:none;display:flex;align-items:center;gap:10px;
+  min-height:52px}
+.learn summary::-webkit-details-marker{display:none}
+.learn summary::after{content:"+";margin-inline-start:auto;color:var(--gold-soft);
+  font-weight:800;font-size:1.2rem;line-height:1}
+.learn details[open] summary::after{content:"\2212"}
+.learn details[open] summary{border-bottom:1px solid var(--rule)}
+.learn .body{padding:4px 16px 16px}
+.learn .one{margin:10px 0 0;color:var(--chalk);font-size:.95rem}
+.learn dl{margin:12px 0 0;display:grid;gap:3px}
+.learn dt{font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--chalk-dim);font-family:var(--display);font-weight:700}
+.learn dd{margin:0 0 9px;font-size:.9rem;color:var(--chalk-dim)}
+.learn dd.ex{font-family:var(--mono);font-size:.84rem;color:var(--chalk);
+  background:var(--ink);border:1px solid var(--rule);border-radius:5px;padding:9px 11px;
+  direction:ltr;unicode-bidi:isolate;text-align:start}
+/* Formelen er regelen de kan bruke selv. Den skiller seg fra eksempelet
+   med gullkant, saa den leses som «dette er verktoeyet». */
+.learn dd.fx{font-family:var(--mono);font-size:.84rem;color:var(--chalk);
+  background:var(--ink);border:1px solid var(--rule);
+  border-inline-start:3px solid var(--gold-metal);border-radius:0 5px 5px 0;
+  padding:9px 11px;direction:ltr;unicode-bidi:isolate;text-align:start}
+html[dir="rtl"] .learn dd.fx{border-radius:5px 0 0 5px}
+.learn .lfig{margin:13px 0 4px}
+.learn .lfig svg{display:block;width:100%;height:auto}
+.guide h3{margin:0 0 5px;font-size:1.05rem;font-weight:800;letter-spacing:-.01em}
+.guide p{margin:0;color:var(--chalk-dim);font-size:.95rem}
+
+/* language chips for the partner's own videos */
+/* «Husk dette» skal leses foer broedteksten rundt, ikke etter. Gul kant
+   og hvit flate loefter den ut, og den staar i full tekstfarge — ikke
+   dempet, slik den gjorde foer. */
+/* «Slik vet du at det gikk riktig». Groenn kant fordi den betyr
+   fullfoert — her er det faktisk riktig bruk av groenn. */
+.chk{margin:13px 0 0;padding:12px 15px;background:var(--ink-deep);
+  border:1px solid var(--rule);border-inline-start:4px solid #0F7A4A;
+  border-radius:0 6px 6px 0;font-size:.89rem;color:var(--chalk)}
+html[dir="rtl"] .chk{border-radius:6px 0 0 6px}
+.chk b{display:block;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;
+  color:#0F7A4A;font-family:var(--display);margin-bottom:5px}
+:root[data-theme="dark"] .chk{border-inline-start-color:#4ADE80}
+:root[data-theme="dark"] .chk b{color:#4ADE80}
+
+.vnote{margin:13px 0 0;padding:13px 15px;background:var(--ink-deep);
+  border:1px solid var(--rule);border-inline-start:4px solid var(--gold-metal);
+  border-radius:0 6px 6px 0;font-size:.9rem;color:var(--chalk);font-weight:500}
+html[dir="rtl"] .vnote{border-radius:6px 0 0 6px}
+/* Knapp slik den staar paa skjermen: ser ut som en knapp, leses som engelsk. */
+.ui{display:inline-block;font:700 .9em/1.25 "Archivo","Montserrat",system-ui,sans-serif;
+  padding:.02em .38em;margin:0 .06em;border:1px solid var(--edge-ui);border-radius:5px;
+  background:var(--ink-deep);color:var(--chalk);white-space:nowrap;unicode-bidi:isolate}
+.gl{color:var(--chalk-dim)}
+.out .apply{display:block;margin-top:12px;min-height:44px;width:100%;border:0;border-radius:999px;background:var(--grad-ink);color:#fff;font:800 1rem/1 var(--display);cursor:pointer}
+.out .apply:disabled{opacity:.6}
+#notice-none .dlink{display:inline-flex;align-items:center;min-height:40px;margin-top:10px;
+  color:var(--gold-soft);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+#spon .dcheck{margin:9px 0 0;font-size:.82rem;line-height:1.45;color:var(--chalk-dim);
+  border-top:1px solid var(--rule);padding-top:9px}
+#spon .dlink{display:inline-flex;align-items:center;min-height:40px;margin-top:4px;
+  color:var(--gold-soft);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+#spon .ok{margin-inline-start:.3em;color:var(--gold-soft);font-weight:800}
+.langs{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0}
+.langs a{display:inline-flex;align-items:center;min-height:40px;padding:7px 14px;border:1px solid var(--rule);border-radius:999px;
+  font-size:.82rem;font-weight:600;text-decoration:none;color:var(--chalk-dim);
+  font-family:"Montserrat",sans-serif;background:var(--ink-deep)}
+.langs a:hover,.langs a:focus-visible{border-color:var(--gold);color:var(--gold)}
+.soon{margin:12px 0 0;font-size:.86rem;color:var(--chalk-dim);font-style:italic}
+
+/* annotated screenshot */
+.shot{margin:14px 0 0;position:relative;max-width:300px}
+.shot img{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:6px}
+.pin{position:absolute;width:24px;height:24px;border-radius:50%;background:var(--gold-metal);
+  color:var(--on-gold);font:800 12px/1 var(--display);display:grid;place-items:center;
+  transform:translate(-50%,-50%);box-shadow:0 0 0 3px var(--ink);pointer-events:none}
+html[dir="rtl"] .pin{transform:translate(50%,-50%)}
+.keys{list-style:none;margin:12px 0 0;padding:0;counter-reset:k}
+.keys li{display:flex;gap:10px;align-items:flex-start;padding:5px 0;font-size:.88rem;
+  color:var(--chalk-dim)}
+.keys li::before{content:counter(k);counter-increment:k;flex:0 0 auto;width:20px;height:20px;
+  border-radius:50%;background:var(--gold-metal);color:var(--on-gold);display:grid;place-items:center;
+  font:800 11px/1 var(--display);margin-top:2px}
+
+/* earnings */
+.earn{margin:0;padding:0;list-style:none}
+.earn > li{padding:0 0 22px;max-width:var(--measure);position:relative;padding-inline-start:20px}
+.earn > li::before{content:"";position:absolute;inset-inline-start:0;top:.6em;
+  width:8px;height:8px;background:var(--gold)}
+.earn h3{margin:0 0 3px;font-size:1.04rem;font-weight:700;letter-spacing:-.01em}
+.earn p{margin:0;color:var(--chalk-dim);font-size:.93rem}
+.warn{max-width:var(--measure);margin:10px 0 0;padding:18px 20px;background:#FFF4EC;
+  border:1px solid #F0D3BE;border-inline-start:4px solid var(--ember);
+  border-radius:0 6px 6px 0;font-size:.93rem;color:var(--chalk)}
+html[dir="rtl"] .warn{border-radius:6px 0 0 6px}
+:root[data-theme="dark"] .warn{background:var(--ink-raise);border-color:var(--rule);
+  border-inline-start-color:var(--ember)}
+
+/* values — tiers that widen */
+.tiers{margin:0;padding:0;list-style:none}
+.tiers > li{display:flex;align-items:flex-start;gap:16px;padding:18px 20px;margin-bottom:3px;
+  background:var(--ink-raise);border-inline-start:3px solid var(--gold)}
+.tiers > li:nth-child(1){width:76%;border-inline-start-color:var(--v1)}
+.tiers > li:nth-child(2){width:84%;border-inline-start-color:var(--v2)}
+.tiers > li:nth-child(3){width:92%;border-inline-start-color:var(--v3)}
+.tiers > li:nth-child(4){width:100%;border-inline-start-color:var(--v4)}
+@media (max-width:560px){ .tiers > li{width:100% !important} }
+/* The whole word is the display type now — founder saw one 2rem Montserrat Black
+   letter in four bright colours and said it read like a primary-school alphabet
+   chart. Geometric/technical face per BRAND.md §1, medium weight instead of
+   Black, sentence case instead of shouting caps, and the AIMPIRE acronym is
+   carried by the initial in the logo gradient rather than by four flat brights. */
+.tiers h3{margin:0 0 6px;font-family:var(--display);font-weight:700;
+  font-variation-settings:"wdth" 90;
+  font-size:clamp(1.5rem,5.6vw,2.05rem);line-height:1.04;letter-spacing:-.022em;
+  text-transform:none;color:var(--chalk)}
+.tiers h3 .ini{color:var(--gold-soft);
+  box-shadow:inset 0 -.085em 0 0 var(--gold);padding-bottom:.03em}
+html[data-font="deva"] .tiers h3,html[data-font="nastaliq"] .tiers h3,html[data-font="naskh"] .tiers h3{
+  font-family:var(--display)}
+.tiers p{margin:0;color:var(--chalk-dim);font-size:.92rem}
+
+/* tre steder, tre navn */
+.places{margin:0;padding:0;list-style:none;display:grid;gap:2px}
+.places > li{padding:15px 18px;background:var(--ink-deep);
+  border-inline-start:3px solid var(--gold)}
+.places h3{margin:0 0 3px;font-size:.95rem;font-weight:800;
+  font-family:"Montserrat",sans-serif;letter-spacing:.01em}
+.places p{margin:0;color:var(--chalk-dim);font-size:.9rem}
+@media (min-width:620px){ .places{grid-template-columns:repeat(3,1fr)} }
+/* Amplify staar i én kolonne ogsaa paa bred skjerm — fire punkter som maa
+   leses i rekkefoelge, ikke tre kort som kan skumleses. */
+.places.amp{grid-template-columns:1fr !important;gap:3px;max-width:var(--measure)}
+.places.amp > li{border-inline-start-color:var(--ember);padding:16px 18px}
+.places.amp p{color:var(--chalk);font-size:.93rem}
+
+/* IB-seksjonen. Staar nederst fordi den er valgfri. */
+.ib{display:grid;gap:3px;max-width:var(--measure)}
+.ib > section{background:var(--ink-deep);border:1px solid var(--rule);
+  border-radius:6px;padding:17px 19px}
+.ib h3{margin:0 0 7px;font-family:var(--display);font-weight:700;
+  font-size:1.06rem;letter-spacing:-.015em}
+.ib p{margin:0;color:var(--chalk);font-size:.93rem}
+.ib .fig{margin:15px 0 0}
+.ib .cap{margin:8px 0 0;font-size:.8rem;color:var(--chalk-dim);
+  font-family:var(--mono);direction:ltr;unicode-bidi:isolate;text-align:start}
+.ib .flag{margin:14px 0 0;padding:11px 13px;background:#FFF4EC;
+  border:1px solid #F0D3BE;border-inline-start:4px solid var(--ember);
+  border-radius:0 5px 5px 0;font-size:.85rem;color:var(--chalk)}
+html[dir="rtl"] .ib .flag{border-radius:5px 0 0 5px}
+:root[data-theme="dark"] .ib .flag{background:var(--ink-raise);border-color:var(--rule)}
+.ib svg{display:block;width:100%;height:auto}
+
+/* notices */
+.notice{max-width:var(--measure);padding:22px 24px;background:var(--ink-deep);
+  border-inline-start:3px solid var(--gold)}
+.notice.alert{border-inline-start-color:var(--ember);background:#FFF4EC}
+:root[data-theme="dark"] .notice.alert{background:var(--ink-raise)}
+.notice h3{margin:0 0 8px;font-size:1.1rem;font-weight:700}
+.notice p{margin:0 0 10px;color:var(--chalk-dim);font-size:.94rem}
+.notice p:last-child{margin-bottom:0}
+.notice .foot{font-size:.85rem;padding-top:12px;margin-top:14px;border-top:1px solid var(--rule)}
+.choice{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.choice button{flex:1 1 150px;padding:13px;border:1px solid var(--rule);background:none;
+  color:var(--chalk);font:inherit;font-size:.92rem;font-weight:700;cursor:pointer;
+  font-family:"Montserrat",sans-serif}
+.choice button:first-child{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+
+/* leader tool */
+.tool{max-width:var(--measure)}
+.tool p{color:var(--chalk-dim);font-size:.94rem;margin:0 0 16px}
+.tool input{width:100%;background:var(--ink-deep);border:1px solid var(--rule);color:var(--chalk);
+  padding:14px 15px;font:inherit;font-size:.95rem;font-family:"Montserrat",sans-serif;
+  margin-bottom:8px}
+.tool input:focus{border-color:var(--gold);outline:none}
+.tool .hint{font-size:.82rem;color:var(--chalk-dim);margin:0 0 14px}
+.spon .who{color:var(--chalk);font-weight:800}
+.tool button{width:100%;background:var(--chalk);color:var(--ink);border:0;padding:15px;
+  font:inherit;font-weight:700;font-size:.98rem;cursor:pointer;font-family:"Montserrat",sans-serif}
+.out{margin-top:14px;padding:14px 15px;background:var(--ink-deep);border:1px solid var(--rule);
+  font-size:.8rem;word-break:break-all;line-height:1.7}
+.out b{display:block;color:var(--gold-soft);margin-bottom:6px;font-size:.85rem}
+.out.bad b{color:var(--gold-soft)}
+
+.risk{max-width:var(--measure);margin:56px 0 0;padding-top:20px;border-top:1px solid var(--rule);
+  color:var(--chalk-dim);font-size:.85rem}
+.sig{margin:30px 0 0;font-size:.8rem;color:var(--chalk-dim);font-family:"Montserrat",sans-serif}
+
+/* Overskrifter i ikke-latinsk skrift bruker spraakets egen skrift. */
+html[data-font="nastaliq"] .sec h3,html[data-font="naskh"] .sec h3,
+html[data-font="deva"] .sec h3,html[data-font="nastaliq"] .notice h3,
+html[data-font="naskh"] .notice h3,html[data-font="deva"] .notice h3{font-family:var(--face);letter-spacing:0}
+/* Lange forklaringer deles i avsnitt med tomme linjer i innholdet. */
+.sec p{white-space:pre-line}
+/* Skriftvalg under spraakraden: lite, men tydelig nok til aa oppdages. */
+.script{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.script[hidden]{display:none}
+.script button{font:600 .82rem/1.2 Montserrat,system-ui,sans-serif;padding:7px 13px;border-radius:999px;
+  border:1px solid var(--rule);background:none;color:var(--chalk-dim);cursor:pointer}
+.script button[dir=rtl]{font-family:"Noto Nastaliq Urdu","Noto Naskh Arabic",serif;font-weight:400}
+.script button[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#fff}
+/* ---------- visninger ----------
+   Kategorien er et attributt paa .shell. `hidden` (render sin) vinner alltid. */
+.shell[data-view] .sec[data-cat]{display:none}
+.shell[data-view="start"] .sec[data-cat="start"],
+.shell[data-view="learn"] .sec[data-cat="learn"],
+.shell[data-view="earn"]  .sec[data-cat="earn"],
+.shell[data-view="tools"] .sec[data-cat="tools"],
+.shell[data-view="faq"]   .sec[data-cat="faq"],
+.shell[data-view="ib"]    .sec[data-cat="ib"]{display:block}
+/* Inne i en kategori er «Start her» allerede lest. Sponsorlinja blir staaende:
+   den sier hvem lenka tilhoerer, og det gjelder paa hver side. */
+.shell[data-view]:not([data-view="menu"]) .hero h1,
+.shell[data-view]:not([data-view="menu"]) .hero > p{display:none}
+.shell[data-view]:not([data-view="menu"]) .hero{padding:18px 0 0}
+/* Varslene hoerer hjemme der beslutningen tas: forsiden og «Kom i gang». */
+.shell[data-view]:not([data-view="menu"]):not([data-view="start"]) .notices{display:none}
+/* Paa forsiden er «ingen sponsorlenke» bare overskriften - ellers fyller den
+   hele foerste skjerm og menyen havner under bretten. Hele forklaringen staar
+   i «Kom i gang». Konflikt-valget beholdes helt: det krever et svar. */
+.shell[data-view="menu"] #notice-none p{display:none}
+.shell[data-view="menu"] #notice-none{padding-block:14px}
+.shell[data-view="menu"] #notice-none h3{margin:0}
+.sec[hidden],.menu[hidden],.back[hidden]{display:none !important}
+/* Ledersiden viser bare lederverktoeyet, medlemssiden aldri det. Ligger i CSS
+   saa en seksjon som slaar seg paa selv (IB, kalkulator, bonuser) ikke lekker over. */
+html[data-page="leaders"] .sec:not(#s-leaders){display:none !important}
+html:not([data-page="leaders"]) #s-leaders{display:none !important}
+/* ---------- hovedmeny ---------- */
+.menu{display:grid;gap:10px;padding:6px 0 0}
+.menu .mlede{margin:0 0 16px;max-width:var(--measure);color:var(--chalk-dim);font-size:1.02rem}
+.plate{display:grid;grid-template-columns:5px 1fr 30px;align-items:center;gap:0 18px;
+  width:100%;text-align:start;font:inherit;color:inherit;background:var(--ink-deep);
+  border:1px solid var(--rule);border-radius:16px;padding:0;overflow:hidden;cursor:pointer;
+  transition:border-color .18s ease,box-shadow .18s ease,transform .12s ease}
+.plate > .stripe{align-self:stretch;min-height:94px;background:var(--rule)}
+.plate > .bd{padding:19px 0}
+.plate > .go{justify-self:end;margin-inline-end:18px;width:10px;height:10px;
+  color:var(--gold-soft);transition:transform .18s ease}
+/* Tegnet, ikke et tegn: Nastaliq tegner U+203A som en parentes. */
+.plate > .go::before{content:"";display:block;width:8px;height:8px;
+  border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg)}
+[dir=rtl] .plate > .go{transform:scaleX(-1)}
+.plate:hover{border-color:var(--gold-soft);box-shadow:0 6px 22px rgba(163,21,159,.10)}
+.plate:hover > .go{transform:translateX(3px)}
+[dir=rtl] .plate:hover > .go{transform:scaleX(-1) translateX(3px)}
+.plate:active{transform:translateY(1px)}
+:root[data-theme="dark"] .plate[data-cat="start"]{border-color:#4A3A5E}
+:root[data-theme="dark"] .plate:hover{box-shadow:0 6px 22px rgba(0,0,0,.35)}
+.plate .t{display:block;margin:0 0 6px;font-family:var(--display);font-weight:700;
+  font-variation-settings:"wdth" 92;font-size:1.2rem;letter-spacing:-.012em;color:var(--chalk)}
+.plate .d{display:block;margin:0;color:var(--chalk-dim);font-size:.95rem;line-height:1.52;
+  max-width:34rem}
+.plate[data-cat="start"]{border-color:#E3C6E2}
+.plate[data-cat="start"] .t{font-size:1.32rem}
+.plate[data-cat="start"] > .stripe{background:var(--grad-ink)}
+/* Hver vei inn har sin farge fra logoen - slik presentasjonene skiller
+   kategorier med farge. Kanten er fargen, flaten bare et snev av den. */
+.plate[data-cat="tools"]{--cat:#0B7C72}
+.plate[data-cat="earn"]{--cat:#A3159F}
+.plate[data-cat="learn"]{--cat:#C99A00}
+.plate[data-cat="faq"]{--cat:#1B4FD8}
+.plate[data-cat="ib"]{--cat:#5B3FD1}
+.plate[data-cat]:not([data-cat="start"]) > .stripe{background:var(--cat)}
+:root:not([data-theme="dark"]) .plate[data-cat]:not([data-cat="start"]){
+  background:color-mix(in srgb, var(--cat) 6%, #FFFFFF);border-color:color-mix(in srgb, var(--cat) 22%, #FFFFFF)}
+:root[data-theme="dark"] .plate[data-cat="tools"]{--cat:#2FE0CC}
+:root[data-theme="dark"] .plate[data-cat="earn"]{--cat:#E04DDE}
+:root[data-theme="dark"] .plate[data-cat="learn"]{--cat:#FBE16B}
+:root[data-theme="dark"] .plate[data-cat="faq"]{--cat:#5B8BFF}
+:root[data-theme="dark"] .plate[data-cat="calc"]{--cat:#E04DDE}
+:root[data-theme="dark"] .plate[data-cat="ib"]{--cat:#A99BFF}
+.plate[data-cat="learn"] > .stripe{background:var(--gold)}
+.plate[data-cat="earn"]  > .stripe{background:var(--gold-metal)}
+.plate[data-cat="tools"] > .stripe{background:var(--edge-ui)}
+html[data-font="deva"] .plate .t,html[data-font="nastaliq"] .plate .t,
+html[data-font="naskh"] .plate .t{font-family:var(--face);letter-spacing:0}
+/* Framdrift paa foerste plate. Ekte tall fra stegene som er huket av,
+   ikke pynt - den er grunnen til aa komme tilbake. */
+.plate .pg{display:flex;align-items:center;gap:9px;margin-top:11px;font-size:.85rem;
+  color:var(--gold-soft);font-variant-numeric:tabular-nums}
+.plate .pg i{display:block;flex:0 0 80px;height:4px;border-radius:2px;background:var(--rule)}
+.plate .pg i > b{display:block;height:100%;border-radius:2px;background:var(--gold)}
+/* ---------- opptak ---------- */
+.clipf,.clip{display:block;margin:14px 0 0;aspect-ratio:720/1558;height:min(62vh,520px);
+  width:auto;max-width:100%;border-radius:14px;border:1px solid var(--rule);background:#000}
+.clipf{position:relative;padding:0;overflow:hidden;cursor:pointer}
+.clipf img{display:block;width:100%;height:100%;object-fit:cover;opacity:.55}
+.clipf .play{position:absolute;inset-inline:10px;bottom:12px;display:flex;align-items:center;
+  gap:10px;padding:11px 14px;border-radius:999px;background:rgba(8,8,11,.86);color:#F4F2F7;
+  font:600 .9rem/1.3 var(--face);text-align:start}
+.clipf .play::before{content:"";flex:0 0 0;border-style:solid;border-width:7px 0 7px 12px;
+  border-color:transparent transparent transparent #FBE16B}
+[dir=rtl] .clipf .play::before{border-width:7px 12px 7px 0;border-color:transparent #FBE16B transparent transparent}
+.clipf:hover img{opacity:.7}
+/* ---------- avkryssing ---------- */
+.markd{display:flex;align-items:center;gap:10px;margin:14px 0 0;padding:11px 16px;
+  min-height:46px;width:100%;max-width:22rem;background:none;font:inherit;font-weight:600;
+  color:var(--chalk);border:1.5px dashed var(--edge-ui);border-radius:10px;cursor:pointer;
+  text-align:start;transition:background .15s,border-color .15s}
+.markd::before{content:"";flex:0 0 20px;height:20px;border-radius:5px;
+  border:2px solid var(--edge-ui);box-sizing:border-box}
+.markd:hover{border-color:var(--gold-soft)}
+.markd[aria-pressed="true"]{border-style:solid;border-color:var(--gold-metal);
+  color:var(--chalk-dim);font-weight:500}
+.markd[aria-pressed="true"]::before{content:"\2713";display:grid;place-items:center;
+  background:var(--gold-metal);border-color:var(--gold-metal);color:#0C1118;font-size:.8rem;font-weight:800}
+.progn{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.progn .alld{color:var(--chalk);font-family:var(--face);font-size:.95rem;font-weight:600}
+.nextb{background:none;border:1px solid var(--rule);border-radius:999px;padding:7px 14px;
+  font:inherit;font-family:var(--face);font-size:.88rem;color:var(--gold-soft);cursor:pointer}
+.nextb:hover{border-color:var(--gold-soft)}
+.guide > li{scroll-margin-top:70px}
+/* ---------- apper ---------- */
+.appc{background:var(--ink-deep);border:1px solid var(--rule);border-radius:14px;
+  padding:18px 18px 18px;margin:0 0 12px}
+.appc h3{margin:0 0 6px;font-family:var(--display);font-size:1.12rem;color:var(--chalk)}
+html[data-font="nastaliq"] .appc h3,html[data-font="naskh"] .appc h3,
+html[data-font="deva"] .appc h3{font-family:Montserrat,system-ui,sans-serif}
+.appc p{margin:0;color:var(--chalk-dim)}
+.appc .ah{display:flex;align-items:center;gap:13px;margin:0 0 10px}
+.appc .ah h3{margin:0}
+.appc .ah img{flex:0 0 48px;width:48px;height:48px;border-radius:11px;
+  box-shadow:0 0 0 1px rgba(20,16,28,.08)}
+.stepapps{margin:14px 0 0}
+.stepapps .appc{margin:0 0 10px}
+/* ---------- kalkulator ---------- */
+.calc{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin:0 0 16px;max-width:var(--measure)}
+.cin{display:grid;gap:6px;font-size:.86rem;color:var(--chalk-dim);flex:1 1 150px}
+.cin input{font:700 1.2rem/1.2 var(--display);padding:11px 14px;border-radius:10px;border:1px solid var(--edge-ui);
+  background:var(--ink-deep);color:var(--chalk);width:100%;font-variant-numeric:tabular-nums}
+.cper{display:flex;flex-wrap:wrap;gap:6px}
+.cper button{font:inherit;font-size:.86rem;padding:9px 12px;border-radius:999px;border:1px solid var(--rule);
+  background:none;color:var(--chalk-dim);cursor:pointer}
+.cper button[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#fff}
+.cbig{display:grid;gap:4px;background:var(--ink-deep);border:1px solid var(--rule);border-radius:14px;
+  padding:14px 16px;margin:0 0 12px;max-width:var(--measure)}
+.cbig span{font-size:.86rem;color:var(--chalk-dim)}
+.cbig strong{font:800 1.7rem/1.1 var(--display);color:var(--chalk);font-variant-numeric:tabular-nums}
+.cbig small{font-size:.84rem;color:var(--chalk-dim)}
+.bnl{display:grid;gap:10px;max-width:var(--measure)}
+.bnl article{background:var(--ink-deep);border:1px solid var(--rule);border-radius:12px;padding:12px 14px}
+.bnl h3{margin:0 0 6px;font-size:1rem;line-height:1.3}
+.bnl p{margin:4px 0 0;font-size:.92rem;line-height:1.55}
+.bnl p b{display:block;font-size:.78rem;font-weight:600;color:var(--chalk-dim)}
+/* Fra partnerens presentasjoner: store tall med skillelinje (12x | 24x),
+   og kolonnekort med fargede faner. Formen er
+   deres, fargene er Aimpires (logoens fire). */
+.vs{background:var(--ink-deep);border:1px solid var(--rule);border-radius:14px;padding:16px 16px 12px}
+.vs h3{margin:0 0 4px}
+.vsnum{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;text-align:center;margin:4px 0 12px}
+.vsnum span{font:800 clamp(2.8rem,13vw,3.8rem)/1 var(--display);letter-spacing:-.02em;
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.vsnum span:first-child{background-image:linear-gradient(180deg,#1B4FD8 0%,#15D8C4 100%)}
+.vsnum span:last-child{background-image:linear-gradient(180deg,#C21FBF 0%,#FBE16B 100%)}
+:root:not([data-theme="dark"]) .vsnum span:last-child{background-image:linear-gradient(180deg,#A3159F 0%,#D98E04 100%)}
+.vsnum i{display:block;width:0;height:58px;border-inline-start:2px dashed var(--edge-ui)}
+.amp li.vs{border-inline-start:1px solid var(--rule)}
+.vsrow{display:grid;grid-template-columns:1fr 1fr;gap:2px 0;padding:9px 0;border-top:1px solid var(--rule)}
+.vsrow > span{grid-column:1 / -1;font-size:.84rem;color:var(--chalk-dim)}
+.vsrow > b{text-align:center;font:700 1.02rem/1.3 var(--display);font-variant-numeric:tabular-nums;color:var(--chalk)}
+.vs .vsnote{margin:10px 0 0;font-size:.86rem;color:var(--chalk-dim)}
+/* Bank, fond eller Sonic (#founder 15.10): avkastning og risiko paa samme rad. */
+.alt{margin:22px 0 6px;background:var(--ink-deep);border:1px solid var(--rule);border-radius:14px;padding:16px 14px 12px}
+.alt h3{margin:0 0 4px}
+.alt > p.lede{margin:0 0 12px;font-size:.95rem}
+.alth,.altrow{display:grid;grid-template-columns:repeat(3,1fr);gap:0 8px}
+.alth b{font:800 .8rem/1.2 var(--display);text-align:center;padding:6px 2px;border-radius:999px;border:1px solid var(--edge-ui)}
+.alth b:last-child{border-color:transparent;background:var(--grad-ink);color:#fff}
+.altrow{padding:10px 0 9px;border-top:1px solid var(--rule)}
+.altrow > span{grid-column:1 / -1;font-size:.82rem;color:var(--chalk-dim);margin-bottom:4px}
+.altrow > b{font:600 .9rem/1.3 var(--face);text-align:center;color:var(--chalk);overflow-wrap:anywhere}
+.altrow > b:last-child{font-weight:800}
+.alt .vsnote{margin:8px 0 0;font-size:.8rem;color:var(--chalk-dim)}
+.alt .disc{margin:10px 0 0;font-size:.82rem;color:var(--chalk);border-top:1px solid var(--rule);padding-top:10px}
+.bnl article{padding:0;overflow:hidden}
+.bnl article h3{margin:0;padding:10px 14px;background:var(--tab);color:#fff;font-size:.98rem}
+.bnl article p{padding:0 14px}
+.bnl article p:last-child{padding-bottom:13px}
+.bnl article:nth-child(4n+1){--tab:#1B4FD8}
+.bnl article:nth-child(4n+2){--tab:#0B7C72}
+.bnl article:nth-child(4n+3){--tab:#A3159F}
+.bnl article:nth-child(4n+4){--tab:#FBE16B}
+.bnl article:nth-child(4n+4) h3{color:#14101C}
+html[data-font="nastaliq"] .bnl p{line-height:2.05}
+html[data-font="nastaliq"] .bnl p b{margin:0 0 2px;line-height:1.9}
+html[data-font="nastaliq"] .vsrow > span{line-height:1.9}
+html[data-font="nastaliq"] .vs .vsnote{line-height:2}
+.acts{margin:6px 0 0;padding:0;list-style:none;max-width:var(--measure)}
+.acts li{position:relative;padding-inline-start:18px;margin:6px 0;line-height:1.55}
+.acts li::before{content:"";position:absolute;inset-inline-start:3px;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.acts.vnote li::before{background:var(--ember)}
+/* Delhaker erstatter kulepunktet: haken ER markoeren. */
+.acts.subs > li{padding-inline-start:0}
+.acts.subs > li::before{content:none}
+html[data-font="nastaliq"] .acts li{line-height:2.05}
+html[data-font="nastaliq"] .acts li::before{top:.95em}
+.p2p{margin:14px 0 0;max-width:var(--measure);border:1px solid var(--rule);border-radius:12px;background:var(--ink-deep);padding:0 14px}
+.p2p summary{cursor:pointer;padding:12px 0;font-weight:700;color:var(--chalk)}
+.p2p p{margin:0 0 10px}
+.p2p .p2pv{display:inline-block;margin:0 0 10px;padding:9px 14px;border-radius:999px;background:var(--gold);color:#fff;text-decoration:none;font-weight:600}
+.p2p ol{margin:0 0 12px;padding-inline-start:20px}
+.p2p ol > li{margin:10px 0}
+.p2p h4{margin:0 0 4px;font-size:.98rem}
+.p2p ul{margin:0;padding-inline-start:18px}
+.p2p ul li{margin:4px 0;line-height:1.55}
+html[data-font="nastaliq"] .p2p ul li, html[data-font="nastaliq"] .p2p p{line-height:2.05}
+/* Hopp-knapper, glidebryter, hurtigvalg og kostnadsstolpe */
+.jump{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:8px 0 2px;margin:0;-webkit-overflow-scrolling:touch}
+.jump::-webkit-scrollbar{display:none}
+.jump button{flex:0 0 auto;font:600 .82rem/1 var(--face);padding:8px 14px;min-height:40px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--ink-deep);color:var(--chalk);cursor:pointer;white-space:nowrap}
+.jump button:hover,.jump button:focus-visible{border-color:var(--gold);color:var(--chalk)}
+.sec{scroll-margin-top:120px}
+.cslide{flex:1 1 100%;width:100%;accent-color:var(--gold);margin:2px 0}
+.cpre{display:flex;flex-wrap:wrap;gap:6px;flex:1 1 100%}
+.cpre button{font:600 .86rem/1 var(--display);padding:8px 13px;min-height:40px;border-radius:999px;border:1px dashed var(--edge-ui);background:transparent;color:var(--chalk);cursor:pointer;font-variant-numeric:tabular-nums}
+.cpre button:hover{border-style:solid;border-color:var(--gold)}
+.cbar{display:flex;height:14px;border-radius:999px;overflow:hidden;margin:12px 0 0;max-width:var(--measure);background:var(--rule)}
+.cbar i{display:block;height:100%;transition:width .25s ease}
+.cbar .k{background:linear-gradient(90deg,#1B4FD8,#15D8C4)}
+.cbar .fx{background:repeating-linear-gradient(45deg,#15D8C4 0 4px,rgba(21,216,196,.35) 4px 8px)}
+.cbar .f{background:#C21FBF}
+.cbar .c{background:#FBE16B}
+.ctab dt::before{content:"";display:inline-block;width:9px;height:9px;border-radius:2px;margin-inline-end:7px;vertical-align:middle;background:transparent}
+.ctab dt:nth-of-type(2)::before{background:#FBE16B}
+.ctab dt:nth-of-type(3)::before{background:#C21FBF}
+.ctab dt:nth-of-type(4)::before{background:linear-gradient(90deg,#1B4FD8,#15D8C4)}
+.plate[data-cat="calc"]{--cat:#A3159F}
+.plate[data-cat="calc"] > .stripe{background:var(--cat)}
+@media (prefers-reduced-motion:reduce){.cbar i{transition:none}}
+/* Inntekt delt i faner: bare én del om gangen, så det ikke blir for mye på én gang. */
+.shell[data-view="earn"][data-tab="sonic"]    .sec[data-tab]:not([data-tab="sonic"]),
+.shell[data-view="earn"][data-tab="results"]  .sec[data-tab]:not([data-tab="results"]),
+.shell[data-view="earn"][data-tab="calc"]     .sec[data-tab]:not([data-tab="calc"]),
+.shell[data-view="earn"][data-tab="withdraw"] .sec[data-tab]:not([data-tab="withdraw"]),
+.shell[data-view="earn"][data-tab="ib"]       .sec[data-tab]:not([data-tab="ib"]){display:none}
+.jump button[aria-selected="true"]{background:var(--gold);border-color:var(--gold);color:#fff}
+.ctab{display:grid;grid-template-columns:1fr auto;gap:6px 16px;margin:12px 0 0;max-width:var(--measure);font-size:.92rem}
+.ctab dt{color:var(--chalk-dim)}
+.ctab dd{margin:0;text-align:end;font-variant-numeric:tabular-nums;color:var(--chalk)}
+.ctab dt:last-of-type,.ctab dd:last-of-type{font-weight:700;color:var(--chalk);border-top:1px solid var(--rule);padding-top:6px}
+.crisk{border:1px solid var(--ember);border-radius:14px;padding:12px 16px;margin:0 0 12px;max-width:var(--measure)}
+.crisk h3{margin:0 0 8px;font-size:1rem;color:var(--ember)}
+.crisk ul{margin:0;padding-inline-start:18px;color:var(--chalk)}
+.crisk li{margin:0 0 6px}
+/* ---------- resultater ---------- */
+.rsfig{max-width:var(--measure);margin:6px 0 4px}
+.rsfig svg{display:block;width:100%;height:auto}
+.rsleg{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:.86rem;color:var(--chalk-dim);margin:0 0 16px}
+.rsleg i{display:inline-block;width:12px;height:12px;border-radius:3px}
+.rsleg span{margin-inline-end:12px}
+.rsstat{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;margin:0 0 18px;max-width:var(--measure)}
+.rsstat div{background:var(--ink-deep);border:1px solid var(--rule);border-radius:10px;padding:10px 12px}
+.rsstat dt{font-size:.78rem;color:var(--chalk-dim);margin:0 0 3px}
+.rsstat dd{margin:0;font:700 1.08rem/1.2 var(--display);color:var(--chalk);font-variant-numeric:tabular-nums}
+.rsnotes{max-width:var(--measure);margin:0 0 14px;padding-inline-start:18px;color:var(--chalk-dim)}
+.rsnotes li{margin:0 0 8px}
+.rstab{max-width:var(--measure);margin:12px 0 0}
+.rstab summary{cursor:pointer;color:var(--gold-soft);font-weight:600}
+.rstab table{width:100%;border-collapse:collapse;margin:10px 0 0;font-size:.86rem;font-variant-numeric:tabular-nums}
+.rstab th,.rstab td{padding:5px 8px;border-bottom:1px solid var(--rule);text-align:end}
+.rstab th:first-child,.rstab td:first-child{text-align:start}
+.rsrc{font-size:.88rem;color:var(--chalk-dim)}
+.rsrc a{color:var(--gold-soft);font-weight:600}
+/* ---------- spoersmaal og svar ---------- */
+.faqs{display:block;width:100%;max-width:var(--measure);margin:0 0 16px;padding:13px 16px;
+  font:inherit;color:var(--chalk);background:var(--ink-deep);border:1px solid var(--edge-ui);
+  border-radius:12px}
+.faqs::placeholder{color:var(--chalk-dim)}
+.faql{max-width:var(--measure)}
+.qa{border:1px solid var(--rule);border-radius:12px;background:var(--ink-deep);margin:0 0 8px}
+.qa[hidden]{display:none}
+.qa summary{list-style:none;cursor:pointer;padding:15px 44px 15px 16px;position:relative;
+  font-weight:600;color:var(--chalk);line-height:1.45}
+[dir=rtl] .qa summary{padding:15px 16px 15px 44px}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:"+";position:absolute;inset-inline-end:16px;top:12px;font-size:1.3rem;
+  color:var(--gold-soft);font-weight:400}
+.qa[open] summary::after{content:"\2212"}
+.qa p{margin:0;padding:0 16px 16px;color:var(--chalk-dim)}
+html[data-font="nastaliq"] .qa summary{font-weight:400}
+/* ---------- tilbake til menyen ---------- */
+/* Toppstripa klistrer seg: «Kom i gang» er ni steg langt, veien tilbake skal
+   ikke ligge ni steg unna, og hvor langt man er kommet skal alltid synes. */
+.topbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:14px;
+  justify-content:space-between;margin:14px 0 0;padding:10px 0;background:var(--ink)}
+.topbar[hidden]{display:none !important}
+.topbar{flex-wrap:wrap;row-gap:4px}
+.topbar .jump{flex:1 1 100%;order:3}
+.topbar .back{white-space:nowrap}
+.minip{display:flex;align-items:center;gap:9px;font-size:.86rem;color:var(--gold-soft);
+  font-variant-numeric:tabular-nums;font-weight:700}
+.minip i{display:block;width:70px;height:5px;border-radius:3px;background:var(--rule);overflow:hidden}
+.minip b{display:block;height:100%;background:var(--gold-metal);transition:width .2s}
+.shell:not([data-view="start"]) .minip{display:none}
+.back{display:inline-flex;align-items:center;gap:9px;
+  margin:0;padding:9px 17px;background:var(--ink);
+  border:1px solid var(--rule);border-radius:999px;font:inherit;
+  font-size:.94rem;color:var(--gold-soft);cursor:pointer;transition:border-color .18s}
+.back:hover{border-color:var(--gold-soft)}
+.back::before{content:"\2190";font-size:1.05em}
+[dir=rtl] .back::before{content:"\2192"}
+@media (prefers-reduced-motion:no-preference){
+  .plate{animation:rise .42s cubic-bezier(.2,.7,.3,1) backwards}
+  .plate:nth-of-type(2){animation-delay:.05s}
+  .plate:nth-of-type(3){animation-delay:.10s}
+  .plate:nth-of-type(4){animation-delay:.15s}
+}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"></div>
+<div class="shell">
+
+  <header class="mast">
+    <div class="wordmark">
+      <img class="mono" src="assets/ap-gradient.png" alt="" width="40" height="40">
+      <span><span class="wm">Aim<em>pire</em></span><span class="tag">Aim for it</span></span>
+    </div>
+    <nav class="switch" id="switch" aria-label="Language"></nav>
+  </header>
+  <nav class="script" id="script" aria-label="Script" hidden></nav>
+
+  <section class="hero">
+    <h1><span id="h1"></span><span id="h2"></span></h1>
+    <p id="hsub"></p>
+    <div class="spon" id="spon" hidden></div>
+  </section>
+
+  <div class="notices" id="notices">
+    <div class="notice" id="notice-none" hidden>
+      <h3 id="nn-t"></h3><p id="nn-b"></p><p class="foot" id="nn-f"></p>
+    </div>
+    <div class="notice alert" id="notice-conflict" hidden>
+      <p id="nc-t"></p>
+      <div class="choice"><button id="nc-keep"></button><button id="nc-use"></button></div>
+    </div>
+  </div>
+
+  <nav class="menu" id="menu" aria-label="Sections"></nav>
+  <div class="topbar" id="topbar" hidden>
+    <button class="back" id="back" type="button"></button>
+    <span class="minip" id="minip" hidden><span id="minip-t"></span><i><b id="minip-b"></b></i></span>
+    <nav class="jump" id="jump" hidden></nav>
+  </div>
+
+  <section class="sec" id="s-main" data-cat="start">
+    <h2 id="t-start"></h2>
+    <div id="main-links"></div>
+  </section>
+
+  <section class="sec" id="s-guide" data-cat="start">
+    <h2 id="t-guide"></h2>
+    <p class="lede" id="guide-lede"></p>
+    <p class="prog" id="prog" hidden>
+      <span id="prog-t"></span>
+      <span class="bar"><i id="prog-i"></i></span>
+      <button id="prog-r" type="button"></button>
+      <span class="progn" id="prog-n"></span>
+    </p>
+    <ol class="guide" id="guide"></ol>
+  </section>
+
+  <section class="sec" id="s-amplify" data-cat="earn" data-tab="sonic" hidden>
+    <h2 id="t-amplify"></h2>
+    <ul class="places" id="amplify"></ul>
+  </section>
+
+  <section class="sec" id="s-results" data-cat="earn" data-tab="results">
+    <h2 id="t-results"></h2>
+    <p class="lede" id="rs-lede"></p>
+    <div class="rsfig" id="rs-fig" dir="ltr"></div>
+    <p class="rsleg" id="rs-leg"></p>
+    <dl class="rsstat" id="rs-stat"></dl>
+    <div class="alt" id="alt" hidden></div>
+    <ul class="rsnotes" id="rs-notes"></ul>
+    <p class="vnote" id="rs-formula"></p>
+    <details class="rstab"><summary id="rs-tabsum"></summary><table id="rs-tab"></table></details>
+    <p class="rsrc"><a id="rs-link" target="_blank" rel="noopener noreferrer"></a> <span id="rs-read"></span></p>
+  </section>
+
+  <section class="sec" id="s-calc" data-cat="earn" data-tab="calc" hidden>
+    <h2 id="t-calculator"></h2>
+    <p class="lede" id="cc-lede"></p>
+    <div class="calc">
+      <label class="cin"><span id="cc-amount-l"></span><input id="cc-amount" type="number" inputmode="decimal" min="10" step="10" value="100"></label>
+      <input class="cslide" id="cc-slide" type="range" min="10" max="2000" step="10" value="100" aria-labelledby="cc-amount-l">
+      <div class="cpre" id="cc-pre" role="group"></div>
+      <div class="cper" id="cc-per" role="group"></div>
+    </div>
+    <div class="cbig"><span id="cc-total-l"></span><strong id="cc-total" dir="ltr"></strong><small id="cc-months"></small></div>
+    <div class="cbar" id="cc-bar" dir="ltr" aria-hidden="true"><i class="k"></i><i class="fx"></i><i class="f"></i><i class="c"></i></div>
+    <dl class="ctab" id="cc-tab"></dl>
+    <p class="vnote" id="cc-range"></p>
+    <div class="crisk"><h3 id="cc-risk-t"></h3><ul id="cc-risks"></ul></div>
+    <p class="vnote" id="cc-method"></p>
+    <p class="warn" id="cc-disc"></p>
+  </section>
+
+  <section class="sec" id="s-withdraw" data-cat="earn" data-tab="withdraw">
+    <h2 id="t-withdraw"></h2>
+    <p class="lede" id="wd-lede"></p>
+    <ol class="rail" id="wd-parts"></ol>
+    <p class="vnote" id="wd-facts"></p>
+  </section>
+
+  <section class="sec" id="s-places" data-cat="start" hidden>
+    <h2 id="t-places"></h2>
+    <p class="lede" id="places-lede"></p>
+    <ul class="places" id="places"></ul>
+  </section>
+
+  <section class="sec" id="s-platform" data-cat="start"><h2 id="t-platform"></h2><div id="platform-links"></div></section>
+
+  <section class="sec" id="s-earn" data-cat="ib">
+    <h2 id="t-earn"></h2>
+    <p class="lede" id="earn-lede"></p>
+    <ul class="earn" id="earn-list"></ul>
+    <div id="earn-shot"></div>
+    <p class="warn" id="earn-warn"></p>
+  </section>
+
+  <section class="sec" id="s-values" data-cat="start"><h2 id="t-values"></h2><ul class="tiers" id="tiers"></ul></section>
+  <section class="sec" id="s-learn" data-cat="learn" hidden>
+    <h2 id="t-learn"></h2>
+    <p class="lede" id="learn-lede"></p>
+    <div id="learn"></div>
+  </section>
+
+  <section class="sec" id="s-video" data-cat="start"><h2 id="t-video"></h2><div id="video-links"></div></section>
+  <section class="sec" id="s-docs" data-cat="start"><h2 id="t-docs"></h2><div id="docs-links"></div></section>
+  <section class="sec" id="s-help" data-cat="start"><h2 id="t-help"></h2><div id="help-links"></div></section>
+
+  <section class="sec" id="s-ib" data-cat="ib" hidden>
+    <h2 id="t-ib"></h2>
+    <p class="lede" id="ib-lede"></p>
+    <div id="ib"></div>
+  </section>
+
+  <section class="sec" id="s-bonus" data-cat="ib" hidden>
+    <h2 id="t-bonus"></h2>
+    <p class="lede" id="bn-lede"></p>
+    <div class="bnl" id="bn-list"></div>
+    <p class="vnote" id="bn-note"></p>
+  </section>
+
+  <section class="sec" id="s-tools" data-cat="tools"><h2 id="t-tools"></h2><div id="tools-links"></div></section>
+
+  <section class="sec" id="s-apps" data-cat="tools">
+    <h2 id="t-apps"></h2>
+    <p class="lede" id="apps-lede"></p>
+    <div id="apps-list"></div>
+    <p class="vnote" id="apps-browser"></p>
+    <p class="warn" id="apps-warn"></p>
+  </section>
+
+  <section class="sec" id="s-faq" data-cat="faq">
+    <h2 id="t-faq"></h2>
+    <p class="lede" id="faq-lede"></p>
+    <input class="faqs" id="faq-q" type="search" autocomplete="off" spellcheck="false">
+    <div class="faql" id="faq-list"></div>
+    <p class="vnote" id="faq-none" hidden></p>
+  </section>
+
+  <section class="sec" id="s-leaders">
+    <h2 id="t-leaders"></h2>
+    <div class="tool">
+      <p id="ld-body"></p>
+      <input id="ld-in" type="url" autocomplete="off" spellcheck="false">
+      <input id="ld-name" type="text" autocomplete="given-name" spellcheck="false" maxlength="24">
+      <input id="ld-mail" type="email" inputmode="email" autocomplete="email">
+      <p class="hint" id="ld-hint"></p>
+      <p class="vnote" id="ld-why"></p>
+      <button id="ld-btn" onclick="makeLink()"></button>
+      <div class="out" id="ld-out" hidden></div>
+    </div>
+  </section>
+
+  <p class="risk" id="risk"></p>
+  <p class="sig">Aimpire &middot; <span id="yr" dir="ltr"></span></p>
+</div>
+
+<script>
+const C = {"brand":{"name":"Aimpire","name_ur":"Aimpire","description":"Open your account in about two minutes. English, Norsk, हिन्दी, اردو."},"hero":{"en":{"line1":"Start here.","line2":"Aim for it.","sub":"Open your account at your own pace — the first part takes about fifteen minutes. No experience needed, and we are honest about the risks."}},"sponsor":{"en":{"goes_to":"You will be connected to","fingerprint":"link ends","change":"Change","none_title":"Open Aimpire from your sponsor's link","none_body":"Your sponsor is whoever introduced you to Aimpire, and the person you go to when something does not make sense. Their link attaches your account to theirs at the broker. Ask them to send it, and open this page from it.","none_foot":"Inviting people yourself? Get your own link, so everyone you invite reaches you.","conflict":"You already have an invite from link {A}. This one is {B}. Which sponsor is right?","keep":"Keep {A}","use":"Use {B}","by":"{N} invited you","name_ph":"Your first name","name_lab":"Shown to the people you invite","double_check":"Is this the right person? If you are the one inviting others, sign up from your own link instead — not from someone else's. Once your account is created, it cannot be moved.","own_link":"Get my own link"}},"sections":{"start":{"en":"The short version"},"platform":{"en":"Where things live"},"earn":{"en":"How earning works"},"values":{"en":"What the name means"},"video":{"en":"Watch first"},"docs":{"en":"Guides that already exist"},"help":{"en":"When you are stuck"},"leaders":{"en":"For team leaders"},"guide":{"en":"Opening your account, step by step"},"learn":{"en":"The words, if you want them"},"platform_gate":{"en":"These open once your sponsor's link is set. They are for after you have an account — opening them before that is how people end up with an account nobody is attached to."},"amplify":{"en":"Sonic — what it is, and what you agree to"},"ib":{"en":"How you earn, if you want to"},"tools":{"en":"Tools"},"apps":{"en":"Apps"},"faq":{"en":"Questions and answers"},"withdraw":{"en":"Taking money out"},"results":{"en":"What Sonic has done, month by month"},"calculator":{"en":"Your amount, run through the record"},"bonus":{"en":"Bonuses and incentives: what each one takes"}},"steps":{"en":["Use your sponsor's link","Create your account","Link your broker account — this step matters","Verify your identity","Wait for approval","Install the two apps","Put money in","Connect to Sonic copy trading","See your account in MetaTrader 5","Join the group"]},"earn":{"en":{"intro":"Optional. Four ways it can pay, and one warning: your real numbers live only in your IB Portal — never in a chat message.","items":[["Rebate per lot","Part of the trading cost comes back on every lot your team trades. Paid on activity. No trading, no rebate."],["Profit share","When a strategy closes a winning trade, the profit is split. The person whose money is in the account keeps the largest share."],["Team bonus","As people you introduced start trading, more levels of the structure can open. Your IB Portal shows which are open and which are still locked — the numbers on that screen are the ones that count."],["Pools and campaigns","Leader pools and seasonal campaigns come and go. Read the current terms before you count on one."]],"warning":"Trading involves real risk, and most retail accounts lose money. What you earn here depends on actual activity — there is no guaranteed income, and it can be nothing. We would rather be honest with you about that from the start."}},"values":{"en":[["A","Aspire","Dream big and go after it. Ambition is the starting point, not the reward."],["I","Inspire","Share what you learn, including what went wrong. Lift the person next to you."],["M","Meritocracy","Work and skill get recognised. Where you come from does not decide what you can become."],["E","Empire","Built together, or not at all. Everyone belongs and everyone contributes."]]},"leaders":{"en":{"title":"Your fixed Aimpire link","body":"Open https://aitech.ibportal.io/profile and copy your Partner link — that one, not any other. It looks like copyxapp.com/auth/register?e=… Paste it here. Approved leaders get one fixed link that shows this whole page in every language, with their name and their link locked in — nobody who opens it can change them.","placeholder":"Paste your invite link","button":"Get my link","ok":"Copied. This is your fixed link — share this one.","bad":"That is not a recognised Partner link. It must start with https:// and come from your Profile page in the IB Portal.","name_hint":"Your first name goes in the request. Approved leaders' names show to the people they invite.","pending":"You are not approved yet. Tap «Apply for approval» and your name and link go to the founder.","apply":"Apply for approval","applied":"Sent. This is your link — save it now. It starts working the moment the founder approves you.","apply_fail":"It could not be sent. Check your connection and try again.","pending_line":"You are not on the approved list yet. This request is copied — send it to the founder. Once you are added, paste your link here again.","applied_wait":"Not working yet? The founder has not approved you yet. Try again in a few minutes.","why":"Use the Partner link from your IB Portal profile. A link copied anywhere else does not connect your member to Tag Markets, and they have to register again through AiTech.","mail_ph":"Your email","mail_hint":"We email you when your link goes live. Nothing else."}},"risk":{"en":"Trading involves risk and you can lose the money you put in. Nothing here is financial advice, and no income is promised. Use only money you can afford to lose, and check the rules that apply where you live."},"links":{"main":[{"url":"__REF__","primary":true,"en":["Open your account","Through your sponsor's link"]},{"url":"https://instagram.com/aim.pire","en":["Instagram","@aim.pire — what we are up to"],"icon":"assets/logo-ig.png"}],"platform":[{"url":"https://aitech.ibportal.io/profile","en":["IB Portal","Your team, your commissions, your real numbers"],"icon":"assets/logo-aitech.png"},{"url":"https://www.copyxapp.com","en":["CopyX","The copy-trading platform"]},{"url":"https://portal.tagmarkets.com/login?brd=1&wp=4","en":["Broker portal","Deposits, withdrawals, KYC"],"icon":"assets/logo-tag.png"}],"video":[{"url":"","en":["Signing up","Three minutes, start to finish"]},{"url":"","en":["Finishing KYC","Which documents, and why they ask"]},{"url":"","en":["Making a deposit","Getting money onto the account"]},{"url":"","en":["Connecting CopyX","Linking your broker account"]},{"url":"","en":["Taking money out","Do this early, with a small amount"]}],"docs":[{"url":"https://intercom.help/tag-markets/en/articles/10088332-how-to-change-your-account-password","en":["Changing your password","The broker's own guide, with pictures"]},{"url":"","en":["Start here guide","PDF, English"]},{"url":"","en":["Start here guide","PDF, Urdu"]},{"url":"","en":["Pips and lot size","How much one move actually costs you"]},{"url":"","en":["Trading psychology","The part nobody wants to read"]}],"help":[{"url":"","en":["Ask your sponsor","The person who invited you"]},{"url":"","en":["Common questions","Answered once, properly"]}],"tools":[{"url":"https://www.myfxbook.com/members/SonicExperts/sonic-ai/12076857","en":["Myfxbook results","Month by month, with the drawdown next to it"],"icon":"assets/logo-mfx.png"},{"url":"https://www.myfxbook.com/forex-calculators/position-size","en":["Position size calculator","How many lots fit your stop and the risk you chose"],"icon":"assets/logo-mfx.png"},{"url":"https://www.myfxbook.com/forex-calculators/pip-calculator","en":["Pip calculator","What one pip is worth in dollars at your lot size"],"icon":"assets/logo-mfx.png"},{"url":"https://www.forexfactory.com/calendar","en":["Economic calendar","When the market is about to move, and why"],"icon":"assets/logo-ff.png"},{"url":"https://matrix.to/#/%23aimpire:matrix.org","en":["Aimpire group","Questions and news — opens in Element X"],"icon":"assets/app-element.jpg"},{"url":"https://instagram.com/aim.pire","en":["Instagram","@aim.pire — what we are up to"],"icon":"assets/logo-ig.png"}]},"guide":{"en":{"lede":"Steps 1–4 take about fifteen minutes. Have your ID card or passport ready.\nThen you wait for approval. The rest you do when it suits you — the page remembers where you stopped.","steps":[["Use your sponsor's link","Open the link your sponsor sent you — their own link, not one from a group.\nAt the top of this page you should see a line naming them, ending in a six-character code.\nNo such line? Ask your sponsor to send you their link before you go on.",{"check":"A name, or a domain and six characters, shows at the top. No line means no sponsor is attached."}],["Create your account","Scroll up and tap the big button to open your account. CopyX opens in a new tab.\nUse your real name — it must match your ID. Pick a password you use nowhere else.\nChange the country from Albania to where you live; the phone code follows it.\nTick both boxes, wait for «Verifying…» to finish, then press Sign Up.",{"img":"assets/shot-register.jpg","alt":"The CopyX sign-up form","marks":[{"n":1,"x":24,"y":32,"t":"Your real name. It must match the ID you upload later, or verification fails."},{"n":2,"x":24,"y":45,"t":"A password you use nowhere else. Not your email password."},{"n":3,"x":9,"y":66,"t":"Tick both. Read them first — they say you can lose money."},{"n":4,"x":50,"y":87,"t":"If you see this yellow box, your link was missing the invite code. Go back and open your sponsor's link instead."},{"n":5,"x":24,"y":56,"t":"This starts on Albania for everyone. Change it — the phone code follows it."}],"check":"You land inside the portal and see your own name."}],["Link your broker account — this step matters","Inside the portal, use the Login to CopyX button to create your Tag Markets account.\nDo not create it anywhere else — an account made elsewhere is not linked, and nothing tracks correctly.",{"video":{"url":"https://drive.google.com/file/d/1KrEU9XkoVflSNhCXUtmHzx-wY0q_RBB1/view","label":"Watch this step"},"note":"The portal says it too: use only that button.","img":"assets/shot-copyx-register.jpg","alt":"The CopyX Registration panel in the IB Portal","marks":[{"n":1,"x":34,"y":37,"t":"Read this line. It tells you to create the broker account from here, not anywhere else."},{"n":2,"x":13,"y":71,"t":"This is the button. It says Login to CopyX — use it even the first time."},{"n":3,"x":50,"y":90,"t":"The warning in yellow: a Tag Markets account made directly on CopyX will not be linked."}],"check":"The Tag Markets account shows inside the portal. If you had to log in somewhere else to find it, it is not linked."}],["Verify your identity","You need your ID card or passport, plus a face scan.\nPhotograph the document in good light with all four corners visible — a blurry photo is the usual reason for rejection.",{"img":"assets/shot-kyc.jpg","alt":"The Upload Documents panel","marks":[{"n":1,"x":50,"y":44,"t":"Pick the document type here first. Nothing uploads until you do."},{"n":2,"x":50,"y":75,"t":"This yellow line is normal before you upload. It is not an error."},{"n":3,"x":90,"y":5,"t":"Validate means the broker has not checked your documents yet."}],"check":"The yellow «upload» line is gone and your document shows as submitted. «Validate» only means the broker has not looked yet."}],["Wait for approval","Approval usually takes a short while.\nUntil then you cannot deposit — the notice on the wallet page is normal, not an error.",{"img":"assets/shot-wallet-kyc.jpg","alt":"The wallet page showing that KYC must be completed first","marks":[{"n":1,"x":50,"y":30,"t":"This pink line means verification is still pending. It disappears once your documents are approved."}],"check":"The pink line on the wallet page is gone and Deposit can be pressed."}],["While you wait: install the two apps","Use the wait to install two apps, from the official stores only — the buttons below go straight there.\nMetaTrader 5, to see your account (step 9).\nElement X, for the Aimpire group (step 10).\nTag Markets, CopyX and the IB Portal run in your browser. Never install a «Tag Markets app» someone sends you.",{"appcards":true,"check":"Both apps open on your phone. You do not need to log in yet."}],["Put money in","In the portal press Deposit, choose the amount (minimum $10) and the crypto you hold.\nYou get an address, a QR code, a network and a countdown of about fifteen minutes.\nSend from your own wallet — Binance, RedotPay or similar. It may ask for Face ID or a code; that is your wallet's own check.\nCountdown ran out? Get a new address; never reuse the old one.",{"note":"Send on exactly the network the payment page names. Your wallet itself warns that a mismatch can mean «permanent loss of funds».\nAccepted: Ethereum (ERC20), Polygon, Tron (TRC20), BNB (BEP20), Bitcoin, Polkadot and Solana. Not Arbitrum.\nFees differ: 25 USDC over Ethereum cost 1.00 USDC, four percent.","check":"The amount shows on the portal's wallet page. Your wallet may show «Pending» for a while — up to 24 hours by its own estimate. Still missing after that? Check the transaction in your own wallet first.","clip":{"src":"assets/video/steg6-innskudd.mp4","poster":"assets/video/steg6-innskudd.jpg","secs":71},"p2p":true}],["Connect to Sonic copy trading","This step starts the copying — until then, nothing trades.\nIn Tag Markets open CopyX, find SONIC and press Details. The card shows the terms: 30 % performance fee, one month minimum, no management fee and no joining fee.\nPress Connect, enter your amount (minimum $10) and choose Amplify.\nUnder Community Token type #Aitech, press Verify, enter 000000 in Hash and press Submit.\nTick both boxes and press Copy Now.",{"note":"With the token the account trades at 24× — our $109 became $2,616 — and it closes at a 5 % loss instead of 10 %. Put in only what you could lose completely.","codes":[{"label":"Community token","value":"#Aitech"},{"label":"Hash","value":"000000"}],"check":"«CopyX Account Created» appears — press Continue, and SONIC shows on your dashboard. Amount $0? Submit did not go through.","clip":{"src":"assets/video/steg7-sonic.mp4","poster":"assets/video/steg7-sonic.jpg","secs":65}}],["See your account in MetaTrader 5","In the portal open MT5 Credentials: account number, Master Password, Investor Password.\nIn MetaTrader 5 add an existing account, search T.M. Financials Ltd and choose TMFinancials-Server.\nYour login is the account number. Then you see Balance, Equity and Free Margin.",{"note":"The Master Password can trade; the Investor Password can only look. Never give anyone your Master Password. If someone should check your results, give them the Investor Password.","apps":{"lede":"Install MetaTrader 5 for your phone:","items":[{"os":"Android","url":"https://play.google.com/store/apps/details?id=net.metaquotes.metatrader5"},{"os":"iPhone","url":"https://apps.apple.com/app/metatrader-5/id413251709"}]},"check":"Balance matches the portal and is 24 times your deposit — our $109 showed as $2,616. Not 24 times? Stop and ask your sponsor.","clip":{"src":"assets/video/steg8-mt5.mp4","poster":"assets/video/steg8-mt5.jpg","secs":51}}],["Join the group","Questions get answered in the group — nobody there started out knowing anything.\nAdding more money later? Add a little at a time.",{"apps":{"lede":"Install Element X — that exact app, not Element Classic and not another chat app. Make an account, any username. Then come back here and tap Join the Aimpire group.","items":[{"os":"Android","url":"https://play.google.com/store/apps/details?id=io.element.android.x"},{"os":"iPhone","url":"https://apps.apple.com/app/element-x/id1631335820"}]},"join":{"url":"https://matrix.to/#/%23aimpire:matrix.org","label":"Join the Aimpire group"},"check":"You can read the messages, not just see the group's name."}]]}},"langs":[{"code":"en","label":"English","dir":"ltr","font":"latin"},{"code":"no","label":"Norsk","dir":"ltr","font":"latin"},{"code":"hi","label":"हिन्दी","dir":"ltr","font":"deva"},{"code":"ar","label":"العربية","dir":"rtl","font":"naskh"},{"code":"ur","label":"اردو","dir":"rtl","font":"nastaliq"},{"code":"ar_rm","label":"Roman Arabic","dir":"ltr","font":"latin","bcp":"ar-Latn","roman_of":"ar"},{"code":"ur_rm","label":"Roman Urdu","dir":"ltr","font":"latin","bcp":"ur-Latn","roman_of":"ur"}],"earn_shot":{"img":"assets/shot-commission.jpg","alt":{"en":"The commissions overview in the IB Portal"},"marks":{"en":[{"n":1,"x":22,"y":55,"t":"This is where your real numbers live. If a figure in a chat message does not match this screen, this screen is right."}]}},"places":{"title":{"en":"Three places, three names"},"lede":{"en":"You will end up with two logins. Knowing which is which saves most of the confusion."},"items":{"en":[["CopyX","The platform that copies the traders. You create this first, in step 2."],["IB Portal","Where your team and your numbers live. Same login as CopyX."],["Tag Markets","The broker — the company that actually holds your money. You create this from inside the portal, in step 3."]]}},"guide_ui":{"en":{"copy":"Copy","copied":"Copied","progress":"{done} of {total} steps done","reset":"Clear","check":"You know it worked when","mark":"Mark this step done","marked":"Done — tap to undo","left":"{n} left","next":"Next: {t}","all_done":"All {total} steps done. You are set up.","all_done_go":"Next: how Sonic works","watch":"See it on screen — {s} seconds"}},"learn":{"intro":{"en":"You do not need any of this to let Sonic run. It is here for when you want to understand what you are looking at. Tap any word to open it."},"labels":{"en":["Example","Why it matters","Formula"]},"terms":{"en":[["Pip","The unit a price moves in — the fourth decimal on most pairs.","On EUR/USD, 1.0850 → 1.0851 is one pip. At 0.01 lots that is $0.10.","Every target and result you hear is quoted in pips, and a number of pips means nothing until you know the lot size behind it.","pip value = lots × $10   (USD-quoted pair)","pip"],["Point","A tenth of a pip. Some platforms quote points instead.","«+500 points» on EUR/USD is 50 pips. At 0.01 lots that is $5, not $500.","This is the mix-up that makes a modest result look ten times bigger. Check the unit before you compare your numbers to anyone's.","pips = points ÷ 10",""],["Spread","The gap between the buy price and the sell price. You pay it the moment you enter.","Buy 1.08515, sell 1.08500 is 1.5 pips. At 0.01 lots, $0.15 per trade.","Every trade starts behind by the spread, win or lose. Ten trades a day on a small account is a real cost.","spread cost = spread in pips × pip value","spread"],["Lot size","How much you trade. This decides what one move is worth — and it is not the same number on every instrument.","EUR/USD: 1.00 lot ≈ $10 per pip, 0.01 ≈ $0.10. Gold (XAUUSD): 1.00 lot = 100 oz, so a $1 move is $100.","This is the one number that decides whether an ordinary move is an irritation or the end of the account — and the figure differs per instrument. Sonic's own record shows it trades gold, not a currency pair. Before you size anything, check the real value: in MT5, open the symbol's Specification (on a computer, right-click the symbol).","pip/point value = lots × contract size × tick     EURUSD → $10 · XAUUSD → $100","lot"],["Leverage and margin","Leverage is how big a position you may hold. Margin is the part of your money locked while it is open.","A 0.01 lot EUR/USD position is about $1,085 of currency. At 1:300 that ties up roughly $3.60 of yours.","Higher leverage does not reduce risk. It only frees margin so you are allowed to open more.","margin = lots × 100,000 × price ÷ leverage",""],["Balance and equity","Balance is money from trades already closed. Equity is that plus or minus everything still open.","Balance $100, one trade 40 pips against you at 0.01 lots (−$4) → equity $96.","Balance is history. Equity is where you actually stand. A floating loss is a real loss not yet written down.","equity = balance + open profit − open loss",""],["Margin call and stop out","When equity falls far enough against the margin your trades need, the broker closes them for you.","$100 account carrying a $60 floating loss has $40 of equity left.","At a stop out you do not choose the exit. The loss is locked in at that moment, often at the worst point.","margin level = (equity ÷ used margin) × 100 %",""],["Stop-loss","A standing instruction to close at a price you picked in advance, so the loss stops growing.","Buy at 1.0850 with a stop at 1.0830 is 20 pips. At 0.01 lots, $2 at risk — decided before you entered.","Without one, the size of your loss is set by how long you can stand to look at it.","risk = stop in pips × pip value",""],["Limit and stop orders","A limit waits for a better price. A stop only triggers once price pushes through a level.","Price 1.0850. Buy Limit 1.0830 fills if price falls. Buy Stop 1.0870 fills if price rises.","Signals are posted in this shorthand: Buy Limit, Buy Stop, Sell Limit, Sell Stop. Pick the wrong one of the four and it either never triggers, or opens your trade at the wrong moment."],["Risk per trade","The money — not the pips — you accept losing on one trade.","$100 account, 0.01 lots, 20-pip stop = $2 at risk. That is 2 percent.","On a $100 account the smallest tradable size already risks several percent per trade. The «risk 1 percent» advice does not fit yet.","lots = risk in $ ÷ (stop in pips × $10)","size"],["Drawdown","How far equity has fallen from its highest point, in percent.","$100 down to $60 is 40 percent down. Getting back to $100 needs a 67 percent gain, not 40.","Losses and recoveries are not symmetrical. A run of small losses can leave you needing a return you have never produced.","gain needed = loss ÷ (1 − loss)   →   40 % lost needs 67 % back","dd"],["Compounding","Leaving gains in, so position size grows with the balance instead of staying fixed.","$100 at 5 percent a month, profit left in, is about $180 after a year rather than $160.","It is the honest argument for patience on a small account — and the engine of every unrealistic plan you will be shown.","final = start × (1 + rate)^periods",""]]}},"amplify":{"items":{"en":[["What Sonic is, and the choice that is yours","Sonic is the strategy your account copies: its trades run in your account by themselves. It only runs amplified, on Amplify — there is no smaller version to start with. So the choice that protects you is the amount.\n\nPut in less if any of these is true: losing all of it would change your month; you have never watched a trade go against you; this is your first trading account.\n\nStart with an amount you could lose completely, and watch it for a few weeks. If you add money later, know that an upgrade restarts the 30-day clock on your deposit."],["Amplify: you trade a multiple of your deposit","Amplify is a funded account: you trade a multiple of what you put in, and it is real money. The broker's standard multiple is 12×; with the Aimpire token it is 24×.\n\nIn our own test, $109 became a trading balance of $2,616. The multiple works on losses exactly as it does on gains."],["When the account closes, in the platform's own words","«If the manager loses more than 10% of starting balance, your account will be liquidated.»\n\nWith the token, the form adds: «By using a token code, your Amplify account draw down limit will change to 5% of your starting balance.»\n\nIn money: your $109 trades as $2,616. A fall of 1 ÷ 24 = 4.2 % in that balance equals your whole $109 — before the 5 % line is even reached. The line is a hard trigger: the account closes by itself, with no waiting for prices to come back. That is why the amount matters most."],["The Aimpire token: #Aitech, then 000000","The community token field is where Aimpire's token goes. Type #Aitech, press Verify, then enter 000000 in the Hash field that appears. Without a valid token the account opens at 12× with the 10 % line, instead of 24× with the 5 % line. Check that the tick shows before you press Copy Now."],["What the platform says about who is responsible","Before you can submit, you tick a box that says trades on CopyX are provided by traders unaffiliated with Tag Markets, and that Tag Markets bears no responsibility or liability for the trades or their outcomes. Read it before you tick it. It means the broker holding your money is not answerable for what the strategy does with it."],["What you keep when it makes money","The presentation gives the split as 70 / 5 / 25, marked «per trade»: 70 % of the profit to you, 5 % to the developers who run the system, 25 % to what it calls «the team» — «How the bonus model is drawn» shows that part. On the Sonic card it shows as a 30 % performance fee, with no management fee and no joining fee.\n\nSo $100 of profit is about $70 to you — less if the fee is taken on each winning trade rather than on the net result. The card says «Schedule 1 Week» and does not say which. Ask your sponsor.\n\nPublished results, Myfxbook included, show the strategy's own account. The 30 % fee is charged to followers, so it is not taken out of those curves."],["The rules, from the broker's own help centre","You can withdraw profits at any time, any hour, any day; the broker says the payout then takes 1–3 working days.\n\nYour original deposit can only be taken out 30 days after your first trade — not 30 days after you paid in — and taking it out closes the account immediately. Upgrading the account starts that 30-day clock again.\n\nThere is no daily loss limit, only the 10 % line (5 % with the community token), and you may hold as many of these accounts as you want."],["Commission and leverage, measured on your own money","Commission on an amplified account is $10 per lot on forex and metals, charged when the trade closes. The broker's own articles disagree about indices and crypto.\n\nThe form shows leverage 1:30, but it applies to the multiplied balance. Measured against your own deposit, 24 × 30 = 720:1 — more than the 1:500 of a standard account, not less. At 12× it is 360:1."]]},"compare":{"cols":["12×","24×"],"en":{"title":"12× or 24× — the same $100","rows":[["Trades as","$1,200","$2,400"],["The account closes after a loss of","10 %","5 %"],["A fall that takes your whole $100","8.3 %","4.2 %"],["Leverage on forex and metals, measured on your own money","360:1","720:1"],["Token","None","#Aitech + 000000"]],"note":"Gains are 12 or 24 times larger too. The record's deepest dip, 0.86 %, would have been about 10 % or 21 % of your deposit."}}},"ib":{"en":{"lede":"This part is optional. You can open an account, let Sonic run, and never introduce a single person. Nothing on the platform requires it. It is here because people ask how it works, and because half-explained money is how communities go wrong.","blocks":[["What an IB actually is","The broker already charges a spread and a commission on every trade, whether you introduced anyone or not. An Introducing Broker gets a share of what the broker earns. That is the usual mechanism across the industry, and it is not a separate fee on the person you introduced. On Sonic there is one more thing to know: part of what the people above you earn comes from the member's own 30 % performance fee. The fee is the same either way, but it is the member who pays it."],["The lock nobody explains","The plan has ten generations. They start locked. Your IB Portal shows two lines that decide everything: «# of Directs with active Trading account» and «Generations unlocked». Generations open only when your directs — the people you introduced yourself — have active trading accounts. Until then, the level-based streams pay nothing on the locked levels. How they open, according to the Tag Markets presentation other teams use: you need at least $250 in trading yourself, which opens the first three levels. Levels four to ten open as up to ten people you introduced directly each have $250 in trading. The portal does not show the rate per level.","lock"],["What that looks like in real numbers","Figures from the founder's own portal on 13 October 2026: five people introduced, $43 deposited across all of them, nine income streams listed by name — and $0.00 earned. Not because anything was broken: mainly because 0 of 10 generations were unlocked. This is the single most useful thing to understand before you start. With $43 between five people, none of them came near the $250 the presentation names."],["Two programmes: international and Europe","AiTech's own presentation of 3 October 2026 shows two versions of the programme. The international one, for members outside Europe, pays on ten levels: 2.5 % of each trade's profit per level, and per lot $2.00, $1.50, $1.00, $1.00 and then $0.50 on levels five to ten — up to $8.50 per lot in all. The European one pays on one level only: 2.5 % that can rise to 22.5 % with volume, $2.00 per lot that can rise to $6.50, and a general bonus of $2.00 per lot plus a bonus payment. In the CopyX app that general bonus has steps at $10,000, $50,000, $200,000 and $500,000 of team volume.\n\nThe broker's own help centre documents a third table for its amplified accounts — $3.00, $1.20 and $0.60 on three levels. That table may belong to Tag Markets' own partner plan rather than AiTech's. The same help centre says a trade only counts for commission if it stays open for at least 3 minutes.","ladder"],["How the bonus model is drawn","The presentation draws it in five parts. First the split of every trade's profit: 70 % stays with the member, 5 % goes to the developers, and 25 % is shared ten levels down in the structure — the 2.5 % per level above. Then the per-lot commission, the leader pools with an ambassador rate of $2.00 per lot, «CPA» on the new money deposited in your network, and incentives.\n\nFor CPA and the pools the presentation and the portal show how much volume each step needs — see «The nine streams, by name». When each of the ten levels opens depends on your directs, as «The lock nobody explains» describes. Ask your sponsor to show you your own figures in the IB Portal before you count on any of it. The presentation marks the programme «subject to local restrictions» and «only available to professional Influencer»."],["A worked example with real sizes","Suppose twenty members each put in $100. At 24× each trades as $2,400. Copying the strategy's own volume — about 4.5 lots a month on about $130,000 — twenty such accounts trade about 1.7 lots a month between them. At $2.00 per lot on the first level, that is about $3.30 a month, and only once that level is open.\n\nThe volume comes from the strategy and from how much your members put in, not from anything you control. Run the number for your own team, not the one in someone's screenshot."],["The formula, so you can put your own numbers in","monthly rebate ≈ members × trades each × lots per trade × rate per lot. Every part after the ≈ sign is yours to check: the lot size depends on your leverage, and the rate depends on which programme your agreement is under. Put in your own numbers and the answer is yours, not someone else's claim."],["The nine streams, by name","So you recognise them in the portal rather than in a chat message: Lot Commissions, Profit Share, CPA Earnings, Leader Pool 1 and 2, Sonic Pool, Profit Pool, NeoFX Pool and Super Sonic Bonus. «CPA Earnings» is not paid per person. It is a monthly percentage of the new money your whole team deposits — from 1 % at $10,000 to 7.5 % at $100,000,000 — counted after a «50% rule», so no more than half may come from your strongest line, and paid as the difference to anyone below you who qualifies too. One overview slide in the presentation calls it a payment per qualified registration; the portal and the presentation's own table show it as a percentage of deposits. Leader Pool 1 starts at $500,000 of team volume, Leader Pool 2 at $1,000,000. Payouts are made in USDT."],["What is not promised","No income is guaranteed and it can be zero. Everything above depends on other people depositing and trading, which depends on them choosing to, which you do not control. Treat it as a share of activity that may happen, not as a plan."]],"unverified":"These are the programme's published rates, not what you will be paid. What you actually earn shows in your own IB Portal — check it there before you repeat a number to anyone.","lock_cap":"Ten generations. Zero open until directs with active accounts unlock them.","ladder_cap":"AiTech, international: $2.00 · $1.50 · $1.00 · $1.00, then $0.50 on levels 5–10 — up to $8.50 per lot"}},"menu":{"en":{"lede":"Pick the part you need now — the rest stays here.","back":"All sections","items":[["earn","Sonic","What it is, its record, your amount and taking money out."],["start","Get set up","Ten steps from a link to an account that works."],["calc","Your amount","What the record would have meant for your money — after every cost."],["tools","Tools","Results, the news calendar, the chat — and the apps."],["learn","Learn the groundwork","Pips, lots and spreads — with the formulas."],["faq","Questions and answers","Short answers to what people usually ask."],["ib","IB and bonuses","Optional: what inviting others pays, and what each part asks of you."]]}},"apps_page":{"list":[{"key":"mt5","name":"MetaTrader 5","android":"https://play.google.com/store/apps/details?id=net.metaquotes.metatrader5","ios":"https://apps.apple.com/app/metatrader-5/id413251709","icon":"assets/app-mt5.jpg"},{"key":"element","name":"Element X","android":"https://play.google.com/store/apps/details?id=io.element.android.x","ios":"https://apps.apple.com/app/element-x/id1631335820","join":"https://matrix.to/#/%23aimpire:matrix.org","icon":"assets/app-element.jpg"}],"en":{"lede":"Two apps, both free. You can install them now — the guide tells you when you need each one.","mt5":"Shows your account and every trade Sonic opens for you. You log in with the details from step 9.","element":"The chat app the Aimpire group uses. Install it before you press the join link in step 10 — the link opens inside the app.","browser":"Tag Markets, CopyX and the IB Portal run in your browser. There is no app to install for them.","warn":"Install only from Google Play or the App Store, through these links. If anyone sends you an app file or a «Tag Markets app», do not install it — fake apps are a common way people lose their login and their money.","join_note":"Installed it? Then join:","join":"Join the Aimpire group"}},"faq":{"en":{"lede":"Short answers to what people usually ask. Answers about rules come from the broker's or the platform's own words, which the other sections show in full.","search":"Search the questions","none":"No question matches that. Ask in the Aimpire group — someone has usually wondered the same.","items":[["Is this a scam?","It is a fair question, and you should ask it about anything involving money.\n\nWhat you can check yourself: your money sits with the broker, never with Aimpire or your sponsor; profit can be withdrawn whenever you ask; and the rules on this page are quoted from the broker's and the platform's own pages.\n\nSo put in only what you can afford to lose completely. Nobody can promise you that the strategy keeps making money."],["Who holds my money?","The broker, Tag Markets — not Aimpire and not your sponsor. Never send money to a person, and only deposit from inside your own portal."],["How much do I need to start?","The minimum is $10, both for the deposit and for connecting Sonic. Start with an amount you could lose completely, and watch it for a few weeks before you decide on more."],["Is this allowed in my country?","Rules differ between countries and change, so check your own before you deposit — we cannot give legal advice. Two separate things matter.\n\nThe broker's list: it publishes a list of countries it does not serve. Pakistan is not on that list. The United Arab Emirates is on it, so the broker does not serve people living there. Its website also says it is not intended for residents of the European Union.\n\nYour own country's rules: these are about you, not the broker. In Pakistan, the State Bank's EPD Circular Letter No. 08 of 2022 says sending money abroad to offshore forex, margin or CFD platforms is not permitted. The broker's list says nothing about that."],["Which apps do I need?","Two, both free: MetaTrader 5 to see your account, and Element X for the Aimpire group. Install them from the official stores only. Tag Markets, CopyX and the IB Portal run in your browser."],["How long does approval take?","The broker says verification «just takes a few minutes», with delays when demand is high or documents are incomplete. You need an ID document and a face scan. If it is rejected, the reason comes by email from SumSub. Use any waiting time for step 6, the apps."],["What does 24× mean for me?","With the Aimpire token your money trades 24 times larger: in our own test, $109 became a trading balance of $2,616. Gains and losses are both 24 times larger. A fall of 4.2 % in that balance is your whole deposit, and the account closes at 5 %."],["What does it cost?","The Sonic strategy takes a 30 % performance fee on profit, so you keep about 70 % of the profit — the Amplify section explains why it can be less. There is no management fee and no joining fee. On Amplify accounts the broker also charges $10 per lot in commission on forex and metals. Then there are the costs any trade has: the spread, swap on positions held overnight, and network fees when you deposit or withdraw crypto."],["Can I withdraw my money?","Profits: yes, you can withdraw them at any time, any day. Your deposit: only 30 days after your first trade, and taking it out closes the account immediately. An upgrade starts those 30 days again. The broker says payouts take 1–3 working days. The steps are under «Sonic» → «Taking money out»."],["Can I reinvest my profit?","Yes. In CopyX open Follower Hub, then Strategies, press Reinvest on the strategy, enter the amount and press Upgrade. Know this first: the broker says an upgrade restarts the 30 days before your deposit can be taken out."],["Is there a daily loss limit?","No daily limit. There is one total limit: 10 % of the starting balance, or 5 % with the Aimpire token. Reach it and the account is closed automatically."],["Is the profit guaranteed?","No. Nothing here is guaranteed. Published results — Myfxbook included — are past results from the strategy's own account, without the fee you pay — not a forecast."],["How do I know the token worked?","Look at the balance in MetaTrader 5: with the token it is 24 times what you put in. If it is not, stop and ask your sponsor before you do anything else."],["Someone says I need eCredits, or must send crypto, to get 24×.","Not through Aimpire. Our token is #Aitech with the code 000000, and you send nothing for it. The platform also has an «#eCredits» route: there you send as many eCredits as you invest to a wallet address, so $100 means 100 eCredits on top of your deposit.\n\nIf anyone asks you to send money or crypto anywhere other than your own deposit page, stop and ask your sponsor."],["Can I have more than one account?","Yes. The broker says you may hold as many as you want, as long as each one follows the rules."],["My deposit has not arrived.","Check the transaction in your own wallet first — the portal cannot show money that never reached it. Your wallet's own estimate can say up to 24 hours. After that, send your sponsor the transaction ID, never a screenshot of your login."],["I chose the wrong network.","A wrong network can mean the money never arrives — wallets warn of «permanent loss of funds». Contact your wallet's own support with the transaction ID straight away. Nobody in Aimpire can reverse a crypto transfer."],["Someone says they are support and asks for my password.","Do not give it — not to support, not to a leader, not to anyone. Aimpire will never ask for it. If someone needs to see your results, give them the Investor Password: it can only look, not trade."],["I forgot my password.","The broker has its own guide for changing it, under «Get set up» → «Guides that already exist». Never ask anyone in a chat to reset it for you."],["Do I have to invite other people?","No. You can open an account, let Sonic run and never introduce anyone. Earning as an introducing broker is optional, and nothing on the platform requires it."],["How do I get a statement for my taxes?","The MetaTrader 5 terminal on a Windows computer can export it: open the History tab at the bottom, right-click, choose Export and save it as HTML, then print that to PDF. Keep the receipts for every deposit and withdrawal too. The rules depend on your country, and we cannot give tax advice."],["Where do I get help?","First this page. Then your sponsor — the person who invited you — for anything about your account. If money does not arrive or something seems wrong, your sponsor takes it further. And ask in the Aimpire group: someone has usually had the same question."]]}},"withdraw":{"en":{"lede":"Profit can come out any time; the deposit only 30 days after your first trade, and taking it out closes the account. The path has three parts, and the middle one is only needed the first time. Do it once early, with a small amount, so you know it works before you rely on it.","parts":[["From Amplify to your Tag wallet","On the Dashboard, open AMPLIFY. Profit you can take out is shown under AVAILABLE. Press WITHDRAW, enter the amount, press WITHDRAW again, then CONTINUE. The back office reviews it, so it can take a while to appear in your Tag Markets Wallet — refresh the page."],["First time only: add your own wallet","Open TAG WALLET → YOUR CRYPTO WALLETS → ADD A CRYPTO WALLET. Fill in the owner's name, choose CRYPTO, add your billing details and the address of your own wallet, enter your dashboard password and press SUBMIT CRYPTO WALLET. It shows PENDING VALIDATION — usually 5 to 45 minutes, up to 24 hours."],["From your Tag wallet to your own wallet","TAG WALLET → WITHDRAWALS. Enter the amount and press SUBMIT REQUEST, tick the box, press «Your attention is required. Please click here», enter the wallet you verified, and choose CRYPTOCHILL — without it the withdrawal is not processed and you have to start again. Check the details and press WITHDRAW."]],"facts":"The broker's minimum withdrawal is $10 on Ethereum (ETH), BNB (BSC) and Bitcoin (BTC), and $50 on Tron (TRX). A network fee is deducted, and it depends on the network — so what arrives is roughly the amount minus the network fee. The broker says Amplify payouts take 1–3 working days, and crypto withdrawals 2–24 hours up to $999, up to 48 hours up to $4,999, and up to 72 hours above that. Profit in CopyX can also be taken out from Follower Hub, Strategies, Withdraw; it then lands in your Tag Markets wallet."}},"results":{"source":"https://www.myfxbook.com/members/SonicExperts/sonic-ai/12076857","months":[["2024-11",1.12,0.13],["2024-12",1.18,0.15],["2025-01",1.23,0.17],["2025-02",1.25,0.1],["2025-03",1.06,0.21],["2025-04",1.26,0.81],["2025-05",1.78,0.6],["2025-06",1.18,0.71],["2025-07",1.45,0.5],["2025-08",1.61,0.42],["2025-09",1.63,0.15],["2025-10",1.17,0.0],["2025-11",0.91,0.03],["2025-12",1.16,0.0],["2026-01",0.61,0.0],["2026-02",0.55,0.03],["2026-03",0.8,0.0],["2026-04",1.26,0.0],["2026-05",1.09,0.0],["2026-06",1.06,0.01],["2026-07",1.17,0.02],["2026-08",0.88,0.0],["2026-09",1.04,0.0],["2026-10",0.42,0.01]],"stats":["+30.58 %","+1.13 %","−0.86 %","634","82–83 %"],"en":{"lede":"From the strategy's own Myfxbook record — a standard Tag Markets account at 1:500 — from 3 November 2024 to 14 October 2026. Each bar is one month's gain; the mark below it is that month's largest dip. The 30 % fee you pay is not taken out of these figures. Past results, not a forecast.","stats":["In total","Average month","Largest dip","Trades","Win rate"],"legend":["gain","largest dip"],"notes":["No losing month in 24 — which also means this record has not yet been tested by one.","Losing days happen: 49 of the 427 daily readings. The worst, −0.64 % on 3 June 2025, is about −15 % of your deposit in one day at 24×; the deepest dip, −0.86 %, about −21 %.","The average loss ($134.97) is bigger than the average win ($93.37). The high win rate carries the result, so a run of losses costs more than a run of wins earns.","The account closes at 5 %. The record's deepest dip, 0.86 %, is about a sixth of that distance.","Dips here are measured on each day's closing balance; inside a day they can go deeper. The record has gaps — the longest is 20 August to 12 September 2025 — and each counts as a single reading.","The strategy card inside CopyX labels 0.26 % as «Max DD». A slide in AiTech's presentation calls 0.26 % the average drawdown and 0.86 % the deepest. Myfxbook's deepest is 0.86 %, and that is the one we use."],"formula":"Effect on your deposit = the account's fall in % × 24.","link":"Check it yourself on Myfxbook","read":"Figures read on 15 October 2026.","table":"Show the numbers"}},"calculator":{"live":true,"multiple":24,"wipe":4.2,"worst_day":0.64,"periods":[6,12,23],"en":{"lede":"Enter an amount and a period. This applies the record's actual months to your money at 24×, takes off the $10-per-lot commission and the 30 % fee, and assumes you take the profit out each month. It is the past, applied to you — not a forecast and not a promise.","amount":"Amount you put in ($)","period":"Period","periods":["Last 6 months","Last 12 months","All 23 months"],"total":"What you would have kept, over the period","months":"Your best and worst month","risk":"The same 24× on the way down","risks":["A fall of 4.2 % in the trading balance takes all {A}; the account closes at 5 %.","The record's worst day (−0.64 %) would have cost {D} of your {A} in one day.","The record has no losing month, so this calculator cannot show you one. That is exactly why it is not a forecast."],"method":"Method: each month = amount × 24 × (that month's gain − commission − fee). The commission is estimated from the lots Myfxbook shows, on a $130,000 account; if the strategy account already pays the same commission, the real cost is lower. Small amounts cannot copy exactly: at about 0.17 lot per trade on $130,000, a deposit below roughly $330 at 24× would need trades smaller than 0.01 lot, the usual minimum. How CopyX handles that is not published.","disclaimer":"Past results applied to your amount — not a guarantee, not advice. Only put in what you could lose completely.","rows":["Before costs","Commission, $10 per lot","Performance fee, 30 %","What you keep"],"range":"Two numbers, because nobody publishes how the 30 % is settled. Taken weekly on the net result, you keep the higher one. Taken on every winning day, you keep the lower one. Per trade, it could be lower still."},"costs":[["2024-11",1.12,0.011,0.359,0.421],["2024-12",1.177,0.016,0.257,0.485],["2025-01",1.232,0.021,0.462,0.467],["2025-02",1.246,0.022,0.372,0.438],["2025-03",1.059,0.038,0.279,0.484],["2025-04",1.255,0.04,0.424,0.936],["2025-05",1.78,0.037,0.74,0.882],["2025-06",1.181,0.055,0.68,1.141],["2025-07",1.448,0.061,0.384,0.904],["2025-08",1.606,0.042,0.606,0.711],["2025-09",1.633,0.107,0.463,0.532],["2025-10",1.166,0.04,0.419,0.348],["2025-11",0.905,0.016,0.271,0.281],["2025-12",1.159,0.027,0.334,0.346],["2026-01",0.611,0.015,0.195,0.183],["2026-02",0.549,0.029,0.164,0.174],["2026-03",0.802,0.043,0.205,0.24],["2026-04",1.263,0.038,0.343,0.377],["2026-05",1.094,0.037,0.395,0.326],["2026-06",1.058,0.025,0.285,0.318],["2026-07",1.166,0.029,0.379,0.355],["2026-08",0.878,0.024,0.251,0.262],["2026-09",1.041,0.024,0.279,0.311]],"balance_assumed":130000},"bonuses":{"en":{"lede":"Most of these need a team volume very few people ever reach — they are here as information, not as a goal. Each card shows what the programme offers and what it asks of you.","labels":["What you get","What it takes"],"items":[["Profit sharing","2.5 % of each trade's profit, on each of ten levels. Paid weekly, in USDT.","At least $250 in trading yourself, which opens the first three levels. Levels four to ten open as people you introduced directly each have $250 in trading — up to ten of them. This rule is from a presentation other teams use; the portal itself only shows directs and unlocked levels."],["Lot commission","Per lot traded: $2.00, $1.50, $1.00, $1.00, then $0.50 on levels five to ten — up to $8.50 per lot. Paid weekly.","The same open levels as profit sharing. The broker's help centre adds that a trade only counts for commission if it stays open for at least 3 minutes."],["CPA Earnings","A monthly percentage of the new money deposited in your network: 1 %, 2 %, 3.5 %, 5 %, and on up to 7.5 %.","$10,000 of new deposits in a month for 1 % (from your direct level), then $50,000, $200,000 and $1,000,000, up to $100,000,000 for 7.5 %. Counted after the 50 % rule, and paid as the difference to anyone below you who qualifies too."],["Leader Pool 1","A share of a monthly pool. The presentation gives an ambassador rate of $2.00 per lot.","$500,000 of team volume in a month after the 50 % rule — no more than $250,000 of it from your strongest line."],["Leader Pool 2","A share of a second monthly pool.","$1,000,000 of team volume in a month after the 50 % rule — no more than $500,000 per share from your strongest line."],["General bonus (European programme)","$2.00 per lot plus a bonus payment.","Steps at $10,000, $50,000, $200,000 and $500,000 of team volume, after the 50 % rule. Shown in the CopyX app."],["October prize draw (Sonic Referral Challenge)","Prizes of $10,000 each, drawn from tickets. The poster names 200 winners and $3 million in total — those two figures do not add up.","One ticket for every 2 new people you introduce directly in October who each reach at least $250. No cap on tickets."],["Travel voucher","A $2,000 travel voucher or the same in USDT, once a year.","$50,000 of new monthly active balance in your whole network, three months in a row, counted 50/50 and without your directs' own deposits."],["Watch award (Leader Pool 1)","A luxury watch worth up to $15,000.","Qualify for Leader Pool 1 two months in a row."],["Watch award (Leader Pool 2)","A luxury watch worth up to $25,000.","Qualify for Leader Pool 2 two months in a row."],["Home award (Leader Pool 2)","A home worth up to $1,200,000.","Qualify for Leader Pool 2 with at least three shares of $1,000,000 each, six months in a row."],["Sonic Pool, Profit Pool, NeoFX Pool, Super Sonic Bonus","Listed by name in the IB Portal.","Their conditions are not shown in the portal or the presentation. Ask your sponsor before you count on any of them."]],"note":"Cash payouts are made in USDT, only to accounts that qualify, and the programme is marked «subject to local restrictions». The international programme applies outside Europe. None of this is income you can count on. Figures from AiTech's presentation of 3 October 2026, the IB Portal and the CopyX app, read on 15 October 2026; the rule for opening levels comes from a presentation other teams use."}},"p2p":{"video":"https://youtu.be/P3C9WztzEas"},"jump":{"en":{"results":"Track record","calc":"Calculator","withdraw":"Withdrawals","ib":"IB & bonuses","sonic":"Sonic"}},"ui_labels":{"labels":["Sign Up","Login to CopyX","Deposit","Details","Connect","Verify","Submit","Copy Now","Continue","WITHDRAW","CONTINUE","SUBMIT REQUEST","Withdraw","Express","Paid","Community Token","Hash","MT5 Credentials","Master Password","Investor Password","Balance","Equity","Free Margin","AVAILABLE","TAG WALLET","WITHDRAWALS","Pending","Validate","Follower Hub","Strategies","Dashboard","Reinvest","YOUR CRYPTO WALLETS"],"gloss":{}},"alt_compare":{"en":{"title":"Bank, fund or Sonic — side by side","lede":"The same questions for three places to keep money. Sonic's record shows the highest return of the three — but it is under two years old, has not had a losing month yet, and Sonic is the only one where you can lose everything.","cols":["Bank savings","Index fund","Sonic"],"rows":[["What you can lose","Nothing, up to the guarantee ¹","It fell 57 % in 2007–09 ²","All of it"],["Return so far","Follows the central bank rate ¹","9 % a year since 1987; 13.4 % over 10 years ²","About 14.7 % a year (+30.6 % in total) ³"],["Length of the record","Decades","38 years","Under 2 years"],["Getting money out","Any time","A few days","Profit in 1–3 working days; deposit 30 days after your first trade, and it closes the account"],["Costs","Usually none","A yearly fund fee","30 % of profit + $10 per lot + spread"],["Suits money you","need soon","can leave for years","could lose completely"]],"notes":["¹ Bank deposits are guaranteed up to NOK 2 million per person per bank in Norway, and up to PKR 1,000,000 in Pakistan. Savings rates follow the central bank rate: 4.50 % in Norway (Norges Bank, 23 September 2026) and 11.5 % in Pakistan (State Bank of Pakistan, 14 September 2026).","² MSCI World index, in US dollars, before fund fees: 9.02 % a year from December 1987 to September 2026, and 13.37 % a year over the last 10 years. Its largest fall was 57.46 %, from October 2007 to March 2009.","³ The strategy's own Myfxbook account at 1:500, 3 November 2024 to 14 October 2026, before the 30 % fee and the $10-per-lot commission. Your own account is on Amplify, where gains and losses are 24 times larger — the calculator shows what that means for your amount."],"disclaimer":"This compares published figures. It is not financial advice and not a recommendation, and past results are no guarantee of future results. Figures are in US dollars; exchange rates can raise or lower them in your currency. Tag Markets states that 80 % of retail investor accounts incur losses."}},"leader_signup":{"_readme":"Founders Google-skjema og publiserte liste over godkjente (B-016). Skjemaet tar imot soeknaden; arket «Aimpire – ledere (godkjenn her)» er der founder huker av «Approved». Tomt form-felt = lederverktoeyet faller tilbake til ledere.txt-linja.","form":"https://docs.google.com/forms/d/e/1FAIpQLSew3TQFfh54TazjiF2S5UHsNquzUuDvRSS3jK-IKRO8CNw25g/formResponse","name_field":"entry.1588080115","link_field":"entry.1299161573","approved_csv":"https://docs.google.com/spreadsheets/d/e/2PACX-1vQCUbvpu8cXdh-V-XkfvqAevZlabu876V-j8HNNd_qJGDOpPhbwVukJa--Vum5QWLuyQwEQM9Y5gMSc/pub?gid=2115650304&single=true&output=csv","mail_field":"entry.1642551334"},"packs":{"no":"5b755c1886","hi":"69feaa966b","ar":"633f6ce211","ur":"15685ac525","ar_rm":"4135622eb2","ur_rm":"01e9051763"}};
+/* «member» eller «leaders». Samme fil, samme CSS, to adresser: medlemmene
+   skal ikke se lederverktoeyet i det hele tatt, og lederne trenger ikke
+   scrolle gjennom guiden for aa finne det. */
+const PAGE = "leaders";
+document.documentElement.setAttribute("data-page", PAGE);
+
+/* An IB's sign-up link carries an opaque token (?e=...), not their IB number,
+   so the whole link travels as ?ref= and only these hosts are accepted. */
+const REF_ALLOWED_HOSTS = ["aitech.sonicpilot.io","copyxapp.com","www.copyxapp.com",
+                           "aitech.ibportal.io","portal.tagmarkets.com","tagmarkets.com"];
+const REF_HOUSE = "";
+
+let lang = C.langs[0].code, sponsorUrl = null, pendingRef = null, sponsorName = "";
+const $ = id => document.getElementById(id);
+const conf = code => C.langs.find(l => l.code === code) || C.langs[0];
+function store(k,v){ try{ v===null?localStorage.removeItem(k):localStorage.setItem(k,v); }catch(e){} }
+function load(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+
+/* Nothing becomes an href unless it is plain http(s). */
+function safeUrl(u){
+  try{ const p = new URL(String(u), location.href).protocol;
+       return p === "https:" || p === "http:"; }catch(e){ return false; }
+}
+/* Images belong to this page. Anything off-origin is skipped. */
+function sameOrigin(u){
+  try{ return new URL(String(u), location.href).origin === location.origin; }catch(e){ return false; }
+}
+function validRef(raw){
+  if(!raw) return null;
+  let u;
+  try{ u = new URL(String(raw).trim()); }catch(e){ return null; }
+  if(u.protocol !== "https:") return null;
+  return REF_ALLOWED_HOSTS.indexOf(u.hostname) !== -1 ? u : null;
+}
+/* «by» kommer fra URL-en og er dermed kontrollert av den som laget lenka.
+   Den settes alltid med textContent, aldri innerHTML — men den filtreres
+   ogsaa: bare bokstaver i et hvilket som helst skriftsystem, mellomrom,
+   bindestrek og apostrof, og maks 24 tegn. Da kan et «navn» verken bli
+   markup, en URL eller et avsnitt. */
+function cleanName(raw){
+  if(!raw) return "";
+  let t = String(raw).trim().slice(0, 48);
+  try{ t = t.replace(/[^\p{L}\p{M} '\-]/gu, ""); }
+  catch(e){ t = t.replace(/[^A-Za-zÀ-ÿ '\-]/g, ""); }
+  t = t.replace(/\s+/g, " ").trim().slice(0, 24);
+  return t;
+}
+function fingerprint(u){
+  const t = u.searchParams.get("e") || u.search || u.pathname;
+  return String(t).replace(/[^A-Za-z0-9]/g,"").slice(-6).toUpperCase();
+}
+
+/* Godkjente ledere (founder 15.10, B-014/B-015). Lista er filen ledere.txt
+   ved siden av siden - den eneste kilden, og bare founder redigerer den (fra
+   mobilen paa GitHub). Én linje per leder: «Fornavn | partnerlenke». Lederens
+   kode i lenka (?l=) regnes ut av partnerlenka, saa founder aldri lager koder.
+   Gamle selvlagde ?ref=-lenker gjelder ikke lenger (B-015). */
+let REG = [], REG_FRESH = false, sponsorVerified = false;
+function refKey(u){ return u ? u.hostname + "|" + (u.searchParams.get("e") || u.pathname + u.search) : ""; }
+function codeOf(u){
+  const s = refKey(u); let h = 0x811c9dc5;
+  for(let i = 0; i < s.length; i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+  return ("00000" + h.toString(36)).slice(-6);
+}
+function parseReg(text){
+  const out = [], seen = {};
+  String(text || "").split(/\r?\n/).forEach(function(line){
+    let t = line.trim(); if(!t || t[0] === "#") return;
+    /* Google-arket leverer CSV: «Sara,https://...» og felt i anfoerselstegn. */
+    t = t.replace(/^"|"$/g, "").replace(/","/g, " | ").replace(/^([^,|]{1,40}),(?=https:\/\/)/, "$1 | ");
+    /* Tilgivende for redigering paa mobil: lenka er det som starter med
+       https://, navnet er alt foran den - «Sara | lenke», «Sara - lenke» og
+       «Sara lenke» virker likt. */
+    const cut = t.indexOf("https://"); if(cut < 1) return;
+    const name = cleanName(t.slice(0, cut).replace(/[|;:,\-\u2013\u2014\s]+$/, "")), u = validRef(t.slice(cut).split(/\s/)[0]);
+    if(!name || !u) return;
+    const id = codeOf(u); if(seen[id]) return; seen[id] = true;
+    out.push({ id: id, name: name, link: u.href });
+  });
+  return out;
+}
+function leaderById(id){ return id ? REG.find(function(x){ return x.id === id; }) || null : null; }
+/* Lagret kopi foerst (rask start, virker uten nett), saa ferske lista. */
+try{ REG = parseReg(JSON.parse(localStorage.getItem("aimpire.reg") || '""')); }catch(e){}
+function loadReg(){
+  const timeout = new Promise(function(res){ setTimeout(function(){ res(null); }, 6000); });
+  /* To kilder, slaatt sammen: Google-arket (founder huker av) og ledere.txt
+     (reserve, for haand). En av dem nede = den andre gjelder. */
+  const one = function(u){ return fetch(u, { cache: "no-store" })
+    .then(function(r){ return r.ok ? r.text() : null; }).catch(function(){ return null; }); };
+  const LS = C.leader_signup || {};
+  const get = Promise.all([one("ledere.txt?t=" + Date.now()), LS.approved_csv ? one(LS.approved_csv) : Promise.resolve(null)])
+    .then(function(r){ return r[0] === null && r[1] === null ? null : (r[0] || "") + "\n" + (r[1] || ""); });
+  return Promise.race([get, timeout]).then(function(text){
+    if(text === null) return false;
+    store("aimpire.reg", JSON.stringify(text));
+    REG = parseReg(text); REG_FRESH = true;
+    return true;
+  });
+}
+
+/* Bestemmes ved lasting. Foerste godkjente sponsor staar: en ny lenke senere
+   bytter den ikke, og det finnes ingen «Endre»-knapp. Fjerner founder en leder
+   fra lista, faller sponsoren bort ved neste besoek. Den egentlige laasen er hos
+   megleren saa snart medlemmet har registrert seg via lenka. */
+function initSponsor(){
+  store("aimpire.ref", null); store("aimpire.by", null);
+  const q = new URLSearchParams(location.search);
+  const lr = leaderById(load("aimpire.leader")) || leaderById(q.get("l"));
+  if(lr){
+    sponsorUrl = validRef(lr.link); sponsorName = lr.name; sponsorVerified = true;
+    store("aimpire.leader", lr.id);
+  } else {
+    sponsorUrl = null; sponsorName = ""; sponsorVerified = false;
+    if(REG_FRESH) store("aimpire.leader", null);
+  }
+  /* Koden blir staaende i adressefeltet, saa et bokmerke eller en deling
+     tar sponsoren med seg. Gamle ?ref=-lenker vaskes bort. */
+  const id = sponsorVerified ? lr.id : "";
+  const want = id ? "?l=" + id : "";
+  if(PAGE !== "leaders" && location.search !== want && (id || q.has("ref") || q.has("by"))){
+    try{ history.replaceState(null, "", location.pathname + want + location.hash); }catch(e){}
+  }
+}
+/* Hvilke steg som er gjort. Lagres lokalt per leser - aldri sendt noe sted. */
+function doneSet(){
+  /* Steg 6 (appene) kom inn 15.10. Avkryssing lagret foer det, for steg 6-9,
+     flyttes ett hakk, saa ingen ser feil steg som gjort. Kjoeres én gang. */
+  if(load("aimpire.done.v") !== "2"){
+    const gml = (load("aimpire.done") || "").split(",").filter(function(x){ return x !== ""; });
+    store("aimpire.done", gml.map(function(x){ const n = +x; return String(n >= 5 ? n + 1 : n); }).join(",") || null);
+    store("aimpire.done.v", "2");
+  }
+  const raw = load("aimpire.done") || "";
+  return new Set(raw.split(",").filter(function(x){ return x !== ""; }));
+}
+/* Et langt steg er mange smaa handlinger. Hver linje kan hukes av for seg, saa
+   man ser hvor man er midt i steget - og slipper aa holde tretten trykk i hodet.
+   Ingen nye tekster: linjene finnes allerede. */
+function subSet(){
+  const raw = load("aimpire.sub") || "";
+  return new Set(raw.split(",").filter(function(x){ return x !== ""; }));
+}
+function subSave(set){ store("aimpire.sub", Array.from(set).join(",") || null); }
+function toggleSub(idx, n, total){
+  const set = subSet(), k = idx + ":" + n;
+  if(set.has(k)) set.delete(k); else set.add(k);
+  subSave(set);
+  /* Alle linjer huket av = steget er gjort. Fjerner man én, er det ikke det. */
+  let gjort = 0;
+  for(let i = 0; i < total; i++) if(set.has(idx + ":" + i)) gjort++;
+  const d = doneSet(), ks = String(idx);
+  if(gjort === total) d.add(ks); else d.delete(ks);
+  store("aimpire.done", Array.from(d).join(",") || null);
+  render();
+}
+function actions(txt, idx){
+  if(txt.indexOf("\n") === -1) return el("p", null, txt);
+  const rows = txt.split("\n").filter(function(s){ return s.trim(); });
+  const set = subSet();
+  const ul = el("ul", "acts subs");
+  rows.forEach(function(s, n){
+    const li = document.createElement("li");
+    const on = set.has(idx + ":" + n);
+    const b = el("button", "sub", on ? "\u2713" : "");
+    b.type = "button";
+    b.setAttribute("aria-pressed", String(on));
+    b.setAttribute("aria-label", s.slice(0, 60));
+    b.onclick = function(){ toggleSub(idx, n, rows.length); };
+    li.appendChild(b);
+    li.appendChild(el("span", null, s));
+    if(on) li.className = "on";
+    ul.appendChild(li);
+  });
+  return ul;
+}
+function toggleStep(i){
+  const set = doneSet(), k = String(i);
+  const paa = !set.has(k);
+  if(paa) set.add(k); else set.delete(k);
+  store("aimpire.done", Array.from(set).join(","));
+  /* Haken paa sirkelen gjelder hele steget: alle linjene foelger med. */
+  const G = C.guide[lang] || C.guide.en, st = G.steps[i];
+  if(st){
+    const rows = String(st[1]).split("\n").filter(function(x){ return x.trim(); });
+    const sub = subSet();
+    rows.forEach(function(_, n){ if(paa) sub.add(i + ":" + n); else sub.delete(i + ":" + n); });
+    subSave(sub);
+  }
+  render();
+}
+function clearSteps(){ store("aimpire.done", null); store("aimpire.sub", null); render(); }
+
+function copyCode(btn, value, label){
+  function done(){
+    const tag = btn.querySelector(".c");
+    if(tag) tag.textContent = (C.guide_ui[lang] || C.guide_ui.en).copied;
+  }
+  try{
+    navigator.clipboard.writeText(value).then(done, function(){ fallback(); });
+  }catch(e){ fallback(); }
+  function fallback(){
+    try{
+      const t = document.createElement("textarea");
+      t.value = value; t.setAttribute("readonly","");
+      t.style.position = "fixed"; t.style.opacity = "0";
+      document.body.appendChild(t); t.select();
+      document.execCommand("copy"); document.body.removeChild(t); done();
+    }catch(e2){}
+  }
+}
+
+function destination(){
+  return sponsorUrl
+    ? { url:sponsorUrl.href, host:sponsorUrl.hostname, fp:fingerprint(sponsorUrl) }
+    : { url:REF_HOUSE, host:null, fp:null };
+}
+
+function makeLink(){ (REG_FRESH ? Promise.resolve() : loadReg()).then(makeLinkNow); }
+function makeLinkNow(){
+  const u = validRef($("ld-in").value), out = $("ld-out"), L = C.leaders[lang] || C.leaders.en;
+  out.hidden = false; out.textContent = "";
+  const b = document.createElement("b");
+  if(!u){ out.className = "out bad"; b.textContent = L.bad; out.appendChild(b); return; }
+  const lr = leaderById(codeOf(u));
+  let text;
+  if(lr){
+    /* Lenken skal alltid til MEDLEMSSIDEN, ogsaa naar den lages paa ledere.html. */
+    const base = location.pathname.replace(/ledere\.html$/, "").replace(/index\.html$/, "");
+    text = location.origin + base + "?l=" + lr.id;
+    out.className = "out"; b.textContent = L.ok;
+  } else {
+    const nm = cleanName($("ld-name").value);
+    if(!nm){ out.className = "out bad"; b.textContent = L.name_hint; out.appendChild(b); $("ld-name").focus(); return; }
+    /* E-posten brukes bare til én beskjed: at lenka er godkjent og virker. */
+    const mail = String($("ld-mail").value || "").trim();
+    const F = C.leader_signup || {};
+    if(F.mail_field && !/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(mail)){
+      out.className = "out bad"; b.textContent = L.mail_hint; out.appendChild(b); $("ld-mail").focus(); return;
+    }
+    if(F.form && F.name_field && F.link_field){
+      /* Ikke godkjent: soeknaden gaar rett til founders Google-skjema med ett
+         trykk. Lederen ser aldri skjemaet. */
+      out.className = "out wait"; b.textContent = L.pending; out.appendChild(b);
+      const go = el("button", "apply", L.apply); go.type = "button";
+      go.onclick = function(){
+        go.disabled = true;
+        const body = new URLSearchParams(); body.set(F.name_field, nm); body.set(F.link_field, u.href);
+        if(F.mail_field && mail) body.set(F.mail_field, mail);
+        fetch(F.form, { method: "POST", mode: "no-cors", body: body })
+          .then(function(){
+            /* Lenken finnes allerede: koden regnes ut av partnerlenka. Lederen
+               faar den med én gang og trenger ingen e-post - den begynner aa
+               virke i det founder huker av. */
+            out.textContent = ""; out.className = "out";
+            out.appendChild(el("b", null, L.applied));
+            const base = location.pathname.replace(/ledere\.html$/, "").replace(/index\.html$/, "");
+            out.appendChild(document.createTextNode(location.origin + base + "?l=" + codeOf(u)));
+            out.appendChild(el("p", "vnote", L.applied_wait || ""));
+            try{ navigator.clipboard.writeText(location.origin + base + "?l=" + codeOf(u)); }catch(e){}
+          })
+          .catch(function(){ go.disabled = false; go.textContent = L.apply_fail; });
+      };
+      out.appendChild(go);
+      return;
+    }
+    /* Uten skjema: linja founder limer inn i ledere.txt, ferdig kopiert. */
+    text = nm + " | " + u.href;
+    out.className = "out wait"; b.textContent = L.pending_line || L.pending;
+  }
+  out.appendChild(b);
+  out.appendChild(document.createTextNode(text));
+  try{ navigator.clipboard.writeText(text); }catch(e){}
+}
+
+function el(tag, cls, text){
+  const n = document.createElement(tag);
+  if(cls) n.className = cls;
+  if(text !== undefined) n.textContent = text;
+  return n;
+}
+
+function rowsFor(items, dest){
+  const frag = document.createDocumentFragment();
+  const list = el("div","rows");
+  let any = false;
+  items.forEach(function(i){
+    const href = i.url === "__REF__" ? dest.url : i.url;
+    if(!href || !safeUrl(href)) return;
+    const pair = i[lang] || i.en;
+    any = true;
+    const a = el("a", i.primary ? "slab" : "row");
+    a.href = href; a.target = "_blank"; a.rel = "noopener noreferrer";
+    /* Tjenestens eget ikon, saa man kjenner igjen hvor man havner. */
+    if(i.icon && sameOrigin(i.icon) && !i.primary){
+      const im = el("img","ri"); im.src = i.icon; im.alt = ""; im.width = 30; im.height = 30;
+      im.loading = "lazy"; im.decoding = "async"; a.appendChild(im); a.classList.add("ico");
+    }
+    a.appendChild(el("span","t",pair[0]));
+    a.appendChild(el("span","s",pair[1]));
+    if(i.primary){ frag.appendChild(a); }
+    else { a.appendChild(el("span","go","›")); list.appendChild(a); }
+  });
+  if(list.children.length) frag.appendChild(list);
+  return any ? frag : null;
+}
+
+function render(){
+  const dest = destination();
+
+  $("h1").textContent = C.hero[lang].line1;
+  $("h2").textContent = C.hero[lang].line2;
+  $("hsub").textContent = C.hero[lang].sub;
+
+  Object.keys(C.sections).forEach(function(k){
+    const h = $("t-" + k);
+    if(!h) return;
+    h.textContent = C.sections[k][lang] || C.sections[k].en;
+    h.appendChild(document.createElement("b"));
+  });
+
+  const S = C.sponsor[lang] || C.sponsor.en;
+  const sp = $("spon"); sp.textContent = "";
+  if(dest.host){
+    sp.hidden = false;
+    if(sponsorName){
+      sp.appendChild(el("strong","who", S.by.replace("{N}", sponsorName)));
+      if(sponsorVerified){ const v = el("span","ok","\u2713"); v.setAttribute("aria-hidden","true"); sp.appendChild(v); }
+      sp.appendChild(document.createTextNode(" \u00b7 "));
+    }
+    sp.appendChild(document.createTextNode(S.goes_to + " "));
+    sp.appendChild(el("strong",null,dest.host));
+    sp.appendChild(document.createTextNode(" " + S.fingerprint + " "));
+    sp.appendChild(el("span","fp",dest.fp));
+    sp.appendChild(document.createTextNode(" "));
+    /* Founder 16.10: den som selv inviterer andre, skal ikke registrere seg
+       under en annen - da maa det rettes i ettertid, og det skaper uenighet.
+       Én rolig linje under, og en vei til egen lenke. */
+    if(S.double_check){
+      const dc = el("p", "dcheck", S.double_check);
+      dc.appendChild(document.createElement("br"));
+      const a2 = el("a", "dlink", S.own_link || "");
+      a2.href = "ledere.html";
+      dc.appendChild(a2);
+      sp.appendChild(dc);
+    }
+  } else { sp.hidden = true; }
+
+  const none = $("notice-none"), cf = $("notice-conflict");
+  none.hidden = !(!sponsorUrl && !REF_HOUSE && !pendingRef);
+  if(!none.hidden){
+    $("nn-t").textContent = S.none_title;
+    $("nn-b").textContent = S.none_body;
+    $("nn-f").textContent = S.none_foot;
+    /* Ogsaa her, foer noen har en sponsor: veien til egen lenke (founder 16.10).
+       Den ligger UTENFOR avsnittene, saa den staar ogsaa paa forsiden, der
+       avsnittene i varselet er skjult. */
+    const old3 = none.querySelector(".dlink"); if(old3) old3.remove();
+    if(S.own_link){
+      const a3 = el("a", "dlink", S.own_link); a3.href = "ledere.html";
+      none.appendChild(a3);
+    }
+  }
+  /* Foerste godkjente sponsor staar (B-015) - det finnes ingen bytte-dialog. */
+  cf.hidden = true;
+
+  ["main","platform","video","docs","help","tools"].forEach(function(key){
+    const host = $(key + "-links"); if(!host) return;
+    host.textContent = "";
+    /* CopyX og meglerportalen er veier INN til registrering. Staar de aapne
+       foer sponsorlenka er satt, kan noen opprette konto uten at noen er
+       knyttet til den - og guidens eget steg 3 sier nettopp at man ikke
+       skal det. De vises derfor foerst naar lenka finnes. */
+    if(key === "platform" && !sponsorUrl){
+      const sec0 = $("s-platform");
+      if(sec0){
+        sec0.hidden = false;
+        host.appendChild(el("p","vnote", C.sections.platform_gate[lang] || C.sections.platform_gate.en));
+      }
+      return;
+    }
+    const frag = rowsFor(C.links[key], dest);
+    if(frag) host.appendChild(frag);
+    const sec = $("s-" + key);
+    if(sec && key !== "main") sec.hidden = !frag;
+  });
+
+  const G = C.guide[lang] || C.guide.en;
+  $("guide-lede").textContent = G.lede;
+  const gl = $("guide"); gl.textContent = "";
+  const U = C.guide_ui[lang] || C.guide_ui.en;
+  const done = doneSet();
+  G.steps.forEach(function(st, idx){
+    const li = document.createElement("li");
+    const isDone = done.has(String(idx));
+    if(isDone) li.className = "done";
+
+    li.id = "st-" + idx;
+    const tick = el("button","tick", isDone ? "\u2713" : String(idx + 1));
+    tick.type = "button";
+    tick.setAttribute("aria-pressed", String(isDone));
+    tick.setAttribute("aria-label", st[0]);
+    tick.onclick = function(){ toggleStep(idx); };
+    li.appendChild(tick);
+
+    li.appendChild(el("h3",null,st[0]));
+    li.appendChild(actions(st[1], idx));
+    const x = st[2];
+    if(x && x.note) li.appendChild(lines(x.note, "vnote"));
+
+    /* Verdier som maa skrives tegn for tegn skal kunne kopieres, ikke
+       leses ut av et avsnitt og tastes paa nytt paa en telefon. */
+    if(x && x.apps && x.apps.items){
+      li.appendChild(el("p","vnote",x.apps.lede));
+      const row = el("div","apps");
+      x.apps.items.forEach(function(a){
+        if(!safeUrl(a.url)) return;
+        const lnk = el("a",null,a.os);
+        lnk.href = a.url; lnk.target = "_blank"; lnk.rel = "noopener noreferrer";
+        row.appendChild(lnk);
+      });
+      if(row.children.length) li.appendChild(row);
+    }
+
+    /* Gruppelenka kommer TIL SLUTT i steget - etter appen og kontoen.
+       Laa den oeverst paa siden, var den en handling ingen kunne utfoere. */
+    if(x && x.join && safeUrl(x.join.url)){
+      const j = el("a","joinbtn",x.join.label);
+      j.href = x.join.url; j.target = "_blank"; j.rel = "noopener noreferrer";
+      li.appendChild(j);
+    }
+
+    if(x && x.codes && x.codes.length){
+      const row = el("div","codes");
+      x.codes.forEach(function(code){
+        const b = el("button"); b.type = "button";
+        b.appendChild(el("span","k",code.label));
+        const v = el("span","v",code.value);
+        v.setAttribute("dir","ltr");
+        b.appendChild(v);
+        b.appendChild(el("span","c",U.copy));
+        b.onclick = function(){ copyCode(b, code.value, code.label); };
+        row.appendChild(b);
+      });
+      li.appendChild(row);
+    }
+    if(x && x.video && safeUrl(x.video.url)){
+      const row = el("div","langs");
+      const a = el("a",null,x.video.label);
+      a.href = x.video.url; a.target = "_blank"; a.rel = "noopener noreferrer";
+      row.appendChild(a);
+      li.appendChild(row);
+    }
+    /* No video in this language yet. Say so, rather than offering another
+       language — a list of every language except yours reads as an insult. */
+    if(x && x.soon) li.appendChild(el("p","soon",x.soon));
+    if(x && x.img && sameOrigin(x.img)){
+      const fig = el("div","shot");
+      const im = document.createElement("img");
+      im.src = x.img; im.alt = x.alt || ""; im.loading = "lazy";
+      fig.appendChild(im);
+      (x.marks || []).forEach(function(m){
+        const pin = el("span","pin",String(m.n));
+        pin.style.insetInlineStart = m.x + "%"; pin.style.top = m.y + "%";
+        fig.appendChild(pin);
+      });
+      li.appendChild(fig);
+      if(x.marks && x.marks.length){
+        const ul = el("ul","keys");
+        x.marks.forEach(function(m){ ul.appendChild(el("li",null,m.t)); });
+        li.appendChild(ul);
+      }
+    }
+    if(x && x.appcards){ const ac = el("div","stepapps"); appCards(ac, false); li.appendChild(ac); }
+    /* Opptaket av steget. Et stillbilde med spill-knapp; videoen hentes
+       foerst ved trykk, og bildet er lazy - saa menyen og lesere uten behov
+       for video betaler ingenting. Lyd finnes ikke, derfor muted. */
+    if(x && x.clip && sameOrigin(x.clip.src) && sameOrigin(x.clip.poster)){
+      const fb = el("button","clipf");
+      fb.type = "button";
+      const im = el("img"); im.src = x.clip.poster; im.alt = ""; im.loading = "lazy"; im.decoding = "async";
+      fb.appendChild(im);
+      fb.appendChild(el("span","play", (U.watch || "").replace("{s}", x.clip.secs)));
+      fb.onclick = function(){
+        const v = document.createElement("video");
+        v.className = "clip"; v.src = x.clip.src; v.poster = x.clip.poster;
+        v.controls = true; v.autoplay = true; v.muted = true; v.playsInline = true;
+        v.setAttribute("playsinline", "");
+        fb.replaceWith(v);
+      };
+      li.appendChild(fb);
+    }
+    /* Har du ikke USDT ennaa? Founders egen Binance P2P-guide - bare paa
+       urdu, Roman Urdu og hindi, der Easypaisa/JazzCash gir mening. */
+    if(x && x.p2p && C.p2p && C.p2p[lang]) li.appendChild(p2pBox(C.p2p[lang], C.p2p.video));
+    /* Settes inn til slutt saa den staar under bildet og markoerene. */
+    if(x && x.check){
+      const ck = el("p","chk");
+      ck.appendChild(el("b", null, U.check));
+      ck.appendChild(document.createTextNode(x.check));
+      li.appendChild(ck);
+    }
+    /* Den tydelige avkryssingen. Sirkelen virket ogsaa, men ingen visste at
+       et stegnummer kunne trykkes paa. Knappen staar der steget er ferdig:
+       rett under «du vet at det virket naar». */
+    const mk = el("button","markd", isDone ? U.marked : U.mark);
+    mk.type = "button";
+    mk.setAttribute("aria-pressed", String(isDone));
+    mk.onclick = function(){ toggleStep(idx); };
+    li.appendChild(mk);
+    gl.appendChild(li);
+  });
+
+  const nDone = G.steps.filter(function(_, i){ return done.has(String(i)); }).length;
+  const pr = $("prog");
+  pr.hidden = false;
+  const total = G.steps.length, left = total - nDone;
+  $("prog-t").textContent = U.progress.replace("{done}", nDone).replace("{total}", total) +
+    (left && U.left ? " \u00b7 " + U.left.replace("{n}", left) : "");
+  $("prog-i").style.width = Math.round((nDone / total) * 100) + "%";
+  /* Toppstripa: samme tall, alltid synlig mens man scroller. */
+  const mp = $("minip");
+  if(mp){
+    mp.hidden = false;
+    $("minip-t").textContent = nDone + " / " + total;
+    $("minip-b").style.width = Math.round((nDone / total) * 100) + "%";
+  }
+  /* Neste steg som ikke er gjort - ett trykk dit. Alle gjort: videre til Sonic,
+     som er neste del i menyen. */
+  const nx = $("prog-n");
+  if(nx){
+    nx.textContent = "";
+    const first = G.steps.findIndex(function(_, i){ return !done.has(String(i)); });
+    if(first === -1 && U.all_done){
+      nx.appendChild(el("span","alld", U.all_done.replace("{total}", total)));
+      const go = el("button","nextb", U.all_done_go);
+      go.type = "button"; go.onclick = function(){ setView("earn"); };
+      nx.appendChild(go);
+    } else if(first > 0 && U.next){
+      const go = el("button","nextb", U.next.replace("{t}", G.steps[first][0]));
+      go.type = "button";
+      go.onclick = function(){
+        const tgt = $("st-" + first);
+        if(tgt) tgt.scrollIntoView({behavior:"smooth", block:"start"});
+      };
+      nx.appendChild(go);
+    }
+  }
+  const pb = $("prog-r");
+  pb.textContent = U.reset; pb.hidden = nDone === 0; pb.onclick = clearSteps;
+
+  /* Three places, three names. This block existed in content.json in every
+     language for a day without ever being drawn - nothing referenced it. */
+  /* Amplify og token. Alt er portalens egne formuleringer, hentet fra
+     founders skjermopptak — ikke omskrevet. Likvidasjonsregelen staar
+     ordrett fordi en parafrase ville myket den opp. */
+  const AM = C.amplify, as_ = $("s-amplify");
+  if(AM && AM.items && (AM.items[lang] || AM.items.en)){
+    as_.hidden = false;
+    $("t-amplify").textContent = C.sections.amplify[lang] || C.sections.amplify.en;
+    $("t-amplify").appendChild(document.createElement("b"));
+    const au = $("amplify"); au.textContent = ""; au.className = "places amp";
+    const CP = AM.compare && (AM.compare[lang] || AM.compare.en);
+    (AM.items[lang] || AM.items.en).forEach(function(it, i){
+      const li = document.createElement("li");
+      li.appendChild(el("h3",null,it[0]));
+      li.appendChild(el("p",null,it[1]));
+      au.appendChild(li);
+      if(i === 1 && CP){
+        const v = el("li","vs");
+        v.appendChild(el("h3", null, CP.title));
+        const n = el("div","vsnum"); n.dir = "ltr";
+        n.appendChild(el("span", null, AM.compare.cols[0])); n.appendChild(el("i")); n.appendChild(el("span", null, AM.compare.cols[1]));
+        v.appendChild(n);
+        /* Etiketten paa egen linje, verdiene rett under hvert sitt store tall. */
+        CP.rows.forEach(function(r){
+          const row = el("div","vsrow"); row.dir = "ltr";
+          const lab = el("span", null, r[0]); lab.dir = "auto"; row.appendChild(lab);
+          row.appendChild(el("b", null, r[1])); row.appendChild(el("b", null, r[2]));
+          v.appendChild(row);
+        });
+        v.appendChild(el("p","vsnote", CP.note));
+        au.appendChild(v);
+      }
+    });
+  } else { as_.hidden = true; }
+
+  const PL = C.places;
+  const ps = $("s-places");
+  if(PL && PL.items && PL.items[lang]){
+    ps.hidden = false;
+    $("t-places").textContent = (PL.title[lang] || PL.title.en);
+    $("t-places").appendChild(document.createElement("b"));
+    $("places-lede").textContent = (PL.lede[lang] || PL.lede.en);
+    const pu = $("places"); pu.textContent = "";
+    (PL.items[lang] || PL.items.en).forEach(function(it){
+      const li = document.createElement("li");
+      li.appendChild(el("h3",null,it[0]));
+      li.appendChild(el("p",null,it[1]));
+      pu.appendChild(li);
+    });
+  } else { ps.hidden = true; }
+
+  const E = C.earn[lang] || C.earn.en;
+  $("earn-lede").textContent = E.intro;
+  const le = $("earn-list"); le.textContent = "";
+  E.items.forEach(function(it){
+    const li = document.createElement("li");
+    li.appendChild(el("h3",null,it[0]));
+    li.appendChild(el("p",null,it[1]));
+    le.appendChild(li);
+  });
+  const es = C.earn_shot;
+  const eh = $("earn-shot"); eh.textContent = "";
+  if(es && es.img && sameOrigin(es.img)){
+    const fig = el("div","shot");
+    const im = document.createElement("img");
+    im.src = es.img; im.alt = (es.alt && (es.alt[lang] || es.alt.en)) || ""; im.loading = "lazy";
+    fig.appendChild(im);
+    const mk = (es.marks && (es.marks[lang] || es.marks.en)) || [];
+    mk.forEach(function(m){
+      const pin = el("span","pin",String(m.n));
+      pin.style.insetInlineStart = m.x + "%"; pin.style.top = m.y + "%";
+      fig.appendChild(pin);
+    });
+    eh.appendChild(fig);
+    if(mk.length){
+      const ul = el("ul","keys");
+      mk.forEach(function(m){ ul.appendChild(el("li",null,m.t)); });
+      eh.appendChild(ul);
+    }
+  }
+  $("earn-warn").textContent = E.warning;
+
+  const tl = $("tiers"); tl.textContent = "";
+  (C.values[lang] || C.values.en).forEach(function(v){
+    const li = document.createElement("li");
+    /* Was a single 2rem letter in one of four bright colours, which read as
+       a children's alphabet chart. The word carries the idea; the acronym
+       survives because the initial is marked inside it. */
+    const box = document.createElement("div");
+    const word = String(v[1] || "");
+    const h3 = el("h3");
+    h3.appendChild(el("span","ini",word.slice(0,1)));
+    h3.appendChild(document.createTextNode(word.slice(1)));
+    box.appendChild(h3);
+    box.appendChild(el("p",null,v[2]));
+    li.appendChild(box); tl.appendChild(li);
+  });
+
+  /* Ordlista: valgfri fordybing, plassert etter guiden. Tall-eksemplene
+     laases til venstre-til-hoeyre saa «0.01 lot» ikke snus i RTL. */
+  /* Smaa figurer til ordlista. Hver viser ÉN ting, og tallene i dem er de
+     samme som i eksempelteksten over — ellers maa leseren oversette. */
+  function learnFig(kind){
+    const S = function(t,a){ return svgEl(t,a); };
+    if(kind === "pip"){
+      const g = S("svg",{viewBox:"0 0 320 56",role:"img","aria-label":"One pip is the fourth decimal"});
+      g.appendChild(S("line",{x1:10,y1:34,x2:310,y2:34,stroke:"var(--rule)","stroke-width":"1.5"}));
+      [[60,"1.0850"],[250,"1.0851"]].forEach(function(p,i){
+        g.appendChild(S("circle",{cx:p[0],cy:34,r:5,fill:i?"var(--gold)":"var(--chalk-dim)"}));
+        const t=S("text",{x:p[0],y:52,"text-anchor":"middle",fill:"var(--chalk-dim)","font-size":"10"});
+        t.textContent=p[1]; g.appendChild(t);
+      });
+      const l=S("text",{x:155,y:18,"text-anchor":"middle",fill:"var(--chalk)","font-size":"11","font-weight":"700"});
+      l.textContent="1 pip = $0.10 at 0.01 lot"; g.appendChild(l);
+      return g;
+    }
+    if(kind === "lot"){
+      const rows=[["1.00","$10.00",100],["0.10","$1.00",34],["0.01","$0.10",12]];
+      const g=S("svg",{viewBox:"0 0 320 "+(rows.length*24+4),role:"img","aria-label":"Lot size decides pip value"});
+      rows.forEach(function(r,i){
+        const y=i*24+3;
+        const a=S("text",{x:0,y:y+13,fill:"var(--chalk-dim)","font-size":"11"}); a.textContent=r[0]; g.appendChild(a);
+        g.appendChild(S("rect",{x:42,y:y+2,width:r[2]*1.5,height:14,rx:2,fill:"var(--gold)",opacity:"0.55"}));
+        const b=S("text",{x:42+r[2]*1.5+7,y:y+13,fill:"var(--chalk)","font-size":"11","font-weight":"700"});
+        b.textContent=r[1]+" / pip"; g.appendChild(b);
+      });
+      return g;
+    }
+    if(kind === "spread"){
+      const g=S("svg",{viewBox:"0 0 320 52",role:"img","aria-label":"Spread is the gap you pay on entry"});
+      g.appendChild(S("rect",{x:40,y:18,width:120,height:14,rx:2,fill:"var(--gold)",opacity:"0.3"}));
+      g.appendChild(S("rect",{x:160,y:18,width:34,height:14,fill:"var(--ember)",opacity:"0.65"}));
+      g.appendChild(S("rect",{x:194,y:18,width:86,height:14,rx:2,fill:"var(--gold)",opacity:"0.3"}));
+      [[100,"sell 1.08500"],[177,"gap"],[237,"buy 1.08515"]].forEach(function(p){
+        const t=S("text",{x:p[0],y:46,"text-anchor":"middle",fill:"var(--chalk-dim)","font-size":"10"});
+        t.textContent=p[1]; g.appendChild(t);
+      });
+      const l=S("text",{x:177,y:12,"text-anchor":"middle",fill:"var(--chalk)","font-size":"10","font-weight":"700"});
+      l.textContent="1.5 pips = $0.15"; g.appendChild(l);
+      return g;
+    }
+    if(kind === "size"){
+      const g=S("svg",{viewBox:"0 0 320 66",role:"img","aria-label":"Working out position size from risk"});
+      [["$2 risk",0],["÷ 20 pips",88],["÷ $10",176],["= 0.01 lot",250]].forEach(function(p,i){
+        const t=S("text",{x:p[1],y:30,fill:i===3?"var(--gold-soft)":"var(--chalk)","font-size":"12",
+          "font-weight":i===3?"700":"400"});
+        t.textContent=p[0]; g.appendChild(t);
+      });
+      g.appendChild(S("line",{x1:0,y1:42,x2:310,y2:42,stroke:"var(--rule)","stroke-width":"1"}));
+      const n=S("text",{x:0,y:60,fill:"var(--chalk-dim)","font-size":"10"});
+      n.textContent="decide the money first, then the size"; g.appendChild(n);
+      return g;
+    }
+    if(kind === "dd"){
+      const g=S("svg",{viewBox:"0 0 320 76",role:"img","aria-label":"Losses and recoveries are not symmetrical"});
+      g.appendChild(S("rect",{x:40,y:8,width:112,height:18,rx:2,fill:"var(--ember)",opacity:"0.6"}));
+      const a=S("text",{x:158,y:22,fill:"var(--chalk)","font-size":"11","font-weight":"700"});
+      a.textContent="40 % down"; g.appendChild(a);
+      g.appendChild(S("rect",{x:40,y:38,width:188,height:18,rx:2,fill:"var(--gold)",opacity:"0.6"}));
+      const b=S("text",{x:234,y:52,fill:"var(--chalk)","font-size":"11","font-weight":"700"});
+      b.textContent="67 % back"; g.appendChild(b);
+      const n=S("text",{x:0,y:72,fill:"var(--chalk-dim)","font-size":"10"});
+      n.textContent="$100 → $60 → needs $100 again"; g.appendChild(n);
+      return g;
+    }
+    return null;
+  }
+
+  const LN = C.learn, ls = $("s-learn");
+  if(LN && LN.terms && (LN.terms[lang] || LN.terms.en)){
+    ls.hidden = false;
+    $("learn-lede").textContent = LN.intro[lang] || LN.intro.en;
+    const lab = LN.labels[lang] || LN.labels.en;
+    const host = $("learn"); host.textContent = ""; host.className = "learn";
+    (LN.terms[lang] || LN.terms.en).forEach(function(t){
+      const dt = document.createElement("details");
+      const sm = el("summary", null, t[0]);
+      dt.appendChild(sm);
+      const bd = el("div","body");
+      bd.appendChild(el("p","one",t[1]));
+      const dl = document.createElement("dl");
+      dl.appendChild(el("dt",null,lab[0]));
+      dl.appendChild(el("dd","ex",t[2]));
+      dl.appendChild(el("dt",null,lab[1]));
+      dl.appendChild(el("dd",null,t[3]));
+      if(t[4] && lab[2]){
+        dl.appendChild(el("dt",null,lab[2]));
+        const fx = el("dd","fx",t[4]); fx.setAttribute("dir","ltr");
+        dl.appendChild(fx);
+      }
+      bd.appendChild(dl);
+      if(t[5]){
+        const lf = el("div","lfig");
+        const made = learnFig(t[5]);
+        if(made){ lf.appendChild(made); bd.appendChild(lf); }
+      }
+      dt.appendChild(bd);
+      host.appendChild(dt);
+    });
+  } else { ls.hidden = true; }
+
+  /* Alt unntatt lederverktoeyet skjules paa ledersiden, og motsatt. */
+  if(PAGE === "leaders"){
+    document.querySelectorAll(".sec").forEach(function(sec){
+      if(sec.id !== "s-leaders") sec.hidden = true;
+    });
+    const h = document.querySelector(".hero"); if(h) h.hidden = true;
+  } else {
+    const ls = $("s-leaders"); if(ls) ls.hidden = true;
+  }
+
+  /* Figurene tegnes her, ikke lastes ned. De foelger temaet fordi de
+     bruker CSS-variablene direkte. */
+  function svgEl(t, attrs){
+    const n = document.createElementNS("http://www.w3.org/2000/svg", t);
+    Object.keys(attrs || {}).forEach(function(k){ n.setAttribute(k, attrs[k]); });
+    return n;
+  }
+  function figLock(){
+    const s = svgEl("svg", {viewBox:"0 0 320 74", role:"img",
+      "aria-label":"Ten generations, none unlocked"});
+    for(let i = 0; i < 10; i++){
+      const x = i * 31 + 2;
+      s.appendChild(svgEl("rect", {x:x, y:16, width:26, height:30, rx:3,
+        fill:"none", stroke:"var(--rule)", "stroke-width":"1.5", "stroke-dasharray":"3 3"}));
+      const t = svgEl("text", {x:x + 13, y:60, "text-anchor":"middle",
+        fill:"var(--chalk-dim)", "font-size":"10"});
+      t.textContent = String(i + 1);
+      s.appendChild(t);
+    }
+    const c = svgEl("text", {x:2, y:10, fill:"var(--ember)", "font-size":"11", "font-weight":"700"});
+    c.textContent = "0 / 10";
+    s.appendChild(c);
+    return s;
+  }
+  function figLadder(){
+    /* AiTechs internasjonale stige (presentasjonen 03.10.2026, s. 21): ti nivaaer,
+       inntil $8.50 per lot. Bredde relativt til nivaa 1 ($2.00 = 100). */
+    const rows = [["1","$2.00",100],["2","$1.50",75],["3","$1.00",50],["4","$1.00",50],
+      ["5","$0.50",25],["6","$0.50",25],["7","$0.50",25],["8","$0.50",25],["9","$0.50",25],["10","$0.50",25]];
+    const s = svgEl("svg", {viewBox:"0 0 320 " + (rows.length * 26 + 6), role:"img",
+      "aria-label":"Per-lot ladder across ten levels"});
+    rows.forEach(function(r, i){
+      const y = i * 26 + 4;
+      const lv = svgEl("text", {x:0, y:y + 14, fill:"var(--chalk-dim)", "font-size":"11"});
+      lv.textContent = r[0]; s.appendChild(lv);
+      s.appendChild(svgEl("rect", {x:42, y:y + 3, width:r[2] * 1.5, height:14, rx:2,
+        fill:"var(--gold)", opacity:(0.3 + (r[2] / 100) * 0.5).toFixed(2)}));
+      const am = svgEl("text", {x:42 + r[2] * 1.5 + 7, y:y + 14,
+        fill:"var(--chalk)", "font-size":"11", "font-weight":"700"});
+      am.textContent = r[1]; s.appendChild(am);
+    });
+    return s;
+  }
+
+  const IB = C.ib, ibs = $("s-ib");
+  if(IB && (IB[lang] || IB.en)){
+    const B = IB[lang] || IB.en;
+    ibs.hidden = false;
+    $("ib-lede").textContent = B.lede;
+    const ih = $("ib"); ih.textContent = ""; ih.className = "ib";
+    B.blocks.forEach(function(bl){
+      const sec = document.createElement("section");
+      sec.appendChild(el("h3", null, bl[0]));
+      sec.appendChild(el("p", null, bl[1]));
+      if(bl[2] === "lock" || bl[2] === "ladder"){
+        const fig = el("div","fig");
+        fig.appendChild(bl[2] === "lock" ? figLock() : figLadder());
+        fig.appendChild(el("p","cap", bl[2] === "lock" ? B.lock_cap : B.ladder_cap));
+        sec.appendChild(fig);
+        if(bl[2] === "ladder") sec.appendChild(el("p","flag", B.unverified));
+      }
+      ih.appendChild(sec);
+    });
+  } else { ibs.hidden = true; }
+
+  const L = C.leaders[lang] || C.leaders.en;
+  $("ld-body").textContent = L.body;
+  $("ld-in").placeholder = L.placeholder;
+  $("ld-name").placeholder = S.name_ph;
+  $("ld-mail").placeholder = L.mail_ph || "";
+  $("ld-hint").textContent = L.name_hint;
+  /* Hvorfor nettopp partnerlenka fra IB-portalen (founder 16.10): en lenke
+     kopiert et annet sted kobler ikke medlemmet til Tag Markets. */
+  const lw = $("ld-why"); if(lw) lw.textContent = L.why || "";
+  $("ld-btn").textContent = L.button;
+
+  $("risk").textContent = C.risk[lang] || C.risk.en;
+  /* Aimpire har eksistert siden 2022 - ikke «startet i aar». */
+  $("yr").textContent = "2022\u2013" + new Date().getFullYear();
+
+  renderApps();
+  renderResults();
+  renderAlt();
+  renderCalc();
+  renderWithdraw();
+  renderBonuses();
+  renderFaq();
+  renderMenu();
+  markUiLabels();
+  isolateFigures();
+  applyView();
+}
+
+/* Tall med tegn i hoeyre-til-venstre-tekst. $, x, % og : er «svake» tegn i
+   Unicode-bidi og havner paa feil side av tallet: $109 ble vist som 109$, 12x
+   som x12 - og 1:30 kan bli 30:1, som snur betydningen. Hver slik bit pakkes
+   i usynlige isolater (LRI ... PDI) saa den alltid leses venstre-til-hoeyre.
+   Kjoeres paa hver render, saa nytt innhold dekkes uten at noen husker det. */
+const FIGURE_RX = new RegExp([
+  "\\d[\\d,.]*(?::\\d+)?(?:\\s?[\\u00f7\\u00d7=]\\s?\\d[\\d,.]*(?::\\d+)?)+(?:\\s?%)?",  // 1 / 24 = 4.2 %, 24 x 30 = 720:1 (hele formelen)
+  "[+\\u2212]?\\$\\s?\\d[\\d,.]*",       // $109  $2,616  $0.60  \u2212$5
+  "\\d[\\d,.]*\\s?\\u00d7",              // 12x  24x
+  "\\u00d7\\s?\\d[\\d,.]*",              // x 0.70
+  "[+\\u2212]?\\d[\\d,.]*\\s?%",          // 10%  5 %  +30.6 %  \u22120.86 %
+  "\\d+(?:\\s?/\\s?\\d+)+",              // 70 / 5 / 25
+  "\\d+:\\d+",                           // 1:30  1:500
+  "#[A-Za-z][A-Za-z0-9]*",                 // #Aitech
+  "@[A-Za-z0-9_][A-Za-z0-9_.]*[A-Za-z0-9_]"  // @aim.pire
+].join("|"), "g");
+function isolateFigures(){
+  if(document.documentElement.dir !== "rtl") return;
+  const root = document.querySelector(".shell");
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: function(n){
+      const p = n.parentNode;
+      if(!p || p.closest("svg, script, style, [dir=ltr]")) return NodeFilter.FILTER_REJECT;
+      if(n.data.indexOf("\u2066") !== -1) return NodeFilter.FILTER_REJECT;
+      FIGURE_RX.lastIndex = 0;
+      return FIGURE_RX.test(n.data) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }
+  });
+  const nodes = [];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(function(n){
+    n.data = n.data.replace(FIGURE_RX, function(m){ return "\u2066" + m + "\u2069"; });
+  });
+}
+
+/* Knapper og felt slik de STAAR paa skjermen hos megleren og i appene - paa
+   engelsk, fordi det er det medlemmet ser. Founder 15.10: ingen skal sitte og
+   gjette om «Next» er «aage». Hver knapp blir en liten knapp i teksten, og paa
+   hindi/urdu/arabisk faar den foerste forekomsten i hvert avsnitt en kort
+   forklaring i parentes. Selve oversettelsene endres ikke. */
+const UI_ROOTS = "#s-guide, #s-withdraw, #s-amplify, #s-faq";
+function markUiLabels(){
+  const U = C.ui_labels; if(!U || !U.labels || !U.labels.length) return;
+  const G = (U.gloss && U.gloss[lang]) || {};
+  const esc = function(t){ return t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); };
+  const rx = new RegExp("(^|[^A-Za-z0-9])(" + U.labels.slice().sort(function(a, b){ return b.length - a.length; }).map(esc).join("|") + ")(?![A-Za-z0-9])", "g");
+  document.querySelectorAll(UI_ROOTS).forEach(function(root){
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(n){
+        const p = n.parentNode;
+        if(!p || p.closest("h2, h3, summary, button, a, .ui, .codes, svg")) return NodeFilter.FILTER_REJECT;
+        rx.lastIndex = 0;
+        return rx.test(n.data) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    const nodes = []; while(w.nextNode()) nodes.push(w.currentNode);
+    nodes.forEach(function(n){
+      const block = n.parentNode.closest("li, p, dd, div") || n.parentNode;
+      const seen = block.__ui || (block.__ui = new Set());
+      const frag = document.createDocumentFragment(); let last = 0, m;
+      rx.lastIndex = 0;
+      while((m = rx.exec(n.data))){
+        const at = m.index + m[1].length, lab = m[2];
+        frag.appendChild(document.createTextNode(n.data.slice(last, at)));
+        const chip = el("span", "ui", lab); chip.dir = "ltr"; frag.appendChild(chip);
+        if(G[lab] && !seen.has(lab)){ seen.add(lab); frag.appendChild(el("span", "gl", " (" + G[lab] + ")")); }
+        last = at + lab.length;
+      }
+      frag.appendChild(document.createTextNode(n.data.slice(last)));
+      n.parentNode.replaceChild(frag, n);
+    });
+  });
+}
+
+/* Apper: samme knapper som i steg 8 og 9, og URL-ene er de samme -
+   de ligger ett sted i innholdet. */
+/* Sonic sin historikk fra Myfxbook: gevinst opp, maanedens stoerste dupp ned,
+   paa SAMME skala - saa forholdet synes uten aa lese tall. Tidsaksen er
+   venstre-til-hoeyre ogsaa paa urdu og arabisk, som grafer vanligvis er. */
+/* Bank, fond eller Sonic: samme spoersmaal for tre steder aa ha penger.
+   Avkastning og risiko staar paa samme rad - aldri avkastning alene. */
+function renderAlt(){
+  const A = C.alt_compare && (C.alt_compare[lang] || C.alt_compare.en), host = $("alt");
+  if(!host) return;
+  if(!A){ host.hidden = true; return; }
+  host.hidden = false; host.textContent = "";
+  host.appendChild(el("h3", null, A.title));
+  host.appendChild(el("p", "lede", A.lede));
+  const h = el("div", "alth"); A.cols.forEach(function(c){ h.appendChild(el("b", null, c)); }); host.appendChild(h);
+  A.rows.forEach(function(r){
+    const row = el("div", "altrow"); row.appendChild(el("span", null, r[0]));
+    r.slice(1).forEach(function(v){ row.appendChild(el("b", null, v)); });
+    host.appendChild(row);
+  });
+  A.notes.forEach(function(n){ host.appendChild(el("p", "vnote vsnote", n)); });
+  host.appendChild(el("p", "disc", A.disclaimer));
+}
+function renderResults(){
+  const R = C.results, host = $("rs-fig");
+  if(!R || !host) return;
+  const T = R[lang] || R.en;
+  $("rs-lede").textContent = T.lede;
+  const NS = "http://www.w3.org/2000/svg";
+  const mk = function(tag, a){ const n = document.createElementNS(NS, tag); for(const k in a) n.setAttribute(k, a[k]); return n; };
+  const W = 330, base = 92, k = 40, n = R.months.length, slot = (W - 12) / n, bw = Math.max(4, slot * 0.6);
+  const svg = mk("svg", {viewBox: "0 0 " + W + " 150", role: "img", "aria-label": T.lede});
+  svg.appendChild(mk("line", {x1: 4, x2: W - 4, y1: base, y2: base, stroke: "var(--rule)", "stroke-width": 1}));
+  /* Aarstallet staar midt under sitt eget aar, med skillestrek mellom aarene.
+     Et aar med bare to maaneder (2024) skal ikke kollidere med det neste. */
+  const span = {};
+  R.months.forEach(function(m, i){
+    const x = 6 + i * slot + (slot - bw) / 2, g = Math.max(0, m[1]), dd = Math.max(0, m[2]);
+    svg.appendChild(mk("rect", {x: x, y: base - g * k, width: bw, height: Math.max(0.5, g * k), rx: 1.5, fill: "var(--gold)"}));
+    if(dd > 0) svg.appendChild(mk("rect", {x: x, y: base + 2, width: bw, height: Math.max(1, dd * k), rx: 1.5, fill: "var(--ember)"}));
+    const y = m[0].slice(0, 4);
+    if(!span[y]) span[y] = [i, i]; else span[y][1] = i;
+  });
+  Object.keys(span).forEach(function(y, j){
+    const a = span[y][0], b = span[y][1], x0 = 6 + a * slot, x1 = 6 + (b + 1) * slot;
+    if(j > 0) svg.appendChild(mk("line", {x1: x0, x2: x0, y1: base + 40, y2: base + 54, stroke: "var(--edge-ui)"}));
+    const tx = mk("text", {x: (x0 + x1) / 2, y: base + 52, "font-size": 10, "text-anchor": "middle", fill: "var(--chalk-dim)", "font-family": "Montserrat, sans-serif"});
+    tx.textContent = (b - a < 3) ? "\u2019" + y.slice(2) : y; svg.appendChild(tx);
+  });
+  const top = mk("text", {x: 4, y: base - 2 * k - 2, "font-size": 9, fill: "var(--chalk-dim)", "font-family": "Montserrat, sans-serif"});
+  top.textContent = "2 %"; svg.appendChild(top);
+  svg.appendChild(mk("line", {x1: 22, x2: W - 4, y1: base - 2 * k, y2: base - 2 * k, stroke: "var(--rule)", "stroke-dasharray": "2 3"}));
+  host.textContent = ""; host.appendChild(svg);
+  const lg = $("rs-leg"); lg.textContent = "";
+  [["var(--gold)", T.legend[0]], ["var(--ember)", T.legend[1]]].forEach(function(p){
+    const sw = el("i"); sw.style.background = p[0]; lg.appendChild(sw); lg.appendChild(el("span", null, p[1]));
+  });
+  const dl = $("rs-stat"); dl.textContent = "";
+  T.stats.forEach(function(lbl, i){ const w = el("div"); w.appendChild(el("dt", null, lbl)); w.appendChild(el("dd", null, R.stats[i])); dl.appendChild(w); });
+  const ul = $("rs-notes"); ul.textContent = "";
+  T.notes.forEach(function(nt){ ul.appendChild(el("li", null, nt)); });
+  $("rs-formula").textContent = T.formula;
+  $("rs-tabsum").textContent = T.table;
+  const tb = $("rs-tab"); tb.textContent = "";
+  const hr = el("tr"); ["", T.legend[0], T.legend[1]].forEach(function(h){ hr.appendChild(el("th", null, h)); }); tb.appendChild(hr);
+  R.months.forEach(function(m){ const tr = el("tr"); tr.appendChild(el("td", null, m[0])); tr.appendChild(el("td", null, "+" + m[1].toFixed(2) + " %")); tr.appendChild(el("td", null, (m[2] ? "−" : "") + m[2].toFixed(2) + " %")); tb.appendChild(tr); });
+  const a = $("rs-link");
+  if(safeUrl(R.source)){ a.href = R.source; a.textContent = T.link; } else { a.removeAttribute("href"); a.textContent = ""; }
+  $("rs-read").textContent = T.read;
+}
+/* Kalkulatoren legger historikkens EKTE maaneder paa medlemmets beloep:
+   beholdt = beloep x 24 x maanedens gevinst x 0,70, profitten tatt ut hver
+   maaned (ingen renters rente). Nedsiden staar like stort ved siden av, og
+   den sier selv hvorfor den ikke er en prognose. Vises bare naar founder
+   har slaatt den paa (calculator.live) - compliance-porten i CLAUDE.md. */
+let calcPeriod = 12;
+function renderCalc(){
+  const K = C.calculator, sec = $("s-calc");
+  if(!K || !sec || !C.results) return;
+  sec.hidden = !K.live;
+  if(!K.live) return;
+  const T = K[lang] || K.en;
+  $("cc-lede").textContent = T.lede;
+  $("cc-amount-l").textContent = T.amount;
+  $("cc-total-l").textContent = T.total;
+  $("cc-risk-t").textContent = T.risk;
+  $("cc-method").textContent = T.method;
+  $("cc-disc").textContent = T.disclaimer;
+  const usd = function(n){ return "$" + n.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}); };
+  const per = $("cc-per"); per.textContent = "";
+  K.periods.forEach(function(n, i){
+    const b = el("button", null, T.periods[i]); b.type = "button";
+    b.setAttribute("aria-pressed", String(n === calcPeriod));
+    b.onclick = function(){ calcPeriod = n; renderCalc(); };
+    per.appendChild(b);
+  });
+  const inp = $("cc-amount"), sl = $("cc-slide");
+  $("cc-range").textContent = T.range || K.en.range;
+  const pre = $("cc-pre"); pre.textContent = "";
+  [50, 100, 250, 500, 1000].forEach(function(v){
+    const b = el("button", null, "$" + v.toLocaleString("en-US")); b.type = "button"; b.dir = "ltr";
+    b.onclick = function(){ inp.value = v; sl.value = v; calc(); };
+    pre.appendChild(b);
+  });
+  sl.oninput = function(){ inp.value = sl.value; calc(); };
+  /* Hver maaned: [maaned, brutto %, kurtasje %, fee ukentlig netto %, fee per vinnerdag %]
+     paa strategikontoen. Ganges med 24 og beloepet. Ingen rentes rente: gevinsten tas ut. */
+  function calc(){
+    const A = Math.max(0, parseFloat(inp.value) || 0), f = A * K.multiple / 100;
+    const ms = K.costs.slice(-calcPeriod);
+    const sum = function(i){ return ms.reduce(function(s, m){ return s + m[i]; }, 0) * f; };
+    const G = sum(1), Cm = sum(2), Fw = sum(3), Fd = sum(4);
+    const hi = G - Cm - Fw, lo = G - Cm - Fd;
+    if(String(sl.value) !== String(Math.min(2000, Math.max(10, A)))) sl.value = Math.min(2000, Math.max(10, A));
+    /* Stolpen: hvor bruttoen blir av. Beholdt (lav) + det ekstra du kan beholde
+       ved ukentlig oppgjoer + avgift + kurtasje = brutto. */
+    const pct = function(x){ return G > 0 ? Math.max(0, x / G * 100).toFixed(2) + "%" : "0%"; };
+    const bar = $("cc-bar").children;
+    bar[0].style.width = pct(lo); bar[1].style.width = pct(hi - lo); bar[2].style.width = pct(Fw); bar[3].style.width = pct(Cm);
+    $("cc-total").textContent = usd(lo) + " \u2013 " + usd(hi);
+    const kept = ms.map(function(m){ return [m[0], (m[1] - m[2] - m[3]) * f]; });
+    const best = kept.reduce(function(a, b){ return b[1] > a[1] ? b : a; });
+    const worst = kept.reduce(function(a, b){ return b[1] < a[1] ? b : a; });
+    $("cc-months").textContent = T.months + ": " + best[0] + " " + usd(best[1]) + " \u00b7 " + worst[0] + " " + usd(worst[1]);
+    const R = T.rows || K.en.rows, tab = $("cc-tab"); tab.textContent = "";
+    [[R[0], usd(G)], [R[1], "\u2212" + usd(Cm)], [R[2], "\u2212" + usd(Fw) + " \u2013 \u2212" + usd(Fd)], [R[3], usd(lo) + " \u2013 " + usd(hi)]]
+      .forEach(function(r){ tab.appendChild(el("dt", null, r[0])); const dd = el("dd", null, r[1]); dd.dir = "ltr"; tab.appendChild(dd); });
+    const ul = $("cc-risks"); ul.textContent = "";
+    T.risks.forEach(function(r){
+      ul.appendChild(el("li", null, r.replace(/\{A\}/g, usd(A)).replace(/\{D\}/g, usd(A * K.multiple * K.worst_day / 100))));
+    });
+    isolateFigures();
+  }
+  inp.oninput = calc; calc();
+}
+/* Bonuser og insentiver: hva hver gir og hva den krever. Informasjon, ikke maal. */
+/* Stegtekst: én linje = én handling. Flere linjer blir en kort liste,
+   en enkelt linje blir et vanlig avsnitt. */
+function lines(txt, cls){
+  if(txt.indexOf("\n") === -1) return el("p", cls || null, txt);
+  const ul = el("ul", "acts" + (cls ? " " + cls : ""));
+  txt.split("\n").filter(function(s){ return s.trim(); }).forEach(function(s){ ul.appendChild(el("li", null, s)); });
+  return ul;
+}
+function p2pBox(P, video){
+  const d = el("details", "p2p");
+  d.appendChild(el("summary", null, P.title));
+  if(P.lede) d.appendChild(el("p", null, P.lede));
+  if(video){
+    const a = el("a", "p2pv", P.watch || "YouTube"); a.href = video; a.target = "_blank"; a.rel = "noopener noreferrer";
+    d.appendChild(a);
+  }
+  const ol = el("ol");
+  P.steps.forEach(function(s){
+    const li = el("li"); li.appendChild(el("h4", null, s[0]));
+    const ul = el("ul"); s[1].forEach(function(b){ ul.appendChild(el("li", null, b)); }); li.appendChild(ul);
+    ol.appendChild(li);
+  });
+  d.appendChild(ol);
+  return d;
+}
+function renderBonuses(){
+  const B = C.bonuses && (C.bonuses[lang] || C.bonuses.en), sec = $("s-bonus"), host = $("bn-list");
+  if(!B || !sec || !host){ if(sec) sec.hidden = true; return; }
+  sec.hidden = false;
+  $("bn-lede").textContent = B.lede;
+  $("bn-note").textContent = B.note;
+  host.textContent = "";
+  B.items.forEach(function(it){
+    const a = el("article");
+    a.appendChild(el("h3", null, it[0]));
+    [1, 2].forEach(function(i){
+      const p = el("p"); p.appendChild(el("b", null, B.labels[i - 1])); p.appendChild(document.createTextNode(it[i])); a.appendChild(p);
+    });
+    host.appendChild(a);
+  });
+}
+/* Uttak i tre deler, fra meglerens egne guider. Den midterste trengs bare
+   foerste gang; det staar i tittelen, saa ingen gjoer den hver gang. */
+function renderWithdraw(){
+  const W = C.withdraw && (C.withdraw[lang] || C.withdraw.en), ol = $("wd-parts");
+  if(!W || !ol) return;
+  $("wd-lede").textContent = W.lede;
+  ol.textContent = "";
+  W.parts.forEach(function(pt){
+    const li = el("li");
+    li.appendChild(el("h3", null, pt[0]));
+    li.appendChild(el("p", null, pt[1]));
+    ol.appendChild(li);
+  });
+  $("wd-facts").textContent = W.facts;
+}
+/* Spoersmaal og svar. Soeket filtrerer paa spoersmaal OG svar, saa «uttak»
+   finner «Kan jeg ta ut pengene mine?». Soeketeksten overlever spraakbytte. */
+function renderFaq(){
+  const F = C.faq && (C.faq[lang] || C.faq.en), host = $("faq-list");
+  if(!F || !host) return;
+  $("faq-lede").textContent = F.lede;
+  const q = $("faq-q"); q.placeholder = F.search; q.setAttribute("aria-label", F.search);
+  host.textContent = "";
+  F.items.forEach(function(it){
+    const dt = el("details","qa");
+    dt.appendChild(el("summary", null, it[0]));
+    dt.appendChild(el("p", null, it[1]));
+    host.appendChild(dt);
+  });
+  const none = $("faq-none"); none.textContent = F.none;
+  function filter(){
+    const v = q.value.trim().toLowerCase(); let vis = 0;
+    host.querySelectorAll(".qa").forEach(function(dt){
+      const hit = !v || dt.textContent.toLowerCase().indexOf(v) !== -1;
+      dt.hidden = !hit; if(hit) vis++;
+      if(v && hit) dt.open = true;
+    });
+    none.hidden = vis > 0;
+  }
+  q.oninput = filter; filter();
+}
+/* App-kortene bygges ett sted. I onboardingen (steg 6) uten bli-med-knappen:
+   gruppa hoerer hjemme i siste steg, etter at appen er installert. */
+function appCards(host, withJoin){
+  const A = C.apps_page; if(!A || !host) return;
+  const T = A[lang] || A.en;
+  A.list.forEach(function(app){
+    const card = el("div","appc");
+    /* Samme ikon som i butikken, saa medlemmet kan se at det er den ekte
+       appen. Navnet staar rett ved, derfor tom alt-tekst. */
+    const head = el("div","ah");
+    if(app.icon && sameOrigin(app.icon)){
+      const im = el("img");
+      im.src = app.icon; im.alt = ""; im.width = 48; im.height = 48;
+      im.loading = "lazy"; im.decoding = "async";
+      head.appendChild(im);
+    }
+    head.appendChild(el("h3", null, app.name));
+    card.appendChild(head);
+    card.appendChild(el("p", null, T[app.key] || ""));
+    const row = el("div","apps");
+    [["Android", app.android], ["iPhone", app.ios]].forEach(function(s){
+      if(!safeUrl(s[1])) return;
+      const a = el("a", null, s[0]);
+      a.href = s[1]; a.target = "_blank"; a.rel = "noopener noreferrer";
+      row.appendChild(a);
+    });
+    if(row.children.length) card.appendChild(row);
+    /* Bli-med-knappen staar UNDER nedlastingen: lenka aapnes inne i appen,
+       saa den virker foerst naar appen finnes. Samme lenke og samme navn
+       som i steg 9. */
+    if(withJoin && app.join && safeUrl(app.join) && T.join){
+      card.appendChild(el("p","vnote", T.join_note));
+      const j = el("a","joinbtn", T.join);
+      j.href = app.join; j.target = "_blank"; j.rel = "noopener noreferrer";
+      card.appendChild(j);
+    }
+    host.appendChild(card);
+  });
+}
+function renderApps(){
+  const A = C.apps_page, host = $("apps-list");
+  if(!A || !host) return;
+  const T = A[lang] || A.en;
+  $("apps-lede").textContent = T.lede;
+  host.textContent = "";
+  appCards(host, true);
+  $("apps-browser").textContent = T.browser;
+  $("apps-warn").textContent = T.warn;
+}
+
+/* ---------- hovedmeny og visninger ---------- */
+let view = "menu";
+const CATS = ["start","tools","earn","learn","faq","ib"];
+/* Gamle lenker til #apps lander der appene bor naa. */
+const ALIAS = { apps: "tools", calc: "earn" };
+/* Menykort som hopper til en bestemt del av en fane. */
+const JUMPTO = { calc: "s-calc" };
+
+function renderMenu(){
+  const nav = $("menu"); if(!nav) return;
+  const M = C.menu && (C.menu[lang] || C.menu.en);
+  if(!M){ nav.hidden = true; return; }
+  nav.textContent = "";
+  nav.appendChild(el("p","mlede", M.lede));
+  const done = doneSet(), steps = (C.guide[lang] || C.guide.en).steps.length;
+  M.items.forEach(function(it){
+    const cat = it[0];
+    const b = el("button","plate");
+    b.type = "button";
+    b.setAttribute("data-cat", cat);
+    b.appendChild(el("span","stripe"));
+    const bd = el("span","bd");
+    bd.appendChild(el("span","t", it[1]));
+    bd.appendChild(el("span","d", it[2]));
+    /* Framdriften er ekte: den teller stegene medlemmet selv har huket av. */
+    if(cat === "start" && done.size){
+      const pg = el("span","pg");
+      const bar = el("i"); const fill = el("b");
+      fill.style.width = Math.round(Math.min(1, done.size / steps) * 100) + "%";
+      bar.appendChild(fill);
+      pg.appendChild(bar);
+      pg.appendChild(el("span", null, done.size + " / " + steps));
+      bd.appendChild(pg);
+    }
+    b.appendChild(bd);
+    const go = el("span","go");
+    go.setAttribute("aria-hidden","true");
+    b.appendChild(go);
+    b.onclick = JUMPTO[cat] ? function(){ location.hash = "#" + cat; } : function(){ if(TABS[cat]) tab = TABS[cat][0]; setView(cat); };
+    nav.appendChild(b);
+  });
+  const bk = $("back");
+  if(bk){ bk.textContent = M.back; bk.onclick = function(){ setView("menu"); }; }
+}
+
+/* Visningen er ren CSS: data-view paa .shell bestemmer hvilken kategori
+   som vises. `hidden` eies av render() alene og vinner alltid. */
+/* Inntektsfanen er delt i faner (founder: «del opp inntjening i flere faner»).
+   Raden øverst er fanene; bare én del vises om gangen. */
+const TABS = { earn: ["sonic", "results", "calc", "withdraw"] };
+let tab = "sonic";
+function setTab(tb, scroll){
+  tab = tb;
+  const sh = document.querySelector(".shell"); if(sh) sh.setAttribute("data-tab", tb);
+  [...document.querySelectorAll("#jump button")].forEach(function(b){
+    const on = b.dataset.tab === tb; b.setAttribute("aria-selected", String(on));
+    if(on && b.parentNode.scrollWidth > b.parentNode.clientWidth){
+      const r = b.parentNode.getBoundingClientRect();
+      if(r.top >= 0 && r.bottom <= innerHeight) b.scrollIntoView({block: "nearest", inline: "nearest"});
+    }
+  });
+  if(scroll) window.scrollTo(0, 0);
+}
+function renderJump(){
+  const j = $("jump"); if(!j) return;
+  const J = C.jump && (C.jump[lang] || C.jump.en);
+  j.textContent = "";
+  const order = TABS[view];
+  if(!J || !order){ j.hidden = true; const sh = document.querySelector(".shell"); if(sh) sh.removeAttribute("data-tab"); return; }
+  j.setAttribute("role", "tablist");
+  order.forEach(function(tb){
+    const b = el("button", null, J[tb] || tb); b.type = "button"; b.dataset.tab = tb; b.setAttribute("role", "tab");
+    b.onclick = function(){ setTab(tb, true); };
+    j.appendChild(b);
+  });
+  j.hidden = false;
+  setTab(tab, false);
+}
+function applyView(){
+  const sh = document.querySelector(".shell"), nav = $("menu"), bk = $("topbar");
+  if(PAGE === "leaders"){
+    sh.removeAttribute("data-view");
+    const nt = $("notices"); if(nt) nt.hidden = true;
+    if(nav) nav.hidden = true;
+    if(bk) bk.hidden = true;
+    return;
+  }
+  sh.setAttribute("data-view", view);
+  if(nav) nav.hidden = view !== "menu";
+  if(bk) bk.hidden = view === "menu";
+  renderJump();
+}
+
+function setView(v, fraHash){
+  view = CATS.indexOf(v) === -1 ? "menu" : v;
+  if(!fraHash){
+    const h = view === "menu" ? " " : "#" + view;
+    try{ history.pushState(null, "", h); }catch(e){ location.hash = view === "menu" ? "" : view; }
+    window.scrollTo(0, 0);
+  }
+  applyView();
+}
+
+function viewFromHash(){
+  let h = (location.hash || "").replace(/^#/, "");
+  const raw = h;
+  h = ALIAS[h] || h;
+  setView(CATS.indexOf(h) === -1 ? "menu" : h, true);
+  if(raw === "calc"){ setTab("calc", true); }
+}
+window.addEventListener("hashchange", viewFromHash);
+window.addEventListener("popstate", viewFromHash);
+
+/* Romanisert urdu/arabisk er et eget spraakspor (ur_rm, ar_rm), men ikke en
+   egen knapp i hovedraden: det er et skriftvalg under spraaket. */
+const baseOf = code => conf(code).roman_of || code;
+function buildSwitch(){
+  const nav = $("switch"); nav.textContent = "";
+  C.langs.filter(function(L){ return !L.roman_of; }).forEach(function(L){
+    const b = el("button",null,L.label);
+    b.id = "L-" + L.code;
+    b.setAttribute("aria-pressed", String(L.code === baseOf(lang)));
+    /* Tilbake til et spraak man har valgt Roman for, husker Roman. */
+    b.onclick = function(){
+      const pref = load("aimpire.script." + L.code);
+      setLang(pref && conf(pref).roman_of === L.code ? pref : L.code);
+    };
+    nav.appendChild(b);
+  });
+  const th = el("button","thm","◐");
+  th.setAttribute("aria-label","Light or dark");
+  th.onclick = toggleTheme;
+  nav.appendChild(th);
+}
+
+/* Spraakpakker (#37): siden har bare engelsk. Et annet spraak hentes én gang
+   fra lang/<kode>.json og lagres paa telefonen, saa neste besoek aapner rett
+   paa urdu uten ventetid. Pakken byttes bare naar innholdet faktisk endres
+   (hashen i C.packs). Feiler hentingen, vises engelsk - aldri en tom side. */
+const HAVE = { en: true };
+function mergePack(L, entries){
+  entries.forEach(function(e){
+    let o = C;
+    for(let i = 0; i < e[0].length && o; i++) o = o[e[0][i]];
+    if(o && typeof o === "object") o[L] = e[1];
+  });
+  HAVE[L] = true;
+}
+function cachedPack(L){
+  try{
+    const p = JSON.parse(localStorage.getItem("aimpire.pack." + L) || "null");
+    return p && C.packs && p.v === C.packs[L] ? p.d : null;
+  }catch(e){ return null; }
+}
+function ensurePack(L){
+  if(HAVE[L] || !C.packs || !C.packs[L]) return Promise.resolve(true);
+  const c = cachedPack(L);
+  if(c){ mergePack(L, c); return Promise.resolve(true); }
+  const timeout = new Promise(function(res){ setTimeout(function(){ res(null); }, 8000); });
+  const get = fetch("lang/" + L + ".json?v=" + C.packs[L])
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .catch(function(){ return null; });
+  return Promise.race([get, timeout]).then(function(d){
+    if(!Array.isArray(d)) return false;
+    mergePack(L, d);
+    try{ localStorage.setItem("aimpire.pack." + L, JSON.stringify({ v: C.packs[L], d: d })); }catch(e){}
+    return true;
+  });
+}
+function setLang(code){
+  const L = conf(code).code;
+  if(HAVE[L] || cachedPack(L)){ ensurePack(L); applyLang(L); return; }
+  document.documentElement.setAttribute("aria-busy", "true");
+  ensurePack(L).then(function(ok){
+    document.documentElement.removeAttribute("aria-busy");
+    applyLang(ok ? L : "en");
+  });
+}
+function applyLang(code){
+  const L = conf(code);
+  lang = L.code;
+  document.documentElement.lang = L.bcp || L.code;
+  document.documentElement.dir = L.dir;
+  document.documentElement.setAttribute("data-font", L.font);
+  C.langs.forEach(function(x){
+    const b = $("L-" + x.code);
+    if(b) b.setAttribute("aria-pressed", String(x.code === baseOf(lang)));
+  });
+  /* Skriftvalg: bare naar spraaket har en romanisert variant. */
+  const sc = $("script"), base = baseOf(lang);
+  const rom = C.langs.find(function(x){ return x.roman_of === base; });
+  if(sc){
+    sc.textContent = "";
+    sc.hidden = !rom;
+    if(rom){
+      [conf(base), rom].forEach(function(x){
+        const b = el("button", null, x.label);
+        b.type = "button";
+        b.setAttribute("aria-pressed", String(x.code === lang));
+        if(x.dir === "rtl") b.dir = "rtl";
+        b.onclick = function(){ store("aimpire.script." + base, x.code); setLang(x.code); };
+        sc.appendChild(b);
+      });
+    }
+  }
+  store("aimpire.lang", lang);
+  render();
+}
+function toggleTheme(){
+  /* Moerk er standard (founder 15.10): foerste trykk gaar til lys. */
+  const cur = document.documentElement.getAttribute("data-theme") || "dark";
+  const next = cur === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  store("aimpire.theme.v2", next);
+}
+(function(){
+  const th = load("aimpire.theme.v2");
+  if(th) document.documentElement.setAttribute("data-theme", th);
+  let l = load("aimpire.lang");
+  if(!C.langs.some(function(x){ return x.code === l; })){
+    const nav = ((navigator.language || "") + " " + (navigator.languages || []).join(" ")).toLowerCase();
+    const hit = C.langs.find(function(x){ return new RegExp("\\b" + x.code + "\\b|" + x.code + "-").test(nav); });
+    l = hit ? hit.code : C.langs[0].code;
+  }
+  let h0 = (location.hash || "").replace(/^#/, "");
+  h0 = ALIAS[h0] || h0;
+  if(CATS.indexOf(h0) !== -1) view = h0;
+  const go = function(){ initSponsor(); buildSwitch(); setLang(l); };
+  /* Har lenka eller telefonen en leder, ventes det paa den ferske lista (liten
+     fil), saa en leder founder nettopp har lagt til eller fjernet gjelder straks. */
+  if(new URLSearchParams(location.search).get("l") || load("aimpire.leader")){
+    document.documentElement.setAttribute("aria-busy", "true");
+    loadReg().then(function(){ document.documentElement.removeAttribute("aria-busy"); go(); });
+  } else { go(); loadReg(); }
+})();
+</script>
+</body>
+</html>

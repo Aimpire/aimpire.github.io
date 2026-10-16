@@ -1,0 +1,10 @@
+# Godkjente Aimpire-ledere. Bare founder redigerer denne filen.
+#
+# Én leder per linje:   Fornavn | partnerlenke
+# Lederen får linja ferdig fra lederverktøyet (ledere.html) og sender den til deg.
+# Lim den inn nederst og trykk «Commit changes». Siden er oppdatert etter 1–2 minutter.
+# Fjerne en leder: slett linja og trykk «Commit changes».
+# Linjer som starter med # er notater og teller ikke.
+#
+# Eksempel (teller ikke):
+# Sara | https://aitech.sonicpilot.io/?e=XXXXXXXX
