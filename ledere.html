@@ -2886,7 +2886,7 @@ function renderSearch(){
       const b = el("button", "qres"); b.type = "button";
       b.appendChild(el("b", null, h.e.t));
       const i = norm(h.e.x).indexOf(v); let snip;
-      if(i > -1){ const st = Math.max(0, i - 50); snip = (st > 0 ? "\u2026" : "") + h.e.x.slice(st, i + v.length + 90) + (i + v.length + 90 < h.e.x.length ? "\u2026" : ""); }
+      if(i > -1){ let st = Math.max(0, i - 50); if(st > 0){ const sp = h.e.x.indexOf(" ", st); if(sp > -1 && sp < i) st = sp + 1; } snip = (st > 0 ? "\u2026" : "") + h.e.x.slice(st, i + v.length + 90) + (i + v.length + 90 < h.e.x.length ? "\u2026" : ""); }
       else snip = h.e.x.slice(0, 120) + (h.e.x.length > 120 ? "\u2026" : "");
       if(snip.trim()) b.appendChild(el("span", null, snip));
       if(h.e.w) b.appendChild(el("small", null, h.e.w));
