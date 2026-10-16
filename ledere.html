@@ -197,6 +197,29 @@ html[data-font="nastaliq"] .hero h1{font-size:clamp(1.6rem,6.4vw,2.5rem);line-he
 }
 @keyframes rise{from{opacity:0;transform:translateY(.35em)}to{opacity:1;transform:none}}
 
+/* Paa korte skjermer (360x640 og mindre, de vanligste billige telefonene) tok
+   logo, spraakvalg, overskrift og sponsorvarselet hele foerste skjerm, saa det
+   foerste kortet - det som sier hva man skal gjoere - laa nedenfor kanten.
+   Maalt 16.10: kort 1 begynte paa 644 px med 640 px skjerm. Overskriften er
+   merkevaren, men den maa ikke staa i veien for handlingen. */
+@media (max-height:700px){
+  header{padding-top:12px}
+  .wordmark{margin-bottom:2px}
+  .hero{padding:26px 0 22px}
+  .hero h1{font-size:clamp(2rem,8.4vw,3.2rem)}
+  html[data-font="deva"] .hero h1,html[data-font="naskh"] .hero h1{font-size:clamp(1.7rem,6.6vw,2.6rem)}
+  html[data-font="nastaliq"] .hero h1{font-size:clamp(1.45rem,5.6vw,2.1rem)}
+  .hero p{margin-top:14px}
+  .notice{margin-block:10px}
+  .menu .mlede{margin-bottom:9px}
+  /* Nastaliq og naskh bruker mer hoeyde per linje. Luften strammes, ikke
+     teksten: founder 15.10 sa urdu var «stor og skremmende» da den var tett. */
+  html[data-font="nastaliq"] .hero,html[data-font="naskh"] .hero,html[data-font="deva"] .hero{padding:16px 0 12px}
+  html[data-font="nastaliq"] .hero p,html[data-font="naskh"] .hero p,html[data-font="deva"] .hero p{margin-top:10px}
+  html[data-font="nastaliq"] .script,html[data-font="naskh"] .script{margin-top:4px}
+  html[data-font="nastaliq"] .notice,html[data-font="naskh"] .notice{padding-block:11px}
+}
+
 /* sections */
 .sec{padding:50px 0 0}
 .sec > h2{margin:0 0 22px;font-size:1.42rem;font-weight:700;letter-spacing:-.015em;
@@ -518,7 +541,7 @@ html[dir="rtl"] .ib .flag{border-radius:5px 0 0 5px}
 .out.bad b{color:var(--gold-soft)}
 
 .risk{max-width:var(--measure);margin:56px 0 0;padding-top:20px;border-top:1px solid var(--rule);
-  color:var(--chalk-dim);font-size:.85rem}
+  color:var(--chalk-dim);font-size:.95rem}
 .sig{margin:30px 0 0;font-size:.8rem;color:var(--chalk-dim);font-family:"Montserrat",sans-serif}
 
 /* Overskrifter i ikke-latinsk skrift bruker spraakets egen skrift. */
