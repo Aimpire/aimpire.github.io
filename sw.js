@@ -5,7 +5,7 @@
    - Google-fonter: cache foerst (gstatic er uforanderlig), CSS-en oppdateres i bakgrunnen.
    - ALDRI cache: godkjent-lista (Google-arket), ledere.txt, skjemaet. De skal vaere ferske.
    Cachenavnet baerer bygg-id, saa hver publisering rydder den forrige. */
-const BUILD = "82b631f57d";
+const BUILD = "753ed95f87";
 const CACHE = "aimpire-" + BUILD;
 const SHELL = ["./", "./ledere.html"];
 
@@ -34,15 +34,19 @@ self.addEventListener("fetch", function(e){
   let url; try{ url = new URL(req.url); }catch(err){ return; }
   if(aldriCache(url)) return;
 
-  /* Sidevisning: nett med 4 s frist, ellers cache. */
+  /* Sidevisning: nett foerst, cache bare naar nettet er for tregt.
+     Ledersiden sender et skjema som maa matche Googles felt, saa der venter vi
+     lenge (20 s) foer vi tyr til en gammel kopi; medlemssiden 6 s. (16.10: en leder
+     satt paa gammel side og fikk soeknaden stille avvist.) */
   if(req.mode === "navigate"){
     e.respondWith((function(){
-      const fallback = /ledere\.html$/.test(url.pathname) ? "./ledere.html" : "./";
+      const erLedere = /ledere\.html$/.test(url.pathname);
+      const fallback = erLedere ? "./ledere.html" : "./";
       const nett = fetch(req).then(function(r){
         if(r && r.ok){ const kopi = r.clone(); caches.open(CACHE).then(function(c){ c.put(fallback, kopi); }); }
         return r;
       });
-      const frist = new Promise(function(res){ setTimeout(function(){ res(null); }, 4000); });
+      const frist = new Promise(function(res){ setTimeout(function(){ res(null); }, erLedere ? 20000 : 6000); });
       return Promise.race([nett.catch(function(){ return null; }), frist]).then(function(r){
         return r || caches.match(fallback).then(function(c){ return c || nett; });
       });

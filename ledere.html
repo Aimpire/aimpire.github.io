@@ -3212,7 +3212,37 @@ function toggleTheme(){
     if(document.readyState === "complete") lastBeacon(); else window.addEventListener("load", lastBeacon);
   }
   if("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")){
-    const regSw = function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); };
+    /* Ledersiden: feltene overlever en omlasting (16.10: en leder satt paa en gammel
+       versjon av siden i en halvtime og fikk soeknaden stille avvist av Google). */
+    const LD_FELT = ["ld-in", "ld-name", "ld-mail", "ld-spons"], LD_KEY = "aimpire.ld.stash";
+    const erLedere = !!document.getElementById("ld-in");
+    if(erLedere){
+      try{
+        const st = JSON.parse(sessionStorage.getItem(LD_KEY) || "null");
+        if(st){ sessionStorage.removeItem(LD_KEY); LD_FELT.forEach(function(id){ const el = document.getElementById(id); if(el && st[id]) el.value = st[id]; }); }
+      }catch(e){}
+    }
+    let haddeKontroll = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener("controllerchange", function(){
+      if(!haddeKontroll){ haddeKontroll = true; return; }   /* foerste installasjon (ingen gammel SW): ikke last om */
+      if(!erLedere) return;                                  /* medlemssiden: neste aapning er ny nok */
+      try{
+        const sist = Number(sessionStorage.getItem("aimpire.sw.reloadedAt") || 0);
+        if(Date.now() - sist < 15000) return;                /* aldri omlastingsloekke */
+        sessionStorage.setItem("aimpire.sw.reloadedAt", String(Date.now()));
+        const st = {}; LD_FELT.forEach(function(id){ const el = document.getElementById(id); if(el && el.value) st[id] = el.value; });
+        sessionStorage.setItem(LD_KEY, JSON.stringify(st));
+      }catch(e){}
+      location.reload();
+    });
+    const regSw = function(){
+      navigator.serviceWorker.register("sw.js").then(function(reg){
+        /* Se etter ny versjon naar siden kommer i forgrunnen igjen, og hvert minutt mens den er aapen. */
+        const sjekk = function(){ try{ reg.update().catch(function(){}); }catch(e){} };
+        document.addEventListener("visibilitychange", function(){ if(document.visibilityState === "visible") sjekk(); });
+        setInterval(sjekk, 60000);
+      }).catch(function(){});
+    };
     if(document.readyState === "complete") regSw(); else window.addEventListener("load", regSw);
   }
 })();
