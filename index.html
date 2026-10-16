@@ -729,6 +729,16 @@ html[data-font="nastaliq"] .vs .vsnote{line-height:2}
 .acts.subs > li{padding-inline-start:0}
 .acts.subs > li::before{content:none}
 /* Kort sjekk: to valg, og forklaringen kommer uansett hva man svarer. */
+/* Foldet avsnitt: overskriften er knappen, og pilen sier at det er mer. */
+.fold > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;
+  min-height:44px;margin:0 -4px;padding:0 4px}
+.fold > summary::-webkit-details-marker{display:none}
+.fold > summary h3{margin:0;flex:1 1 auto}
+.fold > summary::after{content:"";flex:0 0 auto;width:9px;height:9px;margin-inline-end:2px;
+  border-inline-end:2px solid var(--gold-soft);border-block-end:2px solid var(--gold-soft);
+  transform:rotate(45deg);transition:transform .15s ease}
+.fold[open] > summary::after{transform:rotate(-135deg)}
+.fold > p{margin-top:8px}
 .qz{margin:14px 0 0;padding:13px 14px;border:1px solid var(--rule);border-radius:12px;
   background:var(--ink-deep);max-width:var(--measure)}
 .qzt{display:block;font:800 .76rem/1 var(--display);letter-spacing:.08em;
@@ -1638,10 +1648,24 @@ function render(){
     $("t-amplify").appendChild(document.createElement("b"));
     const au = $("amplify"); au.textContent = ""; au.className = "places amp";
     const CP = AM.compare && (AM.compare[lang] || AM.compare.en);
+    /* Aatte avsnitt etter hverandre leses ikke paa en telefon. De to som
+       avgjoer noe - hva Sonic er, og naar kontoen stenger - staar aapne.
+       Resten aapnes med ett trykk. Ingen risikosetning kan foldes bort:
+       de staar i de to aapne. Ingen nye tekster. */
+    const ALLTID_APEN = [0, 2];
     (AM.items[lang] || AM.items.en).forEach(function(it, i){
       const li = document.createElement("li");
-      li.appendChild(el("h3",null,it[0]));
-      li.appendChild(el("p",null,it[1]));
+      if(ALLTID_APEN.indexOf(i) !== -1){
+        li.appendChild(el("h3",null,it[0]));
+        li.appendChild(el("p",null,it[1]));
+      } else {
+        const d = el("details","fold");
+        const sm = document.createElement("summary");
+        sm.appendChild(el("h3",null,it[0]));
+        d.appendChild(sm);
+        d.appendChild(el("p",null,it[1]));
+        li.appendChild(d);
+      }
       au.appendChild(li);
       if(i === 1 && CP){
         const v = el("li","vs");
