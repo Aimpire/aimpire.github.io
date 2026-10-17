@@ -1013,9 +1013,10 @@ html[data-font="nastaliq"] .qa summary{font-weight:400}
   background:linear-gradient(var(--ink),var(--ink)) padding-box,var(--grad) border-box}
 /* Forsidekortet (founder 17.10 03:26): egen-lenke er en LITEN pille her - hovedplassen
    er under IB og bonuser. Kortet skal ikke rope; det peker. */
-#notice-none .dlink{display:inline-flex;width:auto;min-height:36px;margin-top:10px;
-  padding:7px 14px;border:1.5px solid transparent;border-radius:999px;font:700 .82rem/1.15 var(--display);
-  background:linear-gradient(var(--ink),var(--ink)) padding-box,var(--grad) border-box;color:var(--chalk)}
+#notice-none .dlink{display:inline-flex;width:auto;min-height:32px;margin-top:10px;
+  padding:5px 12px;border:1px solid var(--rule);border-radius:999px;font:700 .76rem/1.15 var(--display);
+  background:transparent;color:var(--chalk-dim)}
+#notice-none .slab.reg#nn-own{margin-top:10px}
 #spon .dlink:hover,#notice-none .dlink:hover,.ib .dlink:hover,
 #spon .dlink:focus-visible,#notice-none .dlink:focus-visible,.ib .dlink:focus-visible{
   filter:brightness(1.18);border-color:transparent}
@@ -1025,12 +1026,14 @@ html[dir="rtl"] #spon .dlink::after,html[dir="rtl"] #notice-none .dlink::after,
 html[dir="rtl"] .ib .dlink::after{content:"\2039"}
 /* «Min egen lenke»: kompakt pille med gradientkant - merkets signatur, ikke en graa strek
    (founder 17.10 02:35). Fyllet foelger sideflaten i begge tema. */
-#spon .dlink.mini{display:inline-flex;align-items:center;width:auto;min-height:40px;margin-top:10px;
-  padding:9px 16px 9px 18px;border:1.5px solid transparent;border-radius:999px;
-  background:linear-gradient(var(--ink),var(--ink)) padding-box,var(--grad) border-box;
-  color:var(--chalk);font:800 .85rem/1.15 var(--display);letter-spacing:.01em}
-#spon .dlink.mini::after{font-size:1.05em}
-#spon .dlink.mini:hover,#spon .dlink.mini:focus-visible{filter:brightness(1.18);border-color:transparent}
+/* Bitteliten og diskret, ytterst til hoeyre paa navneraden (founder 17.10 03:36). */
+#spon .dlink.tiny,.spon .dlink.tiny{display:inline-flex;align-items:center;width:auto;min-height:28px;
+  margin:0 0 0 auto;margin-inline-start:auto;margin-inline-end:0;align-self:center;
+  padding:3px 10px;border:1px solid var(--rule);border-radius:999px;background:transparent;
+  color:var(--chalk-dim);font:700 .72rem/1.15 var(--display);text-decoration:none}
+#spon .dlink.tiny::after{content:"\203A";margin-inline-start:5px;color:var(--chalk-dim);font-size:1em}
+html[dir="rtl"] #spon .dlink.tiny::after{content:"\2039"}
+#spon .dlink.tiny:hover,#spon .dlink.tiny:focus-visible{border-color:var(--gold-soft);color:var(--chalk);filter:none}
 .back{min-height:40px;padding:8px 14px;font-size:.9rem;border-color:var(--rule)}
 .menu .share{margin-top:16px;padding-inline:18px 20px}
 .ldlink{display:inline-flex;min-height:36px;margin:4px 0;padding:6px 12px;font-size:.9rem}
@@ -1896,6 +1899,11 @@ function render(){
     sp.appendChild(el("strong",null,dest.host));
     sp.appendChild(document.createTextNode(" " + S.fingerprint + " "));
     sp.appendChild(el("span","fp",dest.fp));
+    /* Egen lenke: bitteliten og diskret, ytterst til hoeyre paa raden (founder 17.10 03:36). */
+    if(S.own_link){
+      const t4 = el("a", "dlink tiny", S.own_link); t4.href = "ledere.html";
+      sp.appendChild(t4);
+    }
     sp.appendChild(document.createTextNode(" "));
     /* Founder 16.10: «under der det står hvem leder som inviterte dem … en knapp
        registrer deg hos oss nå» - rett til lederens registreringsskjema. Ikke naar
@@ -1906,8 +1914,7 @@ function render(){
     if(S.register && safeUrl(dest.url)){
       const rb = el("a","slab reg");
       rb.href = dest.url; rb.target = "_blank"; rb.rel = "noopener noreferrer";
-      rb.appendChild(el("span","t", S.register));
-      if(sponsorName && S.via) rb.appendChild(el("span","s", S.via.replace("{N}", sponsorName)));
+      rb.appendChild(el("span","t", S.register));   /* uten undertekst - navnet staar i raden over (03:36) */
       sp.appendChild(rb);
     }
     /* Founder 16.10: den som selv inviterer andre, skal ikke registrere seg
@@ -1918,22 +1925,13 @@ function render(){
        samme enhet; resten maa IB-portalen se. */
     const me = load("aimpire.me"), cur = leaderById(load("aimpire.leader"));
     if(me && cur && cur.id === me){
-      /* Founder 17.10 03:34: ingen forklarende tekst her - den staar i IB-delen
-         («Din egen lenke - foer du registrerer deg»). Bare den lille pillen. */
-      if(S.own_link){
-        const ob = el("a", "dlink mini", S.own_link);
-        ob.href = "ledere.html";
-        sp.appendChild(ob);
-      }
+      /* Egen lenke: ingenting ekstra - forklaringen bor i IB-delen, og den
+         bittelille pillen sitter i navneraden (founder 17.10 03:36). */
     } else if(S.short_check || S.double_check){
       /* Founder 16.10 (#50): kort linje her - feilen kan bare stoppes idet man
          registrerer seg. Den fulle forklaringen ligger under IB. */
       /* B-023: ogsaa medlemmet som ble «fanget» av feil lenke skal se veien ut. */
       const dc = el("p", "dcheck", (sponsorName && S.not_you ? S.not_you.replace("{N}", sponsorName) + " " : "") + (S.short_check || S.double_check));
-      dc.appendChild(document.createElement("br"));
-      const a2 = el("a", "dlink", S.own_link || "");
-      a2.href = "ledere.html";
-      dc.appendChild(a2);
       sp.appendChild(dc);
     }
   } else { sp.hidden = true; }
@@ -1968,13 +1966,15 @@ function render(){
         none.appendChild(who3);
         const rb3 = el("a", "slab reg"); rb3.id = "nn-reg";
         rb3.href = u3.href; rb3.target = "_blank"; rb3.rel = "noopener noreferrer";
-        rb3.appendChild(el("span", "t", S.register));
-        if(S.via) rb3.appendChild(el("span", "s", S.via.replace("{N}", husket3.name)));
+        rb3.appendChild(el("span", "t", S.register));   /* navnet staar i raden over (03:36) */
         none.appendChild(rb3);
       }
     }
     if(S.own_link){
-      const a3 = el("a", "dlink", S.own_link); a3.href = "ledere.html";
+      const harStor = !!$("nn-reg");
+      const a3 = harStor ? el("a", "dlink", S.own_link) : el("a", "slab reg", null);
+      if(!harStor){ a3.id = "nn-own"; a3.appendChild(el("span", "t", S.own_link)); }
+      a3.href = "ledere.html";
       none.appendChild(a3);
     }
   }
