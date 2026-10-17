@@ -1870,6 +1870,17 @@ html[dir="rtl"] .tbprog b{transform-origin:100% 50%}
   background:#C21FBF;box-shadow:0 0 0 2px var(--ink)}
 .tbb:active svg{transform:scale(.9)}
 .tbb:focus-visible{outline:2px solid #15D8C4;outline-offset:-4px;border-radius:12px}
+/* Snarveier paa Hjem: to kolonner, siste alene over full bredde. */
+.mlist.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:none;border:0;box-shadow:none;padding:0;overflow:visible}
+.mlist.mgrid .plate{display:grid;grid-template-columns:1fr;grid-template-rows:auto auto;gap:8px;padding:14px;border-radius:18px;
+  border:1px solid var(--rule);background:var(--ink-raise);align-items:start;text-align:start;min-height:0}
+.mlist.mgrid .plate > .stripe,.mlist.mgrid .plate > .go{display:none}
+.mlist.mgrid .plate > .mic{grid-column:1;grid-row:1;text-align:start;font-size:1.4rem}
+.mlist.mgrid .plate > .bd{grid-column:1;grid-row:2;padding:0}
+.mlist.mgrid .plate .t{font-size:.98rem}
+.mlist.mgrid .plate .d{font-size:.8rem;line-height:1.35}
+.mlist.mgrid .plate:last-child:nth-child(odd){grid-column:1 / -1}
+#menu .mknow{margin:14px 0 0}
 /* Ticker med ekte kurser (founder 17.10 22:35 «mer trading-effekter … det maa virke som et
    trading community»). Kilde: api.gold-api.com (K-108). Bare ekte tall: metallene viser
    «stengt» i helgen i stedet for aa late som de beveger seg. */
@@ -5142,15 +5153,23 @@ function renderMenu(){
   const nav = $("menu"); if(!nav) return;
   const M = C.menu && (C.menu[lang] || C.menu.en);
   if(!M){ nav.hidden = true; return; }
+  /* «Markedene naa» flyttes inn paa Hjem rett under hovedkortene (se under); legg den
+     tilbake utenfor foer nav toemmes, ellers forsvinner den ved neste render. */
+  const mkNaa = $("mk-now"); if(mkNaa && mkNaa.parentNode === nav) nav.after(mkNaa);
   nav.textContent = "";
   /* Ledeteksten over kortene er tatt bort (lederfeedback 16.10): kortene sier det selv. */
   const done = doneSet(), steps = (C.guide[lang] || C.guide.en).steps.length;
   /* To fremhevede kort (Sonic og Kom i gang), resten som én liste. */
   const FEAT = { earn: 1, start: 1 };
-  const list = el("div","mlist");
+  /* Founder 17.10 22:36 «jobb mer med menyene … rekkefoelge og hvilke funksjonaliteter de
+     gir»: Hjem er et dashbord, ikke en kopi av fanelinja. Verktoey og Laer staar i
+     fanelinja og gjentas ikke her; resten blir snarveier i et kompakt rutenett. */
+  const ITAB = { tools: 1, learn: 1 };
+  const list = el("div","mlist mgrid");
   const feat = el("div","mfeat"); nav.appendChild(feat);
   M.items.forEach(function(it){
     const cat = it[0];
+    if(ITAB[cat]) return;
     const b = el("button", FEAT[cat] ? "plate feat" : "plate");
     b.type = "button";
     b.setAttribute("data-cat", cat);
@@ -5183,6 +5202,7 @@ function renderMenu(){
     b.onclick = JUMPTO[cat] ? function(){ location.hash = "#" + cat; } : function(){ if(TABS[cat]) tab = TABS[cat][0]; setView(cat); };
     if(FEAT[cat]) feat.appendChild(b); else list.appendChild(b);
   });
+  if(mkNaa) nav.appendChild(mkNaa);   /* trading-pulsen tidlig: ekte gullpris + oekter */
   /* Dagens ord (founder 17.10 21:04 «samme tankegang … sjel»): ett begrep fra ordlista per dag. */
   const LT = C.learn && C.learn.terms && (C.learn.terms[lang] || C.learn.terms.en);
   if(LT && LT.length && M.wotd){
