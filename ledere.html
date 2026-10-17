@@ -697,6 +697,7 @@ html[data-font="naskh"] .notice h2,html[data-font="deva"] .notice h2{font-family
    hele foerste skjerm og menyen havner under bretten. Hele forklaringen staar
    i «Kom i gang». Konflikt-valget beholdes helt: det krever et svar. */
 .shell[data-view="menu"] #notice-none p{display:none}
+.shell[data-view="menu"] #notice-none p.ownhint{display:block}
 .shell[data-view="menu"] #notice-none{padding-block:14px}
 .shell[data-view="menu"] #notice-none h3{margin:0}
 .sec[hidden],.menu[hidden],.back[hidden]{display:none !important}
@@ -1092,7 +1093,7 @@ html[data-font="nastaliq"] .qa summary{font-weight:400}
 /* Forsidekortet (founder 17.10 03:26): egen-lenke er en LITEN pille her - hovedplassen
    er under IB og bonuser. Kortet skal ikke rope; det peker. */
 #notice-none .ownhint,#spon .ownhint{margin:14px 0 0;font-size:.8rem;line-height:1.4;font-weight:500;color:var(--chalk-dim)}
-#notice-none .ownhint + .dlink,#spon .ownhint + .dlink{margin-top:6px}
+#notice-none .ownhint + .dlink,#notice-none .ownhint + .slab,#spon .ownhint + .dlink{margin-top:6px}
 #spon .owngrp{order:99;flex-basis:100%;width:100%;display:flex;flex-direction:column;align-items:flex-start}
 #spon .owngrp .ownhint{margin-top:10px}
 #spon .owngrp .dlink.tiny{margin:6px 0 0;margin-inline:0;align-self:flex-start}
@@ -2505,6 +2506,7 @@ function render(){
     const oldReg = $("nn-reg"); if(oldReg) oldReg.remove();
     const oldWho = $("nn-who"); if(oldWho) oldWho.remove();
     const oldOwn = $("nn-own"); if(oldOwn) oldOwn.remove();
+    none.querySelectorAll(".ownhint, a.dlink[href='ledere.html']").forEach(function(x){ x.remove(); });   /* ingen dubletter ved ny tegning */
     /* Founder 17.10 03:28: registreringen via partnerlenken skal vaere STOR her,
        «min egen lenke» liten. Den store finnes bare naar telefonen husker en
        sponsor - det er B-022s «tilbys som ett trykk», aldri en stille kobling:
@@ -2534,7 +2536,7 @@ function render(){
       if(!harStor){ a3.id = "nn-own"; a3.appendChild(el("span", "t", S.own_link)); }
       a3.href = "ledere.html";
       /* Founder 17.10 17:38: liten forklaring over knappen, for den som allerede er registrert. */
-      if(S.own_link_hint && harStor) none.appendChild(el("p", "ownhint", S.own_link_hint));   /* fersk kort: tittelen sier det allerede */
+      if(S.own_link_hint) none.appendChild(el("p", "ownhint", S.own_link_hint));   /* founder 17:55: alltid rett over knappen */
       none.appendChild(a3);
     }
   }
