@@ -3342,6 +3342,9 @@ function renderInner(){
     if(sec && key !== "main") sec.hidden = !frag;
   });
 
+  /* Steg 1 («bruk sponsorens lenke») ER gjort naar sponsoren er bekreftet - kryss det av
+     én gang automatisk (kundegjennomgang 17.10). Fjerner kunden haken, respekteres det. */
+  try{ if(sponsorVerified && !load("aimpire.s0auto")){ const d0 = doneSet(); if(!d0.has("0")){ d0.add("0"); store("aimpire.done", Array.from(d0).join(",")); const G0 = C.guide[lang] || C.guide.en, sb = subSet(); String(G0.steps[0][1]).split("\n").filter(function(x){ return x.trim(); }).forEach(function(_, n){ sb.add("0:" + n); }); subSave(sb); } store("aimpire.s0auto", "1"); } }catch(e){}
   const G = C.guide[lang] || C.guide.en;
   /* Ingen gjentakelse (17.10): ledeteksten sier det samme som de tre faktaboksene
      (~15 min, ID-kort, siden husker). Finnes boksene, staar det bare der. */
