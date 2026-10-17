@@ -22,7 +22,20 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="assets/ap-gradient-96.png">
-<link rel="manifest" href="manifest.webmanifest">
+<script>
+/* Founder 17.10 20:41: iPhone leser manifestet idet siden lastes - foer resten av skriptet.
+   Paa en lederlenke (?l=) paa iPhone/iPad skal det derfor ALDRI finnes et manifest; da lagrer
+   iOS adressen man staar paa, med koden. Ellers legges manifestet inn her, med en gang. */
+(function(){
+  try{
+    var q = new URLSearchParams(location.search), l = (q.get("l") || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+    var ua = navigator.userAgent || "", ios = /iPhone|iPad|iPod/.test(ua) || (!/Android/.test(ua) && /Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    if(l && ios) return;
+    var m = document.createElement("link"); m.rel = "manifest"; m.href = l ? "manifest-leder.webmanifest" : "manifest.webmanifest";
+    document.head.appendChild(m);
+  }catch(e){}
+})();
+</script>
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Aimpire">
