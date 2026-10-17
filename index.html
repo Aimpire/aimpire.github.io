@@ -2048,6 +2048,9 @@ button.pcard::after{content:"";position:absolute;inset-inline:0;top:0;height:3px
 .tbb.tbhome[aria-current="page"] .tbring{box-shadow:0 0 0 2px #15D8C4,0 0 18px rgba(21,216,196,.55),0 0 30px rgba(194,31,191,.35)}
 .tbb.tbhome[aria-current="page"]::before{display:none}
 .tbb.tbhome:active .tbring{transform:scale(.94)}
+/* Fanelinja har Hjem alltid synlig -> «Alle deler» oeverst er samme knapp to ganger og tok
+   halve fanerekka (kundegjennomgang 17.10 23:30). Skjules naar fanelinja finnes. */
+body.has-tabbar #back{display:none}
 body.has-tabbar{padding-bottom:calc(64px + env(safe-area-inset-bottom))}
 body.has-tabbar #pille{bottom:calc(76px + env(safe-area-inset-bottom))}
 @media (prefers-reduced-motion:no-preference){.tbb svg{transition:transform .15s ease}}
@@ -5889,6 +5892,7 @@ function hoppTilAktivtSteg(){
 }
 function setView(v, fraHash){
   view = CATS.indexOf(v) === -1 ? "menu" : v;
+  if(view !== "menu" && typeof planleggTema === "function") planleggTema(1200);
   if(!fraHash){
     const h = view === "menu" ? " " : "#" + view;
     try{ history.pushState(null, "", h); }catch(e){ location.hash = view === "menu" ? "" : view; }
@@ -6065,7 +6069,12 @@ function sporTema(){
   box.querySelector(".x").onclick = lukkTema;
   requestAnimationFrame(function(){ requestAnimationFrame(function(){ box.classList.add("vis"); }); });
 }
-window.addEventListener("load", function(){ setTimeout(function(){ try{ sporTema(); }catch(e){} }, 900); });
+/* Fortsatt ved FOERSTE besoek (#80), men ikke over velkomst-/registreringskortet i aller
+   foerste oeyeblikk (kundegjennomgang 17.10 23:30): spoer naar kunden har aapnet en del av
+   appen, eller etter 45 s. */
+let TEMA_PLAN = false;
+function planleggTema(ms){ if(TEMA_PLAN) return; TEMA_PLAN = true; setTimeout(function(){ try{ sporTema(); }catch(e){} }, ms); }
+window.addEventListener("load", function(){ setTimeout(function(){ planleggTema(0); }, 45000); });
 (function(){
   const th = load("aimpire.theme.v2");
   if(th) document.documentElement.setAttribute("data-theme", th);
