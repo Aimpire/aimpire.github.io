@@ -848,7 +848,9 @@ html[data-font="nastaliq"] .acts li::before{top:.95em}
 .p2p ul li{margin:4px 0;line-height:1.55}
 html[data-font="nastaliq"] .p2p ul li, html[data-font="nastaliq"] .p2p p{line-height:2.05}
 /* Hopp-knapper, glidebryter, hurtigvalg og kostnadsstolpe */
-.jump{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:8px 0 2px;margin:0;-webkit-overflow-scrolling:touch}
+/* Founder 17.10: ingen avklippede faner paa mobil - raden bryter til to linjer
+   i stedet for aa gjemme «Withdrawals» bak kanten. */
+.jump{display:flex;flex-wrap:wrap;gap:6px;padding:8px 0 2px;margin:0}
 .jump::-webkit-scrollbar{display:none}
 .jump button{flex:0 0 auto;font:600 .82rem/1 var(--face);padding:8px 14px;min-height:40px;border-radius:999px;border:1px solid var(--rule);
   background:var(--ink-deep);color:var(--chalk);cursor:pointer;white-space:nowrap}
