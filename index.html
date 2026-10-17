@@ -569,6 +569,9 @@ html[dir="rtl"] .ib .flag{border-radius:5px 0 0 5px}
 .spon .slab.reg .t{font-size:1.12rem}
 .spon .slab.reg .s{margin-top:3px;font-size:.86rem}
 .spon .slab.own{flex:1 1 100%;margin:10px 0 0;padding:13px 18px;border-radius:var(--r-btn)}
+#notice-none .slab.reg{display:block;margin:12px 0 2px;padding:16px 18px;border-radius:var(--r-btn)}
+#notice-none .slab.reg .t{font-size:1.12rem}
+#notice-none .slab.reg .s{margin-top:3px;font-size:.86rem}
 .ib .slab.own{display:block;margin:12px 0 0;padding:13px 18px;border-radius:var(--r-btn)}
 .tool button{width:100%;background:var(--grad);color:#08080B;border:0;padding:13px 16px;min-height:48px;
   border-radius:var(--r-btn);font:800 1rem/1.15 var(--display);cursor:pointer}
@@ -1946,6 +1949,22 @@ function render(){
        Den ligger UTENFOR avsnittene, saa den staar ogsaa paa forsiden, der
        avsnittene i varselet er skjult. */
     const old3 = none.querySelector(".dlink"); if(old3) old3.remove();
+    const oldReg = $("nn-reg"); if(oldReg) oldReg.remove();
+    /* Founder 17.10 03:28: registreringen via partnerlenken skal vaere STOR her,
+       «min egen lenke» liten. Den store finnes bare naar telefonen husker en
+       sponsor - det er B-022s «tilbys som ett trykk», aldri en stille kobling:
+       knappen gaar rett til partner-registreringen og binder ingenting. */
+    if(!venter && S.register){
+      const husket3 = leaderById(load("aimpire.leader"));
+      const u3 = husket3 && validRef(husket3.link);
+      if(u3 && safeUrl(u3.href)){
+        const rb3 = el("a", "slab reg"); rb3.id = "nn-reg";
+        rb3.href = u3.href; rb3.target = "_blank"; rb3.rel = "noopener noreferrer";
+        rb3.appendChild(el("span", "t", S.register));
+        if(S.via) rb3.appendChild(el("span", "s", S.via.replace("{N}", husket3.name)));
+        none.appendChild(rb3);
+      }
+    }
     if(S.own_link){
       const a3 = el("a", "dlink", S.own_link); a3.href = "ledere.html";
       none.appendChild(a3);
