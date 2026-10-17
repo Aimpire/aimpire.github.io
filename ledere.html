@@ -109,7 +109,7 @@ html[data-font="naskh"]{ --face:"Noto Naskh Arabic","Montserrat",serif }
      pulserende punkt. Linja går OPP OG NED og ender flatt: et marked, aldri et
      gevinstløfte (ærlighetsregelen).
    Ingen bilder, ingen JS, ingen ekstra forespørsler. Redusert bevegelse = alt står stille. */
-.sky{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;contain:strict}
+.sky{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;contain:strict;clip-path:inset(0)}   /* clip-path: Safari klipper animerte lag i faste lag paalitelig */
 .sky .orb{position:absolute;border-radius:50%;will-change:transform;transform:translate3d(0,0,0)}
 .sky .o1{width:78vmax;height:78vmax;inset-inline-start:-30vmax;top:-34vmax;
   background:radial-gradient(closest-side,rgba(21,216,196,.40),rgba(21,216,196,0))}
@@ -147,7 +147,7 @@ html[dir="rtl"] .skyline{transform:scaleX(-1)}
    sakte og pulserer. Gloed = tre streker oppaa hverandre (bred/svak, middels, tynn/sterk),
    IKKE filter/blur - samme ytelsesregel som resten av .sky. Linjene gaar opp og ned:
    et marked, aldri et gevinstloefte. Lav styrke saa teksten alltid er lesbar. */
-.neon{position:absolute;inset-inline:0;top:22vh;height:62vh;
+.neon{position:absolute;inset-inline:0;top:22vh;height:62vh;overflow:hidden;contain:paint;clip-path:inset(0);
   -webkit-mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent)}
 .nt{position:absolute;inset-block:0;left:0;width:max(200%,2400px);will-change:transform}   /* minstebredde: rolig kurve ogsaa paa 375 px */
 .nt svg{display:block;width:100%;height:100%;overflow:visible}
@@ -180,6 +180,13 @@ html.paused .sky *,html.paused .skyline *{animation-play-state:paused}
 
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
+/* Aldri sidelengs scrolling (founder 17.10 23:24, Hjem paa iPhone). «clip» lager ikke en
+   scrollbeholder, saa position:sticky (toppstripa) virker fortsatt - det gjoer ikke «hidden». */
+html,body{max-width:100%}
+/* body har hatt overflow-x:hidden fra start; den flyttes opp til vinduet saa lenge html er
+   «visible». Derfor INGEN regel paa html (da blir body egen scrollbeholder og sticky-stripa
+   slipper - maalt 17.10). «clip» paa body virker og beholder sticky. */
+@supports (overflow:clip){body{overflow-x:clip}}
 body{background:var(--ink);color:var(--chalk);font-family:var(--face);
   font-size:1.0625rem;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 /* Nastaliq stabler bokstavformer vertikalt INNE i linja, saa 14px nastaliq
