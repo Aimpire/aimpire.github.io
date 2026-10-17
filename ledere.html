@@ -23,15 +23,21 @@
 
 <link rel="icon" href="assets/ap-gradient-96.png">
 <script>
-/* Founder 17.10 20:41: iPhone leser manifestet idet siden lastes - foer resten av skriptet.
-   Paa en lederlenke (?l=) paa iPhone/iPad skal det derfor ALDRI finnes et manifest; da lagrer
-   iOS adressen man staar paa, med koden. Ellers legges manifestet inn her, med en gang. */
+/* App-filen (manifest) bygges HER, foer resten av siden (founder 17.10 20:41/20:47):
+   iPhone leser den idet man trykker «Legg til paa Hjem-skjerm», og en hjemskjerm-app har
+   eget, tomt lager. Paa en lederlenke faar appen derfor startadresse MED ?l=-koden og
+   spraaket, saa den aapnes som ekte app (uten adressefelt) og med lederens navn - fra
+   Chrome eller Safari, paa iPhone og Android. Kilder: K-106. Adressen faar spraaket lagt til
+   av applyLang (replaceState) foer man rekker aa trykke «Legg til». */
 (function(){
   try{
     var q = new URLSearchParams(location.search), l = (q.get("l") || "").toLowerCase().replace(/[^a-z0-9]/g, "");
-    var ua = navigator.userAgent || "", ios = /iPhone|iPad|iPod/.test(ua) || (!/Android/.test(ua) && /Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
-    if(l && ios) return;
-    var m = document.createElement("link"); m.rel = "manifest"; m.href = l ? "manifest-leder.webmanifest" : "manifest.webmanifest";
+    var m = document.createElement("link"); m.rel = "manifest";
+    if(!l){ m.href = "manifest.webmanifest"; document.head.appendChild(m); return; }
+    /* Lederlenke: manifestet har INGEN start_url. Da bruker telefonen adressen siden staar paa
+       (med ?l= og spraak) som startadresse - W3C appmanifest, K-106. Vanlig https-fil, virker
+       paa iPhone og Android, fra Chrome og Safari. */
+    m.href = "manifest-leder.webmanifest";
     document.head.appendChild(m);
   }catch(e){}
 })();
@@ -5223,24 +5229,6 @@ window.addEventListener("load", function(){ setTimeout(function(){ try{ sporTema
   try{
     const lKode = String(new URLSearchParams(location.search).get("l") || "").toLowerCase().replace(/[^a-z0-9]/g, "");
     if(lKode && /^[a-z0-9]{6}$/.test(lKode)){
-      const mfL = document.querySelector('link[rel="manifest"]');
-      /* Founder 17.10 20:19: «hvorfor blir navnet mitt fjernet da jeg lagrer den som app?»
-         Manifestet startet alltid paa ./?src=pwa - uten ?l=. Og en hjemskjerm-app paa
-         iPhone har eget lager, saa den husker ikke lederen fra Safari. Losning:
-         - iPhone/iPad: ingen manifest-lenke -> iOS lagrer den ADRESSEN man staar paa (med ?l=).
-         - Android/Chrome: manifestet bygges her med start_url som har ?l=-koden. */
-      const uaM = navigator.userAgent || ""; const ios = /iPhone|iPad|iPod/.test(uaM) || (!/Android/.test(uaM) && /Macintosh/.test(uaM) && navigator.maxTouchPoints > 1);
-      if(mfL && ios){ mfL.remove(); }
-      else if(mfL){
-        mfL.href = "manifest-leder.webmanifest";
-        fetch("manifest-leder.webmanifest").then(function(r){ return r.json(); }).then(function(m){
-          const base = location.origin + location.pathname.replace(/(index|ledere)\.html$/, "");
-          m.start_url = base + "?l=" + lKode + "&src=pwa";
-          m.scope = base; m.id = base + "?l=" + lKode;
-          (m.icons || []).forEach(function(ic){ ic.src = new URL(ic.src, base).href; });
-          mfL.href = URL.createObjectURL(new Blob([JSON.stringify(m)], { type: "application/manifest+json" }));
-        }).catch(function(){});
-      }
       const atL = document.querySelector('link[rel="apple-touch-icon"]');
       if(atL) atL.href = "assets/apple-touch-icon-dark.png";
     }
