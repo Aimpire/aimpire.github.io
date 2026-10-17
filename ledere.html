@@ -790,6 +790,19 @@ html[dir="rtl"] .iqsteps li{padding:14px 58px 14px 14px}
 .shchip span{font-size:.75rem;line-height:1.3;color:var(--chalk-dim)}
 .short .iqex > p{margin:0}
 .shmore{margin-top:18px}
+/* Academy-kort (founder 17.10 20:15) */
+#academy summary{display:flex !important;align-items:center;gap:12px}
+#academy .lic{position:relative;flex:0 0 46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:1.35rem;
+  background:linear-gradient(var(--ink),var(--ink)) padding-box,var(--grad) border-box;border:1.5px solid transparent}
+#academy .lic b{position:absolute;top:-6px;inset-inline-start:-6px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--grad);color:#08080B;font:900 .7rem/20px var(--display);text-align:center}
+#academy .ltx{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+#academy .ltx .lt{font-weight:800}
+#academy .lok{flex:0 0 auto;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#16C47F;color:#08080B;font-weight:900;font-size:.85rem}
+#academy summary.done .lic{opacity:.85}
+#academy .lpro{display:flex;align-items:center;gap:10px;margin:0 0 12px;font:800 .82rem/1 var(--display);color:var(--chalk-dim)}
+#academy .lpro i{flex:1;height:6px;border-radius:3px;background:var(--rule);overflow:hidden}
+#academy .lpro i b{display:block;height:100%;background:var(--grad);border-radius:3px}
+
 .snhalal{margin-top:18px;padding:14px 16px;border-radius:18px;border:1px solid var(--rule);background:var(--ink-raise,rgba(127,127,127,.06))}
 .snhalal h4{margin:0 0 4px;font:800 1rem/1.25 var(--display)}
 .snhalal > p{margin:0 0 10px;font-size:.85rem;color:var(--chalk-dim)}
@@ -2334,6 +2347,7 @@ function toggleSub(idx, n, total){
   store("aimpire.done", Array.from(d).join(",") || null);
   render();
 }
+const LESIKON = { size: "\uD83D\uDCCF", mind: "\uD83E\uDDE0", time: "\uD83D\uDD52", gold: "\uD83E\uDE99", candle: "\uD83D\uDD6F\uFE0F", corr: "\uD83D\uDD17", swap: "\uD83C\uDF19" };
 function quizBox(Q, idx, G){
   const d = el("div", "qz");
   d.appendChild(el("b", "qzt", G.quiz_t || ""));
@@ -3331,11 +3345,20 @@ function render(){
       at.hidden = false; al.hidden = false;
       at.textContent = (A.title && (A.title[lang] || A.title.en)) || "Academy";
       al.textContent = (A.lead && (A.lead[lang] || A.lead.en)) || "";
+      let antFerdig = 0;
       A.lessons.forEach(function(les, i){
         const dt = document.createElement("details");
-        const sm = el("summary", null, (les.title[lang] || les.title.en));
+        /* Founder 17.10 20:15 «visuelle ting»: ikon, nummer og hake naar quizen er riktig. */
+        const Qd = les.quiz && (les.quiz[lang] || les.quiz.en);
+        const ferdig = Qd && String(load("aimpire.quiz.les-" + (les.id || i))) === String(Qd.right);
+        if(ferdig) antFerdig++;
+        const sm = el("summary", ferdig ? "done" : null);
+        const ik = el("span", "lic", LESIKON[les.id] || "\uD83D\uDCD8"); ik.appendChild(el("b", null, String(i + 1))); sm.appendChild(ik);
+        const tx = el("span", "ltx"); tx.appendChild(el("span", "lt", (les.title[lang] || les.title.en)));
         const sub = les.sub && (les.sub[lang] || les.sub.en);
-        if(sub) sm.appendChild(el("span", "sub", sub));
+        if(sub) tx.appendChild(el("span", "sub", sub));
+        sm.appendChild(tx);
+        if(ferdig) sm.appendChild(el("span", "lok", "\u2713"));
         dt.appendChild(sm);
         const bd = el("div", "les");
         (les.blocks[lang] || les.blocks.en).forEach(function(bl){
@@ -3351,6 +3374,10 @@ function render(){
         dt.id = "les-" + (les.id || i);
         ah.appendChild(dt);
       });
+      /* Framdrift over leksjonene: «3 / 7» med stripe. */
+      const pr = el("div", "lpro"); const bar = el("i"); const f = el("b"); f.style.width = (antFerdig / A.lessons.length * 100) + "%"; bar.appendChild(f);
+      pr.appendChild(bar); pr.appendChild(el("span", null, antFerdig + " / " + A.lessons.length + " \u2713"));
+      ah.prepend(pr);
     } else { at.hidden = true; al.hidden = true; }
   } else { ls.hidden = true; }
 
