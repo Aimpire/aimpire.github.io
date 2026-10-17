@@ -148,6 +148,12 @@ html[dir="rtl"] .skyline{transform:scaleX(-1)}
    IKKE filter/blur - samme ytelsesregel som resten av .sky. Linjene gaar opp og ned:
    et marked, aldri et gevinstloefte. Lav styrke saa teksten alltid er lesbar. */
 .neon{position:absolute;inset-inline:0;top:22vh;height:62vh;overflow:hidden;contain:paint;clip-path:inset(0)}   /* maske fjernet (ytelse, 18.10) */
+/* Myk toning oeverst/nederst tilbake (founder 18.10 01:18 «ikke fjern for mye»): to FASTE
+   fargeoverganger over kantene i stedet for mask-image, som maatte regnes ut hvert bilde. */
+/* Myk toning oeverst/nederst (founder 18.10 01:18): masken ligger paa SELVE de bevegelige
+   lagene (.nt). Toningen er loddrett, saa den er lik uansett hvor laget har glidd, og blir en
+   del av laget i stedet for aa regnes ut paa nytt hvert bilde (som maske paa .neon gjorde). */
+.nt{-webkit-mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent)}
 .nt{position:absolute;inset-block:0;left:0;width:max(200%,2400px);will-change:transform}   /* minstebredde: rolig kurve ogsaa paa 375 px */
 .nt svg{display:block;width:100%;height:100%;overflow:visible}
 .nt path{fill:none;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
@@ -172,6 +178,17 @@ html[dir="rtl"] .neon{transform:scaleX(-1)}
 
   .nt2{animation:tape 110s linear infinite,neonpuls 4.5s ease-in-out -2.2s infinite}
 }
+/* Lyspuls langs linja, billig variant (18.10): et lite lysende punkt flyttes langs banen med
+   offset-path - linja tegnes aldri paa nytt (den gamle stroke-dash-pulsen gjorde det hvert bilde). */
+.ncomet{position:absolute;left:0;top:0;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,#fff 0 30%,rgba(21,216,196,.9) 45%,rgba(21,216,196,0) 72%);
+  box-shadow:0 0 14px 4px rgba(21,216,196,.45);offset-rotate:0deg;offset-distance:0%}
+.nt2 .ncomet{background:radial-gradient(circle,#fff 0 30%,rgba(194,31,191,.9) 45%,rgba(194,31,191,0) 72%);box-shadow:0 0 14px 4px rgba(194,31,191,.45)}
+@media (prefers-reduced-motion:no-preference){
+  .nt1 .ncomet{animation:nkomet 11s linear infinite}
+  .nt2 .ncomet{animation:nkomet 15s linear -6s infinite}
+}
+@keyframes nkomet{from{offset-distance:0%}to{offset-distance:100%}}
 /* Ikke la bakgrunnen drive i skjulte faner: nettleseren struper allerede animasjoner i
    bakgrunnsfaner; html.paused settes i tillegg av visibilitychange (se skriptet). */
 html.paused .sky *,html.paused .skyline *{animation-play-state:paused}
@@ -2984,6 +3001,24 @@ function stemmeFor(kode){
   }catch(e){ return null; }
 }
 try{ if(window.speechSynthesis) speechSynthesis.onvoiceschanged = function(){ try{ if(view === "start") render(); }catch(e){} }; }catch(e){}
+/* Bygger banen for lyspunktet i piksler: SVG-en strekkes (preserveAspectRatio none), saa
+   koordinatene skaleres til lagets faktiske stoerrelse. Tegnes paa nytt bare ved ny stoerrelse. */
+function neonKomet(){
+  try{
+    if(!window.CSS || !CSS.supports || !CSS.supports("offset-path", "path('M0 0 L1 1')")) return;
+    document.querySelectorAll(".neon .nt").forEach(function(nt){
+      const sv = nt.querySelector("svg"), p = sv && sv.querySelector("path.g1"); if(!p) return;
+      const W = nt.offsetWidth, H = nt.offsetHeight; if(!W || !H) return;
+      const sx = W / 1600, sy = H / 100;
+      let n = 0;
+      const d = p.getAttribute("d").replace(/-?\d+(?:\.\d+)?/g, function(v){ const x = parseFloat(v) * (n++ % 2 ? sy : sx); return x.toFixed(1); });
+      let k = nt.querySelector(".ncomet"); if(!k){ k = document.createElement("i"); k.className = "ncomet"; k.setAttribute("aria-hidden", "true"); nt.appendChild(k); }
+      k.style.offsetPath = "path('" + d + "')";
+    });
+  }catch(e){}
+}
+window.addEventListener("load", function(){ setTimeout(neonKomet, 400); });
+let NK_T = null; window.addEventListener("resize", function(){ clearTimeout(NK_T); NK_T = setTimeout(neonKomet, 300); }, { passive: true });
 function toggleStep(i){
   const set = doneSet(), k = String(i);
   const paa = !set.has(k);
