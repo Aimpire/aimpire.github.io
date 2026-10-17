@@ -569,7 +569,9 @@ html[dir="rtl"] .ib .flag{border-radius:5px 0 0 5px}
 .spon .slab.reg .t{font-size:1.12rem}
 .spon .slab.reg .s{margin-top:3px;font-size:.86rem}
 .spon .slab.own{flex:1 1 100%;margin:10px 0 0;padding:13px 18px;border-radius:var(--r-btn)}
+#nn-who{margin:10px 0 0;padding:0;border:0;gap:8px;align-items:center}
 #notice-none .slab.reg{display:block;margin:12px 0 2px;padding:16px 18px;border-radius:var(--r-btn)}
+#notice-none .slab.reg{margin-top:10px}
 #notice-none .slab.reg .t{font-size:1.12rem}
 #notice-none .slab.reg .s{margin-top:3px;font-size:.86rem}
 .ib .slab.own{display:block;margin:12px 0 0;padding:13px 18px;border-radius:var(--r-btn)}
@@ -1915,11 +1917,9 @@ function render(){
        denne telefonen, og staar naa paa sin egen - si det rett ut. Dekker bare
        samme enhet; resten maa IB-portalen se. */
     const me = load("aimpire.me"), cur = leaderById(load("aimpire.leader"));
-    if(me && cur && cur.id === me && S.self_warn){
-      const sw = el("p", "dcheck selfw", S.self_warn);
-      sw.setAttribute("role", "alert");
-      sp.appendChild(sw);
-      /* Liten, stille vei til ledersiden - ikke en diger flate (founder 17.10 02:26). */
+    if(me && cur && cur.id === me){
+      /* Founder 17.10 03:34: ingen forklarende tekst her - den staar i IB-delen
+         («Din egen lenke - foer du registrerer deg»). Bare den lille pillen. */
       if(S.own_link){
         const ob = el("a", "dlink mini", S.own_link);
         ob.href = "ledere.html";
@@ -1950,6 +1950,7 @@ function render(){
        avsnittene i varselet er skjult. */
     const old3 = none.querySelector(".dlink"); if(old3) old3.remove();
     const oldReg = $("nn-reg"); if(oldReg) oldReg.remove();
+    const oldWho = $("nn-who"); if(oldWho) oldWho.remove();
     /* Founder 17.10 03:28: registreringen via partnerlenken skal vaere STOR her,
        «min egen lenke» liten. Den store finnes bare naar telefonen husker en
        sponsor - det er B-022s «tilbys som ett trykk», aldri en stille kobling:
@@ -1958,6 +1959,13 @@ function render(){
       const husket3 = leaderById(load("aimpire.leader"));
       const u3 = husket3 && validRef(husket3.link);
       if(u3 && safeUrl(u3.href)){
+        const who3 = el("div", "spon nnwho"); who3.id = "nn-who";
+        const av3 = el("span", "avi", Array.from(husket3.name.trim())[0] || ""); av3.setAttribute("aria-hidden", "true");
+        who3.appendChild(av3);
+        who3.appendChild(el("strong", "who", S.by.replace("{N}", husket3.name)));
+        const ok3 = el("span", "ok", "\u2713"); ok3.setAttribute("aria-hidden", "true");
+        who3.appendChild(ok3);
+        none.appendChild(who3);
         const rb3 = el("a", "slab reg"); rb3.id = "nn-reg";
         rb3.href = u3.href; rb3.target = "_blank"; rb3.rel = "noopener noreferrer";
         rb3.appendChild(el("span", "t", S.register));
