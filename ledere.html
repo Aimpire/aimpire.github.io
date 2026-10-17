@@ -1787,6 +1787,7 @@ function toggleStep(i){
   if(paa){
     const t = document.querySelector("#st-" + i + " .tick");
     if(t){ const rc = t.getBoundingClientRect(); gnist(rc.left + rc.width / 2, rc.top + rc.height / 2, 12); }
+    try{ if(navigator.vibrate) navigator.vibrate(12); }catch(e){}
   }
   if(paa) set.add(k); else set.delete(k);
   store("aimpire.done", Array.from(set).join(","));
@@ -3223,7 +3224,15 @@ function renderJump(){
   j.hidden = false;
   setTab(tab, false);
 }
+function settTittel(){
+  try{
+    const M = C.menu && (C.menu[lang] || C.menu.en);
+    const navn = M && M.items ? (M.items.find(function(it){ return it[0] === view; }) || [])[1] : null;
+    document.title = (view !== "menu" && navn) ? "Aimpire \u00b7 " + navn : "Aimpire";
+  }catch(e){}
+}
 function applyView(){
+  settTittel();
   const sh = document.querySelector(".shell"), nav = $("menu"), bk = $("topbar");
   if(PAGE === "leaders"){
     sh.removeAttribute("data-view");
