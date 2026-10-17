@@ -451,7 +451,20 @@ html[dir="rtl"] .row .go{transform:scaleX(-1)}
 .learn summary{flex-wrap:wrap}
 .learn summary::after{order:2}
 .learn summary .sub{display:block;order:3;flex:1 1 100%;width:auto;height:auto;margin-top:2px;
+
   border:0;border-radius:0;background:none;box-shadow:none;font-weight:400;font-size:.85rem;color:var(--chalk-dim)}
+/* Ordlista som brikker (founder 17.10 20:24 «design og forenkling»): ord-pillene ligger i rader;
+   den som aapnes, legger seg over hele bredden. */
+#learn{display:flex !important;flex-wrap:wrap;gap:8px}
+#learn > details{flex:0 0 auto;border-radius:999px !important;margin:0 !important;
+  background:linear-gradient(var(--ink-deep),var(--ink-deep)) padding-box,var(--grad) border-box;border:1.5px solid transparent !important}
+#learn > details > summary{padding:9px 15px !important;font-size:.9rem !important;border:0 !important}
+#learn > details > summary .sub{display:none !important}
+#learn > details > summary::after{content:none !important}
+#learn > details[open]{flex:1 1 100%;border-radius:16px !important;background:var(--ink-deep);border:1px solid var(--rule) !important}
+#learn > details[open] > summary{font-size:1rem !important}
+#learn > details[open] > summary::after{content:"\2212" !important;margin-inline-start:auto}
+
 .learn .les .fx{margin:8px 0 0;padding:9px 12px;font-family:var(--mono);font-size:.84rem;line-height:1.6;color:var(--chalk);
   background:var(--ink);border:1px solid var(--rule);border-inline-start:3px solid var(--gold-metal);border-radius:0 5px 5px 0;
   white-space:pre-line;direction:ltr;unicode-bidi:isolate;text-align:left}
@@ -1889,7 +1902,7 @@ html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
     <p class="vnote" id="iq-honest"></p>
   </section>
   <section class="sec" id="s-ibmore" data-cat="ib" hidden>
-    <details class="ibmore"><summary id="iq-more"></summary><div id="ibmore-in"></div></details>
+    <details class="ibmore" id="ibmore-d"><summary id="iq-more"></summary><div id="ibmore-in"></div></details>
   </section>
   <section class="sec" id="s-earn" data-cat="ib">
     <h2 id="t-earn"></h2>
@@ -2184,7 +2197,7 @@ async function encDekrypter(key, b64){
 /* Kodene denne telefonen faktisk trenger: lenken, husket sponsor og lederens egen. */
 function kjenteKoder(){
   const k = [];
-  try{ const l = new URLSearchParams(location.search).get("l"); if(l) k.push(l); }catch(e){}
+  try{ const l = new URLSearchParams(location.search).get("l"); if(l) k.push(String(l).toLowerCase().replace(/[^a-z0-9]/g, "")); }catch(e){}
   [load("aimpire.leader"), load("aimpire.me")].forEach(function(x){ if(x) k.push(x); });
   return k.filter(function(x, i, a){ return /^[0-9a-z]{6}$/.test(x) && a.indexOf(x) === i; });
 }
@@ -2221,9 +2234,10 @@ function loadReg(){
      maalt 1,5-3 s paa bredbaand, mer paa 3G). Kommer lista etter fristen, brukes
      den straks likevel - foer ble den kastet og medlemmet saa «ingen sponsor»
      (gjennomgang 17.10, funn 1). */
-  let harKode = false; try{ harKode = !!new URLSearchParams(location.search).get("l"); }catch(e){}
-  REG_VENTER = harKode && !REG.length;
-  const budsjett = (harKode && !REG.length) ? 12000 : 6000;
+  let harKode = false, kode0 = ""; try{ kode0 = String(new URLSearchParams(location.search).get("l") || "").toLowerCase().replace(/[^a-z0-9]/g, ""); harKode = !!kode0; }catch(e){}
+  const ukjent = harKode && !leaderById(kode0);
+  REG_VENTER = ukjent;
+  const budsjett = ukjent ? 12000 : 6000;
   const timeout = new Promise(function(res){ setTimeout(function(){ res(undefined); }, budsjett); });
   /* To kilder, slaatt sammen: Google-arket (founder huker av) og ledere.txt
      (reserve, for haand). En av dem nede = den andre gjelder. */
@@ -2255,7 +2269,7 @@ function loadReg(){
     if(text === undefined){
       /* Fristen gikk: vis «sjekker invitasjonen» i stedet for «ingen sponsor» til svaret
          kommer, og bruk svaret naar det kommer (funn B1/A8). */
-      REG_VENTER = harKode && !REG.length;
+      REG_VENTER = harKode && !leaderById(kode0);
       get.then(function(sen){
         REG_VENTER = false;
         const ok = bruk(sen);
@@ -2312,7 +2326,7 @@ function initSponsor(){
   const id = sponsorVerified ? lr.id : "";
   const want = id ? "?l=" + id : "";
   if(PAGE !== "leaders" && location.search !== want && (id || q.has("ref") || q.has("by"))){
-    try{ history.replaceState(null, "", location.pathname + want + location.hash); }catch(e){}
+    try{ const lq = want && /\?l=/.test(want) ? (want + "&lang=" + encodeURIComponent(lang)) : want; history.replaceState(null, "", location.pathname + lq + location.hash); }catch(e){}   /* funn 10: behold spraaket */
   }
 }
 /* Hvilke steg som er gjort. Lagres lokalt per leser - aldri sendt noe sted. */
@@ -2356,7 +2370,8 @@ function quizBox(Q, idx, G){
   const vis = function(valgt){
     [...d.querySelectorAll(".qzb")].forEach(function(b){
       b.setAttribute("aria-pressed", String(+b.dataset.i === valgt));
-      b.disabled = true;
+      /* Funn 9: feil svar laaser ikke - man kan proeve igjen. */
+      b.disabled = valgt === Q.right || +b.dataset.i === valgt;
     });
     const gammel = d.querySelector(".qzw"); if(gammel) gammel.remove();
     const w = el("p", "qzw");
@@ -2366,7 +2381,8 @@ function quizBox(Q, idx, G){
   };
   Q.a.forEach(function(tekst, i){
     const b = el("button", "qzb", tekst); b.type = "button"; b.dataset.i = String(i);
-    b.onclick = function(){ store("aimpire.quiz." + idx, String(i)); vis(i); if(i === Q.right){ feirVed(b, 18); vibrer(12); } };
+    b.onclick = function(){ store("aimpire.quiz." + idx, String(i)); vis(i); if(i === Q.right){ feirVed(b, 18); vibrer(12);
+      if(String(idx).indexOf("les-") === 0) setTimeout(function(){ try{ render(); }catch(e){} }, 900); } };
     d.appendChild(b);
   });
   if(svar !== null && svar !== "") vis(+svar);
@@ -2517,10 +2533,17 @@ function destination(){
     : { url:REF_HOUSE, host:null, fp:null };
 }
 
+/* Funn 3: utklippstavlen er sperret i mange app-nettlesere - et avvist løfte skal ikke gi «Noe gikk galt». */
+function klipp(t){ try{ return navigator.clipboard.writeText(t).then(function(){ return true; }, function(){ return false; }); }catch(e){ return null; } }
 function makeLink(){
+  /* Funn 4: dobbelttrykk mens lista lastes sendte soeknaden to ganger (Mateen). */
+  if(window.__ldSending || window.__ldVenter) return;
+  window.__ldVenter = true;
+  const hb0 = $("ld-btn"); if(hb0 && !hb0.classList.contains("sent")) hb0.disabled = true;
   (REG_FRESH ? Promise.resolve() : loadReg())
     .then(function(){ const u = validRef($("ld-in").value); return u ? sikreLedere([codeOf(u)]) : null; })
-    .then(makeLinkNow);
+    .then(function(){ window.__ldVenter = false; if(hb0 && !hb0.classList.contains("sent")) hb0.disabled = false; makeLinkNow(); },
+          function(){ window.__ldVenter = false; if(hb0) hb0.disabled = false; });
 }
 /* Lederens lenke skal kunne kopieres med ett trykk - ogsaa der utklippstavlen
    er sperret i innebygde nettlesere (founder 17.10). */
@@ -2555,7 +2578,7 @@ function delKnapp(ut, verdi, cls, kort){
     const a2 = el("a", null, p[0]); a2.href = p[1]; a2.target = "_blank"; a2.rel = "noopener noreferrer"; meny.appendChild(a2);
   });
   sb.onclick = function(){
-    if(navigator.share){ navigator.share({ title: "Aimpire", text: L.share_msg || "", url: verdi }).catch(function(){}); }
+    if(navigator.share){ navigator.share({ title: "Aimpire", text: L.share_msg || "", url: verdi }).catch(function(e){ if(!e || e.name !== "AbortError") meny.hidden = false; }); }
     else { meny.hidden = !meny.hidden; }
   };
   ut.appendChild(sb); ut.appendChild(meny);
@@ -2634,7 +2657,7 @@ function makeLinkNow(){
             out.appendChild(el("p", "vnote", L.applied_wait || ""));
             bioBoks(out, hubBase() + "?l=" + codeOf(u));
             store("aimpire.me", codeOf(u));
-            try{ navigator.clipboard.writeText(hubBase() + "?l=" + codeOf(u)); }catch(e){}
+            klipp(hubBase() + "?l=" + codeOf(u));
             feirVed(out, 26); vibrer([12, 50, 12]);
           })
           .catch(function(){
@@ -2663,7 +2686,7 @@ function makeLinkNow(){
   out.appendChild(b);
   visLenke(out, text, !!lr);
   if(lr) bioBoks(out, text);
-  try{ navigator.clipboard.writeText(text); }catch(e){}
+  klipp(text);
 }
 /* #95 (founder 17.10 15:35): lederen skal slippe aa soeke paa nytt. Har denne
    telefonen laget eller faatt en lederlenke foer, vises den med en gang oeverst
@@ -2700,7 +2723,7 @@ function bioBoks(out, url){
   bx.appendChild(el("b", null, L.bio_title));
   bx.appendChild(el("p", null, L.bio_body));
   const bt = el("button", null, L.bio_copy); bt.type = "button";
-  bt.onclick = function(){ try{ navigator.clipboard.writeText(url).then(function(){ bt.textContent = L.bio_done; }); }catch(e){} };
+  bt.onclick = function(){ const p = klipp(url); if(p) p.then(function(ok){ if(ok) bt.textContent = L.bio_done; }); };
   bx.appendChild(bt);
   out.appendChild(bx);
 }
@@ -2746,7 +2769,16 @@ function rowsFor(items, dest){
 
 /* Steg medlemmet har aapnet med ett trykk, saa en ny render (hvert hakk) ikke lukker dem (funn A4). */
 const OPEN_STEPS = new Set();
+/* Gjennomgang 17.10 20:32 (funn 6): én feil i en del skal ikke tomme resten av siden. */
+function safe(f){ try{ f(); }catch(e){ try{ console.error(e); }catch(_){ } } }
 function render(){
+  /* Funn 12: det leseren har aapnet, skal ikke lukke seg naar siden tegnes paa nytt. */
+  const aapne = Array.prototype.map.call(document.querySelectorAll("details[open][id]"), function(d){ return d.id; });
+  try{ renderInner(); } finally {
+    aapne.forEach(function(id){ const d = document.getElementById(id); if(d) d.open = true; });
+  }
+}
+function renderInner(){
   const dest = destination();
 
   $("h1").textContent = C.hero[lang].line1;
@@ -3502,33 +3534,33 @@ function render(){
   $("risk").textContent = C.risk[lang] || C.risk.en;
   /* Ansvarsfraskrivelsen staar under risikolinja, i samme rolige vekt. Den skal
      kunne leses, ikke skremme - derfor egen blokk og ikke en lengre risikolinje. */
-  renderKeep();
+  safe(renderKeep);
   try{ inAppBanner(); }catch(e){}
-  renderSearch();
+  safe(renderSearch);
   const lg = $("legal"); lg.textContent = "";
   String((C.legal && (C.legal[lang] || C.legal.en)) || "").split("\n\n")
     .forEach(function(t){ if(t.trim()) lg.appendChild(el("p", null, t.trim())); });
   /* Aimpire har eksistert siden 2022 - ikke «startet i aar». */
   $("yr").textContent = "2022\u2013" + new Date().getFullYear();
 
-  renderApps();
-  renderResults();
-  renderAlt();
-  renderCalc();
+  safe(renderApps);
+  safe(renderResults);
+  safe(renderAlt);
+  safe(renderCalc);
   try{ temaTekst(); }catch(e){}
   try{ renderSessions(); }catch(e){}
   try{ renderPos(); }catch(e){}
   try{ renderStreak(); }catch(e){}
   try{ renderJournal(); }catch(e){}
-  renderWithdraw();
-  renderBonuses();
-  renderIbq();
-  renderShort();
-  renderFaq();
-  renderMenu();
-  markUiLabels();
-  markTerms();
-  isolateFigures();
+  safe(renderWithdraw);
+  safe(renderBonuses);
+  safe(renderIbq);
+  safe(renderShort);
+  safe(renderFaq);
+  safe(renderMenu);
+  safe(markUiLabels);
+  safe(markTerms);
+  safe(isolateFigures);
   applyView();
 }
 
@@ -4007,9 +4039,14 @@ function renderPos(){
   try{ store("aimpire.pos", JSON.stringify({ i: psInst, bal: $("ps-bal").value, risk: $("ps-risk").value, stop: $("ps-stop").value })); }catch(e){}
 }
 ["ps-bal","ps-risk","ps-stop"].forEach(function(id){ document.addEventListener("input", function(e){ if(e.target && e.target.id === id) renderPos(); }); });
+let SK_FROE = 12345;
 function renderStreak(nyKjoring){
   const K = C.streaks, sec = $("s-streak");
   if(!K || !sec) return;
+  /* Funn (lav): tallene skal ikke endre seg av seg selv ved hver ny tegning - bare paa «kjoer». */
+  if(nyKjoring) SK_FROE = (Math.random() * 4294967296) >>> 0;
+  let froe = SK_FROE;
+  const rnd = function(){ froe |= 0; froe = froe + 0x6D2B79F5 | 0; let t = Math.imul(froe ^ froe >>> 15, 1 | froe); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
   const T = K[lang] || K.en;
   $("t-streak").textContent = T.title; $("sk-lede").textContent = T.lede; $("sk-note").textContent = T.note;
   $("sk-win-l").textContent = T.win; $("sk-rr-l").textContent = T.rr; $("sk-risk-l").textContent = T.risk; $("sk-run").textContent = T.run;
@@ -4024,7 +4061,7 @@ function renderStreak(nyKjoring){
   for(let k = 0; k < N; k++){
     let b = 1, lav = 1, rad = 0, lengst = 0; const kurve = k < 24 ? [1] : null;
     for(let t = 0; t < H; t++){
-      if(Math.random() < p){ b *= 1 + gev; rad = 0; } else { b *= 1 - tap; rad++; if(rad > lengst) lengst = rad; }
+      if(rnd() < p){ b *= 1 + gev; rad = 0; } else { b *= 1 - tap; rad++; if(rad > lengst) lengst = rad; }
       if(b < lav) lav = b;
       if(kurve) kurve.push(b);
     }
@@ -4347,6 +4384,7 @@ function renderIbq(){
    elementer i SHORT_KEEP blir staaende synlige (f.eks. grafen paa Resultater). */
 const SHORT_KEEP = { "s-results": ["#rs-src", "#rs-fig", "#rs-leg"], "s-calc": [".calc", ".cbig", ".chow"] };
 const SHORT_NOFOLD = { "s-guide": 1, "s-leaders": 1 };   /* guiden er allerede en interaktiv sjekkliste - bare kart oeverst */
+let SN_BELOP = 100;
 function renderShort(){
   if(!C.short) return;
   Object.keys(C.short).forEach(function(id){
@@ -4405,14 +4443,14 @@ function renderShort(){
       box.appendChild(el("h3", "iqh", Q.calc_t));
       const cx = el("div", "sncalc");
       const r1 = el("div", "row"); r1.appendChild(el("span", null, Q.calc_l)); const v1 = el("b", "v1"); r1.appendChild(v1); cx.appendChild(r1);
-      const sl = document.createElement("input"); sl.type = "range"; sl.min = "50"; sl.max = "2000"; sl.step = "50"; sl.value = "100"; sl.className = "cslide"; sl.setAttribute("aria-label", Q.calc_l); cx.appendChild(sl);
+      const sl = document.createElement("input"); sl.type = "range"; sl.min = "50"; sl.max = "2000"; sl.step = "50"; sl.value = String(SN_BELOP); sl.className = "cslide"; sl.setAttribute("aria-label", Q.calc_l); cx.appendChild(sl);
       const r2 = el("div", "row big"); r2.appendChild(el("span", null, Q.calc_trade)); const v2 = el("b", "v2"); r2.appendChild(v2); cx.appendChild(r2);
       const bar = el("div", "snbar"); const dep = el("i"); bar.appendChild(dep); cx.appendChild(bar);
       const nt = el("p", "iqnote"); cx.appendChild(nt);
       const fmt = function(v){ const t = "$" + Math.round(v).toLocaleString("en-US"); return lang === "no" ? t.replace(/,/g, " ") : t; };
       const upd = function(){ const d0 = +sl.value; v1.textContent = fmt(d0); v2.textContent = fmt(d0 * 24); dep.style.width = (100 / 24) + "%";
         nt.textContent = Q.calc_note.replace("{P}", lang === "no" ? "4,2 %" : "4.2%"); };
-      sl.oninput = upd; upd();
+      sl.oninput = function(){ SN_BELOP = +sl.value; upd(); }; upd();
       box.appendChild(cx);
     }
     if(Q.split){
@@ -4656,7 +4694,7 @@ function setTab(tb, scroll){
   const sh = document.querySelector(".shell"); if(sh) sh.setAttribute("data-tab", tb);
   [...document.querySelectorAll("#jump button")].forEach(function(b){
     const on = b.dataset.tab === tb; b.setAttribute("aria-selected", String(on));
-    if(on){ const j = b.parentNode; if(j && j.scrollWidth > j.clientWidth){ const x = b.offsetLeft - (j.clientWidth - b.offsetWidth) / 2; try{ j.scrollTo({ left: x, behavior: "smooth" }); }catch(e){ j.scrollLeft = x; } } }
+    if(on){ const j = b.parentNode; if(j && j.scrollWidth > j.clientWidth){ const y0 = scrollY; try{ b.scrollIntoView({ inline: "center", block: "nearest" }); }catch(e){} if(Math.abs(scrollY - y0) > 2) scrollTo(0, y0); } }
     if(on && b.parentNode.scrollWidth > b.parentNode.clientWidth){
       const r = b.parentNode.getBoundingClientRect();
       if(r.top >= 0 && r.bottom <= innerHeight) b.scrollIntoView({block: "nearest", inline: "nearest"});
@@ -4751,7 +4789,7 @@ function buildIndex(){
     const en = EN && EN.length === SIDX.length ? EN[k] : null;
     e.n = norm(e.t + " " + e.x + (en ? " " + en.t + " " + en.x : ""));
     e.nt = norm(e.t + (en ? " " + en.t : ""));
-    e.ws = e.n.split(/[^\p{L}\p{N}$%]+/u).filter(Boolean);
+    e.ws = e.n.split(ORDSKILLE).filter(Boolean);
     e.w = where[e.cat] || "";
   });
 }
@@ -4796,9 +4834,12 @@ function ordPoeng(e, t){
   });
   return best;
 }
+let ORDSKILLE = /[\s.,;:!?()«»"'\/\-–—]+/;
+try{ ORDSKILLE = new RegExp("[^\\p{L}\\p{N}$%]+", "u"); }catch(e){}
 function soek(v){
   const q = norm(v).trim(); if(q.length < 2) return [];
   let ord = q.split(/\s+/).filter(function(t){ return t.length > 1; });
+  if(!ord.length) return [];
   const fyll = ord.filter(function(t){ return STOPP.has(t); });
   if(fyll.length < ord.length) ord = ord.filter(function(t){ return !STOPP.has(t); });   /* fyllord teller bare naar de er alt som er skrevet */
   return SIDX.map(function(e){
@@ -4827,6 +4868,7 @@ function gaaTil(e){
   setView(e.cat);
   setTimeout(function(){ const t = $(e.id); if(!t) return;
     if(t.tagName === "DETAILS") t.open = true;
+    for(let p = t.parentElement; p; p = p.parentElement){ if(p.tagName === "DETAILS") p.open = true; }   /* funn 7 */
     if(t.classList.contains("folded")){ t.classList.add("open"); const n = Number(String(t.id || "").replace("st-", "")); if(!isNaN(n)) OPEN_STEPS.add(n); }
     t.scrollIntoView({ behavior: "smooth", block: "start" }); }, 180);
 }
@@ -4839,7 +4881,7 @@ function renderSearch(){
   if(!S || !S.ph || !sheet || !q) return;
   q.placeholder = S.ph; q.setAttribute("aria-label", S.ph);
   if(ob){ ob.setAttribute("aria-label", S.ph); ob.title = S.ph; }
-  if(xb){ xb.setAttribute("aria-label", S.close || "Close"); xb.title = S.close || "Close"; xb.onclick = closeSearch; }
+  if(xb){ xb.setAttribute("aria-label", S.close || "Close"); xb.title = S.close || "Close"; xb.onclick = function(){ closeSearch(); }; }
   if(!sheet.dataset.wired){
     sheet.dataset.wired = "1";
     sheet.addEventListener("click", function(e){ if(e.target === sheet) closeSearch(); });
@@ -4919,7 +4961,7 @@ function renderKeep(){
   if(!K || !K.title || !box) return;
   const ua = navigator.userAgent || "";
   const standalone = (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true;
-  if(standalone || load("aimpire.keep") || PAGE === "leaders"){ box.hidden = true; return; }
+  if(standalone || load("aimpire.keep") === "installed" || PAGE === "leaders"){ box.hidden = true; return; }
   const ios = /iPhone|iPad|iPod/.test(ua), android = /Android/.test(ua);
   const inapp = /\bwv\b|WhatsApp|FBAN|FBAV|Instagram|Line\//.test(ua);
   box.hidden = false;
@@ -4928,7 +4970,7 @@ function renderKeep(){
   const pill = $("keep-pill"); pill.textContent = "\uD83D\uDCF2 " + K.title;
   pill.onclick = function(){ box.classList.toggle("open"); };
   $("keep-x").setAttribute("aria-label", K.later || "Not now");
-  $("keep-x").onclick = function(){ store("aimpire.keep", "later"); box.hidden = true; };
+  $("keep-x").onclick = function(){ box.classList.remove("open"); };   /* funn 11: pillen blir staaende */
   const go = $("keep-go"); go.textContent = K.button; go.hidden = !installPrompt;
   go.onclick = function(){ if(!installPrompt) return; installPrompt.prompt(); installPrompt.userChoice.then(function(){ installPrompt = null; renderKeep(); }); };
   $("keep-how-t").textContent = K.how;
@@ -4941,8 +4983,8 @@ function renderKeep(){
     ch.href = "intent://" + location.host + location.pathname + location.search + "#Intent;scheme=https;package=com.android.chrome;end";
   } else ch.hidden = true;
   /* Inne i en app-nettleser: vis veien ut uten aa maatte aapne «Slik». */
-  box.querySelector(".keep-how").open = !!inapp;
-  if(inapp) box.classList.add("open");
+  if(inapp && !box.dataset.howaapnet){ box.dataset.howaapnet = "1"; box.querySelector(".keep-how").open = true; }
+  if(inapp && !box.dataset.autoaapnet){ box.dataset.autoaapnet = "1"; box.classList.add("open"); }
 }
 /* Har medlemmet framdrift, aapner Start ved det aktive steget - ikke oeverst,
    forbi sju ferdige steg (founder 17.10: gjoer ting lettere). */
@@ -5045,16 +5087,18 @@ function ensurePack(L){
     return true;
   });
 }
+let langSeq = 0;
 function setLang(code){
-  const L = conf(code).code;
+  const L = conf(code).code, my = ++langSeq;
   if(HAVE[L] || cachedPack(L)){ ensurePack(L); applyLang(L); return; }
   document.documentElement.setAttribute("aria-busy", "true");
   ensurePack(L).then(function(ok){
+    if(my !== langSeq) return;   /* funn 5: et senere valg vinner */
     document.documentElement.removeAttribute("aria-busy");
-    applyLang(ok ? L : "en");
+    applyLang(ok ? L : "en", !ok);
   });
 }
-function applyLang(code){
+function applyLang(code, ikkeLagre){
   const L = conf(code);
   lang = L.code;
   document.documentElement.lang = L.bcp || L.code;
@@ -5081,7 +5125,9 @@ function applyLang(code){
       });
     }
   }
-  store("aimpire.lang", lang);
+  if(!ikkeLagre) store("aimpire.lang", lang);
+  /* Funn 10: paa en lederlenke staar spraaket i adressen, saa iPhone-appen (eget lager) beholder det. */
+  try{ const q = new URLSearchParams(location.search); if(q.get("l") && q.get("lang") !== lang){ q.set("lang", lang); history.replaceState(history.state, "", location.pathname + "?" + q.toString() + location.hash); } }catch(e){}
   render();
 }
 function toggleTheme(){
@@ -5134,6 +5180,7 @@ window.addEventListener("load", function(){ setTimeout(function(){ try{ sporTema
   const th = load("aimpire.theme.v2");
   if(th) document.documentElement.setAttribute("data-theme", th);
   let l = load("aimpire.lang");
+  try{ const ql = new URLSearchParams(location.search).get("lang"); if(ql && C.langs.some(function(x){ return x.code === ql; })) l = ql; }catch(e){}
   if(!C.langs.some(function(x){ return x.code === l; })){
     /* Telefonens egen rekkefoelge avgjoer: en urdu-telefon med engelsk som nr. 2 skal faa
        urdu, ikke engelsk (gjennomgang 17.10, funn A2). nb/nn = norsk. */
@@ -5161,7 +5208,7 @@ window.addEventListener("load", function(){ setTimeout(function(){ try{ sporTema
   /* Hjemskjerm-ikonet: hvitt for universal, moerkt KUN naar siden aapnes fra en
      lederlenke (founder 17.10 04:07 + 04:12). Byttes foer noen rekker aa lagre. */
   try{
-    const lKode = new URLSearchParams(location.search).get("l");
+    const lKode = String(new URLSearchParams(location.search).get("l") || "").toLowerCase().replace(/[^a-z0-9]/g, "");
     if(lKode && /^[a-z0-9]{6}$/.test(lKode)){
       const mfL = document.querySelector('link[rel="manifest"]');
       /* Founder 17.10 20:19: «hvorfor blir navnet mitt fjernet da jeg lagrer den som app?»
@@ -5185,8 +5232,10 @@ window.addEventListener("load", function(){ setTimeout(function(){ try{ sporTema
       if(atL) atL.href = "assets/apple-touch-icon-dark.png";
     }
   }catch(e){}
-  go();
-  loadReg().then(function(){ try{ initSponsor(); render(); }catch(e){} });
+  /* Funn 1: lista startes FOER foerste tegning, saa «sjekker invitasjonen» vises i stedet for «ingen sponsor». */
+  const pReg = loadReg();
+  try{ go(); }catch(e){ try{ console.error(e); }catch(_){} }
+  pReg.then(function(){ try{ initSponsor(); render(); }catch(e){} });
   /* Siden virker uten nett etter foerste besoek, og andre aapning er
      oeyeblikkelig. Registreres for alle, etter load, saa den aldri
      konkurrerer med foerste last. */
