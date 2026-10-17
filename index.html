@@ -856,6 +856,9 @@ html[data-font="nastaliq"] .p2p ul li, html[data-font="nastaliq"] .p2p p{line-he
   background:var(--ink-deep);color:var(--chalk);cursor:pointer;white-space:nowrap}
 .jump button:hover,.jump button:focus-visible{border-color:var(--gold);color:var(--chalk)}
 .sec{scroll-margin-top:120px}
+/* Soeket hopper rett til svaret: ogsaa enkeltelementer maa ha luft til den
+   klebrige topplinja, ellers gjemmer svaret seg bak den (founder 17.10). */
+#guide > li,.qa,.learn > details,.rail > li,[id^="earn-"]{scroll-margin-top:118px}
 .cslide{flex:1 1 100%;width:100%;accent-color:var(--gold);margin:2px 0}
 .cpre{display:flex;flex-wrap:wrap;gap:6px;flex:1 1 100%}
 .cpre button{font:600 .86rem/1 var(--display);padding:8px 13px;min-height:40px;border-radius:999px;border:1px dashed var(--edge-ui);background:transparent;color:var(--chalk);cursor:pointer;font-variant-numeric:tabular-nums}
