@@ -1974,6 +1974,10 @@ html[dir="rtl"] .tbprog b{transform-origin:100% 50%}
 @keyframes ccdraw{to{stroke-dashoffset:0}}
 button.slab.reg.fort{border:0;cursor:pointer;width:100%;font:inherit}
 .dlink.regsmall{display:inline-block;margin-top:8px;font-size:.82rem;color:var(--chalk-dim)}
+#fxlag{position:fixed;inset:0;overflow:hidden;clip-path:inset(0);pointer-events:none;z-index:98;contain:strict}
+/* Bare loddrett panorering paa selve siden; egne scrollrader (fanerekke, spraak) beholder
+   sidelengs, fordi touch-action regnes bare opp til naermeste scrollbeholder. */
+html,body{touch-action:pan-y pinch-zoom}
 /* Smart soek: svarkort og forslag. */
 .qans{display:grid;gap:6px;padding:14px 16px;margin:0 0 10px;border-radius:16px;border:1px solid #15D8C4;
   background:color-mix(in srgb,#15D8C4 9%,var(--ink-raise))}
@@ -2812,10 +2816,14 @@ function stilleBevegelse(){
 function partikkel(x, y, farge, str){
   const d = document.createElement("i");
   const rund = Math.random() < .45;
-  d.style.cssText = "position:fixed;left:" + x + "px;top:" + y + "px;width:" + str + "px;height:" +
+  d.style.cssText = "position:absolute;left:" + x + "px;top:" + y + "px;width:" + str + "px;height:" +
     (rund ? str : Math.round(str * 1.6)) + "px;border-radius:" + (rund ? "50%" : "2px") + ";background:" + farge +
-    ";z-index:98;pointer-events:none;will-change:transform,opacity";
-  document.body.appendChild(d);
+    ";pointer-events:none;will-change:transform,opacity";
+  /* Eget lag som klipper ved skjermkanten: partikler som fløy ut, gjorde siden bredere og
+     sidelengs-drabar paa telefon (founder 18.10 00:01). */
+  let lag = document.getElementById("fxlag");
+  if(!lag){ lag = document.createElement("div"); lag.id = "fxlag"; lag.setAttribute("aria-hidden", "true"); document.body.appendChild(lag); }
+  lag.appendChild(d);
   return d;
 }
 function gnist(x, y, antall){
@@ -5473,6 +5481,34 @@ function sparkSvg(){
   return sv;
 }
 function leggSpark(node){ if(node && !node.querySelector(".spark")) node.insertBefore(sparkSvg(), node.firstChild); }
+
+/* Sveip mellom mappene som i Instagram (founder 18.10 00:01): samme rekkefoelge som fanelinja.
+   Ikke fra ting som selv dras sidelengs (glider, fanerekke, spraak, ticker, chart, bilder,
+   kart, inndata). Krever tydelig, raskt og vannrett sveip. RTL snur retningen. */
+(function(){
+  let x0 = 0, y0 = 0, t0 = 0, aktiv = false;
+  const UNNTAK = "input,textarea,select,iframe,.jump,.switch,.tape2,.gchart,.cslide,.shot,.shotbox,.sheet,#tema,.cseg,.cpre,.mgseg,.qsug,.snspark,.cchart,.ssdial,[data-noswipe]";
+  document.addEventListener("touchstart", function(e){
+    aktiv = false;
+    if(e.touches.length !== 1 || PAGE === "leaders" || !document.body.classList.contains("has-tabbar")) return;
+    const t = e.target; if(t.closest && t.closest(UNNTAK)) return;
+    const qs = $("q-sheet"); if(qs && !qs.hidden) return;
+    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now(); aktiv = true;
+  }, { passive: true });
+  document.addEventListener("touchend", function(e){
+    if(!aktiv) return; aktiv = false;
+    const p = e.changedTouches[0], dx = p.clientX - x0, dy = p.clientY - y0, dt = Date.now() - t0;
+    if(dt > 700 || Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 1.8) return;
+    if(window.getSelection && String(window.getSelection()).length) return;   /* markerte tekst */
+    const rtl = document.documentElement.dir === "rtl";
+    const steg = (dx < 0) !== rtl ? 1 : -1;   /* sveip mot venstre = neste mappe til hoeyre */
+    const naa = TBREKKE.indexOf(view === "earn" ? "prod" : view);
+    const ny = TBREKKE[(naa < 0 ? TBREKKE.indexOf("menu") : naa) + steg];
+    if(!ny) return;
+    const b = document.querySelector('.tbb[data-cat="' + ny + '"]'); if(b) b.click();
+    vibrer(6);
+  }, { passive: true });
+})();
 /* Hvor langt ned i denne visningen: 0-1, tegnet som strek over fanelinja. */
 let tbTick = false;
 function tbScroll(){
