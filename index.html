@@ -1868,8 +1868,74 @@ function parseReg(text){
   return out;
 }
 function leaderById(id){ return id ? REG.find(function(x){ return x.id === id; }) || null : null; }
+/* #94 (B-033, 17.10): arket publiserer ikke lenger fornavn og partnerlenke i klartekst,
+   men én kryptert rad per leder: «id,chiffer». Noekkelen avledes av lederens egen kode
+   (?l=) med PBKDF2 - bare den som har koden, kan lese akkurat den lederen. Samme
+   regnestykke som google/send-lenke.gs (kryptertRad_), bevist likt i node. Den
+   dekrypterte lenka maa gi samme kode tilbake, ellers forkastes raden. */
+const ENC_SALT = "aimpire-v1", ENC_ITER = 10000;
+let ENC = [];
+function parseEnc(text){
+  const ut = [];
+  String(text || "").split(/\r?\n/).forEach(function(l){
+    const m = l.trim().replace(/"/g, "").match(/^([0-9a-f]{32}),([A-Za-z0-9+\/=]{20,})$/);
+    if(m) ut.push({ h: m[1], c: m[2] });
+  });
+  return ut;
+}
+async function encNokler(kode){
+  const te = new TextEncoder();
+  const km = await crypto.subtle.importKey("raw", te.encode(kode), "PBKDF2", false, ["deriveBits"]);
+  const t = new Uint8Array(await crypto.subtle.deriveBits({ name: "PBKDF2", salt: te.encode(ENC_SALT), iterations: ENC_ITER, hash: "SHA-256" }, km, 256));
+  const id = Array.from(t.slice(0, 16)).map(function(x){ return ("0" + x.toString(16)).slice(-2); }).join("");
+  const kin = new Uint8Array(34); kin.set(t); kin.set(te.encode("|k"), 32);
+  return { id: id, key: new Uint8Array(await crypto.subtle.digest("SHA-256", kin)) };
+}
+async function encDekrypter(key, b64){
+  const ct = Uint8Array.from(atob(b64), function(ch){ return ch.charCodeAt(0); });
+  const ut = new Uint8Array(ct.length);
+  for(let i = 0; i < ct.length; i += 32){
+    const blk = new Uint8Array(33); blk.set(key); blk[32] = i / 32;
+    const ks = new Uint8Array(await crypto.subtle.digest("SHA-256", blk));
+    for(let j = 0; j < 32 && i + j < ct.length; j++) ut[i + j] = ct[i + j] ^ ks[j];
+  }
+  return new TextDecoder().decode(ut);
+}
+/* Kodene denne telefonen faktisk trenger: lenken, husket sponsor og lederens egen. */
+function kjenteKoder(){
+  const k = [];
+  try{ const l = new URLSearchParams(location.search).get("l"); if(l) k.push(l); }catch(e){}
+  [load("aimpire.leader"), load("aimpire.me")].forEach(function(x){ if(x) k.push(x); });
+  return k.filter(function(x, i, a){ return /^[0-9a-z]{6}$/.test(x) && a.indexOf(x) === i; });
+}
+async function sikreLedere(koder){
+  if(!ENC.length || !(window.crypto && crypto.subtle)) return;
+  for(const kode of koder){
+    if(!/^[0-9a-z]{6}$/.test(kode) || leaderById(kode)) continue;
+    try{
+      const n = await encNokler(kode);
+      const rad = ENC.find(function(e){ return e.h === n.id; });
+      if(!rad) continue;
+      const del = (await encDekrypter(n.key, rad.c)).split("\n");
+      if(del[0] !== "AIM1") continue;
+      const navn = cleanName(del[1] || ""), u = validRef(del[2] || "");
+      if(!navn || !u || codeOf(u) !== kode) continue;
+      REG.push({ id: kode, name: navn, link: u.href });
+      /* Bare lederne denne telefonen allerede kjenner, lagres - for rask start uten nett. */
+      let kjent = []; try{ kjent = JSON.parse(localStorage.getItem("aimpire.regk") || "[]"); }catch(e){}
+      kjent = kjent.filter(function(x){ return x.id !== kode; }); kjent.push({ id: kode, name: navn, link: u.href });
+      store("aimpire.regk", JSON.stringify(kjent.slice(-10)));
+    }catch(e){}
+  }
+}
 /* Lagret kopi foerst (rask start, virker uten nett), saa ferske lista. */
-try{ REG = parseReg(JSON.parse(localStorage.getItem("aimpire.reg") || '""')); }catch(e){}
+try{
+  const raa = JSON.parse(localStorage.getItem("aimpire.reg") || '""');
+  REG = parseReg(raa); ENC = parseEnc(raa);
+  JSON.parse(localStorage.getItem("aimpire.regk") || "[]").forEach(function(x){
+    const u = validRef(x && x.link); if(u && codeOf(u) === x.id && !leaderById(x.id)) REG.push({ id: x.id, name: cleanName(x.name), link: u.href });
+  });
+}catch(e){}
 function loadReg(){
   /* Med kode i lenka og ingen husket liste: vent lenger (tregt nett i Pakistan
      maalt 1,5-3 s paa bredbaand, mer paa 3G). Kommer lista etter fristen, brukes
@@ -1902,7 +1968,7 @@ function loadReg(){
     if(text !== undefined) REG_VENTER = false;
     if(text === null || text === undefined) return false;
     store("aimpire.reg", JSON.stringify(text));
-    REG = parseReg(text); REG_FRESH = true;
+    REG = parseReg(text); ENC = parseEnc(text); REG_FRESH = true;
     return true;
   };
   return Promise.race([get, timeout]).then(function(text){
@@ -1913,12 +1979,12 @@ function loadReg(){
       get.then(function(sen){
         REG_VENTER = false;
         const ok = bruk(sen);
-        try{ initSponsor(); render(); }catch(e){}
-        return ok;
+        return sikreLedere(kjenteKoder()).then(function(){ try{ initSponsor(); render(); }catch(e){} return ok; });
       });
       return false;
     }
-    return bruk(text);
+    const ok = bruk(text);
+    return sikreLedere(kjenteKoder()).then(function(){ return ok; });
   });
 }
 
@@ -2170,7 +2236,11 @@ function destination(){
     : { url:REF_HOUSE, host:null, fp:null };
 }
 
-function makeLink(){ (REG_FRESH ? Promise.resolve() : loadReg()).then(makeLinkNow); }
+function makeLink(){
+  (REG_FRESH ? Promise.resolve() : loadReg())
+    .then(function(){ const u = validRef($("ld-in").value); return u ? sikreLedere([codeOf(u)]) : null; })
+    .then(makeLinkNow);
+}
 /* Lederens lenke skal kunne kopieres med ett trykk - ogsaa der utklippstavlen
    er sperret i innebygde nettlesere (founder 17.10). */
 function visLenke(ut, verdi){
