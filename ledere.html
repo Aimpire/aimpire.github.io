@@ -1434,6 +1434,14 @@ html[data-font="nastaliq"] .qres b,html[data-font="naskh"] .qres b,html[data-fon
 .shell:not([data-view="menu"]) .keep{display:none}
 .keep-h{display:flex;align-items:center;gap:10px}
 .keep-h strong{font-family:var(--display);font-size:1rem}
+.keep{padding:0;border:0;background:none;margin:12px 0 2px}
+.keep:not(.open) > :not(.keep-pill){display:none}
+.keep-pill{display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 14px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--rule);background:transparent;color:var(--chalk-dim);font:700 .8rem/1 var(--display)}
+.keep-pill:hover,.keep-pill:focus-visible{border-color:var(--gold-soft);color:var(--chalk);outline:none}
+.keep.open{padding:12px 14px;border:1px solid var(--rule);border-radius:var(--r-card);background:var(--ink-deep)}
+.keep.open .keep-pill{margin-bottom:6px;border-color:var(--gold-soft);color:var(--chalk)}
+.keep.open .keep-h strong{display:none}
 .keep-x{margin-inline-start:auto;width:32px;height:32px;border:0;border-radius:50%;background:transparent;color:var(--chalk-dim);cursor:pointer;font-size:18px;line-height:1}
 .keep-x::before{content:"\00d7"}
 .keep-x:hover{color:var(--chalk)}
@@ -1734,9 +1742,8 @@ html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
       <div class="qout" id="q-out" hidden></div>
     </div>
   </div>
-  <nav class="menu" id="menu" aria-label="Sections"></nav>
-  <button type="button" class="mknow" id="mk-now" hidden></button>
   <div class="keep" id="keep" hidden>
+    <button type="button" class="keep-pill" id="keep-pill"></button>
     <div class="keep-h"><strong id="keep-t"></strong><button type="button" class="keep-x" id="keep-x" aria-label="Not now"></button></div>
     <p id="keep-b"></p>
     <button type="button" class="keep-go" id="keep-go" hidden></button>
@@ -1745,6 +1752,8 @@ html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
       <a id="keep-chrome" class="keep-chrome" hidden></a>
     </details>
   </div>
+  <nav class="menu" id="menu" aria-label="Sections"></nav>
+  <button type="button" class="mknow" id="mk-now" hidden></button>
   <div class="topbar" id="topbar" hidden>
     <button class="back" id="back" type="button"></button>
     <span class="minip" id="minip" hidden><span id="minip-t"></span><i><b id="minip-b"></b></i></span>
@@ -4878,6 +4887,9 @@ function renderKeep(){
   const inapp = /\bwv\b|WhatsApp|FBAN|FBAV|Instagram|Line\//.test(ua);
   box.hidden = false;
   $("keep-t").textContent = K.title; $("keep-b").textContent = K.body;
+  /* Founder 17.10 20:01: liten knapp i stedet for et stort kort som skjuler resten. */
+  const pill = $("keep-pill"); pill.textContent = "\uD83D\uDCF2 " + K.title;
+  pill.onclick = function(){ box.classList.toggle("open"); };
   $("keep-x").setAttribute("aria-label", K.later || "Not now");
   $("keep-x").onclick = function(){ store("aimpire.keep", "later"); box.hidden = true; };
   const go = $("keep-go"); go.textContent = K.button; go.hidden = !installPrompt;
@@ -4893,6 +4905,7 @@ function renderKeep(){
   } else ch.hidden = true;
   /* Inne i en app-nettleser: vis veien ut uten aa maatte aapne «Slik». */
   box.querySelector(".keep-how").open = !!inapp;
+  if(inapp) box.classList.add("open");
 }
 /* Har medlemmet framdrift, aapner Start ved det aktive steget - ikke oeverst,
    forbi sju ferdige steg (founder 17.10: gjoer ting lettere). */
