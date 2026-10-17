@@ -1347,6 +1347,15 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var
 
 /* --- Klebefeltet: hårstrek under, saa det har en kant naar det ligger over tekst. --- */
 .topbar{box-shadow:0 1px 0 var(--rule)}
+/* Topplinje v2 (founder 17.10 20:15 «forenkling»): ÉN slank rad - tilbake-pil + faner som kan sveipes. */
+.topbar{flex-wrap:nowrap !important;gap:8px !important;padding-block:8px !important}
+.topbar .back{flex:0 0 auto;min-height:36px !important;padding:0 12px !important;font-size:.82rem !important}
+.topbar .jump{flex:1 1 auto !important;order:0 !important;flex-wrap:nowrap !important;overflow-x:auto;padding:0 !important;gap:6px;
+  scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent)}
+html[dir="rtl"] .topbar .jump{-webkit-mask-image:linear-gradient(270deg,#000 85%,transparent);mask-image:linear-gradient(270deg,#000 85%,transparent)}
+.topbar .jump button{min-height:36px !important;padding:0 12px !important;font-size:.8rem !important;white-space:nowrap}
+.topbar .minip{flex:0 0 auto}
+
 
 /* --- Varselboksen (ingen sponsor): rolig flate med siktelinje oeverst, ikke tykk marg. --- */
 .notice{position:relative;overflow:hidden;border:1px solid var(--rule);border-radius:var(--r-card);
@@ -4620,6 +4629,7 @@ function setTab(tb, scroll){
   const sh = document.querySelector(".shell"); if(sh) sh.setAttribute("data-tab", tb);
   [...document.querySelectorAll("#jump button")].forEach(function(b){
     const on = b.dataset.tab === tb; b.setAttribute("aria-selected", String(on));
+    if(on){ const j = b.parentNode; if(j && j.scrollWidth > j.clientWidth){ const x = b.offsetLeft - (j.clientWidth - b.offsetWidth) / 2; try{ j.scrollTo({ left: x, behavior: "smooth" }); }catch(e){ j.scrollLeft = x; } } }
     if(on && b.parentNode.scrollWidth > b.parentNode.clientWidth){
       const r = b.parentNode.getBoundingClientRect();
       if(r.top >= 0 && r.bottom <= innerHeight) b.scrollIntoView({block: "nearest", inline: "nearest"});
