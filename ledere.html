@@ -265,13 +265,19 @@ html[data-font="deva"] .sec > h2,html[data-font="nastaliq"] .sec > h2,html[data-
 html[data-font="deva"] .slab .t,html[data-font="nastaliq"] .slab .t,html[data-font="naskh"] .slab .t{
   font-family:var(--face);text-transform:none;letter-spacing:0;line-height:1.7}
 .slab .s{display:block;margin-top:5px;font-size:.9rem;opacity:.72;font-weight:600}
-.slab.reg{text-align:center;border:1.5px solid rgba(255,255,255,.30);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.38), inset 0 -2px 0 rgba(0,0,0,.18),
-    0 8px 26px rgba(194,31,191,.30);
+ /* Hovedknappen (valgt i knappelab 17.10 04:23, variant A): pille, fargegloed paa
+    begge sider, dybde innover og et stille glass-skinn. Ingen billig hvit ramme. */
+.slab.reg{text-align:center;border:0;border-radius:999px !important;position:relative;overflow:hidden;
+  box-shadow:0 10px 28px -8px rgba(21,216,196,.45), 0 10px 30px -6px rgba(194,31,191,.48),
+    inset 0 1px 0 rgba(255,255,255,.5), inset 0 -3px 8px rgba(0,0,0,.22);
   transition:transform .12s ease,filter .15s ease}
+.slab.reg::after{content:"";position:absolute;top:0;inset-inline-start:-30%;width:45%;height:100%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.34) 50%,transparent);
+  transform:skewX(-20deg);pointer-events:none}
 .slab.reg:active{transform:scale(.985)}
-:root:not([data-theme="dark"]) .slab.reg{border-color:rgba(0,0,0,.14);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.55), 0 8px 22px rgba(163,21,159,.22)}
+:root:not([data-theme="dark"]) .slab.reg{
+  box-shadow:0 8px 22px -8px rgba(21,160,150,.4), 0 8px 24px -6px rgba(163,21,159,.32),
+    inset 0 1px 0 rgba(255,255,255,.6), inset 0 -3px 8px rgba(0,0,0,.12)}
 .slab:hover,.slab:focus-visible{filter:brightness(1.12)}
 /* Egen lenke: samme slab-form, men omriss - sekundaer handling, aldri doed flate. */
 .slab.own{color:var(--chalk);border:1.5px solid transparent;
@@ -594,8 +600,13 @@ html[data-font="nastaliq"] .tool .flab,html[data-font="naskh"] .tool .flab,html[
 #notice-none .slab.reg .t{font-size:1.12rem}
 #notice-none .slab.reg .s{margin-top:3px;font-size:.86rem}
 .ib .slab.own{display:block;margin:12px 0 0;padding:13px 18px;border-radius:var(--r-btn)}
-.tool button{width:100%;background:var(--grad);color:#08080B;border:0;padding:13px 16px;min-height:48px;
-  border-radius:var(--r-btn);font:800 1rem/1.15 var(--display);cursor:pointer}
+.tool button{width:100%;background:var(--grad);color:#08080B;border:0;padding:13px 16px;min-height:50px;
+  border-radius:999px;font:800 1rem/1.15 var(--display);cursor:pointer;position:relative;overflow:hidden;
+  box-shadow:0 8px 24px -8px rgba(21,216,196,.4), 0 8px 26px -6px rgba(194,31,191,.42),
+    inset 0 1px 0 rgba(255,255,255,.5), inset 0 -3px 8px rgba(0,0,0,.2)}
+.tool button::after{content:"";position:absolute;top:0;inset-inline-start:-30%;width:45%;height:100%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.3) 50%,transparent);
+  transform:skewX(-20deg);pointer-events:none}
 .tool button:hover,.tool button:focus-visible{filter:brightness(1.1);outline:none}
 .tool button:active{transform:scale(.985)}
 .out{margin-top:14px;padding:14px 15px;background:var(--ink-deep);border:1px solid var(--rule);
