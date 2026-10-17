@@ -5161,9 +5161,26 @@ window.addEventListener("load", function(){ setTimeout(function(){ try{ sporTema
   /* Hjemskjerm-ikonet: hvitt for universal, moerkt KUN naar siden aapnes fra en
      lederlenke (founder 17.10 04:07 + 04:12). Byttes foer noen rekker aa lagre. */
   try{
-    if(new URLSearchParams(location.search).get("l")){
+    const lKode = new URLSearchParams(location.search).get("l");
+    if(lKode && /^[a-z0-9]{6}$/.test(lKode)){
       const mfL = document.querySelector('link[rel="manifest"]');
-      if(mfL) mfL.href = "manifest-leder.webmanifest";
+      /* Founder 17.10 20:19: «hvorfor blir navnet mitt fjernet da jeg lagrer den som app?»
+         Manifestet startet alltid paa ./?src=pwa - uten ?l=. Og en hjemskjerm-app paa
+         iPhone har eget lager, saa den husker ikke lederen fra Safari. Losning:
+         - iPhone/iPad: ingen manifest-lenke -> iOS lagrer den ADRESSEN man staar paa (med ?l=).
+         - Android/Chrome: manifestet bygges her med start_url som har ?l=-koden. */
+      const uaM = navigator.userAgent || ""; const ios = /iPhone|iPad|iPod/.test(uaM) || (!/Android/.test(uaM) && /Macintosh/.test(uaM) && navigator.maxTouchPoints > 1);
+      if(mfL && ios){ mfL.remove(); }
+      else if(mfL){
+        mfL.href = "manifest-leder.webmanifest";
+        fetch("manifest-leder.webmanifest").then(function(r){ return r.json(); }).then(function(m){
+          const base = location.origin + location.pathname.replace(/(index|ledere)\.html$/, "");
+          m.start_url = base + "?l=" + lKode + "&src=pwa";
+          m.scope = base; m.id = base + "?l=" + lKode;
+          (m.icons || []).forEach(function(ic){ ic.src = new URL(ic.src, base).href; });
+          mfL.href = URL.createObjectURL(new Blob([JSON.stringify(m)], { type: "application/manifest+json" }));
+        }).catch(function(){});
+      }
       const atL = document.querySelector('link[rel="apple-touch-icon"]');
       if(atL) atL.href = "assets/apple-touch-icon-dark.png";
     }
