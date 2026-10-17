@@ -903,6 +903,19 @@ html:not([data-page="leaders"]) #s-leaders{display:none !important}
 /* ---------- hovedmeny ---------- */
 .menu{display:grid;gap:10px;padding:6px 0 0}
 /* Hjemskjerm v2 (founder 17.10 19:56) */
+/* Mappehode */
+.vhead{display:flex;align-items:center;gap:14px;margin:16px 0 4px;padding:14px 16px;border-radius:18px;position:relative;overflow:hidden;
+  background:linear-gradient(var(--ink-raise,#1A1A22),var(--ink-raise,#1A1A22)) padding-box,var(--grad) border-box;border:1.5px solid transparent}
+.vhead[hidden]{display:none}
+.vhead::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
+  background-image:linear-gradient(rgba(127,127,127,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(127,127,127,.08) 1px,transparent 1px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000);mask-image:linear-gradient(90deg,transparent,#000)}
+html[dir="rtl"] .vhead::after{-webkit-mask-image:linear-gradient(270deg,transparent,#000);mask-image:linear-gradient(270deg,transparent,#000)}
+.vhead .vic{flex:0 0 52px;height:52px;border-radius:15px;display:grid;place-items:center;font-size:1.7rem;background:var(--ink);border:1px solid var(--rule)}
+.vhead .vtx{display:flex;flex-direction:column;gap:3px;min-width:0;position:relative;z-index:1}
+.vhead .vtx b{font:800 1.3rem/1.15 var(--display)}
+.vhead .vtx span{font-size:.86rem;line-height:1.35;color:var(--chalk-dim)}
+
 .mfeat{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .mfeat .plate{display:flex;flex-direction:column;align-items:flex-start;gap:0;padding:16px 14px 14px;min-height:168px;position:relative;overflow:hidden}
 .mfeat .plate > .stripe{position:absolute;inset:0 0 auto 0;height:3px;min-height:0;width:auto;background:var(--grad)}
@@ -4851,6 +4864,20 @@ function applyView(){
   if(nav) nav.hidden = view !== "menu";
   if(bk) bk.hidden = view === "menu";
   renderJump();
+  /* Mappehode (founder 17.10 21:04 «samme tankegang som hjemskjermen i alle mapper»):
+     samme ikon og navn som flisa man trykket paa, saa man ser hvor man er. */
+  let vh = $("vhead");
+  if(!vh && bk){ vh = el("div", "vhead"); vh.id = "vhead"; bk.after(vh); }
+  if(vh){
+    const M = C.menu && (C.menu[lang] || C.menu.en);
+    const it = M && M.items.find(function(x){ return x[0] === view; });
+    vh.hidden = view === "menu" || !it; vh.textContent = "";
+    if(it){
+      vh.setAttribute("data-cat", view);
+      vh.appendChild(el("span", "vic", MIKON[view] || "\u2022"));
+      const tx = el("div", "vtx"); tx.appendChild(el("b", null, it[1])); tx.appendChild(el("span", null, it[2])); vh.appendChild(tx);
+    }
+  }
 }
 
 /* «Ha Aimpire paa telefonen» (founder 16.10): aapnet inne i WhatsApp/Element
