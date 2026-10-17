@@ -973,6 +973,15 @@ html[data-font="nastaliq"] .qa summary{font-weight:400}
 .out .apply:active,.nextb:active,.joinbtn:active{transform:scale(.985)}
 .out .apply{width:100%;margin-top:14px}
 .nextb{width:100%;margin-top:4px}
+/* Neste steg paa forsidekortet, og lederens ferdige lenke som tydelig blokk med kopiknapp. */
+.plate .nx{display:block;margin-top:7px;font-size:.84rem;font-weight:700;color:var(--gold-soft)}
+.out .mylink{display:block;margin:10px 0 2px;padding:12px 14px;border-radius:var(--r-in);
+  background:var(--ink-deep);border:1px solid var(--rule);color:var(--chalk);
+  font:700 .95rem/1.4 ui-monospace,monospace;word-break:break-all;unicode-bidi:isolate}
+.out .copyb{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;
+  margin-top:8px;padding:10px 18px;border:1px solid var(--gold-soft);border-radius:var(--r-btn);
+  background:transparent;color:var(--chalk);font:800 .92rem/1.15 var(--display);cursor:pointer}
+.out .copyb:hover,.out .copyb:focus-visible{border-color:var(--gold);outline:none}
 .joinbtn{display:flex;width:100%;margin-top:12px}
 :root[data-theme="dark"] .out .apply::after,:root[data-theme="dark"] .nextb::after,:root[data-theme="dark"] .joinbtn::after{opacity:.85}
 
@@ -1698,6 +1707,18 @@ function destination(){
 }
 
 function makeLink(){ (REG_FRESH ? Promise.resolve() : loadReg()).then(makeLinkNow); }
+/* Lederens lenke skal kunne kopieres med ett trykk - ogsaa der utklippstavlen
+   er sperret i innebygde nettlesere (founder 17.10). */
+function visLenke(ut, verdi){
+  const UI = C.guide_ui[lang] || C.guide_ui.en;
+  const kode = el("code", "mylink", verdi);
+  kode.setAttribute("dir", "ltr");
+  ut.appendChild(kode);
+  const kb = el("button", "copyb"); kb.type = "button";
+  kb.appendChild(el("span", "c", UI.copy || "Copy"));
+  kb.onclick = function(){ copyCode(kb, verdi, "link"); };
+  ut.appendChild(kb);
+}
 function makeLinkNow(){
   const u = validRef($("ld-in").value), out = $("ld-out"), L = C.leaders[lang] || C.leaders.en;
   out.hidden = false; out.textContent = "";
@@ -1755,7 +1776,7 @@ function makeLinkNow(){
                virke i det founder huker av. */
             out.textContent = ""; out.className = "out";
             out.appendChild(el("b", null, L.applied));
-            out.appendChild(document.createTextNode(hubBase() + "?l=" + codeOf(u)));
+            visLenke(out, hubBase() + "?l=" + codeOf(u));
             out.appendChild(el("p", "vnote", L.applied_wait || ""));
             store("aimpire.me", codeOf(u));
             try{ navigator.clipboard.writeText(hubBase() + "?l=" + codeOf(u)); }catch(e){}
@@ -1770,7 +1791,7 @@ function makeLinkNow(){
     out.className = "out wait"; b.textContent = L.pending_line || L.pending;
   }
   out.appendChild(b);
-  out.appendChild(document.createTextNode(text));
+  visLenke(out, text);
   try{ navigator.clipboard.writeText(text); }catch(e){}
 }
 
@@ -2948,6 +2969,12 @@ function renderMenu(){
       pg.appendChild(bar);
       pg.appendChild(el("span", null, done.size + " / " + steps));
       bd.appendChild(pg);
+      /* Hvor man slapp, rett paa kortet - ett blikk, null leting (founder 17.10). */
+      const UI = C.guide_ui[lang] || C.guide_ui.en;
+      const G2 = C.guide[lang] || C.guide.en;
+      const neste = G2.steps.findIndex(function(_, i){ return !done.has(String(i)); });
+      const nxTekst = neste === -1 ? (UI.all_done_go || "") : (UI.next || "{t}").replace("{t}", G2.steps[neste][0]);
+      if(nxTekst) bd.appendChild(el("span","nx", nxTekst));
     }
     b.appendChild(bd);
     const go = el("span","go");
@@ -3158,6 +3185,17 @@ function renderKeep(){
   /* Inne i en app-nettleser: vis veien ut uten aa maatte aapne «Slik». */
   box.querySelector(".keep-how").open = !!inapp;
 }
+/* Har medlemmet framdrift, aapner Start ved det aktive steget - ikke oeverst,
+   forbi sju ferdige steg (founder 17.10: gjoer ting lettere). */
+function hoppTilAktivtSteg(){
+  if(view !== "start") return;
+  const d = doneSet();
+  if(!d.size) return;
+  setTimeout(function(){
+    const li = document.querySelector("#guide li.current");
+    if(li && view === "start") li.scrollIntoView({ block: "start" });
+  }, 80);
+}
 function setView(v, fraHash){
   view = CATS.indexOf(v) === -1 ? "menu" : v;
   if(!fraHash){
@@ -3166,6 +3204,7 @@ function setView(v, fraHash){
     window.scrollTo(0, 0);
   }
   applyView();
+  if(!fraHash) hoppTilAktivtSteg();
 }
 
 function viewFromHash(){
@@ -3175,7 +3214,7 @@ function viewFromHash(){
   h = ALIAS[h] || h;
   const foer = view;
   setView(CATS.indexOf(h) === -1 ? "menu" : h, true);
-  if(view !== foer){ try{ window.scrollTo(0, 0); }catch(e){} }   /* ny visning = start oeverst (funn A9) */
+  if(view !== foer){ try{ window.scrollTo(0, 0); }catch(e){} hoppTilAktivtSteg(); }   /* ny visning = start oeverst (funn A9) */
   if(raw === "calc"){ setTab("calc", true); }
 }
 window.addEventListener("hashchange", viewFromHash);
