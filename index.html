@@ -1801,7 +1801,7 @@ html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
 .mknow .lane.on em{color:var(--chalk)}
 .mknow .nowl{position:absolute;top:-4px;bottom:16px;width:2px;background:#fff;border-radius:1px;box-shadow:0 0 8px rgba(255,255,255,.8);display:block !important}
 :root:not([data-theme="dark"]) .mknow .nowl{background:#14101C;box-shadow:none}
-.mknow .ax{display:grid !important;grid-template-columns:repeat(5,1fr);margin-inline:84px 74px;font-size:.62rem;color:var(--chalk-dim);opacity:.7}
+.mknow .ax{display:grid !important;grid-template-columns:repeat(5,1fr);margin-inline:84px 74px;font-size:.62rem;color:var(--chalk-dim)}   /* uten opacity: 4,18 -> over 4,5 (Lighthouse 17.10) */
 .mknow .ax span{display:block !important;font-size:inherit !important}
 .mknow .ax span:last-child{text-align:end}
 @media (prefers-reduced-motion:reduce){.mknow .live{animation:none}}
@@ -4357,7 +4357,7 @@ function renderSessions(){
        hver time fra Forex Factory-feeden (K-28). Tid i telefonens tid. */
     const nw = el("span", "mknews"); nw.id = "mk-news"; nw.hidden = true; mk.appendChild(nw);
     nyhetVis();
-    mk.setAttribute("aria-label", T.mk + ": " + naaTekst.join(" "));
+    mk.removeAttribute("aria-label");   /* WCAG 2.5.3: navnet = den synlige teksten (Lighthouse 17.10) */
     mk.hidden = false;
     mk.onclick = function(){ location.hash = "#hours"; };
     MKNOW = { now: now, midnatt: midnatt };
