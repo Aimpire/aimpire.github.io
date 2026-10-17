@@ -357,13 +357,14 @@ html[dir="rtl"] .row .go{transform:scaleX(-1)}
 /* Riktig app, riktig plattform. To store maal - ingen gjetting. */
 .apps{display:flex;gap:8px;margin:13px 0 0;flex-wrap:wrap}
 .apps a{flex:1 1 130px;display:flex;align-items:center;justify-content:center;gap:8px;
-  background:var(--jet);color:var(--jet-on);border:1px solid var(--jet);border-radius:6px;
-  padding:13px 14px;text-decoration:none;font-weight:700;font-size:.92rem;
-  font-family:var(--display);min-height:46px}
-.apps a:hover,.apps a:focus-visible{filter:brightness(1.25)}
+  border:1.5px solid transparent;border-radius:var(--r-btn);
+  background:linear-gradient(var(--ink-raise),var(--ink-raise)) padding-box,var(--grad) border-box;
+  color:var(--chalk);padding:11px 14px;text-decoration:none;font-weight:800;font-size:.9rem;
+  font-family:var(--display);min-height:44px}
+.apps a:hover,.apps a:focus-visible{filter:brightness(1.18)}
 .joinbtn{display:block;margin:9px 0 0;background:var(--grad);color:#08080B;
-  text-decoration:none;padding:15px 16px;border-radius:6px;text-align:center;
-  font-weight:800;font-size:1rem;font-family:var(--display);min-height:50px}
+  text-decoration:none;padding:14px 16px;border-radius:var(--r-btn);text-align:center;
+  font-weight:800;font-size:1rem;font-family:var(--display);min-height:48px}
 .joinbtn:hover,.joinbtn:focus-visible{filter:brightness(1.12)}
 
 /* Ordlista. Lukket til man trykker, saa den som bare vil la Sonic gaa
@@ -555,6 +556,10 @@ html[dir="rtl"] .ib .flag{border-radius:5px 0 0 5px}
   padding:11px 13px;border-radius:var(--r-in);font:inherit;font-size:.95rem;font-family:"Montserrat",sans-serif;
   margin-bottom:8px}
 .tool input:focus{border-color:var(--gold);outline:none}
+.tool .flab{display:block;margin:10px 0 4px;font:700 .78rem/1.2 var(--display);color:var(--chalk-dim);
+  letter-spacing:.02em}
+html[data-font="nastaliq"] .tool .flab,html[data-font="naskh"] .tool .flab,html[data-font="deva"] .tool .flab{font-family:var(--face)}
+.tool input.felt-feil{border-color:var(--gold-deep);box-shadow:0 0 0 1px var(--gold-deep)}
 .tool .hint{font-size:.82rem;color:var(--chalk-dim);margin:0 0 14px}
 /* Founder 16.10: navnet paa den som inviterte, i gull og stoerre - det er det
    foerste medlemmet skal kjenne igjen. Resten av linja er stille. */
@@ -869,7 +874,7 @@ html[data-font="nastaliq"] .p2p ul li, html[data-font="nastaliq"] .p2p p{line-he
 #guide > li,.qa,.learn > details,.rail > li,[id^="earn-"]{scroll-margin-top:118px}
 .cslide{flex:1 1 100%;width:100%;accent-color:var(--gold);margin:2px 0}
 .cpre{display:flex;flex-wrap:wrap;gap:6px;flex:1 1 100%}
-.cpre button{font:600 .86rem/1 var(--display);padding:8px 13px;min-height:40px;border-radius:999px;border:1px dashed var(--edge-ui);background:transparent;color:var(--chalk);cursor:pointer;font-variant-numeric:tabular-nums}
+.cpre button{font:600 .86rem/1 var(--display);padding:8px 13px;min-height:40px;border-radius:999px;border:1px solid var(--edge-ui);background:transparent;color:var(--chalk);cursor:pointer;font-variant-numeric:tabular-nums}
 .cpre button:hover{border-style:solid;border-color:var(--gold)}
 .cbar{display:flex;height:14px;border-radius:999px;overflow:hidden;margin:12px 0 0;max-width:var(--measure);background:var(--rule)}
 .cbar i{display:block;height:100%;transition:width .25s ease}
@@ -1013,9 +1018,10 @@ html[data-font="nastaliq"] .qa summary{font-weight:400}
   background:linear-gradient(var(--ink),var(--ink)) padding-box,var(--grad) border-box}
 /* Forsidekortet (founder 17.10 03:26): egen-lenke er en LITEN pille her - hovedplassen
    er under IB og bonuser. Kortet skal ikke rope; det peker. */
-#notice-none .dlink{display:inline-flex;width:auto;min-height:32px;margin-top:10px;
-  padding:5px 12px;border:1px solid var(--rule);border-radius:999px;font:700 .76rem/1.15 var(--display);
+#notice-none .dlink{display:inline-flex;width:auto;min-height:28px;margin-top:10px;
+  padding:3px 10px;border:1px solid var(--rule);border-radius:999px;font:700 .72rem/1.15 var(--display);
   background:transparent;color:var(--chalk-dim)}
+#notice-none .dlink:hover,#notice-none .dlink:focus-visible{border-color:var(--gold-soft);color:var(--chalk);filter:none}
 #notice-none .slab.reg#nn-own{margin-top:10px}
 #spon .dlink:hover,#notice-none .dlink:hover,.ib .dlink:hover,
 #spon .dlink:focus-visible,#notice-none .dlink:focus-visible,.ib .dlink:focus-visible{
@@ -1395,10 +1401,10 @@ html[data-font="nastaliq"] :is(.switch button,.jump button,.cper button){line-he
     <h2 id="t-leaders"></h2>
     <div class="tool">
       <p id="ld-body"></p>
-      <input id="ld-in" type="url" autocomplete="off" spellcheck="false">
-      <input id="ld-name" type="text" autocomplete="given-name" spellcheck="false" maxlength="24">
-      <input id="ld-mail" type="email" inputmode="email" autocomplete="email">
-      <input id="ld-spons" type="text" autocomplete="off" spellcheck="false" maxlength="24">
+      <input id="ld-in" type="url" autocomplete="off" spellcheck="false" enterkeyhint="next">
+      <input id="ld-name" type="text" autocomplete="given-name" spellcheck="false" maxlength="24" enterkeyhint="next">
+      <input id="ld-mail" type="email" inputmode="email" autocomplete="email" enterkeyhint="next">
+      <input id="ld-spons" type="text" autocomplete="off" spellcheck="false" maxlength="24" enterkeyhint="go">
       <p class="hint" id="ld-hint"></p>
       <p class="vnote" id="ld-why"></p>
       <button id="ld-btn" onclick="makeLink()"></button>
@@ -1753,11 +1759,17 @@ function visLenke(ut, verdi){
   kb.onclick = function(){ copyCode(kb, verdi, "link"); };
   ut.appendChild(kb);
 }
+function markerFeil(id){
+  const inp = $(id); if(!inp) return;
+  inp.classList.add("felt-feil");
+  inp.addEventListener("input", function en(){ inp.classList.remove("felt-feil"); inp.removeEventListener("input", en); });
+  inp.focus();
+}
 function makeLinkNow(){
   const u = validRef($("ld-in").value), out = $("ld-out"), L = C.leaders[lang] || C.leaders.en;
   out.hidden = false; out.textContent = "";
   const b = document.createElement("b");
-  if(!u){ out.className = "out bad"; b.textContent = L.bad; out.appendChild(b); return; }
+  if(!u){ out.className = "out bad"; b.textContent = L.bad; out.appendChild(b); markerFeil("ld-in"); return; }
   /* Lenken skal alltid baere Aimpire-adressen. Lages den fra den gamle
      adressen, ville den ellers ha baaret founders brukernavn videre til alle
      han inviterer. Lokalt beholder vi local host, ellers kunne ingen teste. */
@@ -1777,17 +1789,17 @@ function makeLinkNow(){
     out.className = "out"; b.textContent = L.ok;
   } else {
     const nm = cleanName($("ld-name").value);
-    if(!nm){ out.className = "out bad"; b.textContent = L.name_hint; out.appendChild(b); $("ld-name").focus(); return; }
+    if(!nm){ out.className = "out bad"; b.textContent = L.name_hint; out.appendChild(b); markerFeil("ld-name"); return; }
     /* E-posten brukes bare til én beskjed: at lenka er godkjent og virker. */
     const mail = String($("ld-mail").value || "").trim();
     const F = C.leader_signup || {};
     if(F.mail_field && !/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(mail)){
-      out.className = "out bad"; b.textContent = L.mail_hint; out.appendChild(b); $("ld-mail").focus(); return;
+      out.className = "out bad"; b.textContent = L.mail_hint; out.appendChild(b); markerFeil("ld-mail"); return;
     }
     /* Skjemaet krever «hvem inviterte deg» (founder 16.10). Mangler det, avviser
        Google innsendingen stille - derfor stoppes det her, med beskjed. */
     const spons = cleanName($("ld-spons").value);
-    if(F.sponsor_field && !spons){ out.className = "out bad"; b.textContent = L.spons_hint || L.name_hint; out.appendChild(b); $("ld-spons").focus(); return; }
+    if(F.sponsor_field && !spons){ out.className = "out bad"; b.textContent = L.spons_hint || L.name_hint; out.appendChild(b); markerFeil("ld-spons"); return; }
     if(F.form && F.name_field && F.link_field){
       /* Ikke godkjent: soeknaden gaar rett til founders Google-skjema med ett
          trykk. Lederen ser aldri skjemaet. */
@@ -1949,6 +1961,7 @@ function render(){
     const old3 = none.querySelector(".dlink"); if(old3) old3.remove();
     const oldReg = $("nn-reg"); if(oldReg) oldReg.remove();
     const oldWho = $("nn-who"); if(oldWho) oldWho.remove();
+    const oldOwn = $("nn-own"); if(oldOwn) oldOwn.remove();
     /* Founder 17.10 03:28: registreringen via partnerlenken skal vaere STOR her,
        «min egen lenke» liten. Den store finnes bare naar telefonen husker en
        sponsor - det er B-022s «tilbys som ett trykk», aldri en stille kobling:
@@ -1971,6 +1984,8 @@ function render(){
       }
     }
     if(S.own_link){
+      /* Fersk universal uten registreringsknapp: «Min egen lenke» er selv den store
+         knappen (founder 17.10 03:51). Med husket sponsor: liten pille under den store. */
       const harStor = !!$("nn-reg");
       const a3 = harStor ? el("a", "dlink", S.own_link) : el("a", "slab reg", null);
       if(!harStor){ a3.id = "nn-own"; a3.appendChild(el("span", "t", S.own_link)); }
@@ -2553,10 +2568,20 @@ function render(){
       if(/^https:\/\//.test(bit) && safeUrl(bit)){ const a = el("a", "dlink ldlink", bit.replace(/^https:\/\//, "")); a.href = bit; a.target = "_blank"; a.rel = "noopener noreferrer"; bd.appendChild(a); }
       else bd.appendChild(document.createTextNode(bit));
     }); }
-  $("ld-in").placeholder = L.placeholder;
-  $("ld-name").placeholder = S.name_ph;
-  $("ld-mail").placeholder = L.mail_ph || "";
-  $("ld-spons").placeholder = L.spons_ph || "";
+  /* Synlige etiketter over feltene (founder 17.10 03:49: detaljene paa partnersiden).
+     Samme tekster som foer laa som ledetekst - de forsvant i det man begynte aa skrive. */
+  [["ld-in", L.placeholder], ["ld-name", S.name_ph], ["ld-mail", L.mail_ph || ""], ["ld-spons", L.spons_ph || ""]]
+    .forEach(function(par){
+      const inp = $(par[0]); if(!inp) return;
+      let lab = document.getElementById(par[0] + "-lab");
+      if(!lab){
+        lab = document.createElement("label");
+        lab.id = par[0] + "-lab"; lab.className = "flab"; lab.htmlFor = par[0];
+        inp.parentNode.insertBefore(lab, inp);
+      }
+      lab.textContent = par[1];
+      inp.placeholder = "";
+    });
   $("ld-hint").textContent = L.name_hint;
   /* Hvorfor nettopp partnerlenka fra IB-portalen (founder 16.10): en lenke
      kopiert et annet sted kobler ikke medlemmet til Tag Markets. */
