@@ -1000,13 +1000,17 @@ html[data-font="nastaliq"] .qa summary{font-weight:400}
 .back:hover,.menu .share:hover,#notice-none .dlink:hover,#spon .dlink:hover,
 .back:focus-visible,.menu .share:focus-visible,#notice-none .dlink:focus-visible,#spon .dlink:focus-visible{border-color:var(--gold-soft);outline:none}
 .back:active,.menu .share:active,#notice-none .dlink:active,#spon .dlink:active{transform:scale(.985)}
-#notice-none .dlink{width:100%;margin-top:14px}
 #spon .dlink{margin-top:8px}
 /* Founder 17.10: lenke-knappene saa «hvite og doede» ut. Full bredde, gullkant,
    fast retningspil - samme hoeyde og radius som resten av knappene. */
-#spon .dlink,#notice-none .dlink,.ib .dlink{display:flex;width:100%;min-height:48px;
+#spon .dlink,.ib .dlink{display:flex;width:100%;min-height:48px;
   border:1.5px solid transparent;border-radius:var(--r-btn);font-weight:800;
   background:linear-gradient(var(--ink),var(--ink)) padding-box,var(--grad) border-box}
+/* Forsidekortet (founder 17.10 03:26): egen-lenke er en LITEN pille her - hovedplassen
+   er under IB og bonuser. Kortet skal ikke rope; det peker. */
+#notice-none .dlink{display:inline-flex;width:auto;min-height:36px;margin-top:10px;
+  padding:7px 14px;border:1.5px solid transparent;border-radius:999px;font:700 .82rem/1.15 var(--display);
+  background:linear-gradient(var(--ink),var(--ink)) padding-box,var(--grad) border-box;color:var(--chalk)}
 #spon .dlink:hover,#notice-none .dlink:hover,.ib .dlink:hover,
 #spon .dlink:focus-visible,#notice-none .dlink:focus-visible,.ib .dlink:focus-visible{
   filter:brightness(1.18);border-color:transparent}
@@ -1158,9 +1162,11 @@ html[data-font="nastaliq"] .qres b,html[data-font="naskh"] .qres b,html[data-fon
 .keep-x::before{content:"\00d7"}
 .keep-x:hover{color:var(--chalk)}
 .keep p{margin:6px 0 0;font-size:.92rem;color:var(--chalk-dim)}
-.keep-go{display:inline-flex;align-items:center;justify-content:center;margin-top:10px;min-height:44px;padding:11px 18px;border:0;border-radius:var(--r-btn);
-  background:var(--jet);color:var(--jet-on);font:800 .95rem/1.15 var(--display);cursor:pointer;position:relative}
-.keep-go::after{content:"";position:absolute;inset-inline:16px;bottom:7px;height:2px;border-radius:2px;background:var(--aim);opacity:.9}
+.keep-go{display:inline-flex;align-items:center;justify-content:center;margin-top:10px;min-height:38px;padding:8px 15px;
+  border:1.5px solid transparent;border-radius:999px;
+  background:linear-gradient(var(--ink-raise),var(--ink-raise)) padding-box,var(--grad) border-box;
+  color:var(--chalk);font:750 .88rem/1.15 var(--display);cursor:pointer}
+.keep-go:hover,.keep-go:focus-visible{filter:brightness(1.18);outline:none}
 .keep-how{margin-top:8px;border:0;background:transparent}
 .keep-how > summary{padding:6px 0;font-size:.9rem;color:var(--gold-soft)}
 .keep-how p{margin:4px 0 0;font-size:.9rem}
