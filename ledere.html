@@ -1288,6 +1288,8 @@ html[data-font="nastaliq"] :is(.switch button,.jump button,.cper button){line-he
 .portalbtn:focus-visible{outline:3px solid #1B4FD8;outline-offset:3px}
 .portalbtn .pi{width:26px;height:26px;border-radius:50%;flex:0 0 26px;background:linear-gradient(135deg,#15D8C4,#1B4FD8 55%,#C21FBF)}
 .portalbtn .pa{opacity:.6;font-weight:400}
+.srcbtn{margin:2px 0 18px}
+.srcbtn img{width:26px;height:26px;border-radius:6px;flex:0 0 26px;object-fit:contain;background:#fff}
 html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
 :root[data-theme="dark"] .portalbtn{background:var(--ink-raise, #1A1A22);color:var(--jet);border-color:rgba(244,242,247,.18);box-shadow:none}
 #pille{position:fixed;left:50%;bottom:max(22px,env(safe-area-inset-bottom));z-index:99;pointer-events:none;
@@ -1381,6 +1383,7 @@ html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
   <section class="sec" id="s-results" data-cat="earn" data-tab="results">
     <h2 id="t-results"></h2>
     <p class="lede" id="rs-lede"></p>
+    <a id="rs-src" class="portalbtn srcbtn" target="_blank" rel="noopener noreferrer" hidden><img src="assets/logo-mfx.png" alt="" width="26" height="26" loading="lazy" decoding="async"><span id="rs-src-t"></span><span class="pa" aria-hidden="true">↗</span></a>
     <div class="rsfig" id="rs-fig" dir="ltr"></div>
     <p class="rsleg" id="rs-leg"></p>
     <dl class="rsstat" id="rs-stat"></dl>
@@ -2994,6 +2997,9 @@ function renderResults(){
   R.months.forEach(function(m){ const tr = el("tr"); tr.appendChild(el("td", null, m[0])); tr.appendChild(el("td", null, "+" + m[1].toFixed(2) + " %")); tr.appendChild(el("td", null, (m[2] ? "−" : "") + m[2].toFixed(2) + " %")); tb.appendChild(tr); });
   const a = $("rs-link");
   if(safeUrl(R.source)){ a.href = R.source; a.textContent = T.link; } else { a.removeAttribute("href"); a.textContent = ""; }
+  /* Kilden som knapp øverst (#66): medlemmet ser med en gang at tallene kan sjekkes,
+     og lenken viser alltid dagens tall - et skjermbilde ville vært utdatert i morgen. */
+  { const sb = $("rs-src"); if(sb){ if(safeUrl(R.source)){ sb.href = R.source; $("rs-src-t").textContent = T.link; sb.hidden = false; } else sb.hidden = true; } }
   $("rs-read").textContent = T.read;
 }
 /* Kalkulatoren legger historikkens EKTE maaneder paa medlemmets beloep:
