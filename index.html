@@ -15,9 +15,10 @@
 <meta property="og:title" content="Aimpire">
 <meta property="og:description" content="The guide to opening your account, step by step — English, Norsk, हिन्दी, العربية, اردو. Honest about the risks.">
 <meta property="og:url" content="https://aimpire.github.io/">
-<meta property="og:image" content="https://aimpire.github.io/assets/ap-gradient.png">
-<meta property="og:image:width" content="500">
-<meta property="og:image:height" content="500">
+<meta property="og:image" content="https://aimpire.github.io/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="assets/ap-gradient.png">
@@ -3485,6 +3486,16 @@ function toggleTheme(){
      ga 3,5 s forsinket foerste visning. Naa tegnes siden straks; sponsorblokken viser
      «sjekker invitasjonen» til lista er der, og oppdaterer seg selv naar den kommer.
      Hurtigbufret liste fra sist gjoer uansett sponsoren riktig fra foerste bilde. */
+  /* Hjemskjerm-ikonet: hvitt for universal, moerkt KUN naar siden aapnes fra en
+     lederlenke (founder 17.10 04:07 + 04:12). Byttes foer noen rekker aa lagre. */
+  try{
+    if(new URLSearchParams(location.search).get("l")){
+      const mfL = document.querySelector('link[rel="manifest"]');
+      if(mfL) mfL.href = "manifest-leder.webmanifest";
+      const atL = document.querySelector('link[rel="apple-touch-icon"]');
+      if(atL) atL.href = "assets/apple-touch-icon-dark.png";
+    }
+  }catch(e){}
   go();
   loadReg().then(function(){ try{ initSponsor(); render(); }catch(e){} });
   /* Siden virker uten nett etter foerste besoek, og andre aapning er
