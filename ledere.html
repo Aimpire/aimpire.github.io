@@ -2658,7 +2658,7 @@ function render(){
       if(sponsorVerified){ const v = el("span","ok","\u2713"); v.setAttribute("aria-hidden","true"); sp.appendChild(v); }
       /* Founder 17.10 19:13: del-knappen rett ved siden av lederens navn. Deler
          lederens faste ?l=-lenke (samme som lederen selv deler), ikke partnerlenka. */
-      { const h0 = location.hostname, lok = !h0 || h0 === "localhost" || h0 === "127.0.0.1" || /^\d+\.\d+\.\d+\.\d+$/.test(h0);
+      if(sponsorVerified){ const h0 = location.hostname, lok = !h0 || h0 === "localhost" || h0 === "127.0.0.1" || /^\d+\.\d+\.\d+\.\d+$/.test(h0);
         const base0 = (!lok && C.canonical) ? C.canonical.replace(/\/+$/, "") + "/" : location.origin + location.pathname.replace(/(ledere|index)\.html$/, "");
         const holder = document.createDocumentFragment();
         const pill = delKnapp(holder, base0 + "?l=" + codeOf(sponsorUrl), "sharepill", true);
