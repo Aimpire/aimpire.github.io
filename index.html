@@ -265,19 +265,47 @@ html[data-font="deva"] .sec > h2,html[data-font="nastaliq"] .sec > h2,html[data-
 html[data-font="deva"] .slab .t,html[data-font="nastaliq"] .slab .t,html[data-font="naskh"] .slab .t{
   font-family:var(--face);text-transform:none;letter-spacing:0;line-height:1.7}
 .slab .s{display:block;margin-top:5px;font-size:.9rem;opacity:.72;font-weight:600}
- /* Hovedknappen (valgt i knappelab 17.10 04:23, variant A): pille, fargegloed paa
-    begge sider, dybde innover og et stille glass-skinn. Ingen billig hvit ramme. */
+ /* Hovedknappen - endelig oppskrift (knappelab 04:23 + fagprinsipper 04:25):
+    pille, fire TONEDE skyggelag (kontakt/noekkel/mellom/ambient), lyshetsskifte i
+    fyllet, gradienten glir ved pek, kun transform og skygge i overgangene. */
 .slab.reg{text-align:center;border:0;border-radius:999px !important;position:relative;overflow:hidden;
-  box-shadow:0 10px 28px -8px rgba(21,216,196,.45), 0 10px 30px -6px rgba(194,31,191,.48),
-    inset 0 1px 0 rgba(255,255,255,.5), inset 0 -3px 8px rgba(0,0,0,.22);
-  transition:transform .12s ease,filter .15s ease}
+  max-width:430px;
+  background:
+    linear-gradient(rgba(255,255,255,.16), rgba(255,255,255,0) 40%, rgba(0,0,0,.14)),
+    var(--grad);
+  background-size:100% 100%, 165% 100%;
+  background-position:0 0, 0% 50%;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.16),
+    inset 0 1px 0 rgba(255,255,255,.42),
+    0 2px 6px rgba(10,10,16,.45),
+    0 8px 18px -6px rgba(194,31,191,.42),
+    0 18px 44px -14px rgba(21,216,196,.38);
+  transition:transform .14s ease, box-shadow .18s ease, background-position .5s ease}
 .slab.reg::after{content:"";position:absolute;top:0;inset-inline-start:-30%;width:45%;height:100%;
-  background:linear-gradient(105deg,transparent,rgba(255,255,255,.34) 50%,transparent);
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.26) 50%,transparent);
   transform:skewX(-20deg);pointer-events:none}
-.slab.reg:active{transform:scale(.985)}
+.slab.reg:hover{transform:translateY(-1px);background-position:0 0, 60% 50%;filter:none;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.2),
+    inset 0 1px 0 rgba(255,255,255,.46),
+    0 3px 8px rgba(10,10,16,.5),
+    0 12px 24px -6px rgba(194,31,191,.5),
+    0 24px 54px -14px rgba(21,216,196,.44)}
+.slab.reg:active{transform:translateY(0) scale(.98);transition-duration:.08s;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.14),
+    inset 0 2px 6px rgba(0,0,0,.25),
+    0 2px 5px rgba(10,10,16,.4),
+    0 6px 14px -6px rgba(194,31,191,.38)}
+.slab.reg:focus-visible{outline:3px solid rgba(94,230,214,.55);outline-offset:3px}
 :root:not([data-theme="dark"]) .slab.reg{
-  box-shadow:0 8px 22px -8px rgba(21,160,150,.4), 0 8px 24px -6px rgba(163,21,159,.32),
-    inset 0 1px 0 rgba(255,255,255,.6), inset 0 -3px 8px rgba(0,0,0,.12)}
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.35),
+    inset 0 1px 0 rgba(255,255,255,.6),
+    0 2px 6px rgba(26,16,30,.18),
+    0 8px 18px -6px rgba(163,21,159,.28),
+    0 18px 40px -14px rgba(16,150,140,.25)}
 .slab:hover,.slab:focus-visible{filter:brightness(1.12)}
 /* Egen lenke: samme slab-form, men omriss - sekundaer handling, aldri doed flate. */
 .slab.own{color:var(--chalk);border:1.5px solid transparent;
@@ -590,17 +618,16 @@ html[data-font="nastaliq"] .tool .flab,html[data-font="naskh"] .tool .flab,html[
   font-family:var(--display);font-weight:900;font-size:.95rem;line-height:1;text-transform:uppercase}
 .spon .who{color:var(--chalk);font-weight:800;font-size:1.02rem;letter-spacing:.01em}
 /* Registrer-handlingen er primaer-flaten (samme som «Open your account»), ikke en hvit knapp. */
-.spon .slab.reg{flex:1 1 100%;margin:8px 0 0;padding:16px 18px;border-radius:var(--r-btn)}
-.spon .slab.reg .t{font-size:1.12rem}
+.spon .slab.reg{flex:1 1 100%;margin:10px 0 0;padding:14px 26px;min-height:52px}
+.spon .slab.reg .t{font-size:.95rem;letter-spacing:.06em}
 .spon .slab.reg .s{margin-top:3px;font-size:.86rem}
 .spon .slab.own{flex:1 1 100%;margin:10px 0 0;padding:13px 18px;border-radius:var(--r-btn)}
 #nn-who{margin:10px 0 0;padding:0;border:0;gap:8px;align-items:center}
-#notice-none .slab.reg{display:block;margin:12px 0 2px;padding:16px 18px;border-radius:var(--r-btn)}
-#notice-none .slab.reg{margin-top:10px}
-#notice-none .slab.reg .t{font-size:1.12rem}
+#notice-none .slab.reg{display:block;margin:12px 0 2px;padding:13px 22px;min-height:50px}
+#notice-none .slab.reg .t{font-size:.98rem;letter-spacing:.05em}
 #notice-none .slab.reg .s{margin-top:3px;font-size:.86rem}
 .ib .slab.own{display:block;margin:12px 0 0;padding:13px 18px;border-radius:var(--r-btn)}
-.tool button{width:100%;background:var(--grad);color:#08080B;border:0;padding:13px 16px;min-height:50px;
+.tool button{width:100%;max-width:430px;display:block;background:var(--grad);color:#08080B;border:0;padding:13px 16px;min-height:50px;
   border-radius:999px;font:800 1rem/1.15 var(--display);cursor:pointer;position:relative;overflow:hidden;
   box-shadow:0 8px 24px -8px rgba(21,216,196,.4), 0 8px 26px -6px rgba(194,31,191,.42),
     inset 0 1px 0 rgba(255,255,255,.5), inset 0 -3px 8px rgba(0,0,0,.2)}
@@ -1160,9 +1187,10 @@ html[data-font="nastaliq"] .prog .nextb,html[data-font="naskh"] .prog .nextb,htm
    alle visninger; feltet faar fokus med en gang. */
 .mast .sbtn{order:2;margin:0 0 12px auto;padding:0;width:40px;height:40px;flex:0 0 auto;
   display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
-  background:var(--ink-deep);border:1px solid var(--rule);border-radius:999px;color:var(--chalk-dim)}
+  background:var(--ink-raise);border:1.5px solid var(--edge-ui);border-radius:999px;color:var(--chalk);
+  box-shadow:0 2px 10px rgba(0,0,0,.35)}
 .mast .switch{order:3}
-.mast .sbtn svg{width:18px;height:18px}
+.mast .sbtn svg{width:19px;height:19px}
 .mast .sbtn:hover,.mast .sbtn:focus-visible{color:var(--chalk);border-color:var(--gold-metal)}
 /* Bred skjerm: alt paa én linje - spraakene skyves til hoeyre, lupa ytterst. */
 @media (min-width:700px){
