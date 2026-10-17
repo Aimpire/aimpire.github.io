@@ -1972,6 +1972,8 @@ html[dir="rtl"] .tbprog b{transform-origin:100% 50%}
   .cchart .pt{animation:sparkdot 2s ease-in-out 1.2s infinite}
 }
 @keyframes ccdraw{to{stroke-dashoffset:0}}
+button.slab.reg.fort{border:0;cursor:pointer;width:100%;font:inherit}
+.dlink.regsmall{display:inline-block;margin-top:8px;font-size:.82rem;color:var(--chalk-dim)}
 /* Smart soek: svarkort og forslag. */
 .qans{display:grid;gap:6px;padding:14px 16px;margin:0 0 10px;border-radius:16px;border:1px solid #15D8C4;
   background:color-mix(in srgb,#15D8C4 9%,var(--ink-raise))}
@@ -2868,6 +2870,21 @@ function feirVed(node, antall){
 document.addEventListener("visibilitychange", function(){
   document.documentElement.classList.toggle("paused", document.hidden);
 });
+/* Tiende besoek (kundegjennomgang 17.10 23:58): har kunden alt opprettet kontoen (steg 2),
+   er «Registrer deg» ikke neste handling lenger - den store knappen blir «Fortsett: <neste
+   steg>», og registreringen blir en liten lenke (ikke borte: kan trengs igjen). */
+function fortsettKnapp(){
+  const d = doneSet(); if(!d.has("1")) return null;
+  const G = C.guide[lang] || C.guide.en, U = C.guide_ui[lang] || C.guide_ui.en;
+  const n = G.steps.findIndex(function(_, i){ return !d.has(String(i)); });
+  const tekst = n === -1 ? U.all_done_go : (U.next || "{t}").replace("{t}", G.steps[n][0]);
+  if(!tekst) return null;
+  const b = el("button", "slab reg fort"); b.type = "button";
+  b.appendChild(el("span", "t", tekst));
+  b.onclick = function(){ setView(n === -1 ? "earn" : "start"); };
+  return b;
+}
+function litenReg(href, tekst){ const a = el("a", "dlink regsmall", tekst); a.href = href; a.target = "_blank"; a.rel = "noopener noreferrer"; return a; }
 function toggleStep(i){
   const set = doneSet(), k = String(i);
   const paa = !set.has(k);
@@ -3236,10 +3253,14 @@ function renderInner(){
     if(S.register && safeUrl(dest.url)){
       const brk = el("span","brk"); brk.setAttribute("aria-hidden","true");
       sp.appendChild(brk);   /* tvunget linjeskift: knappen staar alltid UNDER raden */
+      const fk = fortsettKnapp();
+      if(fk){ sp.appendChild(fk); sp.appendChild(litenReg(dest.url, S.register)); }
+      else {
       const rb = el("a","slab reg");
       rb.href = dest.url; rb.target = "_blank"; rb.rel = "noopener noreferrer";
       rb.appendChild(el("span","t", S.register));   /* uten undertekst - navnet staar i raden over (03:36) */
       sp.appendChild(rb);
+      }
     }
     /* Founder 16.10: den som selv inviterer andre, skal ikke registrere seg
        under en annen - da maa det rettes i ettertid, og det skaper uenighet.
@@ -3297,10 +3318,14 @@ function renderInner(){
         const ok3 = el("span", "ok", "\u2713"); ok3.setAttribute("aria-hidden", "true");
         who3.appendChild(ok3);
         none.appendChild(who3);
+        const fk3 = fortsettKnapp();
+        if(fk3){ fk3.id = "nn-reg"; none.appendChild(fk3); none.appendChild(litenReg(u3.href, S.register)); }
+        else {
         const rb3 = el("a", "slab reg"); rb3.id = "nn-reg";
         rb3.href = u3.href; rb3.target = "_blank"; rb3.rel = "noopener noreferrer";
         rb3.appendChild(el("span", "t", S.register));   /* navnet staar i raden over (03:36) */
         none.appendChild(rb3);
+        }
       }
     }
     if(S.own_link){
