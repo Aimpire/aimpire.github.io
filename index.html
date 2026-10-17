@@ -81,43 +81,51 @@ html[data-font="deva"]{ --face:"Noto Sans Devanagari","Montserrat",sans-serif }
 html[data-font="nastaliq"]{ --face:"Noto Nastaliq Urdu","Montserrat",serif }
 html[data-font="naskh"]{ --face:"Noto Naskh Arabic","Montserrat",serif }
 
-/* «Himmelen over bruksanvisningen». Merkevarens egen gradient som et fast
-   lag bak innholdet, saa siden har noe aa staa under i stedet for et moerkt
-   lokk over seg. Driver bare MENS du scroller: animation-timeline gjoer at
-   den har posisjon, ikke tid, saa det tegnes ingen ramme naar siden ligger
-   stille. Kun transform animeres - laget males én gang, GPU-en flytter
-   teksturen. Ingen background-attachment:fixed (jank i Android Chrome) og
-   ingen backdrop-filter (dyr paa Mali/Adreno). ~0,3 KB gzipet. */
-.sky{position:fixed;inset-block-start:0;inset-inline:0;height:46vh;z-index:-1;
-  pointer-events:none;transform:translate3d(0,0,0);
-  background:
-    radial-gradient(90% 60% at 12% -10%, rgba(21,216,196,.34) 0%, rgba(21,216,196,0) 62%),
-    radial-gradient(80% 60% at 92% -12%, rgba(194,31,191,.26) 0%, rgba(194,31,191,0) 60%),
-    radial-gradient(60% 40% at 50% -18%, rgba(251,225,107,.40) 0%, rgba(251,225,107,0) 60%)}
-html[dir="rtl"] .sky{background:
-    radial-gradient(90% 60% at 88% -10%, rgba(21,216,196,.34) 0%, rgba(21,216,196,0) 62%),
-    radial-gradient(80% 60% at 8% -12%, rgba(194,31,191,.26) 0%, rgba(194,31,191,0) 60%),
-    radial-gradient(60% 40% at 50% -18%, rgba(251,225,107,.40) 0%, rgba(251,225,107,0) 60%)}
-:root[data-theme="dark"] .sky{background:
-    radial-gradient(100% 70% at 14% -14%, rgba(27,79,216,.38) 0%, rgba(27,79,216,0) 62%),
-    radial-gradient(80% 60% at 92% -16%, rgba(194,31,191,.24) 0%, rgba(194,31,191,0) 60%),
-    linear-gradient(180deg, rgba(8,8,11,0) 0%, rgba(8,8,11,0) 100%)}
-:root[data-theme="dark"][dir="rtl"] .sky{background:
-    radial-gradient(100% 70% at 86% -14%, rgba(27,79,216,.38) 0%, rgba(27,79,216,0) 62%),
-    radial-gradient(80% 60% at 8% -16%, rgba(194,31,191,.24) 0%, rgba(194,31,191,0) 60%),
-    linear-gradient(180deg, rgba(8,8,11,0) 0%, rgba(8,8,11,0) 100%)}
-@keyframes drift{
-  from{transform:translate3d(-2%,0,0) scale(1.04)}
-  to{transform:translate3d(2%,-1.5%,0) scale(1.12)}}
-@keyframes skypulse{
-  0%{filter:hue-rotate(0deg) saturate(1)}
-  100%{filter:hue-rotate(18deg) saturate(1.18)}}
+/* «Himmelen over bruksanvisningen» v2 (founder 17.10 05:21: «hvor er alle de visuelle
+   effektene … som skulle bevege seg i bakgrunnen»). v1 skiftet bare fargetone 18° på 14 s
+   og fløt kun ved scrolling - målt live: nesten usynlig. v2 er SYNLIG, men like lett:
+   - tre fargefelt i merkefargene som driver sakte (22/27/33 s, alternerende) - bare
+     transform animeres, hvert felt er ett GPU-lag, ingen filter, ingen blur;
+   - en tynn kurslinje som glir som et levende chart (48 s, sømløs løkke) med et
+     pulserende punkt. Linja går OPP OG NED og ender flatt: et marked, aldri et
+     gevinstløfte (ærlighetsregelen).
+   Ingen bilder, ingen JS, ingen ekstra forespørsler. Redusert bevegelse = alt står stille. */
+.sky{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;contain:strict}
+.sky .orb{position:absolute;border-radius:50%;will-change:transform;transform:translate3d(0,0,0)}
+.sky .o1{width:78vmax;height:78vmax;inset-inline-start:-30vmax;top:-34vmax;
+  background:radial-gradient(closest-side,rgba(21,216,196,.40),rgba(21,216,196,0))}
+.sky .o2{width:64vmax;height:64vmax;inset-inline-end:-26vmax;top:-20vmax;
+  background:radial-gradient(closest-side,rgba(194,31,191,.30),rgba(194,31,191,0))}
+.sky .o3{width:58vmax;height:58vmax;inset-inline-start:18vw;top:42vh;
+  background:radial-gradient(closest-side,rgba(251,225,107,.34),rgba(251,225,107,0))}
+:root[data-theme="dark"] .sky .o1{background:radial-gradient(closest-side,rgba(27,79,216,.46),rgba(27,79,216,0))}
+:root[data-theme="dark"] .sky .o2{background:radial-gradient(closest-side,rgba(194,31,191,.30),rgba(194,31,191,0))}
+:root[data-theme="dark"] .sky .o3{background:radial-gradient(closest-side,rgba(21,216,196,.20),rgba(21,216,196,0))}
+.skyline{position:absolute;z-index:-1;pointer-events:none;overflow:hidden;contain:paint;inset-inline:0;top:112px;height:120px;opacity:.55;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%);
+  background:repeating-linear-gradient(180deg,transparent 0 29px,rgba(20,16,28,.07) 29px 30px)}
+:root[data-theme="dark"] .skyline{opacity:.7;
+  background:repeating-linear-gradient(180deg,transparent 0 29px,rgba(244,242,247,.06) 29px 30px)}
+.skyline .tape{position:absolute;inset-block:5px;left:0;width:200%;will-change:transform}
+.skyline .tape svg{display:block;width:100%;height:100%;overflow:visible}
+.skyline .tape path{fill:none;stroke:url(#skyline);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;
+  vector-effect:non-scaling-stroke}
+.skyline .tape .area{fill:url(#skyfill);stroke:none}
+@keyframes orbA{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(9vw,7vh,0) scale(1.14)}}
+@keyframes orbB{from{transform:translate3d(0,0,0) scale(1.06)}to{transform:translate3d(-10vw,9vh,0) scale(.94)}}
+@keyframes orbC{from{transform:translate3d(0,0,0) scale(.96)}to{transform:translate3d(-12vw,-8vh,0) scale(1.1)}}
+@keyframes tape{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+html[dir="rtl"] .skyline{transform:scaleX(-1)}
 @media (prefers-reduced-motion:no-preference){
-  /* Auraen puster ogsaa i ro - tech-folelsen founder etterlyste (17.10 04:01). */
-  .sky{animation:skypulse 14s ease-in-out infinite alternate}
-  @supports (animation-timeline:scroll()){
-    .sky{animation:drift 1s linear both, skypulse 14s ease-in-out infinite alternate;
-      animation-timeline:scroll(root block), auto}}}
+  .sky .o1{animation:orbA 22s ease-in-out infinite alternate}
+  .sky .o2{animation:orbB 27s ease-in-out infinite alternate}
+  .sky .o3{animation:orbC 33s ease-in-out infinite alternate}
+  .skyline .tape{animation:tape 48s linear infinite}
+}
+/* Ikke la bakgrunnen drive i skjulte faner: nettleseren struper allerede animasjoner i
+   bakgrunnsfaner; html.paused settes i tillegg av visibilitychange (se skriptet). */
+html.paused .sky *,html.paused .skyline *{animation-play-state:paused}
 
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -1270,14 +1278,20 @@ html[data-font="nastaliq"] :is(.switch button,.jump button,.cper button){line-he
    visningen - og tok 345 px paa en 640 px skjerm (maalt 16.10). */
 .shell[data-view="menu"] .spon{align-items:center}
 
+#pille{position:fixed;left:50%;bottom:max(22px,env(safe-area-inset-bottom));z-index:99;pointer-events:none;
+  transform:translate(-50%,24px);opacity:0;padding:10px 18px;border-radius:999px;
+  background:var(--jet);color:var(--jet-on);font:700 1rem/1 var(--face, "Montserrat", sans-serif);letter-spacing:.02em;
+  box-shadow:0 10px 30px -8px rgba(20,16,28,.45),0 2px 6px rgba(20,16,28,.18);
+  transition:transform .35s cubic-bezier(.2,.8,.3,1.2),opacity .25s ease}
+#pille.vis{transform:translate(-50%,0);opacity:1}
 @media (prefers-reduced-motion:reduce){
   .out .apply,.nextb,.joinbtn,.back,.menu .share,#notice-none .dlink,#spon .dlink,.plate{transition:none}
   .out .apply:active,.nextb:active,.joinbtn:active{transform:none}}
 </style>
 </head>
 <body>
-<div class="sky" aria-hidden="true"></div>
-<main class="shell">
+<div class="sky" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i></div>
+<div class="skyline" aria-hidden="true"><div class="tape"><svg viewBox="0 0 800 110" preserveAspectRatio="none" focusable="false"><defs><linearGradient id="skyline" x1="0" x2="1"><stop offset="0" stop-color="#15D8C4"/><stop offset=".5" stop-color="#1B4FD8"/><stop offset="1" stop-color="#C21FBF"/></linearGradient><linearGradient id="skyfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15D8C4" stop-opacity=".16"/><stop offset="1" stop-color="#15D8C4" stop-opacity="0"/></linearGradient></defs><path class="area" d="M0 64 C20 60 32 46 50 50 S78 70 96 62 S124 34 142 40 S170 72 188 66 S214 44 232 48 S262 30 280 36 S306 66 326 60 S352 46 370 52 S392 64 400 64 L 400 64 C 420 60 432 46 450 50 S 478 70 496 62 S 524 34 542 40 S 570 72 588 66 S 614 44 632 48 S 662 30 680 36 S 706 66 726 60 S 752 46 770 52 S 792 64 800 64 L 800 110 L 0 110 Z"/><path d="M0 64 C20 60 32 46 50 50 S78 70 96 62 S124 34 142 40 S170 72 188 66 S214 44 232 48 S262 30 280 36 S306 66 326 60 S352 46 370 52 S392 64 400 64 L 400 64 C 420 60 432 46 450 50 S 478 70 496 62 S 524 34 542 40 S 570 72 588 66 S 614 44 632 48 S 662 30 680 36 S 706 66 726 60 S 752 46 770 52 S 792 64 800 64"/></svg></div></div><main class="shell">
 
   <header class="mast">
     <div class="wordmark">
@@ -1669,6 +1683,10 @@ function initSponsor(){
   const lr = fraUrl && !pendingConflict ? fraUrl : null;
   if(lr){
     sponsorUrl = validRef(lr.link); sponsorName = lr.name; sponsorVerified = true;
+    /* Første gang denne telefonen kobles til en sponsor: en liten feiring ved navnet. */
+    if((!husket || husket.id !== lr.id) && !egen){
+      setTimeout(function(){ feirVed(document.querySelector("#spon .who"), 20); vibrer(10); }, 650);
+    }
     store("aimpire.leader", lr.id);
   } else {
     sponsorUrl = null; sponsorName = ""; sponsorVerified = false;
@@ -1733,7 +1751,7 @@ function quizBox(Q, idx, G){
   };
   Q.a.forEach(function(tekst, i){
     const b = el("button", "qzb", tekst); b.type = "button"; b.dataset.i = String(i);
-    b.onclick = function(){ store("aimpire.quiz." + idx, String(i)); vis(i); };
+    b.onclick = function(){ store("aimpire.quiz." + idx, String(i)); vis(i); if(i === Q.right){ feirVed(b, 18); vibrer(12); } };
     d.appendChild(b);
   });
   if(svar !== null && svar !== "") vis(+svar);
@@ -1759,40 +1777,90 @@ function actions(txt, idx){
   });
   return ul;
 }
-/* Gnister i merkefargene - en liten feiring, aldri i veien. Hopper over seg selv
-   naar brukeren har bedt om redusert bevegelse (founder 17.10 04:01: «morsomme ting»). */
+/* Feiringer v2 (founder 17.10 05:21: «ikke noe feiringer»). v1 var 12 små firkanter i
+   0,8 s, og bare ved avhuking - i praksis usett. v2: større gnister med tyngdekraft, et
+   regn av konfetti når alle steg er ferdige, og en liten «✓ 3/10»-pille (tall og tegn,
+   ingen tekst - virker likt på alle fem språk). Brukes ved: avhuket steg, alle steg,
+   riktig quizsvar, kopiert kode, ny sponsor koblet, ledersøknad sendt.
+   Redusert bevegelse: ingen partikler, men pillen og vibrasjonen vises fortsatt. */
+const FEST_FARGER = ["#15D8C4", "#C21FBF", "#FBE16B", "#1B4FD8", "#E04DDE", "#FFFFFF"];
+function stilleBevegelse(){
+  try{ return !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches); }catch(e){ return false; }
+}
+function partikkel(x, y, farge, str){
+  const d = document.createElement("i");
+  const rund = Math.random() < .45;
+  d.style.cssText = "position:fixed;left:" + x + "px;top:" + y + "px;width:" + str + "px;height:" +
+    (rund ? str : Math.round(str * 1.6)) + "px;border-radius:" + (rund ? "50%" : "2px") + ";background:" + farge +
+    ";z-index:98;pointer-events:none;will-change:transform,opacity";
+  document.body.appendChild(d);
+  return d;
+}
 function gnist(x, y, antall){
   try{
-    if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if(!document.body || !document.body.animate && !Element.prototype.animate) return;
-    const farger = ["#15D8C4", "#C21FBF", "#FBE16B", "#1B4FD8", "#E04DDE"];
+    if(stilleBevegelse() || !Element.prototype.animate) return;
     for(let j = 0; j < antall; j++){
-      const d = document.createElement("i");
-      d.style.cssText = "position:fixed;left:" + x + "px;top:" + y + "px;width:7px;height:7px;border-radius:2px;" +
-        "background:" + farger[j % farger.length] + ";z-index:98;pointer-events:none";
-      document.body.appendChild(d);
-      const v = (j / antall) * 6.283 + Math.random() * 0.9;
-      const r = 36 + Math.random() * 54;
-      if(!d.animate){ d.remove(); return; }
+      const d = partikkel(x, y, FEST_FARGER[j % FEST_FARGER.length], 5 + Math.round(Math.random() * 4));
+      const v = (j / antall) * 6.283 + Math.random() * .7;
+      const r = 50 + Math.random() * 70;
+      const dx = Math.cos(v) * r, dy = Math.sin(v) * r - 40;
       d.animate([
-        { transform: "translate(0,0) scale(1) rotate(0)", opacity: 1 },
-        { transform: "translate(" + Math.cos(v) * r + "px," + (Math.sin(v) * r - 26) + "px) scale(.2) rotate(200deg)", opacity: 0 }
-      ], { duration: 650 + Math.random() * 350, easing: "cubic-bezier(.16,.8,.3,1)" }).onfinish = function(){ d.remove(); };
+        { transform: "translate(-50%,-50%) translate(0,0) rotate(0)", opacity: 1 },
+        { transform: "translate(-50%,-50%) translate(" + dx + "px," + dy + "px) rotate(" + (180 + Math.random() * 200) + "deg)", opacity: 1, offset: .55 },
+        { transform: "translate(-50%,-50%) translate(" + dx * 1.15 + "px," + (dy + 70 + Math.random() * 50) + "px) rotate(" + (360 + Math.random() * 200) + "deg)", opacity: 0 }
+      ], { duration: 900 + Math.random() * 500, easing: "cubic-bezier(.2,.75,.35,1)" }).onfinish = function(){ d.remove(); };
     }
   }catch(e){}
 }
+function konfetti(){
+  try{
+    if(stilleBevegelse() || !Element.prototype.animate) return;
+    const n = innerWidth < 600 ? 70 : 110;
+    for(let j = 0; j < n; j++){
+      const x = Math.random() * innerWidth;
+      const d = partikkel(x, -16, FEST_FARGER[j % FEST_FARGER.length], 6 + Math.round(Math.random() * 4));
+      const fall = innerHeight + 40, drift = (Math.random() - .5) * 160;
+      d.animate([
+        { transform: "translate(0,0) rotate(0)", opacity: 1 },
+        { transform: "translate(" + drift + "px," + fall + "px) rotate(" + (540 + Math.random() * 540) + "deg)", opacity: .9 }
+      ], { duration: 2200 + Math.random() * 1600, delay: Math.random() * 600, easing: "cubic-bezier(.25,.6,.45,1)", fill: "backwards" })
+        .onfinish = function(){ d.remove(); };
+    }
+  }catch(e){}
+}
+function pille(tekst){
+  try{
+    let p = document.getElementById("pille");
+    if(!p){ p = document.createElement("div"); p.id = "pille"; p.setAttribute("aria-hidden", "true"); document.body.appendChild(p); }
+    p.textContent = tekst;
+    p.classList.remove("vis"); void p.offsetWidth; p.classList.add("vis");
+    clearTimeout(p._t); p._t = setTimeout(function(){ p.classList.remove("vis"); }, 1900);
+  }catch(e){}
+}
+function vibrer(m){ try{ if(navigator.vibrate) navigator.vibrate(m); }catch(e){} }
+function feirVed(node, antall){
+  if(!node) return;
+  const r = node.getBoundingClientRect();
+  gnist(r.left + r.width / 2, r.top + r.height / 2, antall);
+}
+document.addEventListener("visibilitychange", function(){
+  document.documentElement.classList.toggle("paused", document.hidden);
+});
 function toggleStep(i){
   const set = doneSet(), k = String(i);
   const paa = !set.has(k);
   if(paa){
     const t = document.querySelector("#st-" + i + " .tick");
-    if(t){ const rc = t.getBoundingClientRect(); gnist(rc.left + rc.width / 2, rc.top + rc.height / 2, 12); }
-    try{ if(navigator.vibrate) navigator.vibrate(12); }catch(e){}
+    feirVed(t, 22);
+    vibrer(12);
   }
   if(paa) set.add(k); else set.delete(k);
   store("aimpire.done", Array.from(set).join(","));
   const G0 = C.guide[lang] || C.guide.en;
-  if(paa && set.size === G0.steps.length){ gnist(innerWidth / 2, innerHeight * 0.35, 26); }   /* alle ti: stor feiring */
+  if(paa){
+    if(set.size === G0.steps.length){ konfetti(); vibrer([14, 60, 14, 60, 24]); pille("\uD83C\uDF89 " + set.size + "/" + G0.steps.length); }
+    else pille("\u2713 " + set.size + "/" + G0.steps.length);
+  }
   /* Haken paa sirkelen gjelder hele steget: alle linjene foelger med. */
   const G = C.guide[lang] || C.guide.en, st = G.steps[i];
   if(st){
@@ -1809,6 +1877,7 @@ function copyCode(btn, value, label){
   function done(){
     const tag = btn.querySelector(".c");
     if(tag) tag.textContent = (C.guide_ui[lang] || C.guide_ui.en).copied;
+    feirVed(btn, 10); vibrer(8);
   }
   try{
     navigator.clipboard.writeText(value).then(done, function(){ fallback(); });
@@ -1911,6 +1980,7 @@ function makeLinkNow(){
             out.appendChild(el("p", "vnote", L.applied_wait || ""));
             store("aimpire.me", codeOf(u));
             try{ navigator.clipboard.writeText(hubBase() + "?l=" + codeOf(u)); }catch(e){}
+            feirVed(out, 26); vibrer([12, 50, 12]);
           })
           .catch(function(){ go.disabled = false; go.textContent = L.apply_fail; });
       };
