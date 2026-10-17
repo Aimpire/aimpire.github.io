@@ -4420,21 +4420,19 @@ function gullVis(){
   const pil = px.querySelector(".pil"); pil.textContent = GULL.retning === "opp" ? "▲" : GULL.retning === "ned" ? "▼" : "";
   px.classList.toggle("gammel", Date.now() - GULL.t > 10 * 60000);
 }
-function gullHent(){
-  if(document.hidden) return;
-  fetch("https://api.gold-api.com/price/XAU", { cache: "no-store" }).then(function(r){ return r.ok ? r.json() : null; }).then(function(j){
-    if(!j || !(j.price > 0)) return;
-    const ny = Math.round(j.price * 100) / 100;
-    GULL.retning = GULL.p && ny !== GULL.p ? (ny > GULL.p ? "opp" : "ned") : GULL.retning;
-    const endret = GULL.p && ny !== GULL.p;
-    GULL.p = ny; GULL.t = Date.parse(j.updatedAt) || Date.now();
-    gullVis();
-    const px = document.getElementById("mk-px");
-    if(px && endret){ px.classList.remove("opp", "ned"); void px.offsetWidth; px.classList.add(GULL.retning); }
-  }).catch(function(){});
+/* Gullprisen hentes én gang (tickeren kursHent), ikke to (maalt 17.10 Fast 3G: XAU ble hentet
+   dobbelt). gullHent leser bare det tickeren allerede har. */
+function gullFraKurs(){
+  const q = KURS.XAU; if(!q) return;
+  const endret = GULL.p && q.p !== GULL.p;
+  GULL.retning = endret ? (q.p > GULL.p ? "opp" : "ned") : GULL.retning;
+  GULL.p = q.p; GULL.t = Date.now();
+  gullVis();
+  const px = document.getElementById("mk-px");
+  if(px && endret){ px.classList.remove("opp", "ned"); void px.offsetWidth; px.classList.add(GULL.retning); }
 }
-window.addEventListener("load", function(){ setTimeout(gullHent, 1200); setInterval(gullHent, 30000); });
-document.addEventListener("visibilitychange", function(){ if(!document.hidden) gullHent(); });
+function gullHent(){ gullFraKurs(); }
+/* (gullHent kalles naa fra kursHent, se der) */
 /* ---- Neste store nyhet ---- */
 const NYHET = { liste: null, hentet: 0 };
 function nyhetHent(){
@@ -5385,8 +5383,11 @@ function tapeVis(blink){
   trk.lastChild.setAttribute("aria-hidden", "true");
   box.hidden = false;
 }
+let KURS_SIST = 0;
 function kursHent(){
   if(document.hidden) return;
+  if(Date.now() - KURS_SIST < 10000) return;   /* oppstart + «synlig igjen» rett etter hverandre = én henting (treg nett) */
+  KURS_SIST = Date.now();
   const blink = {};
   Promise.all(KURS_SYM.map(function(k){
     return fetch("https://api.gold-api.com/price/" + k, { cache: "no-store" }).then(function(r){ return r.ok ? r.json() : null; }).then(function(j){
@@ -5396,7 +5397,7 @@ function kursHent(){
       if(gml && ny !== gml.p) blink[k] = 1;
       KURS[k] = { p: ny, r: r };
     }).catch(function(){});
-  })).then(function(){ tapeVis(blink); if(!MG_PX_RORT && KURS.XAU && $("mg-px")){ $("mg-px").value = KURS.XAU.p; $("mg-px").dispatchEvent(new Event("input")); MG_PX_RORT = false; } });
+  })).then(function(){ tapeVis(blink); try{ gullFraKurs(); }catch(e){} if(!MG_PX_RORT && KURS.XAU && $("mg-px")){ $("mg-px").value = KURS.XAU.p; $("mg-px").dispatchEvent(new Event("input")); MG_PX_RORT = false; } });
 }
 window.addEventListener("load", function(){ setTimeout(kursHent, 900); setInterval(kursHent, 30000); });
 document.addEventListener("visibilitychange", function(){ if(!document.hidden) kursHent(); });
