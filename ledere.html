@@ -1653,6 +1653,26 @@ html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
 .mknow span{display:block;font-size:.92rem;line-height:1.45}
 .mknow:focus-visible{outline:2px solid var(--gold-soft);outline-offset:2px}
 /* Markedsklokke v2 */
+/* Live gullpris + trading-detaljer */
+.mknow .mkhd{width:100%}
+.mknow .mkpx{margin-inline-start:auto;display:inline-flex !important;align-items:baseline;gap:6px;padding:3px 9px;border-radius:999px;border:1px solid var(--rule);font-variant-numeric:tabular-nums}
+.mknow .mkpx[hidden]{display:none !important}
+.mknow .mkpx small{font-size:.66rem !important;font-weight:700;color:var(--chalk-dim);letter-spacing:.02em}
+.mknow .mkpx b{font:800 .86rem/1 var(--display) !important;color:var(--chalk) !important;margin:0 !important}
+.mknow .mkpx .pil{font-style:normal;font-size:.66rem;color:var(--chalk-dim)}
+.mknow .mkpx.opp{animation:pxopp 1.4s ease}
+.mknow .mkpx.ned{animation:pxned 1.4s ease}
+.mknow .mkpx.opp .pil{color:#16C47F}.mknow .mkpx.ned .pil{color:#F0506E}
+.mknow .mkpx.gammel b{color:var(--chalk-dim) !important}
+@keyframes pxopp{0%{background:rgba(22,196,127,.35);border-color:#16C47F}100%{background:transparent}}
+@keyframes pxned{0%{background:rgba(240,80,110,.35);border-color:#F0506E}100%{background:transparent}}
+.hero{position:relative}
+.hero::before{content:"";position:absolute;inset:0 -16px;z-index:-1;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(127,127,127,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(127,127,127,.07) 1px,transparent 1px);
+  background-size:28px 28px;-webkit-mask-image:radial-gradient(ellipse at 30% 40%,#000 20%,transparent 75%);mask-image:radial-gradient(ellipse at 30% 40%,#000 20%,transparent 75%)}
+.shchip b,.iqrow .v,.sncalc .row b,.snsplit b,.mknow .lane em,.cbig strong,#cc-total{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){.mknow .mkpx.opp,.mknow .mkpx.ned{animation:none}}
+
 .mknow .mkhd{display:flex;align-items:center;gap:8px}
 #mk-now{margin-top:18px}
 .mknow .mkhd b{margin:0 !important}
@@ -1660,17 +1680,17 @@ html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
 @keyframes mkpulse{70%{box-shadow:0 0 0 8px rgba(22,196,127,0)}100%{box-shadow:0 0 0 0 rgba(22,196,127,0)}}
 .mknow .mksay{display:block;margin:6px 0 10px;font:700 .98rem/1.35 var(--display) !important;color:var(--chalk)}
 .mknow .mktl{position:relative;display:grid !important;gap:6px;font-size:.78rem}
-.mknow .lane{display:grid !important;grid-template-columns:76px 1fr 56px;align-items:center;gap:8px}
+.mknow .lane{display:grid !important;grid-template-columns:76px 1fr 66px;align-items:center;gap:8px}
 .mknow .lane .ln{display:block;font-size:.76rem;font-weight:700;color:var(--chalk-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mknow .lane.on .ln{color:var(--chalk)}
 .mknow .lane .tr{position:relative;display:block !important;height:10px;border-radius:5px;background:var(--rule)}
 .mknow .lane .tr i{position:absolute;top:0;bottom:0;border-radius:5px;background:var(--c);opacity:.35}
 .mknow .lane.on .tr i{opacity:1;box-shadow:0 0 10px var(--c)}
-.mknow .lane em{font-style:normal;font-variant-numeric:tabular-nums;text-align:end;color:var(--chalk-dim);font-size:.74rem}
+.mknow .lane em{white-space:nowrap;font-style:normal;font-variant-numeric:tabular-nums;text-align:end;color:var(--chalk-dim);font-size:.74rem}
 .mknow .lane.on em{color:var(--chalk)}
 .mknow .nowl{position:absolute;top:-4px;bottom:16px;width:2px;background:#fff;border-radius:1px;box-shadow:0 0 8px rgba(255,255,255,.8);display:block !important}
 :root:not([data-theme="dark"]) .mknow .nowl{background:#14101C;box-shadow:none}
-.mknow .ax{display:grid !important;grid-template-columns:repeat(5,1fr);margin-inline:84px 64px;font-size:.62rem;color:var(--chalk-dim);opacity:.7}
+.mknow .ax{display:grid !important;grid-template-columns:repeat(5,1fr);margin-inline:84px 74px;font-size:.62rem;color:var(--chalk-dim);opacity:.7}
 .mknow .ax span{display:block !important;font-size:inherit !important}
 .mknow .ax span:last-child{text-align:end}
 @media (prefers-reduced-motion:reduce){.mknow .live{animation:none}}
@@ -3955,7 +3975,11 @@ function renderSessions(){
   const mk = $("mk-now");
   if(mk && T.mk && T.now_open){
     mk.textContent = "";
-    const hd = el("span", "mkhd"); hd.appendChild(el("i", "live")); hd.appendChild(el("b", null, T.mk)); mk.appendChild(hd);
+    const hd = el("span", "mkhd"); hd.appendChild(el("i", "live")); hd.appendChild(el("b", null, T.mk));
+    /* Live gullpris (K-108) - det Sonic handler. Vises bare naar kilden svarer. */
+    const px = el("span", "mkpx"); px.id = "mk-px"; px.setAttribute("dir", "ltr"); px.hidden = !GULL.p;
+    px.appendChild(el("small", null, "XAU/USD")); px.appendChild(el("b", "v")); px.appendChild(el("i", "pil"));
+    hd.appendChild(px); mk.appendChild(hd); gullVis();
     mk.appendChild(el("span", "mksay", naaTekst[0] || ""));
     const tl = el("span", "mktl"); tl.setAttribute("dir", "ltr");
     const pst = function(t){ return Math.max(0, Math.min(100, (t - midnatt) / 864e5 * 100)); };
@@ -4000,6 +4024,33 @@ function renderSessions(){
     }, 1000);
   }
 }
+/* ---- Live gullpris (founder 17.10 20:59 «trading look … pulser som gir sjel») ----
+   Gratis kilde uten noekkel (K-108). Hentes hvert 30. sekund bare naar siden synes.
+   Endring: kort blink grønt ▲ / rødt ▼ - pil i tillegg til farge (fargeblinde). */
+const GULL = { p: 0, forrige: 0, t: 0, retning: "" };
+function gullFmt(v){ const t = v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); return (typeof lang !== "undefined" && lang === "no") ? t.replace(/,/g, " ").replace(".", ",") : t; }
+function gullVis(){
+  const px = document.getElementById("mk-px"); if(!px || !GULL.p) return;
+  px.hidden = false;
+  px.querySelector(".v").textContent = gullFmt(GULL.p);
+  const pil = px.querySelector(".pil"); pil.textContent = GULL.retning === "opp" ? "▲" : GULL.retning === "ned" ? "▼" : "";
+  px.classList.toggle("gammel", Date.now() - GULL.t > 10 * 60000);
+}
+function gullHent(){
+  if(document.hidden) return;
+  fetch("https://api.gold-api.com/price/XAU", { cache: "no-store" }).then(function(r){ return r.ok ? r.json() : null; }).then(function(j){
+    if(!j || !(j.price > 0)) return;
+    const ny = Math.round(j.price * 100) / 100;
+    GULL.retning = GULL.p && ny !== GULL.p ? (ny > GULL.p ? "opp" : "ned") : GULL.retning;
+    const endret = GULL.p && ny !== GULL.p;
+    GULL.p = ny; GULL.t = Date.parse(j.updatedAt) || Date.now();
+    gullVis();
+    const px = document.getElementById("mk-px");
+    if(px && endret){ px.classList.remove("opp", "ned"); void px.offsetWidth; px.classList.add(GULL.retning); }
+  }).catch(function(){});
+}
+window.addEventListener("load", function(){ setTimeout(gullHent, 1200); setInterval(gullHent, 30000); });
+document.addEventListener("visibilitychange", function(){ if(!document.hidden) gullHent(); });
 function ssTick(){
   if(!SS) return;
   const nu = new Date(), T = SS.T;
@@ -4013,7 +4064,7 @@ function ssTick(){
       const h = Math.floor(ms / 36e5), mi = Math.floor(ms % 36e5 / 6e4);
       m.chipT.textContent = !ms ? "" : (m.aktiv ? "\u2193 " : "\u2191 ") + (h ? h + "t " : "") + mi + "m"; }
   });
-  if(MKNOW && MKNOW.now) MKNOW.now.style.insetInlineStart = "calc(84px + (100% - 84px - 64px) * " + Math.max(0, Math.min(1, (nu - MKNOW.midnatt) / 864e5)).toFixed(4) + ")";
+  if(MKNOW && MKNOW.now) MKNOW.now.style.insetInlineStart = "calc(84px + (100% - 84px - 74px) * " + Math.max(0, Math.min(1, (nu - MKNOW.midnatt) / 864e5)).toFixed(4) + ")";
   if(SS.hand){
     SS.hand.setAttribute("transform", "rotate(" + SS.hand._v(nu).toFixed(3) + " 160 160)");
     SS.klT.textContent = String(nu.getHours()).padStart(2, "0") + ":" + String(nu.getMinutes()).padStart(2, "0");
