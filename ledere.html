@@ -1978,6 +1978,26 @@ button.slab.reg.fort{border:0;cursor:pointer;width:100%;font:inherit}
 /* Bare loddrett panorering paa selve siden; egne scrollrader (fanerekke, spraak) beholder
    sidelengs, fordi touch-action regnes bare opp til naermeste scrollbeholder. */
 html,body{touch-action:pan-y pinch-zoom}
+/* Start-siden kortere (founder 18.10 00:07): «Kort fortalt» gjentok registreringsknappen og
+   hadde Instagram midt i flyten - borte fra Start (Instagram ligger i Verktoey). Reisekart og
+   faktabokser bare foer kontoen er opprettet. */
+.shell[data-view="start"] #s-main{display:none !important}
+.shell.harkonto #s-guide .shpath,.shell.harkonto #s-guide .shchips{display:none}
+#s-places > h2,#s-places > .lede{display:none}
+.plfold{border:1px solid var(--rule);border-radius:16px;background:var(--ink-raise);margin:4px 0 0}
+.plfold > summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;padding:12px 16px}
+.plfold > summary::-webkit-details-marker{display:none}
+.plfold > summary b{font:800 .95rem/1.2 var(--display)}
+.plfold > summary span{font-size:.84rem;color:var(--chalk-dim)}
+.plfold > summary::after{content:"+";margin-inline-start:auto;font:700 1.1rem/1 var(--display);color:var(--gold-soft,#5EE6D6)}
+.plfold[open] > summary::after{content:"\2212"}
+.plin{padding:0 16px 14px}
+#s-places{margin-top:0;padding-top:8px}
+/* To overskrifter oppaa hverandre paa Start (mappehodet «Kom i gang» + «Slik aapner du
+   kontoen»): mappehodet sier det, guide-overskriften skjules der. Strammere luft. */
+.shell[data-view="start"] #t-guide{display:none}
+.shell[data-view="start"] #s-guide,.shell[data-view="start"] #s-places{margin-top:14px;padding-top:0}
+.shell[data-view="start"] #s-guide .short{margin-top:0}
 /* Smart soek: svarkort og forslag. */
 .qans{display:grid;gap:6px;padding:14px 16px;margin:0 0 10px;border-radius:16px;border:1px solid #15D8C4;
   background:color-mix(in srgb,#15D8C4 9%,var(--ink-raise))}
@@ -3390,6 +3410,7 @@ function renderInner(){
   /* Steg 1 («bruk sponsorens lenke») ER gjort naar sponsoren er bekreftet - kryss det av
      én gang automatisk (kundegjennomgang 17.10). Fjerner kunden haken, respekteres det. */
   try{ if(sponsorVerified && !load("aimpire.s0auto")){ const d0 = doneSet(); if(!d0.has("0")){ d0.add("0"); store("aimpire.done", Array.from(d0).join(",")); const G0 = C.guide[lang] || C.guide.en, sb = subSet(); String(G0.steps[0][1]).split("\n").filter(function(x){ return x.trim(); }).forEach(function(_, n){ sb.add("0:" + n); }); subSave(sb); } store("aimpire.s0auto", "1"); } }catch(e){}
+  try{ document.querySelector(".shell").classList.toggle("harkonto", doneSet().has("1")); }catch(e){}
   const G = C.guide[lang] || C.guide.en;
   /* Ingen gjentakelse (17.10): ledeteksten sier det samme som de tre faktaboksene
      (~15 min, ID-kort, siden husker). Finnes boksene, staar det bare der. */
@@ -3604,15 +3625,9 @@ function renderInner(){
       const go = el("button","nextb", U.all_done_go);
       go.type = "button"; go.onclick = function(){ setView("earn"); };
       nx.appendChild(go);
-    } else if(first > 0 && U.next){
-      const go = el("button","nextb", U.next.replace("{t}", G.steps[first][0]));
-      go.type = "button";
-      go.onclick = function(){
-        const tgt = $("st-" + first);
-        if(tgt) tgt.scrollIntoView({behavior:"smooth", block:"start"});
-      };
-      nx.appendChild(go);
     }
+    /* «Neste: …»-knappen er tatt bort (18.10): neste steg staar aapent rett under, og Start
+       hopper selv dit. Den samme handlingen ligger paa Hjem («Neste: …»-hovedknappen). */
   }
   const pb = $("prog-r");
   pb.textContent = U.reset; pb.hidden = nDone === 0; pb.onclick = clearSteps;
@@ -3675,12 +3690,21 @@ function renderInner(){
     $("t-places").appendChild(document.createElement("b"));
     $("places-lede").textContent = (PL.lede[lang] || PL.lede.en);
     const pu = $("places"); pu.textContent = "";
+    const navn = [];
     (PL.items[lang] || PL.items.en).forEach(function(it){
+      navn.push(it[0]);
       const li = document.createElement("li");
       li.appendChild(el("h3",null,it[0]));
       li.appendChild(el("p",null,it[1]));
       pu.appendChild(li);
     });
+    /* Founder 18.10 00:07 «hvorfor saa langt mellom steg 1 og 2»: tre store bokser foran guiden
+       ble for mye. Én sammenfoldet linje med navnene; trykk for forklaringen. */
+    let pf = $("pl-fold");
+    if(!pf){ pf = el("details", "plfold"); pf.id = "pl-fold"; pf.appendChild(el("summary")); const inn = el("div", "plin"); pf.appendChild(inn);
+      inn.appendChild($("places-lede")); inn.appendChild(pu); ps.appendChild(pf); }
+    const sm = pf.querySelector("summary"); sm.textContent = "";
+    sm.appendChild(el("b", null, (PL.title[lang] || PL.title.en))); sm.appendChild(el("span", null, navn.join(" \u00b7 ")));
   } else { ps.hidden = true; }
 
   const E = C.earn[lang] || C.earn.en;
