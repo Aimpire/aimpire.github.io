@@ -2284,7 +2284,8 @@ html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
    «stengt» i helgen i stedet for aa late som de beveger seg. */
 .tape2{position:relative;z-index:1;overflow:hidden;margin:2px -16px 0;padding:8px 0;border-block:1px solid var(--rule);background:var(--ink);background:color-mix(in srgb,var(--ink) 78%,transparent);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.tape2[hidden]{display:block;visibility:hidden;min-height:41px}   /* #100: plassen holdes fra start - ellers skyver kursene innholdet ned (CLS) */
+.tape2[hidden]{display:block;visibility:hidden;min-height:41px}
+#switch:empty{min-height:48px}   /* #100: språkknappene bygges av skriptet - plassen holdes, ellers skyves alt ned (CLS 0,17 på lenke-veien) */   /* #100: plassen holdes fra start - ellers skyver kursene innholdet ned (CLS) */
 .tape2 .trk{display:flex;width:max-content;gap:0}
 .tape2 .grp{display:flex;gap:26px;padding-inline-end:26px}
 .tk{display:inline-flex;align-items:baseline;gap:7px;font:600 .82rem/1 var(--face);white-space:nowrap;color:var(--chalk-dim);border-radius:6px;padding:3px 5px}
