@@ -250,6 +250,17 @@ html:not(.klar) .shell > :not(.hero):not(.mast),html:not(.klar) .hero > :not(h1)
   padding:26px 0 0;border-bottom:1px solid var(--rule)}
 .wordmark{display:flex;align-items:center;gap:11px;padding-bottom:12px}
 .mono{width:40px;height:40px;flex:0 0 auto;display:block}
+/* #155: språk, tema og søk i samme rad som logoen - ingen egen språkrad. */
+.mast{flex-wrap:nowrap}
+.mast .switch{flex:0 0 auto;padding-bottom:12px;overflow:visible;gap:6px}
+#switch{min-height:40px}
+.switch .langbtn{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--ink-deep);color:var(--chalk);font:700 .82rem/1 var(--face);white-space:nowrap;cursor:pointer;min-height:38px}
+.switch .langbtn .gl{font-size:.95rem}
+.switch .thm{margin-inline-start:0}
+#script{display:none !important}
+@media (max-width:380px){ .wordmark .tag{display:none} .switch .langbtn{padding:7px 10px} .mast{gap:8px} }
+@media (max-width:350px){ .wordmark > span{display:none} .wordmark{gap:0} }
 .wordmark .wm{display:block;font-family:var(--display);font-weight:800;font-size:18px;
   font-variation-settings:"wdth" 94;letter-spacing:.11em;text-transform:uppercase;
   line-height:1;color:var(--chalk)}
@@ -2886,6 +2897,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.5505e1bc1a.js" defer></script>
+<script src="app-l.613d9ced50.js" defer></script>
 </body>
 </html>
