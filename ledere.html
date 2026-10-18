@@ -2382,6 +2382,65 @@ body.has-tabbar #pille{bottom:calc(76px + env(safe-area-inset-bottom))}
 @media (prefers-reduced-motion:reduce){
   .out .apply,.nextb,.joinbtn,.back,.menu .share,#notice-none .dlink,#spon .dlink,.plate{transition:none}
   .out .apply:active,.nextb:active,.joinbtn:active{transform:none}}
+
+/* ===== #150 Anti-mal (founder 18.10 15:57/16:07 «man ser at Claude har laget dette … step opp»).
+   Malsporene som går igjen er fjernet her, samlet, så de ikke sniker seg inn igjen:
+   gradientstrek under hver overskrift · overskrift i boks med ikon-firkant · tall i like bokser
+   med gradienttekst · emoji i rammede firkanter · gradientstripe øverst på kort.
+   Prinsipp: typografi og luft bærer hierarkiet; gradienten brukes bare der noe er i bevegelse
+   (neonlinja, framdrift, valgt fane). ===== */
+.sec > h2 b,.short > h2 b{display:none}
+.sec > h2,.short > h2{font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;font-size:1.6rem;line-height:1.12;letter-spacing:-.012em;word-spacing:.08em}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .sec > h2,html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .short > h2{font-family:var(--face);font-stretch:normal}
+.vhead{background:none;border:0;border-radius:0;padding:4px 0 2px;margin:18px 0 6px;gap:0}
+.vhead::after{display:none}
+.vhead .vic{display:none}
+.vhead .vtx b{font-family:"Archivo",var(--display);font-stretch:88%;font-weight:900;font-size:2.15rem;line-height:1.02;letter-spacing:-.018em;word-spacing:.08em}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .vhead .vtx b{font-family:var(--face);font-stretch:normal;font-size:1.7rem;line-height:1.4}
+.vhead .vtx span{font-size:.95rem;max-width:34ch}
+.vhead .spark{display:none}
+.shchips{gap:0;border-block:1px solid var(--rule)}
+.shchip{border:0;border-radius:0;padding:14px 8px;align-items:flex-start;text-align:start;animation:none}
+.shchip + .shchip{border-inline-start:1px solid var(--rule)}
+.shchip b{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--chalk);font-family:"Archivo",var(--display);font-stretch:85%;font-size:1.7rem}
+.sncalc .row.big b{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--gold-soft)}
+.short .iqic.emo{background:none;border:0}
+.snspark{border:0;padding:10px 0;border-radius:0}
+.iqtree,.iqtrack{border:0;padding:6px 0;border-radius:0}
+.mfeat .plate > .stripe{display:none}
+.mfeat .plate .mic{background:none !important;border:0 !important;box-shadow:none !important;width:auto;height:auto;font-size:1.9rem;justify-content:start}
+#academy .lic{background:none;border:0;font-size:1.5rem}
+#academy .lic b{background:var(--chalk);color:var(--ink)}
+/* Flyt (iqflow) er en ekte rekkefølge: loddrett linje med punkter, ikke tre like kort side om side. */
+.iqflow{flex-direction:column;gap:0;margin:16px 0 0;margin-inline-start:9px;border-inline-start:2px solid var(--rule)}
+.iqflow > .iqarr{display:none}
+.iqflow > .iqnode{display:grid;grid-template-columns:30px 1fr;column-gap:12px;align-items:center;text-align:start;
+  padding:12px 0;padding-inline-start:18px;border:0;border-radius:0;background:none;box-shadow:none;position:relative;animation:none}
+.iqflow > .iqnode::before{content:"";position:absolute;inset-inline-start:-7px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;
+  background:var(--ink);border:2px solid #15D8C4}
+.iqflow > .iqnode:last-child::before{background:#15D8C4}
+.iqflow > .iqnode > :first-child{grid-row:1 / span 2;font-size:1.4rem;background:none;border:0;width:auto;height:auto}
+.iqflow > .iqnode strong{font-size:1.02rem}
+.iqflow > .iqnode span:last-child{font-size:.86rem}
+/* Gradientkant er reservert for NESTE STEG (fortsett-kortet, installer-knappen, stegrekka).
+   Alt annet får en rolig kant - da betyr gradienten noe igjen. */
+#learn > details{background:transparent !important;border:1px solid color-mix(in srgb,var(--chalk) 22%,transparent) !important}
+#learn > details[open]{border-color:var(--gold-soft) !important}
+.slab.own{background:transparent !important;border:1.5px solid color-mix(in srgb,var(--chalk) 38%,transparent) !important}
+.slab.own .t{text-transform:none !important;letter-spacing:0 !important}
+.vpnb,.ldkit .kt,#spon .sharepill,.out .shareb,.iqbtn.ghost{background:transparent !important;border:1px solid color-mix(in srgb,var(--chalk) 28%,transparent) !important}
+.llive{background:none;border:0;border-top:1px solid var(--rule);border-radius:0;padding:16px 0 4px;margin-top:18px}
+/* FAQ: en liste med hårfine skiller, ikke en stabel bokser. Spørsmålet bærer, ikonet er stille. */
+.qa{border:0;border-radius:0;background:none;margin:0;border-bottom:1px solid var(--rule)}
+.faql{border-top:1px solid var(--rule)}
+.qa summary{padding:17px 36px 17px 0;font:700 1.02rem/1.35 var(--face)}
+[dir=rtl] .qa summary{padding:17px 0 17px 36px}
+#faq-list .qa .qi{flex:0 0 auto;width:auto;height:auto;background:none;border:0;border-radius:0;font-size:1.1rem;opacity:.9}
+.qa summary::after{content:"";top:50%;inset-inline-end:6px;width:9px;height:9px;margin-top:-7px;border:solid var(--chalk-dim);
+  border-width:0 2px 2px 0;transform:rotate(45deg);transition:transform .2s}
+.qa[open] summary::after{content:"";transform:rotate(-135deg);margin-top:-2px}
+.qa p{padding:0 0 18px;max-width:60ch}
+.qa[open]{background:none}
 </style>
 </head>
 <body>
