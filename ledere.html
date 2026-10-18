@@ -2491,6 +2491,16 @@ html[dir="rtl"] .chk{padding:12px 42px 12px 14px !important}
 .psout .k + .k{border-inline-start:1px solid var(--rule) !important;padding-inline-start:14px}
 .psout .k strong{font-family:"Archivo",var(--display);font-stretch:85%;font-weight:800;font-size:1.8rem}
 .psout .warn2{margin:10px 0}
+/* #152 Ledersiden etter søknad: skjemaet borte, status med grønn hake øverst. */
+.tool.ldsendt > :is(#ld-body,#ld-portal,input,label,#ld-hint,#ld-why,#ld-btn){display:none !important}
+html.ldsendt #sh-s-leaders,html.ldsendt .sec#s-leaders .shpath{display:none !important}
+.ldstatus{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:16px;margin:4px 0 14px;
+  background:color-mix(in srgb,#16C784 10%,transparent)}
+.ldstatus .ldv{flex:0 0 40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#16C784;color:#06120C;font:900 1.2rem/1 var(--display)}
+.ldstatus b{display:block;font:800 1.1rem/1.3 var(--display);color:var(--chalk)}
+.ldstatus p{margin:4px 0 0;font-size:.92rem;color:var(--chalk-dim)}
+.ldagain{margin:14px 0 0;padding:8px 0;border:0;background:none;color:var(--chalk-dim);font:600 .86rem/1.3 var(--face);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.tool:not(.ldsendt) .ldagain{display:none}
 /* Delseksjonstitler (h3 rett under en seksjon, f.eks. «Aimpire Academy») i samme skrift som overskriftene. */
 .sec > h3{font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;font-size:1.32rem;line-height:1.15;letter-spacing:-.01em;word-spacing:.08em}
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .sec > h3{font-family:var(--face);font-stretch:normal;letter-spacing:0;line-height:1.5}
@@ -2871,6 +2881,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.d65ba41172.js" defer></script>
+<script src="app-l.fd6fad55ff.js" defer></script>
 </body>
 </html>
