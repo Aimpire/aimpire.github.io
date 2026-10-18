@@ -1629,6 +1629,8 @@ html.fx .topbar{background:color-mix(in srgb,var(--ink) 62%,transparent) !import
 .plate[data-cat]{--cat:transparent;background:var(--ink-deep);border-color:var(--rule)}
 :root:not([data-theme="dark"]) .plate[data-cat]:not([data-cat="start"]){background:var(--ink-deep);border-color:var(--rule)}
 .plate.feat{overflow:hidden}
+/* #163: IB-flisen over hele bredden - et halvt kort ved siden av et tomt felt så uferdig ut */
+.plate.feat[data-cat="ib"]{grid-column:1/-1}
 .plate.feat::before{content:"";position:absolute;inset-inline:0;top:0;height:3px;background:var(--aim)}
 .plate.feat .t{font-size:1.32rem}
 .plate.feat > .go{color:var(--chalk)}
@@ -2958,6 +2960,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.de020e2c72.js" defer></script>
+<script src="app-l.fa3e07e2f5.js" defer></script>
 </body>
 </html>
