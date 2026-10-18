@@ -50,8 +50,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- #100: skriftarket blokkerer ikke foerste visning lenger (maalt ~0,8 s paa tregt nett). Teksten vises
      straks i systemskrift og bytter naar skriftene er lastet (display=swap, som foer). -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" crossorigin="anonymous"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700;800&display=swap" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700;800&display=swap" crossorigin="anonymous"></noscript>
 <noscript><style>html:not(.klar) .shell>*,html:not(.klar) .hero>*{visibility:visible!important}</style></noscript>
 
 <style>
@@ -103,6 +103,10 @@
 html[data-font="deva"]{ --face:"Noto Sans Devanagari","Montserrat",sans-serif }
 html[data-font="nastaliq"]{ --face:"Noto Nastaliq Urdu","Montserrat",serif }
 html[data-font="naskh"]{ --face:"Noto Naskh Arabic","Montserrat",serif }
+/* #154 (founder 18.10 18:17 «vanlig urdu ser ikke bra ut … like clean som roman urdu»): urdu bruker
+   arabiskens oppsett (linjehøyder/størrelser), men en ren, moderne urdu-skrift i all tekst. Nastaliq
+   er beholdt der den gir identitet: hovedoverskriften og velkomstporten. */
+html[lang="ur"][data-font="naskh"]{ --face:"Noto Sans Arabic","Montserrat",sans-serif }
 
 /* «Himmelen over bruksanvisningen» v2 (founder 17.10 05:21: «hvor er alle de visuelle
    effektene … som skulle bevege seg i bakgrunnen»). v1 skiftet bare fargetone 18° på 14 s
@@ -296,7 +300,8 @@ html[data-font="nastaliq"] .hero h1{font-size:clamp(1.6rem,6.4vw,2.5rem);line-he
 @media (prefers-reduced-motion:no-preference){
   .hero h1{animation:rise .55s cubic-bezier(.2,.7,.3,1) backwards}
 }
-@keyframes rise{from{transform:translateY(.35em)}to{transform:none}}   /* ingen opasitet 0: usynlig tekst teller ikke som tegnet (LCP) */
+@keyframes rise{from{transform:translateY(.35em)}to{transform:none}}
+html[lang="ur"] .hero h1{font-family:"Noto Nastaliq Urdu",serif;font-weight:700;font-size:clamp(1.6rem,6.4vw,2.5rem);line-height:1.6;letter-spacing:0}   /* ingen opasitet 0: usynlig tekst teller ikke som tegnet (LCP) */
 
 /* Paa korte skjermer (360x640 og mindre, de vanligste billige telefonene) tok
    logo, spraakvalg, overskrift og sponsorvarselet hele foerste skjerm, saa det
@@ -1988,7 +1993,7 @@ html.portaapen body{overflow:hidden}
 #port .pg{font:800 clamp(2rem,9.5vw,3rem)/1.15 "Archivo","Montserrat",sans-serif;font-stretch:88%;letter-spacing:-.01em}
 #port [data-f="deva"] .pg{font-family:"Noto Sans Devanagari",sans-serif;font-weight:800;font-stretch:normal}
 #port [data-f="naskh"] .pg{font-family:"Noto Naskh Arabic",serif;font-weight:700;font-stretch:normal;line-height:1.5}
-#port [data-f="nastaliq"] .pg{font-family:"Noto Nastaliq Urdu",serif;font-weight:700;font-stretch:normal;line-height:1.9;font-size:clamp(1.7rem,8vw,2.5rem)}
+#port [lang="ur"] .pg,#port [data-f="nastaliq"] .pg{font-family:"Noto Nastaliq Urdu",serif;font-weight:700;font-stretch:normal;line-height:1.9;font-size:clamp(1.7rem,8vw,2.5rem)}
 #port .pn{font:500 .82rem/1.3 "Montserrat","Noto Sans Devanagari","Noto Naskh Arabic","Noto Nastaliq Urdu",sans-serif;color:rgba(244,242,247,.5)}
 #port .prow::after,#port .phalf::after{content:"";position:absolute;inset-inline-start:26px;bottom:8px;height:2px;width:0;
   background:linear-gradient(90deg,#15D8C4,#1B4FD8,#C21FBF);transition:width .38s cubic-bezier(.2,.8,.3,1)}
@@ -2542,7 +2547,7 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
   </section>
   <!-- #100: toppen staar ferdig i HTML-en og faar riktig spraak/tema/retning her, foer det store
        skriptet nederst er lastet - saa telefonen kan tegne den mens resten fortsatt kommer. -->
-  <script>(function(){try{var H={"en":["Start here.","Aim for it.","Your account, step by step, at your own pace. Honest about the risks.","ltr","en","latin"],"no":["Start her.","Sikt høyt.","Kontoen din, steg for steg, i ditt tempo. Ærlig om risikoen.","ltr","no","latin"],"hi":["यहाँ से शुरू करें।","अपने लक्ष्य की ओर बढ़ें।","आपका account, step by step, आपकी रफ़्तार से। जोखिम के बारे में ईमानदार।","ltr","hi","deva"],"ar":["ابدأ من هنا.","وامضِ نحو هدفك.","حسابك خطوة بخطوة، على راحتك. ونصارحك بالمخاطر.","rtl","ar","naskh"],"ur":["یہیں سے شروع کریں۔","اپنے مقصد کی طرف بڑھیں۔","آپ کا account، step by step، آپ کی رفتار سے۔ خطرات کے بارے میں صاف بات۔","rtl","ur","nastaliq"],"ar_rm":["Ibda' min huna.","Wamdi nahwa hadafak.","Hisabak khutwa bi-khutwa, 3ala rahatak. W nusarihuk bil-makhatir.","ltr","ar-Latn","latin"],"ur_rm":["Yahin se shuru karein.","Apne maqsad ki taraf barhein.","Aap ka account, step by step, aap ki raftaar se. Khatraat ke baare mein saaf baat.","ltr","ur-Latn","latin"]},d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},L=g("aimpire.lang"),t=g("aimpire.theme.v2");try{var q=new URLSearchParams(location.search).get("lang");if(q&&H[q])L=q}catch(e){}if(!H[L]){var n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||""];for(var i=0;i<n.length&&!H[L];i++){var x=String(n[i]||"").toLowerCase().replace(/^(nb|nn)(?=-|$)/,"no");for(var c in H){if(x===c||x.indexOf(c+"-")===0){L=c;break}}}}if(!H[L])L="en";if(t)d.setAttribute("data-theme",t);var h=H[L];d.lang=h[4];d.dir=h[3];d.setAttribute("data-font",h[5]);document.getElementById("h1").textContent=h[0];document.getElementById("h2").textContent=h[1];document.getElementById("hsub").textContent=h[2]}catch(e){}})();</script>
+  <script>(function(){try{var H={"en":["Start here.","Aim for it.","Your account, step by step, at your own pace. Honest about the risks.","ltr","en","latin"],"no":["Start her.","Sikt høyt.","Kontoen din, steg for steg, i ditt tempo. Ærlig om risikoen.","ltr","no","latin"],"hi":["यहाँ से शुरू करें।","अपने लक्ष्य की ओर बढ़ें।","आपका account, step by step, आपकी रफ़्तार से। जोखिम के बारे में ईमानदार।","ltr","hi","deva"],"ar":["ابدأ من هنا.","وامضِ نحو هدفك.","حسابك خطوة بخطوة، على راحتك. ونصارحك بالمخاطر.","rtl","ar","naskh"],"ur":["یہیں سے شروع کریں۔","اپنے مقصد کی طرف بڑھیں۔","آپ کا account،‏ step by step، آپ کی رفتار سے۔ خطرات کے بارے میں صاف بات۔","rtl","ur","naskh"],"ar_rm":["Ibda' min huna.","Wamdi nahwa hadafak.","Hisabak khutwa bi-khutwa, 3ala rahatak. W nusarihuk bil-makhatir.","ltr","ar-Latn","latin"],"ur_rm":["Yahin se shuru karein.","Apne maqsad ki taraf barhein.","Aap ka account, step by step, aap ki raftaar se. Khatraat ke baare mein saaf baat.","ltr","ur-Latn","latin"]},d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},L=g("aimpire.lang"),t=g("aimpire.theme.v2");try{var q=new URLSearchParams(location.search).get("lang");if(q&&H[q])L=q}catch(e){}if(!H[L]){var n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||""];for(var i=0;i<n.length&&!H[L];i++){var x=String(n[i]||"").toLowerCase().replace(/^(nb|nn)(?=-|$)/,"no");for(var c in H){if(x===c||x.indexOf(c+"-")===0){L=c;break}}}}if(!H[L])L="en";if(t)d.setAttribute("data-theme",t);var h=H[L];d.lang=h[4];d.dir=h[3];d.setAttribute("data-font",h[5]);document.getElementById("h1").textContent=h[0];document.getElementById("h2").textContent=h[1];document.getElementById("hsub").textContent=h[2]}catch(e){}})();</script>
 
   <div class="notices" id="notices">
     <div class="notice" id="notice-none" hidden>
@@ -2881,6 +2886,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.a14178f5c5.js" defer></script>
+<script src="app-m.13599d4d9b.js" defer></script>
 </body>
 </html>
