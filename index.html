@@ -30,6 +30,23 @@
    Chrome eller Safari, paa iPhone og Android. Kilder: K-106. Adressen faar spraaket lagt til
    av applyLang (replaceState) foer man rekker aa trykke «Legg til». */
 (function(){
+  /* #164 (founder 19.10): lederlenken kan baere navnet, ?l=asma-pbv4ta. Navnet er bare pynt -
+     de 6 siste tegnene er koden. Gjoeres om til ?l=pbv4ta FOER noe annet leser adressen, saa
+     all eksisterende kode ser akkurat det samme som foer. Gamle ?l=pbv4ta-lenker er urørt. */
+  /* #164: navnelenke (/asma) som service workeren likevel viste forsiden for (tregt nett):
+     send til navneoppslaget, saa lederen ikke mister personen. */
+  try{
+    var sti = location.pathname.replace(/^\/+|\/+$/g, "");
+    if(/^[A-Za-z0-9]{1,30}$/.test(sti) && !/^(index|ledere|404)$/i.test(sti)){
+      location.replace("/404.html?s=" + encodeURIComponent(sti.toLowerCase()) + (location.search ? "&" + location.search.slice(1) : "") + location.hash);
+      return;
+    }
+  }catch(e){}
+  try{
+    var q1 = new URLSearchParams(location.search), r1 = String(q1.get("l") || "").toLowerCase();
+    var m1 = r1.match(/^[a-z0-9]+(?:-[a-z0-9]+)*-([a-z0-9]{6})$/);
+    if(m1){ q1.set("l", m1[1]); history.replaceState(history.state, "", location.pathname + "?" + q1.toString() + location.hash); }
+  }catch(e){}
   try{
     var q = new URLSearchParams(location.search), l = (q.get("l") || "").toLowerCase().replace(/[^a-z0-9]/g, "");
     var m = document.createElement("link"); m.rel = "manifest";
@@ -2960,6 +2977,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.3cd594ffaf.js" defer></script>
+<script src="app-m.e18d5500c5.js" defer></script>
 </body>
 </html>
