@@ -286,7 +286,7 @@ html[data-font="deva"] .hero h1,html[data-font="nastaliq"] .hero h1,html[data-fo
    rekkefoelgen som avgjoer. Foerste forsoek laa foran og ble overstyrt:
    maalt 36px i stedet for 28,8. */
 html[data-font="nastaliq"] .hero h1{font-size:clamp(1.6rem,6.4vw,2.5rem);line-height:1.42}
-.hero h1 span{display:block}
+.hero h1 span{display:inline}   /* #100: én tekstblokk (to linjer via <br>) = LCP-kandidaten er hele overskriften, synlig fra første tegning */
 /* Gradienten bor i logoen og i regelstreken under hver h2. Paa overskriften
    ble den dekorasjon — og halvt usynlig paa hvitt. Dyp blaa i stedet: 9,33:1,
    og to toner leser som ett utsagn i stedet for to. */
@@ -294,10 +294,9 @@ html[data-font="nastaliq"] .hero h1{font-size:clamp(1.6rem,6.4vw,2.5rem);line-he
 .hero h1 span:last-child{background:var(--grad-ink);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero p{margin:26px 0 0;max-width:var(--measure);color:var(--chalk-dim);font-size:1.02rem}
 @media (prefers-reduced-motion:no-preference){
-  .hero h1 span{animation:rise .55s cubic-bezier(.2,.7,.3,1) backwards}
-  .hero h1 span:nth-child(2){animation-delay:.07s}
+  .hero h1{animation:rise .55s cubic-bezier(.2,.7,.3,1) backwards}
 }
-@keyframes rise{from{opacity:0;transform:translateY(.35em)}to{opacity:1;transform:none}}
+@keyframes rise{from{transform:translateY(.35em)}to{transform:none}}   /* ingen opasitet 0: usynlig tekst teller ikke som tegnet (LCP) */
 
 /* Paa korte skjermer (360x640 og mindre, de vanligste billige telefonene) tok
    logo, spraakvalg, overskrift og sponsorvarselet hele foerste skjerm, saa det
@@ -2489,7 +2488,7 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
   <div class="nradar" id="nradar" dir="ltr" hidden><div class="nrtrk" id="nradar-trk"></div></div>
 
   <section class="hero">
-    <h1><span id="h1">Start here.</span><span id="h2">Aim for it.</span></h1>
+    <h1><span id="h1">Start here.</span><br><span id="h2">Aim for it.</span></h1>
     <p id="hsub">Your account, step by step, at your own pace. Honest about the risks.</p>
     <div class="spon" id="spon" hidden></div>
   </section>
