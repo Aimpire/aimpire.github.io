@@ -2485,6 +2485,18 @@ html[dir="rtl"] .chk{padding:12px 42px 12px 14px !important}
 /* #147 kontrast: valutakoden i markedskortet var 4,0:1 (mørk) og 2,8:1 (lys) - nå >= 4,5:1 */
 .mknow .mknews .cc{color:#FF8FA2 !important}
 :root:not([data-theme="dark"]) .mknow .mknews .cc{color:#B0182F !important;background:rgba(176,24,47,.10)}
+/* Kalkulatorens svar: tall uten bokser, hårfin skille - samme språk som tallene på Sonic. */
+.psout{gap:0;border-block:1px solid var(--rule)}
+.psout .k,:root[data-theme="dark"] .psout .k{background:none !important;border:0 !important;border-radius:0;padding:14px 4px}
+.psout .k + .k{border-inline-start:1px solid var(--rule) !important;padding-inline-start:14px}
+.psout .k strong{font-family:"Archivo",var(--display);font-stretch:85%;font-weight:800;font-size:1.8rem}
+.psout .warn2{margin:10px 0}
+/* Merknad/advarsel: ikke farget sidekant (malspor), men et lite tegn foran - ⓘ for merknad, ! for advarsel. */
+.vnote,.warn{position:relative;border-inline-start:0 !important;padding-inline-start:44px !important}
+.vnote::before,.warn::before{position:absolute;inset-inline-start:14px;top:13px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;
+  font:800 .74rem/1 var(--display)}
+.vnote::before{content:"i";background:color-mix(in srgb,var(--chalk) 14%,transparent);color:var(--chalk);font-style:italic;font-family:Georgia,serif}
+.warn::before{content:"!";background:var(--ember,#E8590C);color:#fff}
 .goals .gt{font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;font-size:1.35rem;letter-spacing:-.01em;word-spacing:.08em}
 </style>
 </head>
@@ -2852,6 +2864,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.2120d8bef1.js" defer></script>
+<script src="app-l.72df5c60c6.js" defer></script>
 </body>
 </html>
