@@ -18,7 +18,8 @@ jobs:
           set -e
           curl -fsS --max-time 30 "https://nfs.faireconomy.media/ff_calendar_thisweek.json" -o /tmp/ff.json
           mkdir -p data
-          jq '[.[] | select(.impact=="High") | {t:.title, c:.country, d:.date, f:.forecast, p:.previous}] | sort_by(.d)' /tmp/ff.json > data/nyheter.new
+          # #149: ogsaa Medium, med i = H/M (alvorlighet). Gamle visninger filtrerer paa i.
+          jq '[.[] | select(.impact=="High" or .impact=="Medium") | {t:.title, c:.country, d:.date, f:.forecast, p:.previous, i:(.impact[0:1])}] | sort_by(.d)' /tmp/ff.json > data/nyheter.new
           if [ "$(jq length data/nyheter.new)" -gt 0 ]; then mv data/nyheter.new data/nyheter.json; else rm data/nyheter.new; fi
       - name: Lagre hvis endret
         run: |
