@@ -2019,7 +2019,10 @@ html[dir="rtl"] #port .prow::after{background:linear-gradient(270deg,#15D8C4,#1B
 #port .prow{max-height:9rem}
 #port .psq{display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 22px 18px;text-align:center}
 #port .psq b{font:700 1.35rem/1.9 "Noto Nastaliq Urdu","Noto Naskh Arabic",serif;color:#F4F2F7}
-#port .psq span{font:600 .95rem/1.3 "Montserrat",sans-serif;color:rgba(244,242,247,.6)}
+#port .psq span{font:600 .95rem/1.3 "Montserrat",sans-serif;color:rgba(244,242,247,.78)}
+/* pulslinja krysser spoersmaalet - en mork halo holder teksten lesbar oppaa den */
+#port .psq{position:relative;z-index:2}
+#port .psq b,#port .psq span{text-shadow:0 0 6px #08070C,0 0 14px #08070C,0 0 2px #08070C}
 @media (prefers-reduced-motion:no-preference){#port .psq{animation:psplit .4s cubic-bezier(.2,.8,.3,1)}}
 #port .psplit{background:rgba(7,7,10,.72);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);display:grid;grid-template-columns:1fr 1fr;border-block:1px solid rgba(244,242,247,.1)}
 #port .psplit .phalf + .phalf{border-inline-start:1px solid rgba(244,242,247,.1)}
