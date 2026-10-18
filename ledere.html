@@ -2157,6 +2157,33 @@ html[dir="rtl"] .tbprog b{transform-origin:100% 50%}
 .cchart .pt{fill:#C21FBF;stroke:var(--ink-raise);stroke-width:2;transform-box:fill-box;transform-origin:center}
 .cax{display:flex;justify-content:space-between;font:600 .72rem/1 var(--face);color:var(--chalk-dim)}
 .cshare{margin:14px 0 4px}
+.hlgrid{display:grid;gap:10px;margin-top:12px}
+.hlk{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:1px solid var(--rule);border-radius:16px;background:var(--card,var(--ink-deep));position:relative;z-index:1}
+.hlk .e{flex:0 0 26px;font-size:1.3rem;line-height:1.3}
+.hlk b{display:block;margin-bottom:2px}
+.hlk p{margin:0;font-size:.92rem;line-height:1.45;color:var(--chalk-dim)}
+.ldlist{margin:10px 0 4px;text-align:start}
+.ldchk{display:flex;gap:10px;align-items:center;font-weight:700;cursor:pointer}
+.ldchk input{width:22px;height:22px;accent-color:#15D8C4}
+.ldmer{display:grid;gap:6px;margin-top:8px}
+.ldmer small{font-weight:700;opacity:.8}
+.ldsp{display:flex;flex-wrap:wrap;gap:6px}
+.ldpill{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:6px 12px;border-radius:999px;border:1.5px solid var(--rule);background:transparent;color:inherit;font:600 .9rem/1.2 var(--face,inherit);cursor:pointer}
+.ldpill input{accent-color:#15D8C4}
+.ldpill[aria-pressed="true"]{border-color:#15D8C4;background:color-mix(in srgb,#15D8C4 14%,transparent)}
+#ld-land{min-height:44px;border-radius:10px;padding:8px;font:inherit}
+.ldpick{position:fixed;inset:0;z-index:300;background:rgba(5,4,10,.62);display:flex;align-items:flex-end;justify-content:center}
+.ldpk{position:relative;width:100%;max-width:520px;max-height:86vh;overflow:auto;background:var(--ink-deep,#14131B);color:var(--chalk);border-radius:20px 20px 0 0;padding:22px 18px calc(18px + env(safe-area-inset-bottom))}
+.ldpk h3{margin:0 36px 6px 0;font-size:1.25rem}
+html[dir="rtl"] .ldpk h3{margin:0 0 6px 36px}
+.ldpx{position:absolute;inset-inline-end:12px;top:12px;width:40px;height:40px;border-radius:50%;border:0;background:color-mix(in srgb,var(--chalk) 10%,transparent);color:inherit;font-size:1.4rem;cursor:pointer}
+.ldrows{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px}
+.ldrows li{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--rule);border-radius:14px}
+.ldrows .avi{flex:0 0 40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:linear-gradient(135deg,#15D8C4,#1B4FD8 55%,#C21FBF);color:#fff}
+.ldtx{flex:1;display:grid;gap:2px;min-width:0}
+.ldtx small{opacity:.75}
+.ldgo{flex:0 0 auto;min-height:40px;display:inline-flex;align-items:center;padding:8px 16px;border-radius:999px;background:linear-gradient(90deg,#15D8C4,#1B4FD8 55%,#C21FBF);color:#fff;font-weight:800;text-decoration:none}
+.ldtom{justify-content:center;opacity:.8}
 .pfacts{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px}
 .pfacts .pf{font-size:.8rem;font-weight:700;padding:5px 10px;border-radius:999px;border:1px solid var(--rule);background:color-mix(in srgb,var(--chalk) 6%,transparent)}
 .pfacts .warnf{border-color:color-mix(in srgb,#E8590C 55%,transparent);color:#A8420C}
@@ -2668,7 +2695,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
     <div class="rsfig" id="rs-fig" dir="ltr"></div>
     <p class="rsleg" id="rs-leg"></p>
     <dl class="rsstat" id="rs-stat"></dl>
-    <div class="alt" id="alt" hidden></div>
     <ul class="rsnotes" id="rs-notes"></ul>
     <p class="vnote" id="rs-formula"></p>
     <details class="rstab"><summary id="rs-tabsum"></summary><table id="rs-tab"></table></details>
@@ -2768,6 +2794,11 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
     <p class="lede" id="aca-lede" hidden></p>
     <div id="academy" class="learn"></div>
   </section>
+
+  <!-- #162: halal i Laer, egen kategori - ikke paa Sonic-siden (founder 19.10 00:42). Fakta med kilde (K-41, K-105), ingen fatwa. -->
+  <!-- #162: «Bank, fond eller Sonic» er undervisning, ikke en del av Sonic-historikken (plasseringsgjennomgang 19.10). -->
+  <section class="sec" id="s-alt" data-cat="learn"><div class="alt" id="alt" hidden></div></section>
+  <section class="sec" id="s-halal" data-cat="learn" hidden><h2 id="t-halal"></h2><p class="lede" id="hl-lede"></p><div class="hlgrid" id="hl-grid"></div></section>
 
   <section class="sec" id="s-video" data-cat="start"><h2 id="t-video"></h2><div id="video-links"></div></section>
   <section class="sec" id="s-docs" data-cat="start"><h2 id="t-docs"></h2><div id="docs-links"></div></section>
@@ -2913,6 +2944,7 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
       <input id="ld-mail" type="email" inputmode="email" autocomplete="email" enterkeyhint="next">
       <input id="ld-spons" type="text" autocomplete="off" spellcheck="false" maxlength="24" enterkeyhint="go">
       <p class="hint" id="ld-hint"></p>
+      <div class="ldlist" id="ld-list" hidden></div>
       <p class="vnote" id="ld-why"></p>
       <button id="ld-btn" onclick="makeLink()"></button>
       <div class="out" id="ld-out" hidden></div>
@@ -2926,6 +2958,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.a8e7bff90d.js" defer></script>
+<script src="app-l.dfee862c86.js" defer></script>
 </body>
 </html>
