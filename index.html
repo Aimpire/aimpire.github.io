@@ -438,7 +438,7 @@ button.row:first-child{border-top:0}
 .row:hover,.row:focus-visible{background:#F6F0FA}
 .row .go{color:var(--gold);font-weight:800;font-size:1.25rem;font-family:var(--display);
   grid-area:go;line-height:1}
-html[dir="rtl"] .row .go{transform:scaleX(-1)}
+/* #155 F8: › speiles automatisk i RTL-tekst - ingen ekstra flipp */
 :root[data-theme="dark"] .row:hover,:root[data-theme="dark"] .row:focus-visible{
   background:var(--ink-raise)}
 
@@ -2553,12 +2553,12 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 
   <section class="hero">
     <h1><span id="h1">Start here.</span><br><span id="h2">Aim for it.</span></h1>
-    <p id="hsub">Your account, step by step, at your own pace. Honest about the risks.</p>
+    <p id="hsub">Learn trading honestly. Get started safely, step by step. Copy Sonic — with the risk in plain sight.</p>
     <div class="spon" id="spon" hidden></div>
   </section>
   <!-- #100: toppen staar ferdig i HTML-en og faar riktig spraak/tema/retning her, foer det store
        skriptet nederst er lastet - saa telefonen kan tegne den mens resten fortsatt kommer. -->
-  <script>(function(){try{var H={"en":["Start here.","Aim for it.","Your account, step by step, at your own pace. Honest about the risks.","ltr","en","latin"],"no":["Start her.","Sikt høyt.","Kontoen din, steg for steg, i ditt tempo. Ærlig om risikoen.","ltr","no","latin"],"hi":["यहाँ से शुरू करें।","अपने लक्ष्य की ओर बढ़ें।","आपका account, step by step, आपकी रफ़्तार से। जोखिम के बारे में ईमानदार।","ltr","hi","deva"],"ar":["ابدأ من هنا.","وامضِ نحو هدفك.","حسابك خطوة بخطوة، على راحتك. ونصارحك بالمخاطر.","rtl","ar","naskh"],"ur":["یہیں سے شروع کریں۔","اپنے مقصد کی طرف بڑھیں۔","آپ کا account،‏ step by step، آپ کی رفتار سے۔ خطرات کے بارے میں صاف بات۔","rtl","ur","naskh"],"ar_rm":["Ibda' min huna.","Wamdi nahwa hadafak.","Hisabak khutwa bi-khutwa, 3ala rahatak. W nusarihuk bil-makhatir.","ltr","ar-Latn","latin"],"ur_rm":["Yahin se shuru karein.","Apne maqsad ki taraf barhein.","Aap ka account, step by step, aap ki raftaar se. Khatraat ke baare mein saaf baat.","ltr","ur-Latn","latin"]},d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},L=g("aimpire.lang"),t=g("aimpire.theme.v2");try{var q=new URLSearchParams(location.search).get("lang");if(q&&H[q])L=q}catch(e){}if(!H[L]){var n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||""];for(var i=0;i<n.length&&!H[L];i++){var x=String(n[i]||"").toLowerCase().replace(/^(nb|nn)(?=-|$)/,"no");for(var c in H){if(x===c||x.indexOf(c+"-")===0){L=c;break}}}}if(!H[L])L="en";if(t)d.setAttribute("data-theme",t);var h=H[L];d.lang=h[4];d.dir=h[3];d.setAttribute("data-font",h[5]);document.getElementById("h1").textContent=h[0];document.getElementById("h2").textContent=h[1];document.getElementById("hsub").textContent=h[2]}catch(e){}})();</script>
+  <script>(function(){try{var H={"en":["Start here.","Aim for it.","Learn trading honestly. Get started safely, step by step. Copy Sonic — with the risk in plain sight.","ltr","en","latin"],"no":["Start her.","Sikt høyt.","Lær trading ærlig. Kom i gang trygt, steg for steg. Kopier Sonic — med risikoen synlig.","ltr","no","latin"],"hi":["यहाँ से शुरू करें।","अपने लक्ष्य की ओर बढ़ें।","Trading ईमानदारी से सीखें। कदम-दर-कदम सुरक्षित तरीके से शुरू करें। Sonic को copy करें — जोखिम साफ़ सामने रखकर।","ltr","hi","deva"],"ar":["ابدأ من هنا.","وامضِ نحو هدفك.","تعلّم التداول بصراحة. ابدأ بأمان، خطوة بخطوة. انسخ Sonic — والمخاطر واضحة أمامك.","rtl","ar","naskh"],"ur":["یہیں سے شروع کریں۔","اپنے مقصد کی طرف بڑھیں۔","Trading ایمانداری سے سیکھیں۔ قدم بہ قدم محفوظ طریقے سے شروع کریں۔ Sonic کو copy کریں — خطرہ صاف سامنے رکھ کر۔","rtl","ur","naskh"],"ar_rm":["Ibda' min huna.","Wamdi nahwa hadafak.","Ta3allam al-tadawul bi-saraha. Ibda' bi-aman, khutwa bi-khutwa. Insakh Sonic — wal-makhatir wadiha amamak.","ltr","ar-Latn","latin"],"ur_rm":["Yahin se shuru karein.","Apne maqsad ki taraf barhein.","Trading imandari se seekhein. Qadam ba qadam mehfooz tareeqe se shuru karein. Sonic ko copy karein — khatra saaf saamne rakh kar.","ltr","ur-Latn","latin"]},d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},L=g("aimpire.lang"),t=g("aimpire.theme.v2");try{var q=new URLSearchParams(location.search).get("lang");if(q&&H[q])L=q}catch(e){}if(!H[L]){var n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||""];for(var i=0;i<n.length&&!H[L];i++){var x=String(n[i]||"").toLowerCase().replace(/^(nb|nn)(?=-|$)/,"no");for(var c in H){if(x===c||x.indexOf(c+"-")===0){L=c;break}}}}if(!H[L])L="en";if(t)d.setAttribute("data-theme",t);var h=H[L];d.lang=h[4];d.dir=h[3];d.setAttribute("data-font",h[5]);document.getElementById("h1").textContent=h[0];document.getElementById("h2").textContent=h[1];document.getElementById("hsub").textContent=h[2]}catch(e){}})();</script>
 
   <div class="notices" id="notices">
     <div class="notice" id="notice-none" hidden>
@@ -2897,6 +2897,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.1c2f012a07.js" defer></script>
+<script src="app-m.70a8fa3d3a.js" defer></script>
 </body>
 </html>
