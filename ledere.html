@@ -572,9 +572,11 @@ button.row:first-child{border-top:0}
   background:var(--ink);border:1px solid var(--rule);border-inline-start:3px solid var(--gold-metal);border-radius:0 5px 5px 0;
   white-space:pre-line;direction:ltr;unicode-bidi:isolate;text-align:left}
 html[dir="rtl"] .learn .les .fx{border-radius:5px 0 0 5px}
-.learn dd.ex{font-family:var(--mono);font-size:.84rem;color:var(--chalk);
+/* #155: eksempelet er en setning med tall, ikke kode - vanlig skrift, faste tallbredder, og
+   retningen foelger teksten (urdu/arabisk ble stokket i tvunget LTR + maskinskrift). */
+.learn dd.ex{font-family:var(--face);font-size:.92rem;line-height:1.6;font-variant-numeric:tabular-nums;color:var(--chalk);
   background:var(--ink);border:1px solid var(--rule);border-radius:5px;padding:9px 11px;
-  direction:ltr;unicode-bidi:isolate;text-align:start}
+  unicode-bidi:isolate;text-align:start}
 /* Formelen er regelen de kan bruke selv. Den skiller seg fra eksempelet
    med gullkant, saa den leses som «dette er verktoeyet». */
 .learn dd.fx{font-family:var(--mono);font-size:.84rem;color:var(--chalk);
@@ -2917,6 +2919,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.70bbe81042.js" defer></script>
+<script src="app-l.7b1903188b.js" defer></script>
 </body>
 </html>
