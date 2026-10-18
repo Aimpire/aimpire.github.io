@@ -2285,7 +2285,7 @@ html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
    «stengt» i helgen i stedet for aa late som de beveger seg. */
 .tape2{position:relative;z-index:1;overflow:hidden;margin:2px -16px 0;padding:8px 0;border-block:1px solid var(--rule);background:var(--ink);background:color-mix(in srgb,var(--ink) 78%,transparent);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.tape2[hidden]{display:none}
+.tape2[hidden]{display:block;visibility:hidden;min-height:41px}   /* #100: plassen holdes fra start - ellers skyver kursene innholdet ned (CLS) */
 .tape2 .trk{display:flex;width:max-content;gap:0}
 .tape2 .grp{display:flex;gap:26px;padding-inline-end:26px}
 .tk{display:inline-flex;align-items:baseline;gap:7px;font:600 .82rem/1 var(--face);white-space:nowrap;color:var(--chalk-dim);border-radius:6px;padding:3px 5px}
@@ -2296,7 +2296,7 @@ html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
 .nradar{position:relative;z-index:1;margin:0 -16px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none;
   -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;background:color-mix(in srgb,var(--ink) 70%,transparent)}
 .nradar::-webkit-scrollbar{display:none}
-.nradar[hidden]{display:none}
+.nradar[hidden]{display:block;visibility:hidden;height:61px}   /* #100: samme for nyhetsraden */
 .nrtrk{display:flex;align-items:stretch;width:max-content;padding:8px 16px;gap:0}
 .nrlab{scroll-snap-align:start;align-self:center;font:800 .74rem/1 var(--display);color:var(--chalk-dim);padding-inline-end:14px;white-space:nowrap}
 .nri{scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:2px 16px;min-height:44px;
