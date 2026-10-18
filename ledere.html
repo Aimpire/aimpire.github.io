@@ -469,6 +469,8 @@ html[dir="rtl"] .row .go{transform:scaleX(-1)}
 /* #147: boksen er 26 px, trykkflaten 44 px (Apple HIG) - usynlig ramme rundt, ingen layoutendring. */
 .subs .sub{position:relative}.subs .sub::before{content:"";position:absolute;inset:-9px}
 .subs > li > span{flex:1 1 auto}
+.subs > li.subbtn{display:block;padding:4px 0 10px;padding-inline-start:36px}
+.subs > li.subbtn .slab{margin:0}
 .tick[aria-pressed="true"]::after{content:"";position:absolute;top:0;right:0;bottom:0;left:0;inset:0;
   border-radius:50%;box-shadow:0 0 0 3px var(--gold-metal)}
 .tick{position:absolute}
@@ -2835,6 +2837,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.4c17064aab.js" defer></script>
+<script src="app-l.971a6c5a04.js" defer></script>
 </body>
 </html>
