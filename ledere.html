@@ -2470,6 +2470,10 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .vhead .v
 .pcard.pmore .mic{grid-row:1 / span 2}.pcard.pmore .pt{font-size:1.05rem}.pcard.pmore .pd{font-size:.9rem}
 .pcard.pmore::before,.pcard.pmore::after{display:none}
 .plate.feat::before,button.pcard::after{display:none}
+/* Ingen farget sidekant på lister og tips (malspor): hårfin skillelinje i stedet. */
+.places > li{border-inline-start:0 !important;background:none !important;padding:14px 0;border-top:1px solid var(--rule)}
+.places > li:first-child{border-top:0}
+.iqtip{border-inline-start:0;border-top:1px solid var(--rule);border-radius:0;background:none;padding:12px 0 0}
 .goals .gt{font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;font-size:1.35rem;letter-spacing:-.01em;word-spacing:.08em}
 </style>
 </head>
