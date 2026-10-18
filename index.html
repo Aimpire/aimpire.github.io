@@ -1011,6 +1011,8 @@ html[data-page="leaders"] .sec:not(#s-leaders){display:none !important}
 html:not([data-page="leaders"]) #s-leaders{display:none !important}
 /* #150: ledersiden er et skjema - kursbanner og nyhetsrad hjelper ikke der. */
 html[data-page="leaders"] .tape2,html[data-page="leaders"] .nradar{display:none !important}
+/* #155: kurser og nyheter hjelper paa Hjem, Produkter og Verktoey - i Start/Laer/FAQ/IB tar de bare plass over bretten. Bare etter brukerens eget bytte (.navd), saa foerste lasting ikke hopper. */
+.shell.navd:is([data-view="start"],[data-view="learn"],[data-view="faq"],[data-view="ib"]) :is(.tape2,.nradar){display:none !important}
 /* ---------- hovedmeny ---------- */
 .menu{display:grid;gap:10px;padding:6px 0 0}
 /* Hjemskjerm v2 (founder 17.10 19:56) */
@@ -2149,6 +2151,14 @@ html[dir="rtl"] .tbprog b{transform-origin:100% 50%}
 .cchart .bo{fill:#16C784;opacity:.75}.cchart .bn{fill:#EA3943;opacity:.8}
 .cchart .pt{fill:#C21FBF;stroke:var(--ink-raise);stroke-width:2;transform-box:fill-box;transform-origin:center}
 .cax{display:flex;justify-content:space-between;font:600 .72rem/1 var(--face);color:var(--chalk-dim)}
+.cshare{margin:14px 0 4px}
+.cshint{margin:0 0 10px;font-size:.92rem;color:var(--muted,inherit);opacity:.85}
+.cshrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cshb{min-height:48px;border-radius:12px;border:0;font:700 .98rem/1.2 var(--face,inherit);padding:10px 12px;cursor:pointer;
+  background:linear-gradient(90deg,#15D8C4,#1B4FD8 55%,#C21FBF);color:#fff}
+.cshb.cshi{background:transparent;color:inherit;border:1.5px solid var(--rule)}
+.cshb:disabled{opacity:.55}
+.cshok{display:block;min-height:1.3em;margin-top:6px;font-weight:700;color:#1FA97A}
 .cstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
 .cst{display:grid;gap:3px;padding:10px;border-radius:12px;background:var(--ink-deep);border:1px solid var(--rule)}
 .cst span{font-size:.7rem;color:var(--chalk-dim);line-height:1.2}
@@ -2664,6 +2674,7 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
       <div class="cstats" id="cc-stats"></div>
       <small id="cc-months" hidden></small>
     </div>
+    <div class="cshare" id="cc-share"></div>
     <details class="fold chow"><summary id="cc-how"></summary>
     <div class="cbar" id="cc-bar" dir="ltr" aria-hidden="true"><i class="k"></i><i class="fx"></i><i class="f"></i><i class="c"></i></div>
     <dl class="ctab" id="cc-tab"></dl>
@@ -2897,6 +2908,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.70a8fa3d3a.js" defer></script>
+<script src="app-m.148b1371aa.js" defer></script>
 </body>
 </html>
