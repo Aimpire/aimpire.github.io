@@ -2494,6 +2494,30 @@ html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
   .tk .lv::after{animation:plpuls 1.8s ease-in-out infinite}
 }
 @keyframes tkrull{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* #184 Kurser og nyheter i Verktøy (founder 19.10 04:30 «så folk kan gå og se bedre») */
+.mkpx{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.mkk{border:1px solid var(--rule);border-radius:14px;padding:10px 12px;display:grid;gap:4px}
+.mkk b{font:800 .8rem/1 var(--display);letter-spacing:.03em;color:var(--chalk-dim)}
+.mkk .v{font:800 1.25rem/1.1 var(--face);font-variant-numeric:tabular-nums;color:var(--chalk)}
+.mkk .a{font:700 .78rem/1 var(--face)}.mkk.opp .a{color:#16C784}.mkk.ned .a{color:#EA3943}
+.mkk .st{font:700 .7rem/1 var(--display);color:var(--chalk-dim)}
+.mknext{margin:14px 0 0;padding:12px 14px;border-radius:14px;border:1px solid #F0506E;background:rgba(240,80,110,.08);display:grid;gap:3px;text-decoration:none;color:var(--chalk)}
+.mknext small{font:700 .74rem/1 var(--display);color:#F0506E}
+.mknext strong{font:800 1rem/1.3 var(--face)}
+.mknext span{font:600 .82rem/1.3 var(--face);color:var(--chalk-dim)}
+.mkdag{margin:14px 0 4px;font:800 .78rem/1 var(--display);color:var(--chalk-dim)}
+.mkdag::first-letter{text-transform:uppercase}
+.mkrow{display:grid;grid-template-columns:48px 1fr auto;gap:10px;align-items:center;padding:9px 4px;border-top:1px solid var(--rule);text-decoration:none;color:var(--chalk)}
+.mkrow .tid{font:700 .82rem/1 var(--face);font-variant-numeric:tabular-nums;color:var(--chalk-dim)}
+.mkrow .tt{display:grid;gap:3px;min-width:0}
+.mkrow .tt b{font:700 .88rem/1.25 var(--face)}
+.mkrow .tt b i{font-style:normal;font-weight:800;margin-inline-end:6px;unicode-bidi:isolate}
+.mkrow.hi .tt b i{color:#F0506E}.mkrow.mid .tt b i{color:#F5A524}
+.mkrow .tt small{font:600 .74rem/1.3 var(--face);color:var(--chalk-dim)}
+.mkrow .tt small .par{color:var(--gold-soft,#5EE6D6);font-weight:700}
+.mkrow .go{font-size:1.2rem;color:var(--chalk-dim)}
+html[dir="rtl"] .mkrow .go{transform:scaleX(-1)}
+.mkrow.forbi{opacity:.5}
 /* #182 (founder 19.10 04:24 «nyhetene beveger seg ikke lenger som før»): nyhetsraden ruller som kursbaandet.
    Stopper naar man roerer den (og 3 s etter), saa en nyhet er lett aa trykke paa. Redusert bevegelse = staar stille. */
 @media (prefers-reduced-motion:no-preference){
@@ -2936,6 +2960,16 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
     <p class="vnote" id="bn-note"></p>
   </section>
 
+  <section class="sec" id="s-market" data-cat="tools" data-tab="hours" hidden>
+    <h2 id="mkt-t"></h2>
+    <p class="lede" id="mkt-lede"></p>
+    <h3 class="iqh" id="mkt-pt"></h3>
+    <div class="mkpx" id="mkt-px" dir="ltr"></div>
+    <div class="mknext" id="mkt-next" hidden></div>
+    <h3 class="iqh" id="mkt-nt"></h3>
+    <div class="mknews" id="mkt-news"></div>
+    <p class="vnote" id="mkt-src"></p>
+  </section>
   <section class="sec" id="s-sessions" data-cat="tools" data-tab="hours">
     <h2 id="t-sessions"></h2>
     <p class="lede" id="ss-lede"></p>
@@ -3077,6 +3111,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.15c3d44444.js" defer></script>
+<script src="app-m.c4f6ffa058.js" defer></script>
 </body>
 </html>
