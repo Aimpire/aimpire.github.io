@@ -2189,6 +2189,31 @@ html[dir="rtl"] .tbprog b{transform-origin:100% 50%}
 #s-leaders .tool #ld-navn #ld-lenkenavn{width:auto;min-height:0;height:auto;margin:0;border:0;border-radius:0;background:transparent;box-shadow:none;padding:12px 12px 12px 0;line-height:1.2}
 #s-leaders .tool #ld-navn .ldnpre{line-height:1.2}
 #s-leaders .tool .ldlist input[type="checkbox"]{width:22px;height:22px;min-height:0;margin:0;padding:0;flex:0 0 22px}
+/* #172 sosiale medier: lederens egne kanaler som runde ikoner (kort) eller ikon + navn */
+.sosrad{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.sos{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:6px 12px 6px 8px;border-radius:999px;border:1.5px solid var(--rule);color:var(--chalk);text-decoration:none;font:700 .86rem/1 var(--face,inherit)}
+.sos svg{width:20px;height:20px;flex:0 0 20px}
+.sosrad.liten .sos{min-height:34px;width:34px;padding:0;justify-content:center}
+.sosrad.liten .sos svg{width:18px;height:18px}
+.sos-instagram svg{color:#E1306C}.sos-tiktok svg{color:var(--chalk)}.sos-snapchat svg{color:#F7D708}.sos-whatsapp svg{color:#25D366}.sos-telegram svg{color:#2AABEE}
+.spon .sosplass{flex-basis:100%}
+.spon .sosf{display:block;font-size:.86rem;color:var(--chalk-dim);margin-top:4px}
+.sosfelt{margin:10px 0 4px;text-align:start;border:1.5px solid var(--rule);border-radius:14px;padding:0 12px}
+.sosfelt > summary{cursor:pointer;min-height:48px;display:flex;align-items:center;font-weight:700;list-style:none}
+.sosfelt > summary::-webkit-details-marker{display:none}
+.sosfelt > summary::after{content:"+";margin-inline-start:auto;font-size:1.2rem;opacity:.7}
+.sosfelt[open] > summary::after{content:"\2212"}
+.sosinn{display:flex;align-items:center;margin:6px 0;border:1.5px solid var(--rule);border-radius:12px;overflow:hidden}
+.sosinn svg{width:20px;height:20px;flex:0 0 20px;margin-inline-start:12px}
+.sospre{padding:0 2px 0 8px;opacity:.7;font-size:.88rem;white-space:nowrap}
+#s-leaders .tool .sosfelt input.sosin,.sosfelt input.sosin{flex:1;width:auto;min-width:0;min-height:0;height:auto;margin:0;border:0;border-radius:0;background:transparent;box-shadow:none;color:inherit;font:700 1rem/1.2 var(--face,inherit);padding:12px 12px 12px 4px;outline:none}
+.profboks{margin-top:16px;padding-top:14px;border-top:1px solid var(--rule);text-align:start}
+.profboks h4{margin:0 0 4px;font:800 1rem/1.25 var(--display)}
+#s-leaders .tool .profboks input.profmail{width:100%;margin:8px 0}
+.sosfelt .hint,.profboks .hint{word-break:normal;overflow-wrap:break-word}
+.sosinn.feil{border-color:#E8590C}
+.profboks p.vnote:empty{display:none}
+.profboks .copyb{word-break:normal;overflow-wrap:break-word}
 #s-leaders .tool .ldlist #ld-land{width:100%;margin:0}
 .hlgrid{display:grid;gap:10px;margin-top:12px}
 .hlk{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:1px solid var(--rule);border-radius:16px;background:var(--card,var(--ink-deep));position:relative;z-index:1}
@@ -2980,6 +3005,7 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
       <p class="hint" id="ld-hint"></p>
       <div class="ldnavn" id="ld-navn" hidden></div>
       <div class="ldlist" id="ld-list" hidden></div>
+      <div id="ld-sos" hidden></div>
       <p class="vnote" id="ld-why"></p>
       <button id="ld-btn" onclick="makeLink()"></button>
       <div class="out" id="ld-out" hidden></div>
@@ -2993,6 +3019,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.c54ee3e3b2.js" defer></script>
+<script src="app-l.1422608241.js" defer></script>
 </body>
 </html>
