@@ -2167,6 +2167,8 @@ html .tabbar .tbrow .tbb span{font-size:var(--tbfs,.68rem);letter-spacing:-.01em
 .grol{margin:0;padding-inline-start:1.3em;display:grid;gap:6px;line-height:1.5}
 .grout{font:800 1.15rem/1.35 var(--face);margin:12px 0 4px;min-height:1.4em}
 .grout.opp{color:#12A594}.grout.ned{color:#E5484D}
+:root:not([data-theme="dark"]) .grout.opp{color:#0A7466}:root:not([data-theme="dark"]) .grout.ned{color:#C02A2F}   /* kontrast >= 4.5 paa lys bakgrunn (maalt 19.10) */
+:root:not([data-theme="dark"]) .shpath li.ok .e::after{background:#0A7466}
 .grwarn{color:var(--chalk-dim)}
 .grfig{margin:8px 0 4px;max-width:340px}
 .grfig img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--rule)}
