@@ -2146,6 +2146,10 @@ html[dir="rtl"] .tbprog b{transform-origin:100% 50%}
 .mersheet.vis .mspanel{transform:none;opacity:1}
 @media (prefers-reduced-motion:reduce){.mspanel{transition:none}}
 .msgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mstema{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin-bottom:10px;border-radius:14px;border:1px solid var(--rule)}
+.mstema button{appearance:none;border:0;background:transparent;color:inherit;min-height:44px;border-radius:10px;font:700 .9rem/1 var(--face);cursor:pointer}
+.mstema button[aria-pressed="true"]{background:linear-gradient(90deg,#15D8C4,#1B4FD8 55%,#C21FBF);color:#fff}
+.mstema button:focus-visible{outline:2px solid #15D8C4;outline-offset:2px}
 .msb{appearance:none;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:56px;padding:10px 12px;border-radius:14px;
   border:1px solid var(--rule);background:transparent;color:inherit;font:700 .86rem/1.25 var(--face);text-align:start;cursor:pointer}
 .msb:active{transform:scale(.98)}
@@ -3231,6 +3235,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.f6eb7a6239.js" defer></script>
+<script src="app-m.7a31a82a2d.js" defer></script>
 </body>
 </html>
