@@ -2546,8 +2546,26 @@ body.has-tabbar #back{display:none}
 :root:not([data-theme="dark"]) .tbb .dot{box-shadow:0 0 0 2px #0E1326}
 html[data-font="nastaliq"] .tbb span,html[data-font="naskh"] .tbb span{line-height:1.9;overflow:visible;font-size:.74rem;margin-top:-4px}
 html[data-font="nastaliq"] .tbb,html[data-font="naskh"] .tbb{padding-bottom:4px}
-body.has-tabbar{padding-bottom:calc(64px + env(safe-area-inset-bottom))}
-body.has-tabbar #pille{bottom:calc(76px + env(safe-area-inset-bottom))}
+body.has-tabbar{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+body.has-tabbar #pille{bottom:calc(90px + env(safe-area-inset-bottom))}
+/* #178 (founder 19.10 03:45 «menyen nederst … dårlig tech, folk ser den ikke alltid, men ikke gigantisk»):
+   flytende, avrundet linje litt inn fra kantene - skiller seg tydelig fra innholdet uten aa bli stoerre.
+   Aktiv fane faar en myk «pille» bak ikon og tekst, saa man ser hvor man er uten aa lete etter en strek. */
+.tabbar{inset-inline:10px;bottom:max(8px,env(safe-area-inset-bottom));padding:0 4px;border-radius:24px;
+  max-width:560px;margin-inline:auto}
+@media (min-width:600px){.tabbar{inset-inline:0;width:min(560px,calc(100% - 20px))}}
+:root[data-theme="dark"] .tabbar{box-shadow:0 10px 30px -6px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.08)}
+:root:not([data-theme="dark"]) .tabbar{box-shadow:0 10px 30px -8px rgba(10,16,40,.45)}
+.tbb{min-height:58px;padding:8px 2px 7px;gap:3px}
+.tbb[aria-current="page"]::before{display:none}
+.tbb:not(.tbhome)::after{content:"";position:absolute;top:6px;left:50%;width:46px;height:28px;margin-left:-23px;border-radius:14px;
+  background:transparent;transition:background .2s;z-index:-1}
+.tbb{isolation:isolate}
+:root[data-theme="dark"] .tbb[aria-current="page"]:not(.tbhome)::after{background:rgba(27,79,216,.12)}
+:root:not([data-theme="dark"]) .tbb[aria-current="page"]:not(.tbhome)::after{background:rgba(255,255,255,.14)}
+.tbb[aria-current="page"] span{font-weight:800}
+.tbring{margin-top:-18px;width:48px;height:48px}
+.tabbar .tbprog{top:auto;bottom:3px;inset-inline:26px;height:2px;border-radius:2px;overflow:hidden}
 @media (prefers-reduced-motion:no-preference){.tbb svg{transition:transform .15s ease}}
 #pille{position:fixed;left:50%;bottom:max(22px,env(safe-area-inset-bottom));z-index:99;pointer-events:none;
   transform:translate(-50%,24px);opacity:0;padding:10px 18px;border-radius:999px;
@@ -3043,6 +3061,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.e38ca7faf0.js" defer></script>
+<script src="app-m.2ba4874e4b.js" defer></script>
 </body>
 </html>
