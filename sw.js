@@ -50,7 +50,10 @@ self.addEventListener("fetch", function(e){
          en lagret kopi, vises den etter maks 0,8 s, og nettversjonen lagres i bakgrunnen til neste gang.
          Uten lagret kopi ventes det paa nettet som foer. Ledersiden beholder 20 s (skjemaet maa matche Google). */
       return caches.match(fallback).then(function(lagret){
-        const ms = erLedere ? 20000 : (lagret ? 800 : 6000);
+        /* Bare forsiden (/ og /index.html, med eller uten ?l=) faar hurtigvisning. Navnelenker (/asma/) og
+           404.html maa alltid naa nettet - en lagret forside der ville mistet sponsoren (#169). */
+        const erRot = url.pathname === "/" || /\/index\.html$/.test(url.pathname);
+        const ms = erLedere ? 20000 : (lagret && erRot ? 800 : 6000);
         const frist = new Promise(function(res){ setTimeout(function(){ res(null); }, ms); });
         return Promise.race([nett.catch(function(){ return null; }), frist]).then(function(r){
           return r || lagret || caches.match(fallback).then(function(c){ return c || nett; });
