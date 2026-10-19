@@ -2239,6 +2239,11 @@ html[dir="rtl"] .tbprog b{transform-origin:100% 50%}
 .sosfelt .hint,.profboks .hint{word-break:normal;overflow-wrap:break-word}
 .sosinn.feil{border-color:#E8590C}
 .profboks p.vnote:empty{display:none}
+.ldsrc{margin:8px 0 4px;padding:10px 12px;border-radius:12px;border:1.5px solid rgba(229,72,77,.55);background:rgba(229,72,77,.08);color:#FF6B6E;font:600 .9rem/1.45 var(--face);text-align:start}
+:root:not([data-theme="dark"]) .ldsrc{color:#C62828}
+.ldsrcok{display:flex;align-items:center;gap:10px;margin:10px 0 4px;padding:12px;border:1.5px solid var(--rule);border-radius:12px;font:700 .95rem/1.35 var(--face);text-align:start;cursor:pointer}
+.ldsrcok.feil{border-color:#E5484D}
+#s-leaders .tool .ldsrcok input{width:22px;height:22px;flex:0 0 22px;min-height:0;margin:0;padding:0}
 .profboks .copyb{word-break:normal;overflow-wrap:break-word}
 #s-leaders .tool .ldlist #ld-land{width:100%;margin:0}
 .hlgrid{display:grid;gap:10px;margin-top:12px}
@@ -3185,6 +3190,7 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
       <p id="ld-body"></p>
       <a id="ld-portal" class="portalbtn" href="https://aitech.ibportal.io/profile" target="_blank" rel="noopener noreferrer"><span class="pi" aria-hidden="true"></span><span id="ld-portal-t"></span><span class="pa" aria-hidden="true">↗</span></a>
       <input id="ld-in" type="url" autocomplete="off" spellcheck="false" enterkeyhint="next">
+      <p class="ldsrc" id="ld-src" hidden></p>
       <input id="ld-name" type="text" autocomplete="given-name" spellcheck="false" maxlength="24" enterkeyhint="next">
       <input id="ld-mail" type="email" inputmode="email" autocomplete="email" enterkeyhint="next">
       <input id="ld-spons" type="text" autocomplete="off" spellcheck="false" maxlength="24" enterkeyhint="go">
@@ -3192,6 +3198,7 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
       <div class="ldnavn" id="ld-navn" hidden></div>
       <div class="ldlist" id="ld-list" hidden></div>
       <div id="ld-sos" hidden></div>
+      <label class="ldsrcok" id="ld-srcok" hidden><input type="checkbox" id="ld-srcchk"><span></span></label>
       <p class="vnote" id="ld-why"></p>
       <button id="ld-btn" onclick="makeLink()"></button>
       <div class="out" id="ld-out" hidden></div>
@@ -3206,6 +3213,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.12d897cb50.js" defer></script>
+<script src="app-m.ba9834cdd7.js" defer></script>
 </body>
 </html>
