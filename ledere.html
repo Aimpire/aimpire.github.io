@@ -67,8 +67,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- #100: skriftarket blokkerer ikke foerste visning lenger (maalt ~0,8 s paa tregt nett). Teksten vises
      straks i systemskrift og bytter naar skriftene er lastet (display=swap, som foer). -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700;800&display=swap" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700;800&display=swap" crossorigin="anonymous"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap" crossorigin="anonymous"></noscript>
 <noscript><style>html:not(.klar) .shell>*,html:not(.klar) .hero>*{visibility:visible!important}</style></noscript>
 
 <style>
@@ -123,7 +123,15 @@ html[data-font="naskh"]{ --face:"Noto Naskh Arabic","Montserrat",serif }
 /* #154 (founder 18.10 18:17 «vanlig urdu ser ikke bra ut … like clean som roman urdu»): urdu bruker
    arabiskens oppsett (linjehøyder/størrelser), men en ren, moderne urdu-skrift i all tekst. Nastaliq
    er beholdt der den gir identitet: hovedoverskriften og velkomstporten. */
-html[lang="ur"][data-font="naskh"]{ --face:"Noto Sans Arabic","Montserrat",sans-serif }
+html[lang="ur"][data-font="naskh"]{ --face:"Noto Sans Arabic","Noto Sans",sans-serif; --display:"Noto Sans Arabic","Noto Sans",sans-serif }
+/* #191 (founder 19.10 05:08 «urdu-siden … tung å se på, ikke symmetrisk»): ÉN skriftfamilie i hele urdu-siden.
+   Engelske ord midt i urdu («account», «Sonic») settes i Noto Sans, som er tegnet for aa passe med Noto Sans
+   Arabic (samme hoeyde og vekt) - ikke Montserrat, som var bredere og tyngre og ga hoppete linjer.
+   Lettere vekter og strammere linjeavstand; Nastaliq bare i velkomstporten. */
+html[lang="ur"][data-font="naskh"] body{line-height:1.75}
+html[lang="ur"][data-font="naskh"] :is(h1,h2,h3,h4,.t,.vtx b,.pt){font-weight:600;letter-spacing:0}
+html[lang="ur"][data-font="naskh"] :is(b,strong){font-weight:600}
+html[lang="ur"][data-font="naskh"] :is(.slab .t,.tneste,button){letter-spacing:0}
 
 /* «Himmelen over bruksanvisningen» v2 (founder 17.10 05:21: «hvor er alle de visuelle
    effektene … som skulle bevege seg i bakgrunnen»). v1 skiftet bare fargetone 18° på 14 s
@@ -329,7 +337,7 @@ html[data-font="nastaliq"] .hero h1{font-size:clamp(1.6rem,6.4vw,2.5rem);line-he
   .hero h1{animation:rise .55s cubic-bezier(.2,.7,.3,1) backwards}
 }
 @keyframes rise{from{transform:translateY(.35em)}to{transform:none}}
-html[lang="ur"] .hero h1{font-family:"Noto Nastaliq Urdu",serif;font-weight:700;font-size:clamp(1.6rem,6.4vw,2.5rem);line-height:1.6;letter-spacing:0}   /* ingen opasitet 0: usynlig tekst teller ikke som tegnet (LCP) */
+html[lang="ur"] .hero h1{font-family:"Noto Sans Arabic","Noto Sans",sans-serif;font-weight:700;font-size:clamp(1.5rem,6vw,2.3rem);line-height:1.45;letter-spacing:0}   /* ingen opasitet 0: usynlig tekst teller ikke som tegnet (LCP) */
 
 /* Paa korte skjermer (360x640 og mindre, de vanligste billige telefonene) tok
    logo, spraakvalg, overskrift og sponsorvarselet hele foerste skjerm, saa det
@@ -2518,6 +2526,23 @@ html[data-font="nastaliq"] #tour .tkort p{line-height:2.1}
 #tour .tkort,#tour .thopp{pointer-events:auto}
 #tour .ring.lek{animation:none !important;box-shadow:0 0 0 9999px rgba(5,4,12,.62),0 0 0 3px #F5A524,0 0 26px 6px rgba(245,165,36,.45)}
 #tour .tvert{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+#tour .tkort.trisk{border:2px solid #E5484D;box-shadow:0 0 0 4px rgba(229,72,77,.15),0 20px 50px -10px rgba(0,0,0,.6)}
+#tour .tkort.trisk h3{color:#FF5A5F}
+#tour .trl{margin:0 0 14px;padding-inline-start:20px;display:grid;gap:7px}
+#tour .trl li{color:#FF6B6E;font:600 1rem/1.45 var(--face)}
+:root:not([data-theme="dark"]) #tour .trl li,:root:not([data-theme="dark"]) #tour .tkort.trisk h3{color:#C62828}
+#tour .trok{display:flex;align-items:center;gap:10px;padding:12px;border:1.5px dashed rgba(229,72,77,.5);border-radius:12px;font:700 1rem/1.3 var(--face);color:var(--chalk);opacity:.55;cursor:pointer}
+#tour .trok.klar{opacity:1;border-style:solid}
+#tour .trok input{width:24px;height:24px;flex:0 0 24px;accent-color:#15D8C4}
+#tour .trvent{display:block;margin:6px 0 10px;font:600 .82rem/1 var(--face);color:var(--chalk-dim)}
+#tour .tneste:disabled{opacity:.4;cursor:not-allowed}
+.ldtop{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:999px;border:1.5px solid var(--rule);color:var(--chalk);text-decoration:none;font:800 .8rem/1 var(--face);white-space:nowrap;flex:0 0 auto}
+.ldtop svg{width:18px;height:18px}
+.ldtop.meg{border-color:transparent;background:linear-gradient(90deg,#15D8C4,#1B4FD8 55%,#C21FBF);color:#fff}
+@media (max-width:430px){#switch .thm{display:none} .langbtn .lt{max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+@media (min-width:431px){.temabunn{display:none}}
+.temabunn{appearance:none;background:none;border:1px solid var(--rule);border-radius:999px;color:var(--chalk-dim);font:700 .86rem/1 var(--face);padding:10px 16px;cursor:pointer;margin-top:8px}
+@media (max-width:430px){.ldtop{width:40px;padding:0;justify-content:center}.ldtop span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
 #tour .tvert img{width:28px;height:28px;border-radius:50%;box-shadow:0 0 0 2px rgba(21,216,196,.5)}
 #tour .tvert .tdots{margin:0}
 #tour .tdots i.ferdig{background:#15D8C4}
@@ -3176,11 +3201,11 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 
   <p class="risk" id="risk"></p>
   <div class="legal" id="legal"></div>
-  <p class="tourigjen"><button type="button" id="tour-igjen" hidden></button></p>
+  <p class="tourigjen"><button type="button" id="tour-igjen" hidden></button> <button type="button" id="tema-bunn" class="temabunn"></button></p>
   <p class="sig">Aimpire &middot; <span id="yr" dir="ltr"></span></p>
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.ac97f9647e.js" defer></script>
+<script src="app-l.89e42ddb6e.js" defer></script>
 </body>
 </html>
