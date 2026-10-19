@@ -3,6 +3,7 @@
   "short_name": "Aimpire",
   "description": "The guide to opening your account, step by step.",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#08080B",
   "theme_color": "#08080B",
   "lang": "en",

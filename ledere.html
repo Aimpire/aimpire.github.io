@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>/* #215 (hardtest R3): GitHub Pages kan ikke sende X-Frame-Options. Vises siden i en ramme paa en annen side
+   (klikkapning/falsk kopi), bryter den ut - eller forblir usynlig om nettleseren stopper det. Vanlig bruk beroeres ikke. */
+try{ if(window.top !== window.self){ document.documentElement.style.visibility = "hidden"; window.top.location.replace(window.location.href); } }catch(e){}</script>
 <title>Aimpire</title>
 <meta name="description" content="The guide to opening your account, step by step — English, Norsk, हिन्दी, العربية, اردو. Honest about the risks.">
 <meta name="theme-color" content="#08080B">
@@ -312,6 +315,9 @@ html:not(.klar) .shell > :not(.hero):not(.mast),html:not(.klar) .hero > :not(h1)
 .switch .thm{font-size:15px;margin-inline-start:auto;padding:7px 11px;min-width:40px;
   border-style:dashed;color:var(--chalk-dim);flex:0 0 auto}
 .switch .thm:hover{color:var(--chalk);border-color:var(--gold-metal)}
+.switch .thm{display:inline-grid;place-items:center}
+.switch .thm svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+:root[data-theme="dark"] .switch .thm .ti-s,:root:not([data-theme="dark"]) .switch .thm .ti-m{display:none}
 
 /* hero */
 .hero{padding:52px 0 40px}
@@ -445,6 +451,7 @@ html[data-font="deva"] .slab .t,html[data-font="nastaliq"] .slab .t,html[data-fo
 /* ruled link rows */
 /* Rader paa blaa grunn saa ut som tekst. Naa er de et hvitt kort med
    egne rader, tittelen i lenkefargen og et stoerre, tydeligere maal. */
+.rows .sharemenu{padding:0 14px 12px}
 .rows{background:var(--ink-deep);border:1px solid var(--rule);border-radius:8px;
   overflow:hidden}
 /* Tittel OVER undertekst, som en listerad i en app. Side om side presset
@@ -1058,9 +1065,9 @@ html[dir="rtl"] .iqsteps li{padding:14px 58px 14px 14px}
 html[data-page="leaders"] .sec:not(#s-leaders){display:none !important}
 html:not([data-page="leaders"]) #s-leaders{display:none !important}
 /* #150: ledersiden er et skjema - kursbanner og nyhetsrad hjelper ikke der. */
-html[data-page="leaders"] .tape2,html[data-page="leaders"] .nradar{display:none !important}
+html[data-page="leaders"] .tape2,html[data-page="leaders"] .nradar,html[data-page="leaders"] .oekt,html[data-page="leaders"] .tvtape{display:none !important}
 /* #155: kurser og nyheter hjelper paa Hjem, Produkter og Verktoey - i Start/Laer/FAQ/IB tar de bare plass over bretten. Bare etter brukerens eget bytte (.navd), saa foerste lasting ikke hopper. */
-.shell.navd:is([data-view="start"],[data-view="learn"],[data-view="faq"],[data-view="ib"]) :is(.tape2,.nradar){display:none !important}
+.shell.navd:is([data-view="start"],[data-view="learn"],[data-view="faq"],[data-view="ib"]) :is(.tape2,.nradar,.oekt,.tvtape){display:none !important}
 /* ---------- hovedmeny ---------- */
 .menu{display:grid;gap:10px;padding:6px 0 0}
 /* Hjemskjerm v2 (founder 17.10 19:56) */
@@ -1374,6 +1381,7 @@ html[data-font="nastaliq"] .p2p ul li, html[data-font="nastaliq"] .p2p p{line-he
 .rs-pick{margin:6px 0 0;font:700 .92rem/1.3 ui-monospace,monospace;color:var(--gold-soft);
   letter-spacing:.02em;font-variant-numeric:tabular-nums}
 .sec{scroll-margin-top:120px}
+.sec.forst{padding-top:14px}
 /* Soeket hopper rett til svaret: ogsaa enkeltelementer maa ha luft til den
    klebrige topplinja, ellers gjemmer svaret seg bak den (founder 17.10). */
 #guide > li,.qa,.learn > details,.rail > li,[id^="earn-"]{scroll-margin-top:118px}
@@ -1508,6 +1516,10 @@ html[data-font="nastaliq"] .qa summary{font-weight:400}
   background:transparent;color:var(--chalk);font:800 .92rem/1.15 var(--display);cursor:pointer}
 .out .copyb:hover,.out .copyb:focus-visible{border-color:var(--gold);outline:none}
 .out .shareb{border:1.5px solid transparent;background:linear-gradient(var(--ink),var(--ink)) padding-box,var(--grad) border-box}
+/* #233: for lederen er DELING hovedhandlingen - den faar den fylte fargen; bio-knappen blir en rolig kantknapp.
+   Foer var «Kopier lenken til bioen» sidens mest fargerike knapp og «Del» graa. */
+html[data-page="leaders"] .out .shareb{background:var(--grad) !important;color:#08080B !important;border:0 !important;font-weight:800}
+html[data-page="leaders"] .out .bio button{background:transparent !important;color:var(--chalk) !important;border:1.5px solid var(--rule) !important}
 .out .shareb .c::before{content:"\2197";margin-inline-end:6px}
 .sharemenu{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 #spon .sharepill{display:inline-flex !important;align-items:center;gap:5px;min-height:28px;width:auto !important;flex:0 0 auto !important;margin:0 !important;margin-inline-start:auto !important;
@@ -1516,7 +1528,8 @@ html[data-font="nastaliq"] .qa summary{font-weight:400}
 #spon .sharepill .c::before{content:"\2197";margin-inline-end:5px}
 #spon .spmenu{flex-basis:100%;margin:8px 0 4px}
 
-.sharemenu a{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--rule);color:var(--chalk);font:700 .85rem/1 var(--display);text-decoration:none}
+.sharemenu button{appearance:none;background:transparent;cursor:pointer}
+.sharemenu a,.sharemenu button{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--rule);color:var(--chalk);font:700 .85rem/1 var(--display);text-decoration:none}
 
 .joinbtn{display:flex;width:100%;margin-top:12px}
 :root[data-theme="dark"] .out .apply::after,:root[data-theme="dark"] .nextb::after,:root[data-theme="dark"] .joinbtn::after{opacity:.85}
@@ -1638,6 +1651,16 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var
 html[dir="rtl"] .topbar .jump{-webkit-mask-image:linear-gradient(270deg,#000 85%,transparent);mask-image:linear-gradient(270deg,#000 85%,transparent)}
 .topbar .jump button{min-height:36px !important;padding:0 12px !important;font-size:.8rem !important;white-space:nowrap}
 .topbar .minip{flex:0 0 auto}
+/* #206 (founder «verktøy knappen og folder er enda ikke optimal … finne frem til ting fort»): paa 360 px
+   saa man bare 2 av 4 faner (Dagbok og Lenker skjult bak sveip uten tegn). Fortsatt ÉN rad (17.10), men
+   fire like brede faner med ikon over kort tekst - alle synlige uten sveip. */
+.topbar .jump,html[dir="rtl"] .topbar .jump{display:grid !important;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);overflow:visible;gap:4px;
+  -webkit-mask-image:none;mask-image:none}
+.topbar .jump button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;
+  min-height:50px !important;padding:5px 2px !important;border-radius:12px;white-space:normal;text-align:center;font-size:.68rem !important;line-height:1.15;letter-spacing:-.01em}
+.topbar .jump button .ti{margin:0;font-size:1.05rem;line-height:1}
+.topbar .jump button .tl{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto}
+html[data-font="nastaliq"] .topbar .jump button{line-height:1.5;padding-block:3px !important}
 /* #139 (founder 18.10 05:35: «svarte bokser bak noen skrifter som strekker seg helt ut»):
    klebefeltet var en helsvart stripe kant til kant. Naa en svevende, avrundet glass-stripe: delvis
    gjennomsiktig, myk skygge. Blur bare paa telefoner med kraft (.fx) - billige telefoner faar samme
@@ -1993,6 +2016,16 @@ html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
 .psgrid input{width:100%;min-height:48px;padding:10px 14px;border-radius:12px;border:1.5px solid var(--rule-strong, rgba(20,16,28,.18));
   background:var(--paper, #fff);color:var(--jet);font:600 1.05rem var(--face);font-variant-numeric:tabular-nums}
 .psinst{display:flex;flex-wrap:wrap;gap:8px}
+/* #225 Nyhetsvakt: kalkulatoren og journalen sier fra naar en stor nyhet for instrumentet er naer. Samme roede som «Neste store nyhet». */
+.nyvakt-h{grid-column:1/-1}
+.nyvakt-h[hidden]{display:none}
+.nyvakt{display:grid;gap:3px;margin:2px 0 6px;padding:9px 12px;border-radius:12px;border:1px solid rgba(240,80,110,.55);background:rgba(240,80,110,.08);text-decoration:none;color:var(--chalk)}
+.nyvakt b{font:800 .88rem/1.3 var(--face)}
+.nyvakt b i{font-style:normal;color:#F0506E;margin-inline-end:6px;unicode-bidi:isolate}
+.nyvakt span{font:700 .8rem/1.3 var(--face);color:var(--chalk-dim)}
+.nyvakt span .par{color:var(--gold-soft,#5EE6D6)}
+.nyvakt small{font:500 .76rem/1.35 var(--face);color:var(--chalk-dim)}
+:root:not([data-theme="dark"]) .nyvakt b i{color:#B0182F}
 .psinst button{min-height:44px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--rule-strong, rgba(20,16,28,.18));
   background:var(--paper, #fff);color:var(--jet);font:600 .9rem var(--face)}
 .psinst button[aria-pressed="true"]{background:var(--jet);color:var(--jet-on);border-color:var(--jet)}
@@ -2153,6 +2186,9 @@ html[dir="rtl"] .tbprog b{transform-origin:100% 50%}
 .tbrow .tbb{min-width:0;padding-inline:0}
 @media (max-width:340px){.tabbar{inset-inline:6px;padding:0 2px}.tbrow .tbb{padding-inline:0}}
 html .tabbar .tbrow .tbb span{font-size:var(--tbfs,.68rem);letter-spacing:-.01em}
+/* #204: startstoerrelse naer det maalingen ender paa, saa etikettene ikke hopper i foerste bilde (maalingen kommer etter tegningen) */
+@media (max-width:400px){.tbrow{--tbfs:9px}}
+@media (max-width:340px){.tbrow{--tbfs:8.5px}}
 /* #194 Mer-arket: flyter rett over menylinja, samme form. Under linja (z 55) saa «Mer» kan lukke det igjen. */
 .mersheet{position:fixed;inset:0;z-index:54}
 .mersheet[hidden]{display:none}
@@ -2516,6 +2552,45 @@ html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
 .tk b{font:800 .8rem/1 var(--display);color:var(--chalk);letter-spacing:.03em}
 .tk .v{font-variant-numeric:tabular-nums;color:var(--chalk)}
 .tk .a{font-size:.7rem}
+/* #207 (founder 19.10 valgte A): TradingView-kurslinje under vaare fire kurser - indekser og valutapar som ruller.
+   Fast hoeyde (ingen hopp naar den lastes). TradingView-lenken skal staa (vilkaar, K-137). */
+.tvtape{position:relative;margin:0 -16px;height:64px;overflow:hidden;border-bottom:1px solid var(--rule);
+  background:color-mix(in srgb,var(--ink) 70%,transparent)}
+.tvtape[hidden]{display:none}
+/* TradingView ignorerer «compact» (maalt: iframe 84 px + lenke 32 px = 116 px). Skalert til 62 %: 52 px kurser + 12 px lenke.
+   Widgeten setter egne inline-stiler og !important - derfor !important her (hoeyere spesifisitet vinner). */
+.tvtape .tradingview-widget-container{height:64px !important;overflow:hidden}
+.tvtape iframe{transform:scale(.62);transform-origin:0 0;width:161.3% !important;height:84px !important}
+.tvtape .tradingview-widget-copyright{position:absolute !important;left:0;right:0;bottom:0;height:12px !important;padding:0 12px !important;
+  text-align:end !important;font:600 9px/12px var(--face) !important;opacity:.75}
+.tvtape .tradingview-widget-copyright a{color:var(--chalk-dim);text-decoration:none}
+.tvtape .tvlast{appearance:none;width:100%;height:100%;border:0;background:transparent;color:var(--chalk);font:700 .82rem/1 var(--face);cursor:pointer}
+/* #205 (founder «på hjem skjermen må også frem hvilken marked som er aktiv … hvilken session er vi i pr nå»):
+   én linje under kursene. Trykk = markedskortet i Verktøy. Fast hoeyde, saa ingenting hopper naar den fylles. */
+.oekt{display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:10px;row-gap:5px;width:calc(100% + 32px);margin:0 -16px;min-height:54px;padding:8px 16px;box-sizing:border-box;
+  border:0;border-bottom:1px solid var(--rule);background:color-mix(in srgb,var(--ink) 70%,transparent);color:var(--chalk);
+  font:700 .84rem/1.2 var(--face);text-align:start;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.oekt[hidden]{display:grid !important;visibility:hidden}
+.oekt .r1{grid-column:1;display:flex;align-items:center;gap:7px;min-width:0;overflow:hidden;white-space:nowrap;
+  padding:6px 0 6px 8px;margin:-6px 0 -6px -8px}   /* plass til pulsringen innenfor overflow:hidden */
+html[dir="rtl"] .oekt .r1{padding:6px 8px 6px 0;margin:-6px -8px -6px 0}
+.oekt .lab{font:800 .66rem/1 var(--face);letter-spacing:.06em;text-transform:uppercase;color:var(--chalk-dim)}
+.oekt.sover .lab{text-transform:none;letter-spacing:0;font:600 .82rem/1.2 var(--face);white-space:normal}
+.oekt .puls{position:relative;flex:none;width:8px;height:8px;border-radius:50%;background:#15D8C4}
+.oekt .puls::after{content:"";position:absolute;inset:0;border-radius:50%;background:#15D8C4;animation:oektpuls 2.4s ease-out infinite}
+.oekt.sover .puls{background:var(--chalk-dim)}.oekt.sover .puls::after{display:none}
+@keyframes oektpuls{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(2.6);opacity:0}}
+@media (prefers-reduced-motion:reduce){.oekt .puls::after{animation:none;opacity:0}}
+.oekt .okchip{display:inline-flex;align-items:center;gap:5px;padding:3px 8px 3px 6px;border-radius:999px;
+  background:color-mix(in srgb,var(--c) 14%,transparent);border:1px solid color-mix(in srgb,var(--c) 40%,transparent);font:800 .78rem/1 var(--face);color:var(--chalk)}
+.oekt .okchip i{width:6px;height:6px;border-radius:50%;background:var(--c)}
+.oekt .r2{grid-column:1;display:flex;align-items:center;gap:8px;min-width:0}
+.oekt .bar{flex:none;width:52px;height:4px;border-radius:999px;background:color-mix(in srgb,var(--chalk) 12%,transparent);overflow:hidden}
+.oekt .bar b{display:block;height:100%;border-radius:inherit;background:var(--c)}
+html[dir="rtl"] .oekt .bar{transform:scaleX(-1)}
+.oekt .st{min-width:0;overflow:hidden;text-overflow:ellipsis;font:600 .76rem/1.2 var(--face);color:var(--chalk-dim);white-space:nowrap}
+.oekt .go{grid-column:2;grid-row:1 / span 2;font-size:1.3rem;line-height:1;color:var(--chalk-dim)}
+html[dir="rtl"] .oekt .go{transform:scaleX(-1)}
 /* #149 Nyhetsradar: egen rad under kursbanneren, sveipes sidelengs, staar stille. */
 .nradar{position:relative;z-index:1;margin:0 -16px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none;
   -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;background:color-mix(in srgb,var(--ink) 70%,transparent)}
@@ -2558,32 +2633,56 @@ html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
 @keyframes tkrull{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 /* #186 App-guide: dim + lysende ramme rundt det ekte elementet + kort med stor tekst */
 #tour{position:fixed;inset:0;z-index:400;pointer-events:auto}
+/* #208 (founder «når guide er på bør det ikke gå ann å scrolle i bakgrunnen»): turen flytter siden selv (scrollTo virker fortsatt) */
+html.touraapen,html.touraapen body{overflow:hidden;overscroll-behavior:none}
+/* #209 (founder «ha den låst stående pr nå»): en nettside kan ikke laase rotasjonen i nettleseren (bare installert app,
+   via manifest). Liggende telefon (lav hoeyde + touch) faar et «snu telefonen»-ikon uten tekst. iPad/PC beroeres ikke. */
+#snu{display:none}
+@media (orientation:landscape) and (max-height:500px) and (pointer:coarse){
+  #snu{display:flex;position:fixed;inset:0;z-index:2000;align-items:center;justify-content:center;background:#08080B;color:#fff}
+  html{overflow:hidden}
+  #snu svg{animation:snu 2.4s ease-in-out infinite}
+}
+@keyframes snu{0%,20%{transform:rotate(-90deg)}55%,100%{transform:rotate(0)}}
+@media (prefers-reduced-motion:reduce){#snu svg{animation:none}}
 #tour .ring{position:fixed;border-radius:16px;box-shadow:0 0 0 9999px rgba(5,4,12,.74),0 0 0 3px #15D8C4,0 0 24px 4px rgba(21,216,196,.45);transition:all .35s cubic-bezier(.2,.8,.3,1);pointer-events:none}
 #tour .ring.ingen{width:0;height:0;left:50%;top:50%;box-shadow:0 0 0 9999px rgba(5,4,12,.78)}
 #tour .tkort{position:fixed;left:16px;right:16px;max-width:440px;margin:0 auto;background:var(--ink-deep,#14131B);color:var(--chalk);
-  border:1px solid var(--rule);border-radius:20px;padding:20px 20px 16px;box-shadow:0 20px 50px -10px rgba(0,0,0,.6);transition:top .35s cubic-bezier(.2,.8,.3,1),bottom .35s}
+  border:1px solid var(--rule);border-radius:20px;padding:20px 20px 16px;box-shadow:0 20px 50px -10px rgba(0,0,0,.6);transition:top .35s cubic-bezier(.2,.8,.3,1),bottom .35s;
+  max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain}
+/* #203: lav skjerm (Samsung med verktoeylinjer, liggende telefon) - knappene staar alltid synlige nederst i kortet */
+#tour .tbunn{position:sticky;bottom:-16px;margin:0 -20px -16px;padding:10px 20px 16px;background:inherit;border-radius:0 0 20px 20px}
 #tour .tkort h3{margin:0 0 8px;font:800 1.25rem/1.3 var(--display)}
 #tour .tkort p{margin:0 0 16px;font:500 1.05rem/1.55 var(--face);color:var(--chalk)}
 #tour .tnav{display:flex;align-items:center;gap:10px}
 #tour .tnr{font:700 .85rem/1 var(--face);color:var(--chalk-dim);margin-inline-end:auto}
-#tour .tdots{display:flex;gap:5px;margin-bottom:12px}
+#tour .tdots{display:flex;gap:0;margin-bottom:12px;flex-wrap:wrap}
+#tour .tdots button{all:unset;display:flex;align-items:center;padding:9px 2.5px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#tour .tdots button:focus-visible{outline:2px solid #15D8C4;outline-offset:1px;border-radius:4px}
+@media (max-width:350px){#tour .tdots button{padding-inline:1.5px}#tour .tdots i{width:6px;height:6px}#tour .tdots i.on{width:14px}}
 #tour .tdots i{width:7px;height:7px;border-radius:50%;background:var(--rule)}
 #tour .tdots i.on{background:linear-gradient(135deg,#15D8C4,#C21FBF);width:18px;border-radius:4px}
 #tour button{appearance:none;cursor:pointer;font:800 1rem/1 var(--face);border-radius:999px;min-height:48px;padding:0 22px}
 #tour .tneste{border:0;color:#fff;background:linear-gradient(90deg,#15D8C4,#1B4FD8 55%,#C21FBF)}
 #tour .tbak,#tour .thopp{border:1.5px solid var(--rule);background:transparent;color:var(--chalk)}
-#tour .thopp{position:fixed;top:max(14px,env(safe-area-inset-top));inset-inline-end:14px;min-height:40px;font-size:.9rem;background:rgba(20,19,27,.85);color:#fff;border-color:rgba(255,255,255,.3)}
+/* #202 (founder «skip knappen må komme tydligere det var langt unna»): rett under «Neste», hele bredden */
+#tour .thopp{display:block;width:100%;margin-top:10px;min-height:44px;font-size:.95rem}
 html[data-font="nastaliq"] #tour .tkort p{line-height:2.1}
 @media (prefers-reduced-motion:reduce){#tour .ring,#tour .tkort{transition:none}}
 #tour{pointer-events:none}
 #tour .tsperre{position:fixed;inset:0;pointer-events:auto;background:transparent}
-#tour .tkort,#tour .thopp{pointer-events:auto}
+#tour .tkort{pointer-events:auto}
 #tour .ring.lek{animation:none !important;box-shadow:0 0 0 9999px rgba(5,4,12,.62),0 0 0 3px #F5A524,0 0 26px 6px rgba(245,165,36,.45)}
 #tour .tvert{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 #tour .tkort.trisk{border:2px solid #E5484D;box-shadow:0 0 0 4px rgba(229,72,77,.15),0 20px 50px -10px rgba(0,0,0,.6)}
 #tour .tkort.trisk h3{color:#FF5A5F}
 #tour .trl{margin:0 0 14px;padding-inline-start:20px;display:grid;gap:7px}
 #tour .trl li{color:#FF6B6E;font:600 1rem/1.45 var(--face)}
+/* #203: lav skjerm - alle risikopunktene (ogsaa «sjekk ditt eget land», B-030) skal faa plass uten at man maa rulle */
+@media (max-height:700px){#tour .tkort.trisk{padding-top:14px}#tour .tkort.trisk .tvert{margin-bottom:6px}#tour .tkort.trisk h3{font-size:1.1rem;margin-bottom:6px}
+  #tour .trl{gap:4px;margin-bottom:8px}#tour .trl li{font-size:.9rem;line-height:1.35}html[data-font="nastaliq"] #tour .trl li{line-height:1.7}}
+@media (max-height:600px){html[data-font="nastaliq"] #tour .trl li{line-height:1.55}#tour .tkort.trisk h3{margin-bottom:4px}
+  #tour .tkort.trisk .trok{padding-block:6px}#tour .tkort.trisk .tbunn{padding-top:6px}}
 :root:not([data-theme="dark"]) #tour .trl li,:root:not([data-theme="dark"]) #tour .tkort.trisk h3{color:#C62828}
 #tour .trok{display:flex;align-items:center;gap:10px;padding:12px;border:1.5px dashed rgba(229,72,77,.5);border-radius:12px;font:700 1rem/1.3 var(--face);color:var(--chalk);opacity:.55;cursor:pointer}
 #tour .trok.klar{opacity:1;border-style:solid}
@@ -2643,18 +2742,42 @@ html[data-font="nastaliq"] #tour .tkort p{line-height:2.1}
 @media (prefers-reduced-motion:no-preference){ .nrk.inn{animation:nrinn .45s cubic-bezier(.2,.8,.3,1)} }
 @keyframes nrinn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 /* #184 Kurser og nyheter i Verktøy (founder 19.10 04:30 «så folk kan gå og se bedre») */
-.mkpx{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.mkk{border:1px solid var(--rule);border-radius:14px;padding:10px 12px;display:grid;gap:4px}
-.mkk b{font:800 .8rem/1 var(--display);letter-spacing:.03em;color:var(--chalk-dim)}
-.mkk .v{font:800 1.25rem/1.1 var(--face);font-variant-numeric:tabular-nums;color:var(--chalk)}
+/* Founder 19.10 («nyhetsfeeden … tar veldig mye plass»): seksjonen maalt til 858 px paa 360 px bredde, markedsklokka
+   begynte paa 1349 px. Naa: kurskort paa én linje, nyhetene i én sammenleggbar blokk med antall i overskriften. */
+#s-market .lede{margin:0 0 12px;font-size:.92rem}
+#s-market .iqh{margin:12px 0 8px}
+#s-market .vnote{margin-top:10px;padding:8px 12px;font-size:.78rem}
+.mkpx{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.mkk{border:1px solid var(--rule);border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:6px;min-width:0}
+.mkk b{font:800 .72rem/1 var(--display);letter-spacing:.03em;color:var(--chalk-dim)}
+.mkk .v{font:800 .95rem/1.1 var(--face);font-variant-numeric:tabular-nums;color:var(--chalk);margin-inline-start:auto}
 .mkk .a{font:700 .78rem/1 var(--face)}.mkk.opp .a{color:#16C784}.mkk.ned .a{color:#EA3943}
 .mkk .st{font:700 .7rem/1 var(--display);color:var(--chalk-dim)}
-.mknext{margin:14px 0 0;padding:12px 14px;border-radius:14px;border:1px solid #F0506E;background:rgba(240,80,110,.08);display:grid;gap:3px;text-decoration:none;color:var(--chalk)}
+.mknext{margin:10px 0 0;padding:10px 12px;border-radius:14px;border:1px solid #F0506E;background:rgba(240,80,110,.08);display:grid;gap:3px;text-decoration:none;color:var(--chalk)}
 .mknext small{font:700 .74rem/1 var(--display);color:#F0506E}
 .mknext strong{font:800 1rem/1.3 var(--face)}
 .mknext span{font:600 .82rem/1.3 var(--face);color:var(--chalk-dim)}
 .mkdag{margin:14px 0 4px;font:800 .78rem/1 var(--display);color:var(--chalk-dim)}
+/* #206: dagene som sammenleggbare blokker - hele overskriften er trykkflate (44 px), pil viser tilstand */
+.mkdet{border-bottom:1px solid var(--rule)}
+/* #212: bryter for middels nyheter - av = kantlinje, paa = fylt */
+.mkmid{appearance:none;display:inline-flex;align-items:center;gap:6px;min-height:40px;margin:6px 0 4px;padding:0 14px;border-radius:999px;
+  border:1px solid var(--rule);background:transparent;color:var(--chalk-dim);font:700 .82rem/1 var(--face);cursor:pointer}
+.mkmid[aria-pressed="true"]{background:color-mix(in srgb,#F5A524 16%,transparent);border-color:#F5A524;color:var(--chalk)}
+.mkdet>summary.mkdag,.mkalle>summary.mkdag{display:flex;align-items:center;justify-content:space-between;min-height:44px;margin:0;cursor:pointer;list-style:none;font-size:.86rem;color:var(--chalk)}
+.mkdet>summary.mkdag::-webkit-details-marker,.mkalle>summary.mkdag::-webkit-details-marker{display:none}
+.mkdet>summary.mkdag::after,.mkalle>summary.mkdag::after{content:"";width:8px;height:8px;border-inline-end:2px solid var(--chalk-dim);border-bottom:2px solid var(--chalk-dim);transform:rotate(45deg);transition:transform .2s;margin-inline-end:6px}
+.mkdet[open]>summary.mkdag::after,.mkalle[open]>summary.mkdag::after{transform:rotate(-135deg)}
 .mkdag::first-letter{text-transform:uppercase}
+/* Hele ukeslista bak én linje: «Ukens nyheter  🔴 5 · 🟠 15 ›». Lukket som standard, valget huskes. */
+.mkalle{margin-top:10px;border-top:1px solid var(--rule)}
+.mkalle>summary.mkdag{min-height:48px}
+.mkalle>summary.mkdag>h3{margin:0;flex:1;font:800 .95rem/1.2 var(--display);color:var(--chalk)}
+.mktell{font:700 .8rem/1 var(--face);color:var(--chalk-dim);white-space:nowrap}
+.mkalle>summary.mkdag::after{margin-inline-start:12px}   /* tellerens dir="ltr" snur margin-inline, saa avstanden ligger paa pila */
+.mkalle .mknews{padding-bottom:6px}
+.mkalle .mkmid{margin:4px 0 6px}
+.mkalle .mkdet:last-child{border-bottom:0}
 .mkrow{display:grid;grid-template-columns:48px 1fr auto;gap:10px;align-items:center;padding:9px 4px;border-top:1px solid var(--rule);text-decoration:none;color:var(--chalk)}
 .mkrow .tid{font:700 .82rem/1 var(--face);font-variant-numeric:tabular-nums;color:var(--chalk-dim)}
 .mkrow .tt{display:grid;gap:3px;min-width:0}
@@ -2852,7 +2975,37 @@ html[dir="rtl"] .chk{padding:12px 42px 12px 14px !important}
 .psout .warn2{margin:10px 0}
 /* #152 Ledersiden etter søknad: skjemaet borte, status med grønn hake øverst. */
 .tool.ldsendt > :is(#ld-body,#ld-portal,input,label,#ld-hint,#ld-why,#ld-btn){display:none !important}
-html.ldsendt #sh-s-leaders,html.ldsendt .sec#s-leaders .shpath{display:none !important}
+/* #233 (founder 19.10 «ledersiden er ikke optimal og rart satt opp»): feltene som kom til senere (advarsel, lenkenavn,
+   lederliste, sosiale medier) ble staaende igjen etter innsending - saa en godkjent leder saa et halvt skjema med
+   roed advarsel over sin egen lenke. Etter innsending er skjemaet borte; det som teller staar oeverst. */
+.tool.ldsendt > :is(#ld-src,#ld-srcok,#ld-navn,#ld-list,#ld-sos){display:none !important}
+/* Godkjent: stegstripen er ferdig og trengs ikke. Venter: stripen vises med tre haker og siste steg som venter
+   (maalgradient-effekten: tre av fire gjort foeles naert, og man skjoenner hva som gjenstaar). */
+html.ldok #sh-s-leaders,html.ldok .sec#s-leaders .shpath{display:none !important}
+html.ldvent #sh-s-leaders .shpath li.naa .e{border-color:#F5A524;animation:ldpuls 1.8s ease-in-out infinite}
+html.ldvent #sh-s-leaders .shpath li.naa .t{color:var(--chalk)}
+@keyframes ldpuls{0%,100%{box-shadow:0 0 0 0 rgba(245,165,36,.45)}50%{box-shadow:0 0 0 7px rgba(245,165,36,0)}}
+@media (prefers-reduced-motion:reduce){html.ldvent #sh-s-leaders .shpath li.naa .e{animation:none}}
+/* «Søke med en annen Partner-lenke?» brukes nesten aldri - liten tekstlenke, ikke sidens mest fargerike knapp */
+.tool .ldagain.ldagain{width:auto;max-width:none;display:inline-block;min-height:0;background:none;color:var(--chalk-dim);box-shadow:none;
+  padding:10px 0;margin:18px 0 0;font:600 .86rem/1.3 var(--face);text-decoration:underline;text-underline-offset:3px;border-radius:0;filter:none}
+.tool .ldagain.ldagain::after{display:none}
+.tool .ldagain.ldagain:hover{color:var(--chalk)}
+/* Forhaandsvisning av lenken mens man skriver: slik ser de man inviterer den */
+.ldprev{display:grid;gap:4px;margin:10px 0 2px;padding:12px 14px;border-radius:14px;border:1px dashed color-mix(in srgb,#15D8C4 55%,transparent);
+  background:color-mix(in srgb,#15D8C4 6%,transparent)}
+.ldprev[hidden]{display:none}
+.ldprev .lpw{display:flex;align-items:center;gap:8px;font:800 1rem/1.25 var(--face)}
+.ldprev .lpw i{font-style:normal;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#12A594;color:#fff;font-size:.75rem;flex:0 0 22px}
+.ldprev .lpu{font:600 .82rem/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--chalk-dim);word-break:break-all}
+/* PC/Mac (#232): skjema/lenke til venstre, verktøykassen ved siden av - begge synlige uten aa rulle forbi hverandre */
+@media (min-width:1024px){
+  html[data-page="leaders"] #s-leaders{display:grid;grid-template-columns:minmax(0,1fr) 320px;column-gap:40px;align-items:start}
+  html[data-page="leaders"] #s-leaders > :not(.tool):not(.ldkit){grid-column:1 / -1}
+  html[data-page="leaders"] #s-leaders > .ldkit{grid-column:2;position:sticky;top:24px;margin-top:0}   /* ingen fast rad: legger seg i samme rad som skjemaet/lenken uansett tilstand */
+  html[data-page="leaders"] #s-leaders > .tool{grid-column:1}
+  html[data-page="leaders"] #s-leaders .ldkit .kg{grid-template-columns:1fr}
+}
 .ldstatus{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:16px;margin:4px 0 14px;
   background:color-mix(in srgb,#16C784 10%,transparent)}
 .ldstatus .ldv{flex:0 0 40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#16C784;color:#06120C;font:900 1.2rem/1 var(--display)}
@@ -2874,9 +3027,88 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .goals .g
 html[data-font="nastaliq"] .goals .gl{line-height:1.85;font-size:.8rem}
 html[data-font="naskh"] .goals .gl{line-height:1.6}
 html[data-font="nastaliq"] .goals .goal{min-height:96px}
+
+
+/* #236 Sveipepil (moenster fra Androids tilbake-gest): kommer inn fra kanten og foelger fingeren, fylles ved grensen. */
+.svpil{position:fixed;top:50%;z-index:58;display:flex;align-items:center;gap:8px;height:44px;padding:0 14px;border-radius:999px;pointer-events:none;
+  background:var(--ink-raise,var(--ink));color:var(--chalk);border:1px solid var(--rule);box-shadow:0 8px 24px -8px rgba(0,0,0,.45);
+  opacity:calc(.35 + var(--f,0) * .65);transition:background .15s,color .15s,border-color .15s}
+.svpil[hidden]{display:none}
+.svpil[data-side="h"]{right:0;transform:translate(calc(100% - var(--f,0) * (100% + 12px)),-50%)}
+.svpil[data-side="v"]{left:0;transform:translate(calc(-100% + var(--f,0) * (100% + 12px)),-50%);flex-direction:row-reverse}
+.svpil .svr{width:10px;height:10px;border-top:2.5px solid currentColor;border-right:2.5px solid currentColor;transform:rotate(45deg)}
+.svpil[data-side="v"] .svr{transform:rotate(-135deg)}
+.svpil .svn{font:800 .9rem/1 var(--face);white-space:nowrap}
+.svpil.tilb .svn{display:none}
+.svpil.klar{background:var(--grad);color:#08080B;border-color:transparent}
+@media (prefers-reduced-motion:reduce){.svpil{transition:none}}
+/* ===== #232 PC og Mac (founder 19.10 23:59 «gjør den også pc og Mac vennlig … best for forbrukeren»).
+   Maalt 1440x900: 736 px mobilkolonne midt paa skjermen, flytende mobilmeny nederst over innholdet.
+   Fra 1024 px blir SAMME meny en fast sidemeny til venstre (moenster folk kjenner fra nettbank/Discord/Notion):
+   alltid synlig, dekker ingenting, og innholdet faar plass. Ingen ny logikk - knappene og rekkefoelgen er de samme,
+   saa mobil og guiden (som peker paa menyen) er uendret. RTL: sidemenyen staar til hoeyre (logiske egenskaper). */
+@media (min-width:1024px){
+  body.has-tabbar{padding-bottom:0;padding-inline-start:236px}
+  body.has-tabbar #pille{bottom:28px}
+  .tabbar{inset-inline-start:0 !important;inset-inline-end:auto !important;top:0;bottom:0 !important;width:236px !important;max-width:none;
+    margin:0 !important;border-radius:0;padding:22px 14px 18px;border-top:0;border-inline-end:1px solid var(--rule);
+    display:flex;flex-direction:column;box-shadow:none !important}
+  .tabbar .tbprog{display:none}
+  .tbrow{display:flex !important;flex-direction:column;gap:3px;max-width:none;margin:0;flex:1;min-height:0}
+  .tbrow .tbb{flex-direction:row;justify-content:flex-start;align-items:center;gap:13px;width:100%;min-height:46px;
+    padding:10px 14px !important;border-radius:12px;text-align:start;transition:background .15s,color .15s}
+  html .tabbar .tbrow .tbb span{font-size:.95rem;letter-spacing:0;font-weight:650}
+  .tbb span{overflow:visible}
+  .tbb svg{flex:0 0 22px;width:22px;height:22px}
+  .tbb:not(.tbhome)::after{display:none}
+  .tbb.tbhome{order:-1;margin-bottom:14px;padding-inline:10px !important}
+  .tbb.tbhome span{font:800 1.05rem/1 var(--display) !important;letter-spacing:.06em !important}
+  .tbring{margin-top:0;width:40px;height:40px;flex:0 0 40px}
+  #tb-more{margin-top:auto}
+  .tbb .dot{top:12px;inset-inline-start:30px}
+  /* Paa mobil er menyen bevisst i MOTSATT farge (#146) for aa skille seg fra innholdet. En sidemeny skal derimot
+     hvile i samme flate som siden - ellers blir den en lysende vegg ved siden av moerkt innhold. */
+  :root[data-theme="dark"] .tabbar.tabbar,:root:not([data-theme="dark"]) .tabbar.tabbar{background:var(--ink-deep);border-inline-end:1px solid var(--rule)}
+  :root[data-theme="dark"] .tbrow .tbb.tbb,:root:not([data-theme="dark"]) .tbrow .tbb.tbb{color:var(--chalk-dim)}
+  :root[data-theme="dark"] .tbrow .tbb.tbb[aria-current="page"],:root:not([data-theme="dark"]) .tbrow .tbb.tbb[aria-current="page"]{color:var(--chalk)}
+  :root[data-theme="dark"] .tbrow .tbb[aria-current="page"]:not(.tbhome){background:rgba(27,79,216,.18)}
+  :root:not([data-theme="dark"]) .tbrow .tbb[aria-current="page"]:not(.tbhome){background:rgba(27,79,216,.09)}
+  :root[data-theme="dark"] .tbb .dot,:root:not([data-theme="dark"]) .tbb .dot{box-shadow:0 0 0 2px var(--ink-deep)}
+  /* Mer-arket aapnes ved siden av knappen, ikke midt nederst */
+  .mspanel{inset-inline-start:248px;inset-inline-end:auto;bottom:18px;width:400px;max-width:calc(100vw - 280px);margin:0}
+  .msbg{background:rgba(6,10,24,.25)}
+  /* Innholdet: bredere kolonne, men brødtekst holder lesbar linjelengde (--measure) */
+  .shell{max-width:62rem}
+  .goals .ggrid{grid-template-columns:repeat(6,1fr)}
+  .mlist.mgrid{grid-template-columns:repeat(3,1fr)}
+  .vhead{margin-top:6px}
+}
+.sbtn .sbl{display:none}
+.sbtn .kbd{display:none}
+@media (min-width:1024px){
+  .sbtn{width:auto !important;min-width:260px;justify-content:flex-start;gap:10px;padding:0 10px 0 14px !important;border-radius:999px !important}
+  .sbtn .sbl{display:inline;flex:1;text-align:start;font:600 .88rem/1 var(--face);color:var(--chalk-dim);white-space:nowrap}
+  .sbtn svg{flex:0 0 18px;width:18px;height:18px}
+}
+@media (min-width:1024px) and (hover:hover) and (pointer:fine){
+  .sbtn .kbd{display:inline-block}
+  .tbrow .tbb.tbb:not([aria-current="page"]):hover{background:color-mix(in srgb,var(--chalk) 6%,transparent);color:var(--chalk)}
+  .tbb.tbhome:hover .tbring{box-shadow:0 0 0 2px rgba(21,216,196,.6)}
+}
+/* Mus og styreflate (alle bredder): tydelig hover og fokus. Paa touch skjer ingenting (hover:hover). */
+@media (hover:hover) and (pointer:fine){
+  .mlist.mgrid > li > a,.mlist.mgrid > li > button,.goals .ggrid > *,.places > li > a,.mkrow,.mkk,.okchip,.oekt{transition:transform .15s ease,border-color .15s ease,background .15s ease}
+  .mlist.mgrid > li > a:hover,.mlist.mgrid > li > button:hover,.goals .ggrid > *:hover{transform:translateY(-2px)}
+  .mkrow:hover,.places > li > a:hover{background:color-mix(in srgb,var(--chalk) 5%,transparent)}
+  .oekt:hover{border-color:color-mix(in srgb,var(--chalk) 22%,transparent)}
+}
+:focus-visible{outline:2px solid #15D8C4;outline-offset:2px}
+.kbd{display:inline-block;min-width:1.5em;padding:1px 6px;border:1px solid var(--rule);border-bottom-width:2px;border-radius:6px;font:700 .72rem/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--chalk-dim);text-align:center}
+@media not all and (hover:hover) and (pointer:fine){.kbd{display:none}}
 </style>
 </head>
 <body>
+<div id="snu" aria-hidden="true"><svg viewBox="0 0 64 64" width="72" height="72"><rect x="22" y="8" width="20" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="32" cy="38" r="1.8" fill="currentColor"/><path d="M12 40a20 20 0 0 0 16 16" fill="none" stroke="#15D8C4" stroke-width="3" stroke-linecap="round"/><path d="M24 52l4 4-5 2" fill="none" stroke="#15D8C4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 <script>/* Telefoner med kraft faar den loepende pulsen i bakgrunnen (se .nt .cm). */
 try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory || navigator.deviceMemory >= 4)) document.documentElement.classList.add("fx"); }catch(e){}</script>
 <div class="sky" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i><div class="neon" aria-hidden="true"><div class="nt nt1"><svg viewBox="0 0 1600 100" preserveAspectRatio="none"><defs><linearGradient id="ng1" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1600" y2="0"><stop offset="0.000" stop-color="#15D8C4"/><stop offset="0.125" stop-color="#1B4FD8"/><stop offset="0.250" stop-color="#C21FBF"/><stop offset="0.375" stop-color="#FBE16B"/><stop offset="0.500" stop-color="#15D8C4"/><stop offset="0.625" stop-color="#1B4FD8"/><stop offset="0.750" stop-color="#C21FBF"/><stop offset="0.875" stop-color="#FBE16B"/><stop offset="1" stop-color="#15D8C4"/></linearGradient><linearGradient id="ng2" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1600" y2="0"><stop offset="0.000" stop-color="#C21FBF"/><stop offset="0.125" stop-color="#FBE16B"/><stop offset="0.250" stop-color="#15D8C4"/><stop offset="0.375" stop-color="#1B4FD8"/><stop offset="0.500" stop-color="#C21FBF"/><stop offset="0.625" stop-color="#FBE16B"/><stop offset="0.750" stop-color="#15D8C4"/><stop offset="0.875" stop-color="#1B4FD8"/><stop offset="1" stop-color="#C21FBF"/></linearGradient></defs><g class="nc"><line class="cu" x1="10.0" x2="10.0" y1="47.6" y2="61.0"/><rect class="cu" x="6.0" y="50.5" width="8.0" height="6.3"/><line class="cd" x1="30.0" x2="30.0" y1="47.1" y2="57.7"/><rect class="cd" x="26.0" y="50.5" width="8.0" height="2.7"/><line class="cu" x1="50.0" x2="50.0" y1="41.1" y2="55.5"/><rect class="cu" x="46.0" y="45.6" width="8.0" height="7.7"/><line class="cd" x1="70.0" x2="70.0" y1="43.5" y2="51.6"/><rect class="cd" x="66.0" y="45.6" width="8.0" height="1.2"/><line class="cu" x1="90.0" x2="90.0" y1="40.8" y2="49.1"/><rect class="cu" x="86.0" y="43.8" width="8.0" height="2.4"/><line class="cu" x1="110.0" x2="110.0" y1="29.9" y2="47.7"/><rect class="cu" x="106.0" y="35.8" width="8.0" height="8.0"/><line class="cd" x1="130.0" x2="130.0" y1="30.5" y2="39.9"/><rect class="cd" x="126.0" y="35.8" width="8.0" height="1.2"/><line class="cu" x1="150.0" x2="150.0" y1="23.1" y2="38.6"/><rect class="cu" x="146.0" y="27.6" width="8.0" height="8.3"/><line class="cu" x1="170.0" x2="170.0" y1="21.9" y2="33.1"/><rect class="cu" x="166.0" y="26.5" width="8.0" height="1.2"/><line class="cu" x1="190.0" x2="190.0" y1="21.9" y2="31.4"/><rect class="cu" x="186.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="210.0" x2="210.0" y1="21.3" y2="28.3"/><rect class="cd" x="206.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="230.0" x2="230.0" y1="21.0" y2="30.4"/><rect class="cd" x="226.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="250.0" x2="250.0" y1="22.8" y2="34.0"/><rect class="cd" x="246.0" y="26.0" width="8.0" height="5.9"/><line class="cu" x1="270.0" x2="270.0" y1="20.5" y2="35.8"/><rect class="cu" x="266.0" y="26.0" width="8.0" height="5.9"/><line class="cd" x1="290.0" x2="290.0" y1="21.1" y2="31.5"/><rect class="cd" x="286.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="310.0" x2="310.0" y1="21.1" y2="34.0"/><rect class="cd" x="306.0" y="26.0" width="8.0" height="2.3"/><line class="cd" x1="330.0" x2="330.0" y1="24.7" y2="41.6"/><rect class="cd" x="326.0" y="28.3" width="8.0" height="8.1"/><line class="cd" x1="350.0" x2="350.0" y1="32.6" y2="43.5"/><rect class="cd" x="346.0" y="36.4" width="8.0" height="1.4"/><line class="cu" x1="370.0" x2="370.0" y1="30.4" y2="40.1"/><rect class="cu" x="366.0" y="35.9" width="8.0" height="1.9"/><line class="cd" x1="390.0" x2="390.0" y1="33.3" y2="47.3"/><rect class="cd" x="386.0" y="35.9" width="8.0" height="8.6"/><line class="cu" x1="410.0" x2="410.0" y1="30.4" y2="48.2"/><rect class="cu" x="406.0" y="36.3" width="8.0" height="8.2"/><line class="cd" x1="430.0" x2="430.0" y1="31.8" y2="45.9"/><rect class="cd" x="426.0" y="36.3" width="8.0" height="6.5"/><line class="cu" x1="450.0" x2="450.0" y1="34.9" y2="46.3"/><rect class="cu" x="446.0" y="39.0" width="8.0" height="3.8"/><line class="cu" x1="470.0" x2="470.0" y1="29.2" y2="43.3"/><rect class="cu" x="466.0" y="32.6" width="8.0" height="6.4"/><line class="cu" x1="490.0" x2="490.0" y1="21.7" y2="38.2"/><rect class="cu" x="486.0" y="26.0" width="8.0" height="6.6"/><line class="cd" x1="510.0" x2="510.0" y1="21.3" y2="31.7"/><rect class="cd" x="506.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="530.0" x2="530.0" y1="20.6" y2="37.7"/><rect class="cd" x="526.0" y="26.0" width="8.0" height="5.7"/><line class="cu" x1="550.0" x2="550.0" y1="21.3" y2="34.3"/><rect class="cu" x="546.0" y="26.0" width="8.0" height="5.7"/><line class="cd" x1="570.0" x2="570.0" y1="20.6" y2="33.3"/><rect class="cd" x="566.0" y="26.0" width="8.0" height="1.5"/><line class="cd" x1="590.0" x2="590.0" y1="21.9" y2="34.2"/><rect class="cd" x="586.0" y="27.5" width="8.0" height="2.5"/><line class="cu" x1="610.0" x2="610.0" y1="22.8" y2="32.8"/><rect class="cu" x="606.0" y="27.7" width="8.0" height="2.3"/><line class="cd" x1="630.0" x2="630.0" y1="22.3" y2="32.8"/><rect class="cd" x="626.0" y="27.7" width="8.0" height="1.2"/><line class="cd" x1="650.0" x2="650.0" y1="25.4" y2="32.1"/><rect class="cd" x="646.0" y="28.5" width="8.0" height="1.3"/><line class="cd" x1="670.0" x2="670.0" y1="24.4" y2="39.7"/><rect class="cd" x="666.0" y="29.9" width="8.0" height="3.9"/><line class="cd" x1="690.0" x2="690.0" y1="31.4" y2="42.8"/><rect class="cd" x="686.0" y="33.7" width="8.0" height="3.9"/><line class="cd" x1="710.0" x2="710.0" y1="33.9" y2="45.6"/><rect class="cd" x="706.0" y="37.6" width="8.0" height="5.5"/><line class="cd" x1="730.0" x2="730.0" y1="39.9" y2="51.1"/><rect class="cd" x="726.0" y="43.0" width="8.0" height="3.0"/><line class="cd" x1="750.0" x2="750.0" y1="40.5" y2="51.3"/><rect class="cd" x="746.0" y="46.0" width="8.0" height="3.1"/><line class="cd" x1="770.0" x2="770.0" y1="44.7" y2="55.3"/><rect class="cd" x="766.0" y="49.1" width="8.0" height="4.0"/><line class="cd" x1="790.0" x2="790.0" y1="48.3" y2="60.2"/><rect class="cd" x="786.0" y="53.2" width="8.0" height="3.7"/><line class="cu" x1="810.0" x2="810.0" y1="45.0" y2="62.8"/><rect class="cu" x="806.0" y="50.5" width="8.0" height="6.3"/><line class="cd" x1="830.0" x2="830.0" y1="46.5" y2="59.3"/><rect class="cd" x="826.0" y="50.5" width="8.0" height="2.7"/><line class="cu" x1="850.0" x2="850.0" y1="42.3" y2="55.6"/><rect class="cu" x="846.0" y="45.6" width="8.0" height="7.7"/><line class="cd" x1="870.0" x2="870.0" y1="41.2" y2="48.3"/><rect class="cd" x="866.0" y="45.6" width="8.0" height="1.2"/><line class="cu" x1="890.0" x2="890.0" y1="41.0" y2="49.8"/><rect class="cu" x="886.0" y="43.8" width="8.0" height="2.4"/><line class="cu" x1="910.0" x2="910.0" y1="31.4" y2="46.4"/><rect class="cu" x="906.0" y="35.8" width="8.0" height="8.0"/><line class="cd" x1="930.0" x2="930.0" y1="33.7" y2="41.4"/><rect class="cd" x="926.0" y="35.8" width="8.0" height="1.2"/><line class="cu" x1="950.0" x2="950.0" y1="24.4" y2="41.8"/><rect class="cu" x="946.0" y="27.6" width="8.0" height="8.3"/><line class="cu" x1="970.0" x2="970.0" y1="20.9" y2="31.2"/><rect class="cu" x="966.0" y="26.5" width="8.0" height="1.2"/><line class="cu" x1="990.0" x2="990.0" y1="22.2" y2="30.5"/><rect class="cu" x="986.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="1010.0" x2="1010.0" y1="21.4" y2="30.4"/><rect class="cd" x="1006.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="1030.0" x2="1030.0" y1="21.8" y2="30.5"/><rect class="cd" x="1026.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="1050.0" x2="1050.0" y1="20.2" y2="35.9"/><rect class="cd" x="1046.0" y="26.0" width="8.0" height="5.9"/><line class="cu" x1="1070.0" x2="1070.0" y1="22.3" y2="36.8"/><rect class="cu" x="1066.0" y="26.0" width="8.0" height="5.9"/><line class="cd" x1="1090.0" x2="1090.0" y1="23.0" y2="29.2"/><rect class="cd" x="1086.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="1110.0" x2="1110.0" y1="20.1" y2="32.4"/><rect class="cd" x="1106.0" y="26.0" width="8.0" height="2.3"/><line class="cd" x1="1130.0" x2="1130.0" y1="24.1" y2="38.4"/><rect class="cd" x="1126.0" y="28.3" width="8.0" height="8.1"/><line class="cd" x1="1150.0" x2="1150.0" y1="32.7" y2="42.1"/><rect class="cd" x="1146.0" y="36.4" width="8.0" height="1.4"/><line class="cu" x1="1170.0" x2="1170.0" y1="33.8" y2="42.2"/><rect class="cu" x="1166.0" y="35.9" width="8.0" height="1.9"/><line class="cd" x1="1190.0" x2="1190.0" y1="31.4" y2="46.7"/><rect class="cd" x="1186.0" y="35.9" width="8.0" height="8.6"/><line class="cu" x1="1210.0" x2="1210.0" y1="31.8" y2="48.3"/><rect class="cu" x="1206.0" y="36.3" width="8.0" height="8.2"/><line class="cd" x1="1230.0" x2="1230.0" y1="31.6" y2="46.2"/><rect class="cd" x="1226.0" y="36.3" width="8.0" height="6.5"/><line class="cu" x1="1250.0" x2="1250.0" y1="34.1" y2="47.7"/><rect class="cu" x="1246.0" y="39.0" width="8.0" height="3.8"/><line class="cu" x1="1270.0" x2="1270.0" y1="30.5" y2="41.2"/><rect class="cu" x="1266.0" y="32.6" width="8.0" height="6.4"/><line class="cu" x1="1290.0" x2="1290.0" y1="21.3" y2="38.4"/><rect class="cu" x="1286.0" y="26.0" width="8.0" height="6.6"/><line class="cd" x1="1310.0" x2="1310.0" y1="23.0" y2="29.8"/><rect class="cd" x="1306.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="1330.0" x2="1330.0" y1="21.6" y2="35.0"/><rect class="cd" x="1326.0" y="26.0" width="8.0" height="5.7"/><line class="cu" x1="1350.0" x2="1350.0" y1="22.5" y2="34.9"/><rect class="cu" x="1346.0" y="26.0" width="8.0" height="5.7"/><line class="cd" x1="1370.0" x2="1370.0" y1="22.5" y2="31.9"/><rect class="cd" x="1366.0" y="26.0" width="8.0" height="1.5"/><line class="cd" x1="1390.0" x2="1390.0" y1="24.3" y2="33.5"/><rect class="cd" x="1386.0" y="27.5" width="8.0" height="2.5"/><line class="cu" x1="1410.0" x2="1410.0" y1="22.6" y2="32.1"/><rect class="cu" x="1406.0" y="27.7" width="8.0" height="2.3"/><line class="cd" x1="1430.0" x2="1430.0" y1="23.4" y2="33.5"/><rect class="cd" x="1426.0" y="27.7" width="8.0" height="1.2"/><line class="cd" x1="1450.0" x2="1450.0" y1="25.3" y2="32.7"/><rect class="cd" x="1446.0" y="28.5" width="8.0" height="1.3"/><line class="cd" x1="1470.0" x2="1470.0" y1="24.6" y2="36.7"/><rect class="cd" x="1466.0" y="29.9" width="8.0" height="3.9"/><line class="cd" x1="1490.0" x2="1490.0" y1="31.0" y2="41.3"/><rect class="cd" x="1486.0" y="33.7" width="8.0" height="3.9"/><line class="cd" x1="1510.0" x2="1510.0" y1="32.8" y2="45.4"/><rect class="cd" x="1506.0" y="37.6" width="8.0" height="5.5"/><line class="cd" x1="1530.0" x2="1530.0" y1="39.8" y2="49.3"/><rect class="cd" x="1526.0" y="43.0" width="8.0" height="3.0"/><line class="cd" x1="1550.0" x2="1550.0" y1="40.7" y2="52.9"/><rect class="cd" x="1546.0" y="46.0" width="8.0" height="3.1"/><line class="cd" x1="1570.0" x2="1570.0" y1="43.7" y2="55.8"/><rect class="cd" x="1566.0" y="49.1" width="8.0" height="4.0"/><line class="cd" x1="1590.0" x2="1590.0" y1="49.8" y2="61.4"/><rect class="cd" x="1586.0" y="53.2" width="8.0" height="3.7"/></g><path class="g3" stroke="url(#ng1)" d="M0.0 46.8 C10.0 46.8 10.0 40.5 20.0 40.5 C30.0 40.5 30.0 43.3 40.0 43.3 C50.0 43.3 50.0 35.6 60.0 35.6 C70.0 35.6 70.0 36.2 80.0 36.2 C90.0 36.2 90.0 33.8 100.0 33.8 C110.0 33.8 110.0 25.8 120.0 25.8 C130.0 25.8 130.0 26.0 140.0 26.0 C150.0 26.0 150.0 17.6 160.0 17.6 C170.0 17.6 170.0 16.5 180.0 16.5 C190.0 16.5 190.0 16.0 200.0 16.0 C210.0 16.0 210.0 16.0 220.0 16.0 C230.0 16.0 230.0 16.0 240.0 16.0 C250.0 16.0 250.0 21.9 260.0 21.9 C270.0 21.9 270.0 16.0 280.0 16.0 C290.0 16.0 290.0 16.0 300.0 16.0 C310.0 16.0 310.0 18.3 320.0 18.3 C330.0 18.3 330.0 26.4 340.0 26.4 C350.0 26.4 350.0 27.7 360.0 27.7 C370.0 27.7 370.0 25.9 380.0 25.9 C390.0 25.9 390.0 34.5 400.0 34.5 C410.0 34.5 410.0 26.3 420.0 26.3 C430.0 26.3 430.0 32.7 440.0 32.7 C450.0 32.7 450.0 29.0 460.0 29.0 C470.0 29.0 470.0 22.6 480.0 22.6 C490.0 22.6 490.0 16.0 500.0 16.0 C510.0 16.0 510.0 16.0 520.0 16.0 C530.0 16.0 530.0 21.7 540.0 21.7 C550.0 21.7 550.0 16.0 560.0 16.0 C570.0 16.0 570.0 17.5 580.0 17.5 C590.0 17.5 590.0 20.0 600.0 20.0 C610.0 20.0 610.0 17.7 620.0 17.7 C630.0 17.7 630.0 18.5 640.0 18.5 C650.0 18.5 650.0 19.9 660.0 19.9 C670.0 19.9 670.0 23.7 680.0 23.7 C690.0 23.7 690.0 27.6 700.0 27.6 C710.0 27.6 710.0 33.0 720.0 33.0 C730.0 33.0 730.0 36.0 740.0 36.0 C750.0 36.0 750.0 39.1 760.0 39.1 C770.0 39.1 770.0 43.2 780.0 43.2 C790.0 43.2 790.0 46.8 800.0 46.8 L800.0 46.8 C810.0 46.8 810.0 40.5 820.0 40.5 C830.0 40.5 830.0 43.3 840.0 43.3 C850.0 43.3 850.0 35.6 860.0 35.6 C870.0 35.6 870.0 36.2 880.0 36.2 C890.0 36.2 890.0 33.8 900.0 33.8 C910.0 33.8 910.0 25.8 920.0 25.8 C930.0 25.8 930.0 26.0 940.0 26.0 C950.0 26.0 950.0 17.6 960.0 17.6 C970.0 17.6 970.0 16.5 980.0 16.5 C990.0 16.5 990.0 16.0 1000.0 16.0 C1010.0 16.0 1010.0 16.0 1020.0 16.0 C1030.0 16.0 1030.0 16.0 1040.0 16.0 C1050.0 16.0 1050.0 21.9 1060.0 21.9 C1070.0 21.9 1070.0 16.0 1080.0 16.0 C1090.0 16.0 1090.0 16.0 1100.0 16.0 C1110.0 16.0 1110.0 18.3 1120.0 18.3 C1130.0 18.3 1130.0 26.4 1140.0 26.4 C1150.0 26.4 1150.0 27.7 1160.0 27.7 C1170.0 27.7 1170.0 25.9 1180.0 25.9 C1190.0 25.9 1190.0 34.5 1200.0 34.5 C1210.0 34.5 1210.0 26.3 1220.0 26.3 C1230.0 26.3 1230.0 32.7 1240.0 32.7 C1250.0 32.7 1250.0 29.0 1260.0 29.0 C1270.0 29.0 1270.0 22.6 1280.0 22.6 C1290.0 22.6 1290.0 16.0 1300.0 16.0 C1310.0 16.0 1310.0 16.0 1320.0 16.0 C1330.0 16.0 1330.0 21.7 1340.0 21.7 C1350.0 21.7 1350.0 16.0 1360.0 16.0 C1370.0 16.0 1370.0 17.5 1380.0 17.5 C1390.0 17.5 1390.0 20.0 1400.0 20.0 C1410.0 20.0 1410.0 17.7 1420.0 17.7 C1430.0 17.7 1430.0 18.5 1440.0 18.5 C1450.0 18.5 1450.0 19.9 1460.0 19.9 C1470.0 19.9 1470.0 23.7 1480.0 23.7 C1490.0 23.7 1490.0 27.6 1500.0 27.6 C1510.0 27.6 1510.0 33.0 1520.0 33.0 C1530.0 33.0 1530.0 36.0 1540.0 36.0 C1550.0 36.0 1550.0 39.1 1560.0 39.1 C1570.0 39.1 1570.0 43.2 1580.0 43.2 C1590.0 43.2 1590.0 46.8 1600.0 46.8"/><path class="g2" stroke="url(#ng1)" d="M0.0 46.8 C10.0 46.8 10.0 40.5 20.0 40.5 C30.0 40.5 30.0 43.3 40.0 43.3 C50.0 43.3 50.0 35.6 60.0 35.6 C70.0 35.6 70.0 36.2 80.0 36.2 C90.0 36.2 90.0 33.8 100.0 33.8 C110.0 33.8 110.0 25.8 120.0 25.8 C130.0 25.8 130.0 26.0 140.0 26.0 C150.0 26.0 150.0 17.6 160.0 17.6 C170.0 17.6 170.0 16.5 180.0 16.5 C190.0 16.5 190.0 16.0 200.0 16.0 C210.0 16.0 210.0 16.0 220.0 16.0 C230.0 16.0 230.0 16.0 240.0 16.0 C250.0 16.0 250.0 21.9 260.0 21.9 C270.0 21.9 270.0 16.0 280.0 16.0 C290.0 16.0 290.0 16.0 300.0 16.0 C310.0 16.0 310.0 18.3 320.0 18.3 C330.0 18.3 330.0 26.4 340.0 26.4 C350.0 26.4 350.0 27.7 360.0 27.7 C370.0 27.7 370.0 25.9 380.0 25.9 C390.0 25.9 390.0 34.5 400.0 34.5 C410.0 34.5 410.0 26.3 420.0 26.3 C430.0 26.3 430.0 32.7 440.0 32.7 C450.0 32.7 450.0 29.0 460.0 29.0 C470.0 29.0 470.0 22.6 480.0 22.6 C490.0 22.6 490.0 16.0 500.0 16.0 C510.0 16.0 510.0 16.0 520.0 16.0 C530.0 16.0 530.0 21.7 540.0 21.7 C550.0 21.7 550.0 16.0 560.0 16.0 C570.0 16.0 570.0 17.5 580.0 17.5 C590.0 17.5 590.0 20.0 600.0 20.0 C610.0 20.0 610.0 17.7 620.0 17.7 C630.0 17.7 630.0 18.5 640.0 18.5 C650.0 18.5 650.0 19.9 660.0 19.9 C670.0 19.9 670.0 23.7 680.0 23.7 C690.0 23.7 690.0 27.6 700.0 27.6 C710.0 27.6 710.0 33.0 720.0 33.0 C730.0 33.0 730.0 36.0 740.0 36.0 C750.0 36.0 750.0 39.1 760.0 39.1 C770.0 39.1 770.0 43.2 780.0 43.2 C790.0 43.2 790.0 46.8 800.0 46.8 L800.0 46.8 C810.0 46.8 810.0 40.5 820.0 40.5 C830.0 40.5 830.0 43.3 840.0 43.3 C850.0 43.3 850.0 35.6 860.0 35.6 C870.0 35.6 870.0 36.2 880.0 36.2 C890.0 36.2 890.0 33.8 900.0 33.8 C910.0 33.8 910.0 25.8 920.0 25.8 C930.0 25.8 930.0 26.0 940.0 26.0 C950.0 26.0 950.0 17.6 960.0 17.6 C970.0 17.6 970.0 16.5 980.0 16.5 C990.0 16.5 990.0 16.0 1000.0 16.0 C1010.0 16.0 1010.0 16.0 1020.0 16.0 C1030.0 16.0 1030.0 16.0 1040.0 16.0 C1050.0 16.0 1050.0 21.9 1060.0 21.9 C1070.0 21.9 1070.0 16.0 1080.0 16.0 C1090.0 16.0 1090.0 16.0 1100.0 16.0 C1110.0 16.0 1110.0 18.3 1120.0 18.3 C1130.0 18.3 1130.0 26.4 1140.0 26.4 C1150.0 26.4 1150.0 27.7 1160.0 27.7 C1170.0 27.7 1170.0 25.9 1180.0 25.9 C1190.0 25.9 1190.0 34.5 1200.0 34.5 C1210.0 34.5 1210.0 26.3 1220.0 26.3 C1230.0 26.3 1230.0 32.7 1240.0 32.7 C1250.0 32.7 1250.0 29.0 1260.0 29.0 C1270.0 29.0 1270.0 22.6 1280.0 22.6 C1290.0 22.6 1290.0 16.0 1300.0 16.0 C1310.0 16.0 1310.0 16.0 1320.0 16.0 C1330.0 16.0 1330.0 21.7 1340.0 21.7 C1350.0 21.7 1350.0 16.0 1360.0 16.0 C1370.0 16.0 1370.0 17.5 1380.0 17.5 C1390.0 17.5 1390.0 20.0 1400.0 20.0 C1410.0 20.0 1410.0 17.7 1420.0 17.7 C1430.0 17.7 1430.0 18.5 1440.0 18.5 C1450.0 18.5 1450.0 19.9 1460.0 19.9 C1470.0 19.9 1470.0 23.7 1480.0 23.7 C1490.0 23.7 1490.0 27.6 1500.0 27.6 C1510.0 27.6 1510.0 33.0 1520.0 33.0 C1530.0 33.0 1530.0 36.0 1540.0 36.0 C1550.0 36.0 1550.0 39.1 1560.0 39.1 C1570.0 39.1 1570.0 43.2 1580.0 43.2 C1590.0 43.2 1590.0 46.8 1600.0 46.8"/><path class="g1" stroke="url(#ng1)" d="M0.0 46.8 C10.0 46.8 10.0 40.5 20.0 40.5 C30.0 40.5 30.0 43.3 40.0 43.3 C50.0 43.3 50.0 35.6 60.0 35.6 C70.0 35.6 70.0 36.2 80.0 36.2 C90.0 36.2 90.0 33.8 100.0 33.8 C110.0 33.8 110.0 25.8 120.0 25.8 C130.0 25.8 130.0 26.0 140.0 26.0 C150.0 26.0 150.0 17.6 160.0 17.6 C170.0 17.6 170.0 16.5 180.0 16.5 C190.0 16.5 190.0 16.0 200.0 16.0 C210.0 16.0 210.0 16.0 220.0 16.0 C230.0 16.0 230.0 16.0 240.0 16.0 C250.0 16.0 250.0 21.9 260.0 21.9 C270.0 21.9 270.0 16.0 280.0 16.0 C290.0 16.0 290.0 16.0 300.0 16.0 C310.0 16.0 310.0 18.3 320.0 18.3 C330.0 18.3 330.0 26.4 340.0 26.4 C350.0 26.4 350.0 27.7 360.0 27.7 C370.0 27.7 370.0 25.9 380.0 25.9 C390.0 25.9 390.0 34.5 400.0 34.5 C410.0 34.5 410.0 26.3 420.0 26.3 C430.0 26.3 430.0 32.7 440.0 32.7 C450.0 32.7 450.0 29.0 460.0 29.0 C470.0 29.0 470.0 22.6 480.0 22.6 C490.0 22.6 490.0 16.0 500.0 16.0 C510.0 16.0 510.0 16.0 520.0 16.0 C530.0 16.0 530.0 21.7 540.0 21.7 C550.0 21.7 550.0 16.0 560.0 16.0 C570.0 16.0 570.0 17.5 580.0 17.5 C590.0 17.5 590.0 20.0 600.0 20.0 C610.0 20.0 610.0 17.7 620.0 17.7 C630.0 17.7 630.0 18.5 640.0 18.5 C650.0 18.5 650.0 19.9 660.0 19.9 C670.0 19.9 670.0 23.7 680.0 23.7 C690.0 23.7 690.0 27.6 700.0 27.6 C710.0 27.6 710.0 33.0 720.0 33.0 C730.0 33.0 730.0 36.0 740.0 36.0 C750.0 36.0 750.0 39.1 760.0 39.1 C770.0 39.1 770.0 43.2 780.0 43.2 C790.0 43.2 790.0 46.8 800.0 46.8 L800.0 46.8 C810.0 46.8 810.0 40.5 820.0 40.5 C830.0 40.5 830.0 43.3 840.0 43.3 C850.0 43.3 850.0 35.6 860.0 35.6 C870.0 35.6 870.0 36.2 880.0 36.2 C890.0 36.2 890.0 33.8 900.0 33.8 C910.0 33.8 910.0 25.8 920.0 25.8 C930.0 25.8 930.0 26.0 940.0 26.0 C950.0 26.0 950.0 17.6 960.0 17.6 C970.0 17.6 970.0 16.5 980.0 16.5 C990.0 16.5 990.0 16.0 1000.0 16.0 C1010.0 16.0 1010.0 16.0 1020.0 16.0 C1030.0 16.0 1030.0 16.0 1040.0 16.0 C1050.0 16.0 1050.0 21.9 1060.0 21.9 C1070.0 21.9 1070.0 16.0 1080.0 16.0 C1090.0 16.0 1090.0 16.0 1100.0 16.0 C1110.0 16.0 1110.0 18.3 1120.0 18.3 C1130.0 18.3 1130.0 26.4 1140.0 26.4 C1150.0 26.4 1150.0 27.7 1160.0 27.7 C1170.0 27.7 1170.0 25.9 1180.0 25.9 C1190.0 25.9 1190.0 34.5 1200.0 34.5 C1210.0 34.5 1210.0 26.3 1220.0 26.3 C1230.0 26.3 1230.0 32.7 1240.0 32.7 C1250.0 32.7 1250.0 29.0 1260.0 29.0 C1270.0 29.0 1270.0 22.6 1280.0 22.6 C1290.0 22.6 1290.0 16.0 1300.0 16.0 C1310.0 16.0 1310.0 16.0 1320.0 16.0 C1330.0 16.0 1330.0 21.7 1340.0 21.7 C1350.0 21.7 1350.0 16.0 1360.0 16.0 C1370.0 16.0 1370.0 17.5 1380.0 17.5 C1390.0 17.5 1390.0 20.0 1400.0 20.0 C1410.0 20.0 1410.0 17.7 1420.0 17.7 C1430.0 17.7 1430.0 18.5 1440.0 18.5 C1450.0 18.5 1450.0 19.9 1460.0 19.9 C1470.0 19.9 1470.0 23.7 1480.0 23.7 C1490.0 23.7 1490.0 27.6 1500.0 27.6 C1510.0 27.6 1510.0 33.0 1520.0 33.0 C1530.0 33.0 1530.0 36.0 1540.0 36.0 C1550.0 36.0 1550.0 39.1 1560.0 39.1 C1570.0 39.1 1570.0 43.2 1580.0 43.2 C1590.0 43.2 1590.0 46.8 1600.0 46.8"/><path class="cm" pathLength="100" d="M0.0 46.8 C10.0 46.8 10.0 40.5 20.0 40.5 C30.0 40.5 30.0 43.3 40.0 43.3 C50.0 43.3 50.0 35.6 60.0 35.6 C70.0 35.6 70.0 36.2 80.0 36.2 C90.0 36.2 90.0 33.8 100.0 33.8 C110.0 33.8 110.0 25.8 120.0 25.8 C130.0 25.8 130.0 26.0 140.0 26.0 C150.0 26.0 150.0 17.6 160.0 17.6 C170.0 17.6 170.0 16.5 180.0 16.5 C190.0 16.5 190.0 16.0 200.0 16.0 C210.0 16.0 210.0 16.0 220.0 16.0 C230.0 16.0 230.0 16.0 240.0 16.0 C250.0 16.0 250.0 21.9 260.0 21.9 C270.0 21.9 270.0 16.0 280.0 16.0 C290.0 16.0 290.0 16.0 300.0 16.0 C310.0 16.0 310.0 18.3 320.0 18.3 C330.0 18.3 330.0 26.4 340.0 26.4 C350.0 26.4 350.0 27.7 360.0 27.7 C370.0 27.7 370.0 25.9 380.0 25.9 C390.0 25.9 390.0 34.5 400.0 34.5 C410.0 34.5 410.0 26.3 420.0 26.3 C430.0 26.3 430.0 32.7 440.0 32.7 C450.0 32.7 450.0 29.0 460.0 29.0 C470.0 29.0 470.0 22.6 480.0 22.6 C490.0 22.6 490.0 16.0 500.0 16.0 C510.0 16.0 510.0 16.0 520.0 16.0 C530.0 16.0 530.0 21.7 540.0 21.7 C550.0 21.7 550.0 16.0 560.0 16.0 C570.0 16.0 570.0 17.5 580.0 17.5 C590.0 17.5 590.0 20.0 600.0 20.0 C610.0 20.0 610.0 17.7 620.0 17.7 C630.0 17.7 630.0 18.5 640.0 18.5 C650.0 18.5 650.0 19.9 660.0 19.9 C670.0 19.9 670.0 23.7 680.0 23.7 C690.0 23.7 690.0 27.6 700.0 27.6 C710.0 27.6 710.0 33.0 720.0 33.0 C730.0 33.0 730.0 36.0 740.0 36.0 C750.0 36.0 750.0 39.1 760.0 39.1 C770.0 39.1 770.0 43.2 780.0 43.2 C790.0 43.2 790.0 46.8 800.0 46.8 L800.0 46.8 C810.0 46.8 810.0 40.5 820.0 40.5 C830.0 40.5 830.0 43.3 840.0 43.3 C850.0 43.3 850.0 35.6 860.0 35.6 C870.0 35.6 870.0 36.2 880.0 36.2 C890.0 36.2 890.0 33.8 900.0 33.8 C910.0 33.8 910.0 25.8 920.0 25.8 C930.0 25.8 930.0 26.0 940.0 26.0 C950.0 26.0 950.0 17.6 960.0 17.6 C970.0 17.6 970.0 16.5 980.0 16.5 C990.0 16.5 990.0 16.0 1000.0 16.0 C1010.0 16.0 1010.0 16.0 1020.0 16.0 C1030.0 16.0 1030.0 16.0 1040.0 16.0 C1050.0 16.0 1050.0 21.9 1060.0 21.9 C1070.0 21.9 1070.0 16.0 1080.0 16.0 C1090.0 16.0 1090.0 16.0 1100.0 16.0 C1110.0 16.0 1110.0 18.3 1120.0 18.3 C1130.0 18.3 1130.0 26.4 1140.0 26.4 C1150.0 26.4 1150.0 27.7 1160.0 27.7 C1170.0 27.7 1170.0 25.9 1180.0 25.9 C1190.0 25.9 1190.0 34.5 1200.0 34.5 C1210.0 34.5 1210.0 26.3 1220.0 26.3 C1230.0 26.3 1230.0 32.7 1240.0 32.7 C1250.0 32.7 1250.0 29.0 1260.0 29.0 C1270.0 29.0 1270.0 22.6 1280.0 22.6 C1290.0 22.6 1290.0 16.0 1300.0 16.0 C1310.0 16.0 1310.0 16.0 1320.0 16.0 C1330.0 16.0 1330.0 21.7 1340.0 21.7 C1350.0 21.7 1350.0 16.0 1360.0 16.0 C1370.0 16.0 1370.0 17.5 1380.0 17.5 C1390.0 17.5 1390.0 20.0 1400.0 20.0 C1410.0 20.0 1410.0 17.7 1420.0 17.7 C1430.0 17.7 1430.0 18.5 1440.0 18.5 C1450.0 18.5 1450.0 19.9 1460.0 19.9 C1470.0 19.9 1470.0 23.7 1480.0 23.7 C1490.0 23.7 1490.0 27.6 1500.0 27.6 C1510.0 27.6 1510.0 33.0 1520.0 33.0 C1530.0 33.0 1530.0 36.0 1540.0 36.0 C1550.0 36.0 1550.0 39.1 1560.0 39.1 C1570.0 39.1 1570.0 43.2 1580.0 43.2 C1590.0 43.2 1590.0 46.8 1600.0 46.8"/></svg></div><div class="nt nt2"><svg viewBox="0 0 1600 100" preserveAspectRatio="none"><path class="g3" stroke="url(#ng2)" d="M0.0 52.5 C12.5 52.5 12.5 56.5 25.0 56.5 C37.5 56.5 37.5 56.8 50.0 56.8 C62.5 56.8 62.5 56.9 75.0 56.9 C87.5 56.9 87.5 55.4 100.0 55.4 C112.5 55.4 112.5 62.4 125.0 62.4 C137.5 62.4 137.5 59.4 150.0 59.4 C162.5 59.4 162.5 54.5 175.0 54.5 C187.5 54.5 187.5 51.2 200.0 51.2 C212.5 51.2 212.5 47.8 225.0 47.8 C237.5 47.8 237.5 45.4 250.0 45.4 C262.5 45.4 262.5 42.1 275.0 42.1 C287.5 42.1 287.5 36.6 300.0 36.6 C312.5 36.6 312.5 34.2 325.0 34.2 C337.5 34.2 337.5 31.6 350.0 31.6 C362.5 31.6 362.5 32.5 375.0 32.5 C387.5 32.5 387.5 28.4 400.0 28.4 C412.5 28.4 412.5 22.3 425.0 22.3 C437.5 22.3 437.5 18.2 450.0 18.2 C462.5 18.2 462.5 18.8 475.0 18.8 C487.5 18.8 487.5 17.2 500.0 17.2 C512.5 17.2 512.5 20.5 525.0 20.5 C537.5 20.5 537.5 24.7 550.0 24.7 C562.5 24.7 562.5 23.5 575.0 23.5 C587.5 23.5 587.5 17.9 600.0 17.9 C612.5 17.9 612.5 25.0 625.0 25.0 C637.5 25.0 637.5 31.6 650.0 31.6 C662.5 31.6 662.5 34.2 675.0 34.2 C687.5 34.2 687.5 39.0 700.0 39.0 C712.5 39.0 712.5 41.3 725.0 41.3 C737.5 41.3 737.5 46.5 750.0 46.5 C762.5 46.5 762.5 50.1 775.0 50.1 C787.5 50.1 787.5 52.5 800.0 52.5 L800.0 52.5 C812.5 52.5 812.5 56.5 825.0 56.5 C837.5 56.5 837.5 56.8 850.0 56.8 C862.5 56.8 862.5 56.9 875.0 56.9 C887.5 56.9 887.5 55.4 900.0 55.4 C912.5 55.4 912.5 62.4 925.0 62.4 C937.5 62.4 937.5 59.4 950.0 59.4 C962.5 59.4 962.5 54.5 975.0 54.5 C987.5 54.5 987.5 51.2 1000.0 51.2 C1012.5 51.2 1012.5 47.8 1025.0 47.8 C1037.5 47.8 1037.5 45.4 1050.0 45.4 C1062.5 45.4 1062.5 42.1 1075.0 42.1 C1087.5 42.1 1087.5 36.6 1100.0 36.6 C1112.5 36.6 1112.5 34.2 1125.0 34.2 C1137.5 34.2 1137.5 31.6 1150.0 31.6 C1162.5 31.6 1162.5 32.5 1175.0 32.5 C1187.5 32.5 1187.5 28.4 1200.0 28.4 C1212.5 28.4 1212.5 22.3 1225.0 22.3 C1237.5 22.3 1237.5 18.2 1250.0 18.2 C1262.5 18.2 1262.5 18.8 1275.0 18.8 C1287.5 18.8 1287.5 17.2 1300.0 17.2 C1312.5 17.2 1312.5 20.5 1325.0 20.5 C1337.5 20.5 1337.5 24.7 1350.0 24.7 C1362.5 24.7 1362.5 23.5 1375.0 23.5 C1387.5 23.5 1387.5 17.9 1400.0 17.9 C1412.5 17.9 1412.5 25.0 1425.0 25.0 C1437.5 25.0 1437.5 31.6 1450.0 31.6 C1462.5 31.6 1462.5 34.2 1475.0 34.2 C1487.5 34.2 1487.5 39.0 1500.0 39.0 C1512.5 39.0 1512.5 41.3 1525.0 41.3 C1537.5 41.3 1537.5 46.5 1550.0 46.5 C1562.5 46.5 1562.5 50.1 1575.0 50.1 C1587.5 50.1 1587.5 52.5 1600.0 52.5"/><path class="g2" stroke="url(#ng2)" d="M0.0 52.5 C12.5 52.5 12.5 56.5 25.0 56.5 C37.5 56.5 37.5 56.8 50.0 56.8 C62.5 56.8 62.5 56.9 75.0 56.9 C87.5 56.9 87.5 55.4 100.0 55.4 C112.5 55.4 112.5 62.4 125.0 62.4 C137.5 62.4 137.5 59.4 150.0 59.4 C162.5 59.4 162.5 54.5 175.0 54.5 C187.5 54.5 187.5 51.2 200.0 51.2 C212.5 51.2 212.5 47.8 225.0 47.8 C237.5 47.8 237.5 45.4 250.0 45.4 C262.5 45.4 262.5 42.1 275.0 42.1 C287.5 42.1 287.5 36.6 300.0 36.6 C312.5 36.6 312.5 34.2 325.0 34.2 C337.5 34.2 337.5 31.6 350.0 31.6 C362.5 31.6 362.5 32.5 375.0 32.5 C387.5 32.5 387.5 28.4 400.0 28.4 C412.5 28.4 412.5 22.3 425.0 22.3 C437.5 22.3 437.5 18.2 450.0 18.2 C462.5 18.2 462.5 18.8 475.0 18.8 C487.5 18.8 487.5 17.2 500.0 17.2 C512.5 17.2 512.5 20.5 525.0 20.5 C537.5 20.5 537.5 24.7 550.0 24.7 C562.5 24.7 562.5 23.5 575.0 23.5 C587.5 23.5 587.5 17.9 600.0 17.9 C612.5 17.9 612.5 25.0 625.0 25.0 C637.5 25.0 637.5 31.6 650.0 31.6 C662.5 31.6 662.5 34.2 675.0 34.2 C687.5 34.2 687.5 39.0 700.0 39.0 C712.5 39.0 712.5 41.3 725.0 41.3 C737.5 41.3 737.5 46.5 750.0 46.5 C762.5 46.5 762.5 50.1 775.0 50.1 C787.5 50.1 787.5 52.5 800.0 52.5 L800.0 52.5 C812.5 52.5 812.5 56.5 825.0 56.5 C837.5 56.5 837.5 56.8 850.0 56.8 C862.5 56.8 862.5 56.9 875.0 56.9 C887.5 56.9 887.5 55.4 900.0 55.4 C912.5 55.4 912.5 62.4 925.0 62.4 C937.5 62.4 937.5 59.4 950.0 59.4 C962.5 59.4 962.5 54.5 975.0 54.5 C987.5 54.5 987.5 51.2 1000.0 51.2 C1012.5 51.2 1012.5 47.8 1025.0 47.8 C1037.5 47.8 1037.5 45.4 1050.0 45.4 C1062.5 45.4 1062.5 42.1 1075.0 42.1 C1087.5 42.1 1087.5 36.6 1100.0 36.6 C1112.5 36.6 1112.5 34.2 1125.0 34.2 C1137.5 34.2 1137.5 31.6 1150.0 31.6 C1162.5 31.6 1162.5 32.5 1175.0 32.5 C1187.5 32.5 1187.5 28.4 1200.0 28.4 C1212.5 28.4 1212.5 22.3 1225.0 22.3 C1237.5 22.3 1237.5 18.2 1250.0 18.2 C1262.5 18.2 1262.5 18.8 1275.0 18.8 C1287.5 18.8 1287.5 17.2 1300.0 17.2 C1312.5 17.2 1312.5 20.5 1325.0 20.5 C1337.5 20.5 1337.5 24.7 1350.0 24.7 C1362.5 24.7 1362.5 23.5 1375.0 23.5 C1387.5 23.5 1387.5 17.9 1400.0 17.9 C1412.5 17.9 1412.5 25.0 1425.0 25.0 C1437.5 25.0 1437.5 31.6 1450.0 31.6 C1462.5 31.6 1462.5 34.2 1475.0 34.2 C1487.5 34.2 1487.5 39.0 1500.0 39.0 C1512.5 39.0 1512.5 41.3 1525.0 41.3 C1537.5 41.3 1537.5 46.5 1550.0 46.5 C1562.5 46.5 1562.5 50.1 1575.0 50.1 C1587.5 50.1 1587.5 52.5 1600.0 52.5"/><path class="g1" stroke="url(#ng2)" d="M0.0 52.5 C12.5 52.5 12.5 56.5 25.0 56.5 C37.5 56.5 37.5 56.8 50.0 56.8 C62.5 56.8 62.5 56.9 75.0 56.9 C87.5 56.9 87.5 55.4 100.0 55.4 C112.5 55.4 112.5 62.4 125.0 62.4 C137.5 62.4 137.5 59.4 150.0 59.4 C162.5 59.4 162.5 54.5 175.0 54.5 C187.5 54.5 187.5 51.2 200.0 51.2 C212.5 51.2 212.5 47.8 225.0 47.8 C237.5 47.8 237.5 45.4 250.0 45.4 C262.5 45.4 262.5 42.1 275.0 42.1 C287.5 42.1 287.5 36.6 300.0 36.6 C312.5 36.6 312.5 34.2 325.0 34.2 C337.5 34.2 337.5 31.6 350.0 31.6 C362.5 31.6 362.5 32.5 375.0 32.5 C387.5 32.5 387.5 28.4 400.0 28.4 C412.5 28.4 412.5 22.3 425.0 22.3 C437.5 22.3 437.5 18.2 450.0 18.2 C462.5 18.2 462.5 18.8 475.0 18.8 C487.5 18.8 487.5 17.2 500.0 17.2 C512.5 17.2 512.5 20.5 525.0 20.5 C537.5 20.5 537.5 24.7 550.0 24.7 C562.5 24.7 562.5 23.5 575.0 23.5 C587.5 23.5 587.5 17.9 600.0 17.9 C612.5 17.9 612.5 25.0 625.0 25.0 C637.5 25.0 637.5 31.6 650.0 31.6 C662.5 31.6 662.5 34.2 675.0 34.2 C687.5 34.2 687.5 39.0 700.0 39.0 C712.5 39.0 712.5 41.3 725.0 41.3 C737.5 41.3 737.5 46.5 750.0 46.5 C762.5 46.5 762.5 50.1 775.0 50.1 C787.5 50.1 787.5 52.5 800.0 52.5 L800.0 52.5 C812.5 52.5 812.5 56.5 825.0 56.5 C837.5 56.5 837.5 56.8 850.0 56.8 C862.5 56.8 862.5 56.9 875.0 56.9 C887.5 56.9 887.5 55.4 900.0 55.4 C912.5 55.4 912.5 62.4 925.0 62.4 C937.5 62.4 937.5 59.4 950.0 59.4 C962.5 59.4 962.5 54.5 975.0 54.5 C987.5 54.5 987.5 51.2 1000.0 51.2 C1012.5 51.2 1012.5 47.8 1025.0 47.8 C1037.5 47.8 1037.5 45.4 1050.0 45.4 C1062.5 45.4 1062.5 42.1 1075.0 42.1 C1087.5 42.1 1087.5 36.6 1100.0 36.6 C1112.5 36.6 1112.5 34.2 1125.0 34.2 C1137.5 34.2 1137.5 31.6 1150.0 31.6 C1162.5 31.6 1162.5 32.5 1175.0 32.5 C1187.5 32.5 1187.5 28.4 1200.0 28.4 C1212.5 28.4 1212.5 22.3 1225.0 22.3 C1237.5 22.3 1237.5 18.2 1250.0 18.2 C1262.5 18.2 1262.5 18.8 1275.0 18.8 C1287.5 18.8 1287.5 17.2 1300.0 17.2 C1312.5 17.2 1312.5 20.5 1325.0 20.5 C1337.5 20.5 1337.5 24.7 1350.0 24.7 C1362.5 24.7 1362.5 23.5 1375.0 23.5 C1387.5 23.5 1387.5 17.9 1400.0 17.9 C1412.5 17.9 1412.5 25.0 1425.0 25.0 C1437.5 25.0 1437.5 31.6 1450.0 31.6 C1462.5 31.6 1462.5 34.2 1475.0 34.2 C1487.5 34.2 1487.5 39.0 1500.0 39.0 C1512.5 39.0 1512.5 41.3 1525.0 41.3 C1537.5 41.3 1537.5 46.5 1550.0 46.5 C1562.5 46.5 1562.5 50.1 1575.0 50.1 C1587.5 50.1 1587.5 52.5 1600.0 52.5"/><path class="cm" pathLength="100" d="M0.0 52.5 C12.5 52.5 12.5 56.5 25.0 56.5 C37.5 56.5 37.5 56.8 50.0 56.8 C62.5 56.8 62.5 56.9 75.0 56.9 C87.5 56.9 87.5 55.4 100.0 55.4 C112.5 55.4 112.5 62.4 125.0 62.4 C137.5 62.4 137.5 59.4 150.0 59.4 C162.5 59.4 162.5 54.5 175.0 54.5 C187.5 54.5 187.5 51.2 200.0 51.2 C212.5 51.2 212.5 47.8 225.0 47.8 C237.5 47.8 237.5 45.4 250.0 45.4 C262.5 45.4 262.5 42.1 275.0 42.1 C287.5 42.1 287.5 36.6 300.0 36.6 C312.5 36.6 312.5 34.2 325.0 34.2 C337.5 34.2 337.5 31.6 350.0 31.6 C362.5 31.6 362.5 32.5 375.0 32.5 C387.5 32.5 387.5 28.4 400.0 28.4 C412.5 28.4 412.5 22.3 425.0 22.3 C437.5 22.3 437.5 18.2 450.0 18.2 C462.5 18.2 462.5 18.8 475.0 18.8 C487.5 18.8 487.5 17.2 500.0 17.2 C512.5 17.2 512.5 20.5 525.0 20.5 C537.5 20.5 537.5 24.7 550.0 24.7 C562.5 24.7 562.5 23.5 575.0 23.5 C587.5 23.5 587.5 17.9 600.0 17.9 C612.5 17.9 612.5 25.0 625.0 25.0 C637.5 25.0 637.5 31.6 650.0 31.6 C662.5 31.6 662.5 34.2 675.0 34.2 C687.5 34.2 687.5 39.0 700.0 39.0 C712.5 39.0 712.5 41.3 725.0 41.3 C737.5 41.3 737.5 46.5 750.0 46.5 C762.5 46.5 762.5 50.1 775.0 50.1 C787.5 50.1 787.5 52.5 800.0 52.5 L800.0 52.5 C812.5 52.5 812.5 56.5 825.0 56.5 C837.5 56.5 837.5 56.8 850.0 56.8 C862.5 56.8 862.5 56.9 875.0 56.9 C887.5 56.9 887.5 55.4 900.0 55.4 C912.5 55.4 912.5 62.4 925.0 62.4 C937.5 62.4 937.5 59.4 950.0 59.4 C962.5 59.4 962.5 54.5 975.0 54.5 C987.5 54.5 987.5 51.2 1000.0 51.2 C1012.5 51.2 1012.5 47.8 1025.0 47.8 C1037.5 47.8 1037.5 45.4 1050.0 45.4 C1062.5 45.4 1062.5 42.1 1075.0 42.1 C1087.5 42.1 1087.5 36.6 1100.0 36.6 C1112.5 36.6 1112.5 34.2 1125.0 34.2 C1137.5 34.2 1137.5 31.6 1150.0 31.6 C1162.5 31.6 1162.5 32.5 1175.0 32.5 C1187.5 32.5 1187.5 28.4 1200.0 28.4 C1212.5 28.4 1212.5 22.3 1225.0 22.3 C1237.5 22.3 1237.5 18.2 1250.0 18.2 C1262.5 18.2 1262.5 18.8 1275.0 18.8 C1287.5 18.8 1287.5 17.2 1300.0 17.2 C1312.5 17.2 1312.5 20.5 1325.0 20.5 C1337.5 20.5 1337.5 24.7 1350.0 24.7 C1362.5 24.7 1362.5 23.5 1375.0 23.5 C1387.5 23.5 1387.5 17.9 1400.0 17.9 C1412.5 17.9 1412.5 25.0 1425.0 25.0 C1437.5 25.0 1437.5 31.6 1450.0 31.6 C1462.5 31.6 1462.5 34.2 1475.0 34.2 C1487.5 34.2 1487.5 39.0 1500.0 39.0 C1512.5 39.0 1512.5 41.3 1525.0 41.3 C1537.5 41.3 1537.5 46.5 1550.0 46.5 C1562.5 46.5 1562.5 50.1 1575.0 50.1 C1587.5 50.1 1587.5 52.5 1600.0 52.5"/></svg></div></div></div>
@@ -2892,6 +3124,8 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
   </header>
   <nav class="script" id="script" aria-label="Script" hidden></nav>
   <div class="tape2" id="tape2" dir="ltr" aria-label="Live prices" hidden><div class="trk" id="tape2-trk"></div></div>
+  <div class="tvtape" id="tvtape" dir="ltr"></div>
+  <button class="oekt" id="oekt" type="button" hidden></button>
   <div class="nradar" id="nradar" dir="ltr" hidden><div class="nrtrk" id="nradar-trk"></div></div>
 
   <section class="hero">
@@ -3114,8 +3348,10 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
     <h3 class="iqh" id="mkt-pt"></h3>
     <div class="mkpx" id="mkt-px" dir="ltr"></div>
     <div class="mknext" id="mkt-next" hidden></div>
-    <h3 class="iqh" id="mkt-nt"></h3>
-    <div class="mknews" id="mkt-news"></div>
+    <details class="mkalle" id="mkt-alle">
+      <summary class="mkdag"><h3 class="iqh" id="mkt-nt"></h3><span class="mktell" id="mkt-tell" dir="ltr"></span></summary>
+      <div class="mknews" id="mkt-news"></div>
+    </details>
     <p class="vnote" id="mkt-src"></p>
   </section>
   <section class="sec" id="s-sessions" data-cat="tools" data-tab="hours">
@@ -3154,6 +3390,7 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
       <input id="ps-risk" type="number" inputmode="decimal" min="0.1" max="100" step="any" value="2" dir="ltr">
       <span class="flab" id="ps-inst-l"></span>
       <div class="psinst" id="ps-inst" role="group"></div>
+      <div class="nyvakt-h" id="ps-vakt" hidden></div>
       <label class="flab" for="ps-stop" id="ps-stop-l"></label>
       <input id="ps-stop" type="number" inputmode="decimal" min="0.1" step="any" value="20" dir="ltr">
     </div>
@@ -3216,6 +3453,7 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
     <div class="psgrid">
       <label class="flab" for="jn-inst" id="jn-inst-l"></label>
       <input id="jn-inst" type="text" maxlength="16" autocomplete="off" spellcheck="false" dir="ltr" placeholder="XAU/USD">
+      <div class="nyvakt-h" id="jn-vakt" hidden></div>
       <span class="flab" id="jn-dir-l"></span>
       <div class="psinst" id="jn-dir" role="group"></div>
       <label class="flab" for="jn-lots" id="jn-lots-l"></label>
@@ -3257,6 +3495,8 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
       <a id="ld-portal" class="portalbtn" href="https://aitech.ibportal.io/profile" target="_blank" rel="noopener noreferrer"><span class="pi" aria-hidden="true"></span><span id="ld-portal-t"></span><span class="pa" aria-hidden="true">↗</span></a>
       <input id="ld-in" type="url" autocomplete="off" spellcheck="false" enterkeyhint="next">
       <p class="ldsrc" id="ld-src" hidden></p>
+      <!-- #201: avkrysningen gjelder lenkefeltet - staar rett under advarselen, ikke etter navn/e-post/sosiale medier -->
+      <label class="ldsrcok" id="ld-srcok" hidden><input type="checkbox" id="ld-srcchk"><span></span></label>
       <input id="ld-name" type="text" autocomplete="given-name" spellcheck="false" maxlength="24" enterkeyhint="next">
       <input id="ld-mail" type="email" inputmode="email" autocomplete="email" enterkeyhint="next">
       <input id="ld-spons" type="text" autocomplete="off" spellcheck="false" maxlength="24" enterkeyhint="go">
@@ -3264,7 +3504,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
       <div class="ldnavn" id="ld-navn" hidden></div>
       <div class="ldlist" id="ld-list" hidden></div>
       <div id="ld-sos" hidden></div>
-      <label class="ldsrcok" id="ld-srcok" hidden><input type="checkbox" id="ld-srcchk"><span></span></label>
       <p class="vnote" id="ld-why"></p>
       <button id="ld-btn" onclick="makeLink()"></button>
       <div class="out" id="ld-out" hidden></div>
@@ -3279,6 +3518,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.a16533ce28.js" defer></script>
+<script src="app-l.7639e357bc.js" defer></script>
 </body>
 </html>
