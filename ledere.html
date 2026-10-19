@@ -2494,6 +2494,13 @@ html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
   .tk .lv::after{animation:plpuls 1.8s ease-in-out infinite}
 }
 @keyframes tkrull{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* #182 (founder 19.10 04:24 «nyhetene beveger seg ikke lenger som før»): nyhetsraden ruller som kursbaandet.
+   Stopper naar man roerer den (og 3 s etter), saa en nyhet er lett aa trykke paa. Redusert bevegelse = staar stille. */
+@media (prefers-reduced-motion:no-preference){
+  .nradar.rull{overflow:hidden;scroll-snap-type:none}
+  .nradar.rull .nrtrk{animation:tkrull var(--nrt,60s) linear infinite}
+  .nradar.rull.pause .nrtrk,html.paused .nradar.rull .nrtrk{animation-play-state:paused}
+}
 @media (prefers-reduced-motion:reduce){.tape2{overflow-x:auto}.tape2 .grp + .grp{display:none}}
 /* Levende chart-linje i mappehoder og produktkort: pynt, tydelig som pynt (ingen tall). */
 .vhead,.pcard{position:relative;overflow:hidden}
@@ -3068,6 +3075,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.34cdfa7d05.js" defer></script>
+<script src="app-l.1b3a9b345a.js" defer></script>
 </body>
 </html>
