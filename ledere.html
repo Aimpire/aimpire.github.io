@@ -2498,7 +2498,9 @@ html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
    Stopper naar man roerer den (og 3 s etter), saa en nyhet er lett aa trykke paa. Redusert bevegelse = staar stille. */
 @media (prefers-reduced-motion:no-preference){
   .nradar.rull{overflow:hidden;scroll-snap-type:none}
-  .nradar.rull .nrtrk{animation:tkrull var(--nrt,60s) linear infinite}
+  .nradar.rull .nrtrk{animation:tkrull var(--nrt,60s) linear infinite reverse}   /* #183: motsatt vei av kursene - to tydelige baand */
+  /* #183: myk toning i kantene - tekst glir inn og ut i stedet for aa kuttes */
+  .nradar.rull,.tape2{-webkit-mask-image:linear-gradient(90deg,transparent,#000 22px,#000 calc(100% - 22px),transparent);mask-image:linear-gradient(90deg,transparent,#000 22px,#000 calc(100% - 22px),transparent)}
   .nradar.rull.pause .nrtrk,html.paused .nradar.rull .nrtrk{animation-play-state:paused}
 }
 @media (prefers-reduced-motion:reduce){.tape2{overflow-x:auto}.tape2 .grp + .grp{display:none}}
