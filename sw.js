@@ -46,9 +46,15 @@ self.addEventListener("fetch", function(e){
         if(r && r.ok){ const kopi = r.clone(); caches.open(CACHE).then(function(c){ c.put(fallback, kopi); }); }
         return r;
       });
-      const frist = new Promise(function(res){ setTimeout(function(){ res(null); }, erLedere ? 20000 : 6000); });
-      return Promise.race([nett.catch(function(){ return null; }), frist]).then(function(r){
-        return r || caches.match(fallback).then(function(c){ return c || nett; });
+      /* Ytelse 19.10 (maalt: 1,4 s til foerste byte paa ny URL, opptil 6 s paa tregt nett): har medlemssiden
+         en lagret kopi, vises den etter maks 0,8 s, og nettversjonen lagres i bakgrunnen til neste gang.
+         Uten lagret kopi ventes det paa nettet som foer. Ledersiden beholder 20 s (skjemaet maa matche Google). */
+      return caches.match(fallback).then(function(lagret){
+        const ms = erLedere ? 20000 : (lagret ? 800 : 6000);
+        const frist = new Promise(function(res){ setTimeout(function(){ res(null); }, ms); });
+        return Promise.race([nett.catch(function(){ return null; }), frist]).then(function(r){
+          return r || lagret || caches.match(fallback).then(function(c){ return c || nett; });
+        });
       });
     })());
     return;
