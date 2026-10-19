@@ -2135,7 +2135,25 @@ html[dir="rtl"] #port .prow::after{background:linear-gradient(270deg,#15D8C4,#1B
 .tbprog b{display:block;height:100%;width:100%;transform-origin:0 50%;transform:scaleX(0);
   background:linear-gradient(90deg,#15D8C4,#1B4FD8,#C21FBF)}
 html[dir="rtl"] .tbprog b{transform-origin:100% 50%}
-.tbrow{display:grid;grid-template-columns:repeat(5,1fr);max-width:560px;margin:0 auto}
+.tbrow{display:grid;grid-template-columns:repeat(6,1fr);max-width:560px;margin:0 auto}
+/* #194 Mer-arket: flyter rett over menylinja, samme form. Under linja (z 55) saa «Mer» kan lukke det igjen. */
+.mersheet{position:fixed;inset:0;z-index:54}
+.mersheet[hidden]{display:none}
+.msbg{position:absolute;inset:0;background:rgba(6,10,24,.45)}
+.mspanel{position:absolute;inset-inline:10px;bottom:calc(max(8px,env(safe-area-inset-bottom)) + 70px);max-width:560px;margin-inline:auto;
+  background:var(--ink-raise,var(--ink));color:var(--chalk);border:1px solid var(--rule);border-radius:22px;padding:10px;
+  box-shadow:0 18px 40px -10px rgba(6,10,24,.55);transform:translateY(12px);opacity:0;transition:transform .22s cubic-bezier(.2,.8,.3,1.1),opacity .18s ease}
+.mersheet.vis .mspanel{transform:none;opacity:1}
+@media (prefers-reduced-motion:reduce){.mspanel{transition:none}}
+.msgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.msb{appearance:none;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:56px;padding:10px 12px;border-radius:14px;
+  border:1px solid var(--rule);background:transparent;color:inherit;font:700 .86rem/1.25 var(--face);text-align:start;cursor:pointer}
+.msb:active{transform:scale(.98)}
+.msb:focus-visible{outline:2px solid #15D8C4;outline-offset:2px}
+.msi{font-size:1.25rem;line-height:1;flex:0 0 auto}
+.msb:last-child:nth-child(odd){grid-column:1/-1;flex-direction:row;align-items:center;justify-content:center}
+.mst{min-width:0;word-break:normal;overflow-wrap:normal;hyphens:none}
+.tbb[data-cat="more"][aria-expanded="true"]{color:var(--chalk)}
 .tbb{appearance:none;background:none;border:0;color:var(--chalk-dim);font:600 .68rem/1.1 var(--face);
   display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 2px 8px;cursor:pointer;
   min-height:54px;position:relative;-webkit-tap-highlight-color:transparent}
@@ -3213,6 +3231,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.f48bf9d22b.js" defer></script>
+<script src="app-l.c4578a3b44.js" defer></script>
 </body>
 </html>
