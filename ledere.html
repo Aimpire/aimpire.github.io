@@ -2513,6 +2513,28 @@ html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
 #tour .thopp{position:fixed;top:max(14px,env(safe-area-inset-top));inset-inline-end:14px;min-height:40px;font-size:.9rem;background:rgba(20,19,27,.85);color:#fff;border-color:rgba(255,255,255,.3)}
 html[data-font="nastaliq"] #tour .tkort p{line-height:2.1}
 @media (prefers-reduced-motion:reduce){#tour .ring,#tour .tkort{transition:none}}
+#tour{pointer-events:none}
+#tour .tsperre{position:fixed;inset:0;pointer-events:auto;background:transparent}
+#tour .tkort,#tour .thopp{pointer-events:auto}
+#tour .ring.lek{animation:none !important;box-shadow:0 0 0 9999px rgba(5,4,12,.62),0 0 0 3px #F5A524,0 0 26px 6px rgba(245,165,36,.45)}
+#tour .tvert{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+#tour .tvert img{width:28px;height:28px;border-radius:50%;box-shadow:0 0 0 2px rgba(21,216,196,.5)}
+#tour .tvert .tdots{margin:0}
+#tour .tdots i.ferdig{background:#15D8C4}
+#tour .tpil{position:fixed;width:44px;height:44px;color:#15D8C4;opacity:0;pointer-events:none;filter:drop-shadow(0 0 8px rgba(21,216,196,.7));transition:opacity .25s}
+#tour .tpil.vis{opacity:1}
+#tour .tpil svg{width:100%;height:100%}
+#tour .tpil.opp svg{transform:rotate(180deg)}
+@media (prefers-reduced-motion:no-preference){
+  #tour .tpil.vis.ned{animation:tpilN 1s ease-in-out infinite}
+  #tour .tpil.vis.opp{animation:tpilO 1s ease-in-out infinite}
+  #tour .ring:not(.ingen){animation:tring 1.8s ease-in-out infinite}
+  #tour .tkort.inn{animation:tinn .42s cubic-bezier(.2,.8,.3,1.1)}
+}
+@keyframes tpilN{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@keyframes tpilO{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes tring{0%,100%{box-shadow:0 0 0 9999px rgba(5,4,12,.74),0 0 0 3px #15D8C4,0 0 18px 2px rgba(21,216,196,.4)}50%{box-shadow:0 0 0 9999px rgba(5,4,12,.74),0 0 0 3px #C21FBF,0 0 30px 8px rgba(194,31,191,.45)}}
+@keyframes tinn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
 .tourigjen{text-align:center;margin:18px 0 0}
 .tourigjen button{appearance:none;background:none;border:1px solid var(--rule);border-radius:999px;color:var(--chalk-dim);font:700 .86rem/1 var(--face);padding:10px 16px;cursor:pointer}
 /* #185 Nytt baand: stille kurser i fire kolonner + ett nyhetskort som skifter */
@@ -3159,6 +3181,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.43eb49bc72.js" defer></script>
+<script src="app-l.ac97f9647e.js" defer></script>
 </body>
 </html>
