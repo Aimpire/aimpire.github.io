@@ -2494,6 +2494,27 @@ html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
   .tk .lv::after{animation:plpuls 1.8s ease-in-out infinite}
 }
 @keyframes tkrull{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* #186 App-guide: dim + lysende ramme rundt det ekte elementet + kort med stor tekst */
+#tour{position:fixed;inset:0;z-index:400;pointer-events:auto}
+#tour .ring{position:fixed;border-radius:16px;box-shadow:0 0 0 9999px rgba(5,4,12,.74),0 0 0 3px #15D8C4,0 0 24px 4px rgba(21,216,196,.45);transition:all .35s cubic-bezier(.2,.8,.3,1);pointer-events:none}
+#tour .ring.ingen{width:0;height:0;left:50%;top:50%;box-shadow:0 0 0 9999px rgba(5,4,12,.78)}
+#tour .tkort{position:fixed;left:16px;right:16px;max-width:440px;margin:0 auto;background:var(--ink-deep,#14131B);color:var(--chalk);
+  border:1px solid var(--rule);border-radius:20px;padding:20px 20px 16px;box-shadow:0 20px 50px -10px rgba(0,0,0,.6);transition:top .35s cubic-bezier(.2,.8,.3,1),bottom .35s}
+#tour .tkort h3{margin:0 0 8px;font:800 1.25rem/1.3 var(--display)}
+#tour .tkort p{margin:0 0 16px;font:500 1.05rem/1.55 var(--face);color:var(--chalk)}
+#tour .tnav{display:flex;align-items:center;gap:10px}
+#tour .tnr{font:700 .85rem/1 var(--face);color:var(--chalk-dim);margin-inline-end:auto}
+#tour .tdots{display:flex;gap:5px;margin-bottom:12px}
+#tour .tdots i{width:7px;height:7px;border-radius:50%;background:var(--rule)}
+#tour .tdots i.on{background:linear-gradient(135deg,#15D8C4,#C21FBF);width:18px;border-radius:4px}
+#tour button{appearance:none;cursor:pointer;font:800 1rem/1 var(--face);border-radius:999px;min-height:48px;padding:0 22px}
+#tour .tneste{border:0;color:#fff;background:linear-gradient(90deg,#15D8C4,#1B4FD8 55%,#C21FBF)}
+#tour .tbak,#tour .thopp{border:1.5px solid var(--rule);background:transparent;color:var(--chalk)}
+#tour .thopp{position:fixed;top:max(14px,env(safe-area-inset-top));inset-inline-end:14px;min-height:40px;font-size:.9rem;background:rgba(20,19,27,.85);color:#fff;border-color:rgba(255,255,255,.3)}
+html[data-font="nastaliq"] #tour .tkort p{line-height:2.1}
+@media (prefers-reduced-motion:reduce){#tour .ring,#tour .tkort{transition:none}}
+.tourigjen{text-align:center;margin:18px 0 0}
+.tourigjen button{appearance:none;background:none;border:1px solid var(--rule);border-radius:999px;color:var(--chalk-dim);font:700 .86rem/1 var(--face);padding:10px 16px;cursor:pointer}
 /* #185 Nytt baand: stille kurser i fire kolonner + ett nyhetskort som skifter */
 .tape2.stille{overflow:hidden;-webkit-mask-image:none;mask-image:none}
 .tape2.stille .trk{animation:none !important;width:100%;transform:none !important}
@@ -3133,10 +3154,11 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 
   <p class="risk" id="risk"></p>
   <div class="legal" id="legal"></div>
+  <p class="tourigjen"><button type="button" id="tour-igjen" hidden></button></p>
   <p class="sig">Aimpire &middot; <span id="yr" dir="ltr"></span></p>
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.90f23d7418.js" defer></script>
+<script src="app-l.43eb49bc72.js" defer></script>
 </body>
 </html>
