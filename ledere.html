@@ -2176,6 +2176,20 @@ html[dir="rtl"] .tbprog b{transform-origin:100% 50%}
 .cchart .pt{fill:#C21FBF;stroke:var(--ink-raise);stroke-width:2;transform-box:fill-box;transform-origin:center}
 .cax{display:flex;justify-content:space-between;font:600 .72rem/1 var(--face);color:var(--chalk-dim)}
 .cshare{margin:14px 0 4px}
+.ldnavn{margin:10px 0 4px;text-align:start}
+.ldnl{font-weight:700;opacity:.85}
+.ldnrad{display:flex;align-items:center;margin-top:6px;border:1.5px solid var(--rule);border-radius:12px;overflow:hidden}
+.ldnpre{padding:0 4px 0 12px;opacity:.7;font-size:.92rem;white-space:nowrap}
+#ld-lenkenavn{flex:1;min-width:0;border:0;background:transparent;color:inherit;font:700 1rem/1.2 var(--face,inherit);padding:12px 12px 12px 0;outline:none}
+.ldnst{margin:6px 0 0;font-weight:700;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.ldnst.ok{color:#1FA97A}
+.ldnst.opp{color:#E8590C}
+/* skjemaets knapper og felt er store og fulle - forslag og lenkenavn skal ikke arve det */
+#s-leaders .tool #ld-navn .ldnst button.ldpill{width:auto;min-height:36px;margin:0;padding:6px 12px;border-radius:999px;border:1.5px solid var(--rule);background:transparent;color:inherit;font:700 .9rem/1.2 var(--face,inherit);box-shadow:none}
+#s-leaders .tool #ld-navn #ld-lenkenavn{width:auto;min-height:0;height:auto;margin:0;border:0;border-radius:0;background:transparent;box-shadow:none;padding:12px 12px 12px 0;line-height:1.2}
+#s-leaders .tool #ld-navn .ldnpre{line-height:1.2}
+#s-leaders .tool .ldlist input[type="checkbox"]{width:22px;height:22px;min-height:0;margin:0;padding:0;flex:0 0 22px}
+#s-leaders .tool .ldlist #ld-land{width:100%;margin:0}
 .hlgrid{display:grid;gap:10px;margin-top:12px}
 .hlk{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:1px solid var(--rule);border-radius:16px;background:var(--card,var(--ink-deep));position:relative;z-index:1}
 .hlk .e{flex:0 0 26px;font-size:1.3rem;line-height:1.3}
@@ -2963,6 +2977,7 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
       <input id="ld-mail" type="email" inputmode="email" autocomplete="email" enterkeyhint="next">
       <input id="ld-spons" type="text" autocomplete="off" spellcheck="false" maxlength="24" enterkeyhint="go">
       <p class="hint" id="ld-hint"></p>
+      <div class="ldnavn" id="ld-navn" hidden></div>
       <div class="ldlist" id="ld-list" hidden></div>
       <p class="vnote" id="ld-why"></p>
       <button id="ld-btn" onclick="makeLink()"></button>
@@ -2977,6 +2992,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.2b3e1e55c1.js" defer></script>
+<script src="app-l.27b3c44d97.js" defer></script>
 </body>
 </html>
