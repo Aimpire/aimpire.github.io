@@ -20,6 +20,24 @@ jobs:
           mkdir -p data
           # #149: ogsaa Medium, med i = H/M (alvorlighet). Gamle visninger filtrerer paa i.
           jq '[.[] | select(.impact=="High" or .impact=="Medium") | {t:.title, c:.country, d:.date, f:.forecast, p:.previous, i:(.impact[0:1])}] | sort_by(.d)' /tmp/ff.json > data/nyheter.new
+          # #175/#177: XML-utgaven av samme feed har en lenke per nyhet (Forex Factorys egen side).
+          # Kobles paa tittel + land. Feiler XML-en, staar nyhetene uten lenke (huben bruker da dagslista).
+          curl -fsS --max-time 30 "https://nfs.faireconomy.media/ff_calendar_thisweek.xml" -o /tmp/ff.xml || true
+          python3 - <<'PY' || true
+          import json, re, xml.etree.ElementTree as ET
+          raw = open('/tmp/ff.xml', 'rb').read().decode('cp1252')
+          raw = re.sub(r'^<\?xml[^>]*\?>', '', raw.strip())
+          url = {}
+          for e in ET.fromstring(raw).iter('event'):
+              t, c, u = (e.findtext('title') or '').strip(), (e.findtext('country') or '').strip(), (e.findtext('url') or '').strip()
+              if re.fullmatch(r'https://www\.forexfactory\.com/calendar/[0-9]+-[a-z0-9-]+', u):
+                  url[(t, c)] = u
+          d = json.load(open('data/nyheter.new', encoding='utf-8'))
+          for n in d:
+              if (n.get('t'), n.get('c')) in url: n['u'] = url[(n['t'], n['c'])]
+          json.dump(d, open('data/nyheter.new', 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+          print('lenker:', sum(1 for n in d if 'u' in n), 'av', len(d))
+          PY
           if [ "$(jq length data/nyheter.new)" -gt 0 ]; then mv data/nyheter.new data/nyheter.json; else rm data/nyheter.new; fi
       - name: Lagre hvis endret
         run: |
