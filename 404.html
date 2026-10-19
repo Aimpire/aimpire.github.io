@@ -47,10 +47,12 @@
   document.getElementById("t").textContent = T[0];
   /* Ikke et navn (f.eks. en gammel fil som er borte): rett til forsiden. */
   if(!/^[a-z0-9]{1,30}$/.test(s) || CSV.indexOf("http") !== 0){ hjem(rest); return; }
+  /* Sikkerhet: navnet maa staa NOEYAKTIG én gang. Staar det flere ganger (f.eks. etter en
+     haandredigering av fanen), sendes ingen videre - ellers kunne lenken peke til feil leder. */
   var fant = function(t){
-    var kode = null;
-    String(t || "").split(/\r?\n/).forEach(function(l){ var f = l.split(","); if(f[0] && f[0].trim().toLowerCase() === s) kode = (f[1] || "").trim().toLowerCase(); });
-    return kode && /^[a-z0-9]{6}$/.test(kode) ? kode : null;
+    var treff = [];
+    String(t || "").split(/\r?\n/).forEach(function(l){ var f = l.split(","); if(f[0] && f[0].trim().toLowerCase() === s) treff.push((f[1] || "").trim().toLowerCase()); });
+    return treff.length === 1 && /^[a-z0-9]{6}$/.test(treff[0]) ? treff[0] : null;
   };
   fetch(CSV + (CSV.indexOf("?") < 0 ? "?" : "&") + "t=" + Date.now(), { cache: "no-store" })
     .then(function(r){ return r.ok ? r.text() : ""; })
