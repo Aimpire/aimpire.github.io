@@ -66,18 +66,36 @@ try{ if(window.top !== window.self){ document.documentElement.style.visibility =
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Aimpire">
 <meta name="mobile-web-app-capable" content="yes">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- #100: skriftarket blokkerer ikke foerste visning lenger (maalt ~0,8 s paa tregt nett). Teksten vises
-     straks i systemskrift og bytter naar skriftene er lastet (display=swap, som foer). -->
-<!-- #100 (20.10, maalt): paa tregt nett (3G-profil 400 kbps) var skriftene ~250 kB av 522 kB og delte linja med
-     app-skriptet - appen ble klar foerst etter 9,6 s. Naar telefonen selv melder tregt nett (2g/3g eller Datasparing),
-     hentes skriftene foerst etter at siden er lastet; teksten staar i systemskrift til da. Ellers som foer. -->
-<script>(function(){var u="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap",c=navigator.connection,treg=!!(c&&(c.saveData||/(^|-)(2g|3g)$/.test(c.effectiveType||"")));
-function hent(){var l=document.createElement("link");l.rel="stylesheet";l.href=u;l.crossOrigin="anonymous";document.head.appendChild(l);}
-if(treg){document.documentElement.setAttribute("data-skrift","senere");addEventListener("load",function(){setTimeout(hent,0);});}else{hent();}})();</script>
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap" crossorigin="anonymous"></noscript>
+<!-- #100/#154 (20.10): skriftene ligger hos oss (assets/fonts, OFL), utvalgt til tegnsettene vi bruker. Ingen kall til
+     Google Fonts: ingen avhengighet av at de svarer fra Pakistan, ingen IP til tredjepart, mindre data. -->
 <noscript><style>html:not(.klar) .shell>*,html:not(.klar) .hero>*{visibility:visible!important}</style></noscript>
+<style id="skrift" media="print">
+/* SKRIFT-START (tools/skrift/lag_skrift.py – ikke rediger for hånd) */
+@font-face{font-family:'Archivo';font-style:normal;font-weight:500 800;font-stretch:85% 100%;font-display:swap;src:url(assets/fonts/archivo-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Archivo';font-style:normal;font-weight:500 800;font-stretch:85% 100%;font-display:swap;src:url(assets/fonts/archivo-latin-ext.woff2) format('woff2');unicode-range:U+0100-017F,U+02BF,U+1E24-1E25,U+1E6C-1E6D,U+2190-2199,U+21BB,U+2212,U+221E,U+2248,U+2260,U+22EE-22EF}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400 900;font-display:swap;src:url(assets/fonts/montserrat-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400 900;font-display:swap;src:url(assets/fonts/montserrat-latin-ext.woff2) format('woff2');unicode-range:U+0100-017F,U+02BF,U+1E24-1E25,U+1E6C-1E6D,U+2190-2199,U+21BB,U+2212,U+221E,U+2248,U+2260,U+22EE-22EF}
+@font-face{font-family:'Noto Naskh Arabic';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/noto-naskh-arabic-arabic.woff2) format('woff2');unicode-range:U+0600-06FF,U+200C-200F,U+2010-2011,U+204F,U+25CC}
+@font-face{font-family:'Noto Naskh Arabic';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/noto-naskh-arabic-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Noto Naskh Arabic';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/noto-naskh-arabic-latin-ext.woff2) format('woff2');unicode-range:U+0100-017F,U+02BF,U+1E24-1E25,U+1E6C-1E6D,U+2190-2199,U+21BB,U+2212,U+221E,U+2248,U+2260,U+22EE-22EF}
+@font-face{font-family:'Noto Nastaliq Urdu';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/noto-nastaliq-urdu-arabic.woff2) format('woff2');unicode-range:U+0600-06FF,U+200C-200F,U+2010-2011,U+204F,U+25CC}
+@font-face{font-family:'Noto Nastaliq Urdu';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/noto-nastaliq-urdu-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Noto Nastaliq Urdu';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/noto-nastaliq-urdu-latin-ext.woff2) format('woff2');unicode-range:U+0100-017F,U+02BF,U+1E24-1E25,U+1E6C-1E6D,U+2190-2199,U+21BB,U+2212,U+221E,U+2248,U+2260,U+22EE-22EF}
+@font-face{font-family:'Noto Sans';font-style:normal;font-weight:400 700;font-stretch:100%;font-display:swap;src:url(assets/fonts/noto-sans-devanagari.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:'Noto Sans';font-style:normal;font-weight:400 700;font-stretch:100%;font-display:swap;src:url(assets/fonts/noto-sans-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Noto Sans';font-style:normal;font-weight:400 700;font-stretch:100%;font-display:swap;src:url(assets/fonts/noto-sans-latin-ext.woff2) format('woff2');unicode-range:U+0100-017F,U+02BF,U+1E24-1E25,U+1E6C-1E6D,U+2190-2199,U+21BB,U+2212,U+221E,U+2248,U+2260,U+22EE-22EF}
+@font-face{font-family:'Noto Sans Arabic';font-style:normal;font-weight:400 800;font-stretch:100%;font-display:swap;src:url(assets/fonts/noto-sans-arabic-arabic.woff2) format('woff2');unicode-range:U+0600-06FF,U+200C-200F,U+2010-2011,U+204F,U+25CC}
+@font-face{font-family:'Noto Sans Arabic';font-style:normal;font-weight:400 800;font-stretch:100%;font-display:swap;src:url(assets/fonts/noto-sans-arabic-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Noto Sans Arabic';font-style:normal;font-weight:400 800;font-stretch:100%;font-display:swap;src:url(assets/fonts/noto-sans-arabic-latin-ext.woff2) format('woff2');unicode-range:U+0100-017F,U+02BF,U+1E24-1E25,U+1E6C-1E6D,U+2190-2199,U+21BB,U+2212,U+221E,U+2248,U+2260,U+22EE-22EF}
+@font-face{font-family:'Noto Sans Devanagari';font-style:normal;font-weight:400 800;font-stretch:100%;font-display:swap;src:url(assets/fonts/noto-sans-devanagari-devanagari.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:'Noto Sans Devanagari';font-style:normal;font-weight:400 800;font-stretch:100%;font-display:swap;src:url(assets/fonts/noto-sans-devanagari-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Noto Sans Devanagari';font-style:normal;font-weight:400 800;font-stretch:100%;font-display:swap;src:url(assets/fonts/noto-sans-devanagari-latin-ext.woff2) format('woff2');unicode-range:U+0100-017F,U+02BF,U+1E24-1E25,U+1E6C-1E6D,U+2190-2199,U+21BB,U+2212,U+221E,U+2248,U+2260,U+22EE-22EF}
+/* SKRIFT-SLUTT */
+</style>
+<script>/* #100: paa tregt nett (telefonen melder 2g/3g eller Datasparing) skrus skriftene paa foerst etter load, saa de ikke
+   deler linja med app-skriptet (maalt 3G: klar 17,8 -> ~14 s). Ellers med en gang. media=print = ikke brukt, ikke hentet. */
+(function(){var s=document.getElementById("skrift"),c=navigator.connection,treg=!!(c&&(c.saveData||/(^|-)(2g|3g)$/.test(c.effectiveType||"")));
+if(!treg){s.media="all";return;}document.documentElement.setAttribute("data-skrift","senere");addEventListener("load",function(){s.media="all";});})();</script>
 
 <style>
 /* Samplet fra founders egne Canva-dokumenter 14.10.2026, ikke oppfunnet:
@@ -2083,6 +2101,18 @@ html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
   background:radial-gradient(60% 70% at 20% 100%,rgba(27,79,216,.28),transparent 70%),radial-gradient(50% 60% at 85% 100%,rgba(194,31,191,.22),transparent 70%)}
 #port.inn{opacity:1}#port.ut{opacity:0;transition-duration:.5s}
 html.portaapen body{overflow:hidden}
+/* #153 (20.10, maalt): i Instagram/TikTok-nettleseren laa «Aapne i Chrome» under porten (z 40 mot 120) og kunne ikke trykkes
+   foer spraak, skrift og tema var valgt - valg som Chrome ikke husker etterpaa. Mens porten er aapen ligger banneret fast
+   oeverst over den, og porten skyves ned like mye. Etter porten staar banneret i flyten som foer. */
+html.portaapen #inapp-bar:not([hidden]){position:fixed;left:0;right:0;top:0;z-index:130;margin:0}
+html.portaapen #inapp-bar:not([hidden]){padding:10px 14px}
+html.portaapen #inapp-bar p{font-size:.84rem;line-height:1.35;margin-bottom:6px}
+/* Paa smaa skjermer (320x568) skjoev banneret urdu-valget ut av porten. Da kan porten rulles; «margin:auto» sentrerer
+   valgene naar det er plass uten aa kutte toppen naar det ikke er det (justify-content:center gjoer det). */
+html.portaapen.iabvis #port{padding-top:calc(var(--iabh,0px) + 10px);overflow-y:auto;overscroll-behavior:contain}
+html.portaapen.iabvis #port .prows{flex:1 0 auto;justify-content:flex-start}
+html.portaapen.iabvis #port .prows > :first-child{margin-top:auto}
+html.portaapen.iabvis #port .prows > :last-child{margin-bottom:auto}
 #port .pline{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
 #port .pline path{fill:none;stroke-linejoin:round;stroke-linecap:round}
 #port .pline .pl{stroke:url(#plg);stroke-width:2.2;opacity:.48;stroke-dasharray:100;stroke-dashoffset:100}
@@ -3524,6 +3554,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.73947ac6b8.js" defer></script>
+<script src="app-m.423c33a8f8.js" defer></script>
 </body>
 </html>
