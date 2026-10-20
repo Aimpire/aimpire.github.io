@@ -5,7 +5,7 @@
    - Google-fonter: cache foerst (gstatic er uforanderlig), CSS-en oppdateres i bakgrunnen.
    - ALDRI cache: godkjent-lista (Google-arket), ledere.txt, skjemaet. De skal vaere ferske.
    Cachenavnet baerer bygg-id, saa hver publisering rydder den forrige. */
-const BUILD = "389e5d74ba";
+const BUILD = "8dce71f765";
 const CACHE = "aimpire-" + BUILD;
 const SHELL = ["./", "./ledere.html"];
 
@@ -33,6 +33,9 @@ self.addEventListener("fetch", function(e){
   if(req.method !== "GET") return;
   let url; try{ url = new URL(req.url); }catch(err){ return; }
   if(aldriCache(url)) return;
+  /* #258 (20.10): forhåndsvisningen under /neste/ er en annen app med egne filer - den rører vi ikke, verken navigering,
+     pakker eller bilder. Ellers ville testsiden blitt lagret som forsiden, og dens språkpakker fylt vår cache. */
+  if(url.origin === self.location.origin && /^\/neste(\/|$)/.test(url.pathname)) return;
 
   /* Sidevisning: nett foerst, cache bare naar nettet er for tregt.
      Ledersiden sender et skjema som maa matche Googles felt, saa der venter vi
@@ -42,8 +45,12 @@ self.addEventListener("fetch", function(e){
     e.respondWith((function(){
       const erLedere = /ledere\.html$/.test(url.pathname);
       const fallback = erLedere ? "./ledere.html" : "./";
+      /* #258 (20.10): bare appens egne sider lagres som reserve. Før ble ENHVER side lagret som «./» - en navnelenke
+         (/asma/) er en liten omdirigeringsside, og på tregt nett ble den servert som forside etter 0,8 s og sendte
+         videre til seg selv igjen. */
+      const erAppSide = url.pathname === "/" || /\/(index|ledere)\.html$/.test(url.pathname);
       const nett = fetch(req).then(function(r){
-        if(r && r.ok){ const kopi = r.clone(); caches.open(CACHE).then(function(c){ c.put(fallback, kopi); }); }
+        if(r && r.ok && erAppSide){ const kopi = r.clone(); caches.open(CACHE).then(function(c){ c.put(fallback, kopi); }); }
         return r;
       });
       /* Ytelse 19.10 (maalt: 1,4 s til foerste byte paa ny URL, opptil 6 s paa tregt nett): har medlemssiden
