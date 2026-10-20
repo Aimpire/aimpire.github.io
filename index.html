@@ -70,7 +70,12 @@ try{ if(window.top !== window.self){ document.documentElement.style.visibility =
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- #100: skriftarket blokkerer ikke foerste visning lenger (maalt ~0,8 s paa tregt nett). Teksten vises
      straks i systemskrift og bytter naar skriftene er lastet (display=swap, som foer). -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'">
+<!-- #100 (20.10, maalt): paa tregt nett (3G-profil 400 kbps) var skriftene ~250 kB av 522 kB og delte linja med
+     app-skriptet - appen ble klar foerst etter 9,6 s. Naar telefonen selv melder tregt nett (2g/3g eller Datasparing),
+     hentes skriftene foerst etter at siden er lastet; teksten staar i systemskrift til da. Ellers som foer. -->
+<script>(function(){var u="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap",c=navigator.connection,treg=!!(c&&(c.saveData||/(^|-)(2g|3g)$/.test(c.effectiveType||"")));
+function hent(){var l=document.createElement("link");l.rel="stylesheet";l.href=u;l.crossOrigin="anonymous";document.head.appendChild(l);}
+if(treg){document.documentElement.setAttribute("data-skrift","senere");addEventListener("load",function(){setTimeout(hent,0);});}else{hent();}})();</script>
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Archivo:wdth,wght@85..100,500..800&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Devanagari:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap" crossorigin="anonymous"></noscript>
 <noscript><style>html:not(.klar) .shell>*,html:not(.klar) .hero>*{visibility:visible!important}</style></noscript>
 
