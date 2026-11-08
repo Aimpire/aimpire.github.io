@@ -22,7 +22,6 @@ try{ if(window.top !== window.self){ document.documentElement.style.visibility =
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="assets/ap-gradient-96.png">
 <script>
@@ -40,12 +39,7 @@ try{ if(window.top !== window.self){ document.documentElement.style.visibility =
      send til navneoppslaget, saa lederen ikke mister personen. */
   try{
     var sti = location.pathname.replace(/^\/+|\/+$/g, "");
-    /* #248: /neste/ er forhåndsvisningen av neste versjon, ikke en navnelenke.
-       21.10: og «guide» er hubens EGEN mappe etter cutover. Uten den her leste huben seg selv som et navn og
-       sendte seg til /404.html?s=guide, som sendte tilbake til rot med hashen intakt - en uendelig ring for alle
-       med et gammelt bokmerke (/#faq, /#calc, /#steg-3 ...). Målt med navigasjonslogg: 14 hopp på 0,4 s.
-       cutover-bygg.sh nekter allerede en navnelenke som heter «guide», så de to vaktene sier det samme. */
-    if(/^[A-Za-z0-9]{1,30}$/.test(sti) && !/^(index|ledere|404|neste|guide)$/i.test(sti)){
+    if(/^[A-Za-z0-9]{1,30}$/.test(sti) && !/^(index|ledere|404)$/i.test(sti)){
       location.replace("/404.html?s=" + encodeURIComponent(sti.toLowerCase()) + (location.search ? "&" + location.search.slice(1) : "") + location.hash);
       return;
     }
@@ -73,7 +67,7 @@ try{ if(window.top !== window.self){ document.documentElement.style.visibility =
 <meta name="mobile-web-app-capable" content="yes">
 <!-- #100/#154 (20.10): skriftene ligger hos oss (assets/fonts, OFL), utvalgt til tegnsettene vi bruker. Ingen kall til
      Google Fonts: ingen avhengighet av at de svarer fra Pakistan, ingen IP til tredjepart, mindre data. -->
-<noscript><style>html:not(.klar) .shell > *,html:not(.klar) .hero > *{visibility:visible !important}</style></noscript>
+<noscript><style>html:not(.klar) .shell>*,html:not(.klar) .hero>*{visibility:visible!important}</style></noscript>
 <style id="skrift" media="print">
 /* SKRIFT-START (tools/skrift/lag_skrift.py – ikke rediger for hånd) */
 @font-face{font-family:'Archivo';font-style:normal;font-weight:500 800;font-stretch:85% 100%;font-display:swap;src:url(assets/fonts/archivo-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
@@ -112,17 +106,18 @@ if(!treg){s.media="all";return;}document.documentElement.setAttribute("data-skri
   /* Aimpires egne farger, fra logoen: svart + gradienten blaa -> turkis ->
      magenta -> gul. IKKE AiTech (marine + himmelblaa) og IKKE Tag (lime).
      Lys modus: hvit med farge, ikke graa. Kontrast maalt mot #FFFFFF. */
-  --ink:#FBFAFD;            /* sideflate: nesten hvit, et snev fiolett     */
+  /* #323 craft: nøytral sideflate (ikke fiolett #FBFAFD — Claude-tell sky noterte på #271). */
+  --ink:#F7F8FA;
   --ink-deep:#FFFFFF;
   --ink-raise:#FFFFFF;
   --gold:#A3159F;           /* FLATE: knapp, aktiv fane, marg - magenta 10:1 med hvit tekst */
   --gold-soft:#0B7C72;      /* TEKSTaksent: dyp turkis, 5,1:1              */
   --gold-deep:#A3159F;
   --lime:#0F7A4A; --red:#C0392B;
-  --chalk:#14101C;          /* broedtekst: 18:1                            */
-  --chalk-dim:#4D4858;      /* guidetekst: 8,6:1                           */
-  --rule:#E7E2EE;
-  --edge-ui:#827C8E;
+  --chalk:#12141A;          /* broedtekst: nøytral, ikke lilla-undertone    */
+  --chalk-dim:#4A4E58;      /* guidetekst                                  */
+  --rule:#E2E5EA;
+  --edge-ui:#7A7F8A;
   --ember:#C24F15;
   --gold-metal:#FBE16B;     /* FLATE: markoerer og stegtall - merke-gult   */
   --on-gold:#14101C;        /* tekst PAA gult, samme i begge temaer: 15:1  */
@@ -606,7 +601,26 @@ button.row:first-child{border-top:0}
 .learn dt{font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;
   color:var(--chalk-dim);font-family:var(--display);font-weight:700}
 .learn dd{margin:0 0 9px;font-size:.9rem;color:var(--chalk-dim)}
-.aca-t{margin:34px 0 4px;font-size:1.15rem}
+.aca-t{margin:4px 0 6px;font-size:1.55rem;font-weight:800;letter-spacing:-.02em;line-height:1.2;color:var(--chalk)}
+.aca-lede{margin:0 0 14px;max-width:36rem;font-size:1.02rem;line-height:1.5;color:var(--chalk-dim)}
+html[data-font="nastaliq"] .aca-t{font-size:1.45rem;line-height:1.55}
+html[data-font="nastaliq"] .aca-lede{font-size:1.05rem;line-height:1.75}
+/* Learn folder: one title like Start/Products — hide duplicate «Aimpire Academy». */
+.shell[data-view="learn"] #vhead{margin:4px 0 10px;padding:0}
+.shell[data-view="learn"] #vhead .vtx b{font-size:1.85rem;max-width:14ch}
+.shell[data-view="learn"] #vhead .vtx span{max-width:40ch;font-size:.98rem;line-height:1.45}
+.shell[data-view="learn"] #aca-t{display:none}
+.shell[data-view="learn"] #aca-lede{
+  display:block;margin:0 0 12px;max-width:36rem;
+  font-size:1.02rem;line-height:1.55;color:var(--chalk-dim)}
+.shell[data-view="learn"] #aca-path{
+  margin:0 0 14px;padding:0 0 12px;border-bottom:1px solid var(--rule);
+  font:600 .82rem/1.45 var(--face);color:var(--chalk-dim);letter-spacing:.01em;max-width:42ch}
+html[data-font="nastaliq"] .shell[data-view="learn"] #vhead .vtx b{font-size:1.55rem;line-height:1.5;max-width:none}
+html[data-font="nastaliq"] .shell[data-view="learn"] #aca-lede{font-size:1.05rem;line-height:1.75}
+/* Dictionary is secondary under the Academy corridor. */
+#s-learn > #t-learn{margin:28px 0 4px;font-size:1.05rem;font-weight:700;color:var(--chalk-dim);letter-spacing:0}
+#s-learn > #learn-lede{font-size:.92rem;color:var(--chalk-dim)}
 .learn .les{padding:4px 16px 18px}
 .learn .les h4{margin:16px 0 4px;font-size:.98rem;color:var(--chalk)}
 .learn .les p{margin:0;font-size:.95rem;line-height:1.65;color:var(--chalk-dim)}
@@ -1013,24 +1027,44 @@ html[dir="rtl"] .iqsteps li{padding:14px 58px 14px 14px}
 @keyframes iqrise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 .iqrb{margin:0;font-size:.92rem;line-height:1.5}
 .short .iqic.emo{background:var(--ink-raise,rgba(127,127,127,.08));border:1px solid var(--rule);font-size:1.35rem;line-height:1}
-.shchips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
-.shchip{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:14px 6px;border-radius:16px;border:1px solid var(--rule);animation:iqpop .45s ease both;animation-delay:var(--d)}
-.shchip b{font:900 1.35rem/1 var(--display);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.shchip span{font-size:.75rem;line-height:1.3;color:var(--chalk-dim)}
+.shchips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:16px;max-width:100%;overflow:hidden}
+.shchip{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:14px 6px;border-radius:16px;border:1px solid var(--rule);animation:iqpop .45s ease both;animation-delay:var(--d);min-width:0;overflow-wrap:anywhere}
+.shchip b{font:900 1.35rem/1 var(--display);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;max-width:100%;overflow-wrap:anywhere}
+.shchip span{font-size:.75rem;line-height:1.3;color:var(--chalk-dim);max-width:100%;overflow-wrap:anywhere}
 .short .iqex > p{margin:0}
 .shmore{margin-top:18px}
-/* Academy-kort (founder 17.10 20:15) */
-#academy summary{display:flex !important;align-items:center;gap:12px}
-#academy .lic{position:relative;flex:0 0 46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:1.35rem;
-  background:linear-gradient(var(--ink),var(--ink)) padding-box,var(--grad) border-box;border:1.5px solid transparent}
-#academy .lic b{position:absolute;top:-6px;inset-inline-start:-6px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--grad);color:#08080B;font:900 .7rem/20px var(--display);text-align:center}
-#academy .ltx{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
-#academy .ltx .lt{font-weight:800}
-#academy .lok{flex:0 0 auto;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#16C47F;color:#08080B;font-weight:900;font-size:.85rem}
-#academy summary.done .lic{opacity:.85}
-#academy .lpro{display:flex;align-items:center;gap:10px;margin:0 0 12px;font:800 .82rem/1 var(--display);color:var(--chalk-dim)}
-#academy .lpro i{flex:1;height:6px;border-radius:3px;background:var(--rule);overflow:hidden}
-#academy .lpro i b{display:block;height:100%;background:var(--grad);border-radius:3px}
+/* Academy lesson corridor — Start/Products hairline grammar (after #383). */
+#academy.acorridor{display:flex;flex-direction:column;gap:0;margin:0 0 18px;
+  border:0;border-bottom:1px solid var(--rule);background:transparent}
+#academy.acorridor > details,
+#academy.acorridor > details[open]{
+  background:transparent !important;border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;box-shadow:none !important}
+#academy.acorridor > details:last-of-type{border-bottom:0 !important}
+#academy summary{display:flex !important;flex-wrap:nowrap !important;align-items:flex-start;gap:12px;
+  padding:14px 2px 16px !important;border:0 !important;min-height:0}
+#academy summary::after{order:4;color:var(--chalk-dim);font-weight:500;font-size:1rem;line-height:1.7rem;margin-top:0}
+#academy .lic{position:relative;flex:0 0 auto;width:1.7rem;height:1.7rem;margin-top:2px;border-radius:8px;display:grid;place-items:center;
+  font:700 .72rem/1 var(--display);background:var(--rule);color:var(--chalk);border:0;box-shadow:none}
+#academy .lic b{position:static;min-width:0;height:auto;padding:0;border-radius:0;background:none;color:inherit;font:inherit;text-align:center}
+#academy .ltx{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;order:1}
+#academy .ltx .lt{font:700 1.05rem/1.25 var(--display);letter-spacing:-.01em;color:var(--chalk)}
+#academy .ltx .sub{display:block;order:unset;flex:none;width:auto;height:auto;margin:0;padding:0;
+  border:0;border-radius:0;background:none;box-shadow:none;
+  font:500 .92rem/1.45 var(--face);color:var(--chalk-dim);max-width:42ch}
+#academy .lok{flex:0 0 auto;order:3;width:auto;height:auto;margin-top:4px;border-radius:0;display:inline;
+  background:none;color:var(--chalk-dim);font:600 .8rem/1 var(--face);opacity:.9}
+#academy summary.done .lic{opacity:1;background:color-mix(in srgb,var(--chalk) 16%,transparent)}
+#academy summary.done .lt{color:var(--chalk-dim)}
+#academy .lpro{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px 12px;
+  margin:0;padding:10px 2px 12px;font:600 .82rem/1.35 var(--face);color:var(--chalk-dim);
+  border-bottom:1px solid var(--rule)}
+#academy .lpro i{flex:none;width:auto;height:3px;border-radius:2px;background:var(--rule);overflow:hidden}
+#academy .lpro i b{display:block;height:100%;background:color-mix(in srgb,var(--chalk) 42%,transparent);border-radius:2px}
+#academy .lbadge{margin:0;padding:10px 2px 4px;border:0;border-radius:0;text-align:start;font:600 .9rem/1.4 var(--face);background:transparent;color:var(--chalk-dim)}
+#academy .les{padding:8px 2px 18px !important;border-top:1px solid var(--rule)}
+#academy .les h4{margin:14px 0 4px;font:700 1rem/1.3 var(--display);color:var(--chalk)}
+#academy .les p{margin:0;font-size:.92rem;line-height:1.55;color:var(--chalk-dim);max-width:42ch}
 
 .snhalal{margin-top:18px;padding:14px 16px;border-radius:18px;border:1px solid var(--rule);background:var(--ink-raise,rgba(127,127,127,.06))}
 .snhalal h4{margin:0 0 4px;font:800 1rem/1.25 var(--display)}
@@ -1113,20 +1147,29 @@ html[data-page="leaders"] .tape2,html[data-page="leaders"] .nradar,html[data-pag
 /* ---------- hovedmeny ---------- */
 .menu{display:grid;gap:10px;padding:6px 0 0}
 /* Hjemskjerm v2 (founder 17.10 19:56) */
-.ldkit{margin-top:28px}
-.ldkit .kh{margin:0 0 4px;font:800 1.15rem/1.25 var(--display)}
-.ldkit .kl{margin:0 0 12px;font-size:.9rem;color:var(--chalk-dim)}
-.ldkit .kg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.ldkit .kt.ktmin{grid-column:1 / -1;flex-direction:row;align-items:center;border:1.5px solid transparent !important;
-  background:linear-gradient(var(--ink),var(--ink)) padding-box,var(--grad) border-box !important}
-/* #247: på mobil står verktøykassen først (flex-rekkefølge); på PC ligger den allerede øverst ved siden av skjemaet */
-@media (max-width:1023px){ html[data-page="leaders"] #s-leaders{display:flex;flex-direction:column} html[data-page="leaders"] #s-leaders > .ldkit{order:-1;margin:0 0 22px} }
-.ldkit .kt{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:16px;text-decoration:none;color:var(--chalk);
-  background:linear-gradient(var(--ink-raise,#1A1A22),var(--ink-raise,#1A1A22)) padding-box,var(--grad) border-box;border:1.5px solid transparent}
-.ldkit .ki{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:1.3rem;background:var(--ink);border:1px solid var(--rule)}
-.ldkit .kx{display:flex;flex-direction:column;gap:2px}
-.ldkit .kx b{font:800 .95rem/1.2 var(--display)}
-.ldkit .kx small{font-size:.78rem;line-height:1.3;color:var(--chalk-dim)}
+/* #247/#308 lift: toolbox-first — hairline list (not 2-col SaaS cards); Min side = one interactive row */
+.ldkit{margin:0 0 22px;order:0}
+/* #308: ingen .kh under h2 — seksjonen starter paa ingress (.kl) */
+.ldkit .kl{margin:0 0 14px;font-size:.9rem;line-height:1.45;color:var(--chalk-dim)}
+#ld-mine > .short.nofold{margin:4px 0 16px}
+.ldkit .kg{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--rule)}
+.ldkit .kt{display:flex;flex-direction:row;align-items:flex-start;gap:12px;padding:14px 0;border-radius:0;text-decoration:none;color:var(--chalk);
+  background:transparent;border:0;border-bottom:1px solid var(--rule);box-shadow:none}
+.ldkit .kt:hover,.ldkit .kt:focus-visible{background:color-mix(in srgb,var(--chalk) 4%,transparent)}
+.ldkit .ki{width:22px;height:22px;border-radius:0;display:grid;place-items:center;font-size:.95rem;background:transparent;border:0;opacity:.85;flex:0 0 auto;margin-top:2px}
+.ldkit .kx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ldkit .kx b{font:700 .95rem/1.25 var(--display)}
+.ldkit .kx small{font-size:.78rem;line-height:1.35;color:var(--chalk-dim)}
+/* Min side = interactive row inside toolbox (not page hero) */
+.ldkit .ldmin{display:grid;gap:4px;margin-top:16px;padding:14px 0;border-radius:0;border:0;border-top:1px solid var(--rule);
+  background:transparent;text-align:start;cursor:pointer;color:inherit;font:inherit;width:100%;box-shadow:none}
+.ldkit .ldmin:hover,.ldkit .ldmin:focus-visible{color:var(--chalk)}
+.ldkit .ldmin:focus-visible{outline:2px solid #15D8C4;outline-offset:2px}
+.ldkit .ldmin b{font:700 1rem/1.25 var(--display)}
+.ldkit .ldmin small{font-size:.82rem;line-height:1.4;color:var(--chalk-dim)}
+.ldkit .ldmin .ldmin-go{margin-top:4px;font:650 .86rem/1.3 var(--face);color:var(--chalk-dim)}
+#s-leaders .tool{order:1}
+#s-leaders .tool .ldmine-h{margin:0 0 10px;font:800 1.05rem/1.25 var(--display)}
 
 .jump button .ti{margin-inline-end:5px}
 #faq-list .qa summary{display:flex !important;align-items:center;gap:10px}
@@ -1142,7 +1185,7 @@ html[data-page="leaders"] .tape2,html[data-page="leaders"] .nradar,html[data-pag
 .wotd .wd{font-size:.9rem;line-height:1.45;color:var(--chalk-dim)}
 .wotd .wm{font:700 .82rem/1 var(--display);color:var(--gold-soft,#5EE6D6)}
 html[dir="rtl"] .wotd .wm{unicode-bidi:plaintext}
-#academy .lbadge{margin:0 0 12px;padding:12px 14px;border-radius:14px;text-align:center;font:800 .95rem/1.3 var(--display);background:var(--grad);color:#08080B}
+/* #academy .lbadge soft whisper — rule lives with .acorridor above */
 
 .vpnbox{margin:12px 0 0;padding:12px 14px;border-radius:14px;border:1px dashed var(--rule);background:var(--ink-deep)}
 .vpnbox p{margin:0 0 10px;font-size:.88rem;line-height:1.45;color:var(--chalk-dim)}
@@ -1176,20 +1219,7 @@ html[dir="rtl"] .vhead::after{-webkit-mask-image:linear-gradient(270deg,transpar
 .goals .gl{font-size:.82rem;font-weight:700;line-height:1.25}
 :root[data-theme="light"] .goals .goal{background:rgba(0,0,0,.04)}
 .mfeat{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.mfeat .plate:only-child{grid-column:1 / -1}
-/* #256: pip-linjalen i Lær */
-.pipr{display:grid;gap:10px;padding:14px;border:1px solid var(--rule);border-radius:16px;background:var(--ink-deep)}
-.pipr .prad{display:flex;gap:6px;flex-wrap:wrap}
-.pipr .prad button{flex:1;min-height:44px;border-radius:999px;border:1.5px solid var(--rule);background:transparent;color:var(--chalk);font:700 .9rem/1 var(--face);cursor:pointer}
-.pipr .prad button.on{background:var(--grad);color:#08080B;border-color:transparent}
-.pipr .ppris{font:800 1.35rem/1.3 var(--mono);text-align:center;white-space:nowrap;overflow-x:auto}
-.pipr .ppris b{padding:0 3px;border-radius:6px;background:linear-gradient(135deg,#15D8C4,#5B8BFF);color:#08080B}
-.pipr .pslide{width:100%;min-height:36px;accent-color:#15D8C4}
-.pipr .pres{font:800 1.15rem/1.3 var(--mono);text-align:center}
-.pipr .pres.pos{color:#3DDC97} .pipr .pres.neg{color:#FF6B6E}
-:root:not([data-theme="dark"]) .pipr .pres.pos{color:#0E8A5A} :root:not([data-theme="dark"]) .pipr .pres.neg{color:#C62828}
-.pipr .pnote{font-size:.86rem;line-height:1.4;color:var(--chalk-dim);text-align:center}
-.pipr .pnote:empty{display:none}   /* #254: ett kort alene = hele bredden */
+.mfeat .plate:only-child{grid-column:1 / -1}   /* #254: ett kort alene = hele bredden */
 .mneste{margin-bottom:18px}
 .mneste .plate{min-height:0;border-color:color-mix(in srgb,#15D8C4 45%,var(--rule))}
 .mib{margin-top:14px}
@@ -1554,7 +1584,10 @@ html[data-font="nastaliq"] .qa summary{font-weight:400}
    knappenivaaer, én regel for aktive brikker (fylt jet), to fremhevede kort
    paa menyen og resten som liste. Bare CSS + menyens gruppering; ingen tekst.
    ============================================================ */
-:root{--aim:var(--grad-ink);--r-card:16px;--r-btn:14px;--r-chip:999px;--r-in:12px}
+/* #323 craft: radius-hierarki — pill kun primary CTA + språk/tema (B-049); øvrig tool. */
+:root{--aim:var(--grad-ink);--r-card:16px;--r-btn:14px;--r-tool:12px;--r-pill:999px;--r-chip:12px;--r-in:12px;
+  --cta-shadow:0 14px 32px -18px rgba(21,216,196,.45)}
+:root:not([data-theme="dark"]){--cta-shadow:0 12px 28px -16px rgba(12,127,120,.32)}
 
 /* --- Nivaa 1: hovedhandling. Fylt jet, siktelinje under teksten. --- */
 .out .apply,.nextb,.joinbtn{
@@ -2049,7 +2082,18 @@ html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
 @media (prefers-reduced-motion:reduce){.mknow .mkpx.opp,.mknow .mkpx.ned{animation:none}}
 
 .mknow .mkhd{display:flex;align-items:center;gap:8px}
-#mk-now{margin-top:18px}
+#mk-now{margin-top:0}
+/* #254 Trust foyer (design-lift): marked under fold som lukket disclosure — ikke terminal øverst. */
+.mk-box{margin:14px 0 6px;border:0;border-top:1px solid var(--rule);border-radius:0;background:transparent;overflow:visible}
+.mk-box > summary{list-style:none;cursor:pointer;padding:12px 0;font:650 .88rem/1.35 var(--face);color:var(--chalk-dim);display:flex;align-items:center;justify-content:space-between;gap:10px;letter-spacing:0}
+.mk-box > summary::-webkit-details-marker{display:none}
+.mk-box > summary::after{content:"+";font:650 1rem/1 var(--face);color:var(--chalk-dim)}
+.mk-box[open] > summary::after{content:"–"}
+.mk-box > summary:focus-visible{outline:2px solid #15D8C4;outline-offset:2px}
+.mk-box .mknow{border:0;border-radius:0;margin:0;background:transparent}
+.shell[data-view="menu"] .hero{padding-bottom:22px}
+/* #254 lift: foyer breathes — brand/hero ahead of markets hairline, no card shell on disclosure */
+.shell[data-view="menu"] .mast .wm{letter-spacing:.04em}
 .mknow .mkhd b{margin:0 !important}
 .mknow .live{position:relative;width:8px;height:8px;border-radius:50%;background:#16C47F}
 /* #100: ringen skaleres (transform/opacity, gaar paa grafikkortet) i stedet for box-shadow, som tegnet om hvert bilde. */
@@ -2530,11 +2574,75 @@ html,body{touch-action:pan-y pinch-zoom}
 .plfold[open] > summary::after{content:"\2212"}
 .plin{padding:0 16px 14px}
 #s-places{margin-top:0;padding-top:8px}
-/* To overskrifter oppaa hverandre paa Start (mappehodet «Kom i gang» + «Slik aapner du
-   kontoen»): mappehodet sier det, guide-overskriften skjules der. Strammere luft. */
+/* Start corridor: folder vhead is the only title (hide matching #t-guide via .dupl). */
 .shell[data-view="start"] #t-guide{display:none}
-.shell[data-view="start"] #s-guide,.shell[data-view="start"] #s-places{margin-top:14px;padding-top:0}
+.shell[data-view="start"] #guide-lede{display:block;margin:0 0 16px;max-width:36rem;font-size:1.02rem;line-height:1.55;color:var(--chalk-dim);white-space:pre-line}
+.shell[data-view="start"] #s-guide,.shell[data-view="start"] #s-places{margin-top:6px;padding-top:0}
 .shell[data-view="start"] #s-guide .short{margin-top:0}
+.shell[data-view="start"] #vhead{margin:4px 0 10px;padding:0}
+.shell[data-view="start"] #vhead .vtx b{font-size:1.85rem;max-width:14ch}
+.shell[data-view="start"] #vhead .vtx span{max-width:36ch;font-size:.98rem;line-height:1.45}
+/* Quiet phase rail — Academy/Products grammar, no emoji circles or gradient track. */
+.shell[data-view="start"] #s-guide .shpath{
+  display:flex;flex-wrap:nowrap;gap:0;margin:0 0 18px;padding:0 0 14px;overflow-x:auto;
+  border-bottom:1px solid var(--rule);-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.shell[data-view="start"] #s-guide .shpath::-webkit-scrollbar{display:none}
+.shell[data-view="start"] #s-guide .shpath::before{display:none}
+.shell[data-view="start"] #s-guide .shpath li{flex:1 1 0;min-width:4.2rem;animation:none;gap:6px}
+.shell[data-view="start"] #s-guide .shpath .shgo{gap:6px;min-height:44px}
+.shell[data-view="start"] #s-guide .shpath .e{
+  width:1.7rem;height:1.7rem;border-radius:8px;font:700 .72rem/1 var(--display);
+  background:var(--rule);color:var(--chalk);border:0;box-shadow:none}
+.shell[data-view="start"] #s-guide .shpath .t{font:600 .68rem/1.2 var(--face);letter-spacing:.01em;color:var(--chalk-dim)}
+.shell[data-view="start"] #s-guide .shpath li.ok .e{background:color-mix(in srgb,var(--chalk) 16%,transparent)}
+.shell[data-view="start"] #s-guide .shpath li.ok .e::after{display:none}
+.shell[data-view="start"] #s-guide .shpath li.nu .e{background:color-mix(in srgb,var(--chalk) 28%,transparent);color:var(--chalk)}
+.shell[data-view="start"] #s-guide .shpath li.nu .t{color:var(--chalk);font-weight:700}
+.shell[data-view="start"] #s-guide .shchips{display:none !important}
+/* Soft step corridor — tick is a quiet number, not a gold medal. */
+.shell[data-view="start"] #guide{border:0;border-block:1px solid var(--rule);padding:4px 0 8px;margin:0}
+.shell[data-view="start"] #guide::before{display:none}
+.shell[data-view="start"] #guide > li{padding:14px 0 18px;padding-inline-start:3.1rem;max-width:none;border-bottom:1px solid var(--rule)}
+.shell[data-view="start"] #guide > li:last-child{border-bottom:0;padding-bottom:8px}
+.shell[data-view="start"] #guide > li.folded{padding-bottom:12px}
+.shell[data-view="start"] #guide .tick{
+  inset-inline-start:0;top:10px;width:1.7rem;height:1.7rem;border-radius:8px;
+  background:var(--rule);border:0;color:var(--chalk);font:700 .72rem/1 var(--display);
+  box-shadow:none}
+.shell[data-view="start"] #guide .tick[aria-pressed="true"]{background:color-mix(in srgb,var(--chalk) 18%,transparent);color:var(--chalk-dim)}
+.shell[data-view="start"] #guide .tick[aria-pressed="true"]::after{display:none}
+.shell[data-view="start"] #guide > li.current .tick{background:color-mix(in srgb,var(--chalk) 26%,transparent)}
+.shell[data-view="start"] #guide > li.current > h3{font-size:1.12rem;letter-spacing:-.015em}
+.shell[data-view="start"] #guide h3 .sti{display:none}
+.shell[data-view="start"] #guide .markd{
+  margin-top:14px;border-radius:10px;border:1px solid var(--rule);background:transparent;
+  color:var(--chalk);font:600 .9rem/1.2 var(--face);padding:12px 14px;min-height:44px}
+.shell[data-view="start"] #guide .joinbtn{
+  background:transparent;color:var(--chalk);border:1px solid color-mix(in srgb,var(--chalk) 32%,transparent);
+  font-family:var(--face);font-weight:700}
+.shell[data-view="start"] #prog{
+  display:grid;grid-template-columns:1fr auto;gap:8px 12px;margin:0 0 8px;padding:0 0 14px;
+  border-bottom:1px solid var(--rule);font:600 .82rem/1.35 var(--face);color:var(--chalk-dim)}
+.shell[data-view="start"] #prog .bar.segbar{height:3px;border-radius:2px;background:var(--rule);overflow:hidden}
+.shell[data-view="start"] #prog .bar .segs{display:none}
+.shell[data-view="start"] #prog .bar > #prog-i{display:block;height:100%;background:color-mix(in srgb,var(--chalk) 42%,transparent);border-radius:2px}
+.shell[data-view="start"] .askspon{display:none !important}
+.shell[data-view="start"] .plfold{border:0;border-radius:0;background:transparent;border-bottom:1px solid var(--rule);margin:0 0 8px}
+.shell[data-view="start"] .plfold > summary{padding:12px 0;border-radius:0}
+.shell[data-view="start"] .plfold > summary::after{color:var(--chalk-dim);font-weight:500}
+.shell[data-view="start"] .start-more{margin:22px 0 8px;border:0;border-top:1px solid var(--rule);padding-top:4px;background:transparent}
+.shell[data-view="start"] .start-more > summary{
+  list-style:none;cursor:pointer;display:flex;flex-direction:column;gap:4px;padding:14px 0;
+  font:700 1rem/1.25 var(--display);color:var(--chalk)}
+.shell[data-view="start"] .start-more > summary::-webkit-details-marker{display:none}
+.shell[data-view="start"] .start-more > summary span{font:500 .88rem/1.4 var(--face);color:var(--chalk-dim);font-weight:500}
+.shell[data-view="start"] .start-more > summary::after{content:"+";margin-inline-start:auto;color:var(--chalk-dim);font-weight:500;align-self:flex-start}
+.shell[data-view="start"] .start-more[open] > summary::after{content:"\2212"}
+.shell[data-view="start"] .start-more .sm-in{display:grid;gap:8px;padding:0 0 12px}
+.shell[data-view="start"] .start-more .sec{margin:0;padding:12px 0;border-top:1px solid var(--rule)}
+.shell[data-view="start"] .start-more .sec > h2{font-size:1.15rem}
+html[data-font="nastaliq"] .shell[data-view="start"] #vhead .vtx b{font-size:1.55rem;line-height:1.5;max-width:none}
+html[data-font="nastaliq"] .shell[data-view="start"] #guide-lede{font-size:1.05rem;line-height:1.75}
 /* Fibonacci + journalkurve + median (K-118). */
 .fbcalc{display:grid;gap:12px}.fbcalc .cin{flex:none}
 .fbseg{grid-template-columns:repeat(2,1fr);margin:0}
@@ -2906,7 +3014,40 @@ button.pcard::after{content:"";position:absolute;inset-inline:0;top:0;height:3px
 .plive i{position:relative;width:7px;height:7px;border-radius:50%;background:#15D8C4}
 @media (prefers-reduced-motion:no-preference){.plive i::after{animation:plpuls 1.8s ease-in-out infinite}}
 @keyframes plpuls{0%{transform:scale(1);opacity:1}50%{transform:scale(2.4);opacity:0}100%{transform:scale(1);opacity:0}}
-.pcard.pmore{cursor:default;background:none;border-style:dashed}
+/* Products corridor: numbered Sonic→MT5 hairline path (Academy/Start grammar — not card souk). */
+.prodview .vhead{margin:4px 0 8px;padding:0}
+.prodview .vhead .vtx b{font-size:1.85rem;max-width:14ch}
+.prodview .vhead .vtx span{max-width:40ch;font-size:.98rem;line-height:1.45}
+.prodview .ppath{margin:0 0 14px;padding:0 0 12px;border-bottom:1px solid var(--rule);
+  font:600 .82rem/1.45 var(--face);color:var(--chalk-dim);letter-spacing:.01em;max-width:42ch}
+.pgrid-corridor{gap:0;margin:4px 0 18px;border-block:1px solid var(--rule)}
+.pgrid-corridor > .pcard.pstep{
+  display:grid;grid-template-columns:1.7rem minmax(0,1fr);column-gap:12px;row-gap:0;align-items:start;
+  border:0;border-radius:0;border-bottom:1px solid var(--rule);background:transparent;
+  padding:14px 2px 16px;overflow:visible;box-shadow:none}
+.pgrid-corridor > .pcard.pstep:last-child{border-bottom:0}
+.pgrid-corridor > .pcard.pstep > .spark{display:none}
+.pcard .pnum{display:inline-grid;place-items:center;min-width:1.6rem;height:1.6rem;border-radius:8px;font:700 .78rem/1 var(--display);background:var(--rule);color:var(--chalk)}
+.pgrid-corridor .pcard .pnum{width:1.7rem;height:1.7rem;min-width:1.7rem;margin-top:2px;font:700 .72rem/1 var(--display)}
+.pgrid-corridor .pbody{display:grid;gap:5px;min-width:0}
+.pgrid-corridor .pcard .ptop{justify-content:flex-start;gap:10px;align-items:baseline}
+.pgrid-corridor .pcard .pt{font:700 1.05rem/1.25 var(--display);letter-spacing:-.01em}
+.pgrid-corridor .pcard .pd{font-size:.92rem;line-height:1.45;max-width:42ch}
+.pgrid-corridor .plive{padding:0;border-radius:0;background:none;gap:5px;
+  font:600 .75rem/1.2 var(--face);color:var(--chalk-dim);letter-spacing:0}
+.pgrid-corridor .plive i{width:6px;height:6px}
+.pgrid-corridor .pfacts{gap:0;margin:2px 0 0;flex-wrap:wrap}
+.pgrid-corridor .pfacts .pf{padding:0;border:0;border-radius:0;background:none;
+  font:600 .8rem/1.4 var(--face);color:var(--chalk-dim)}
+.pgrid-corridor .pfacts .pf + .pf::before{content:"·";margin-inline:8px;opacity:.45;font-weight:500}
+.pgrid-corridor .pfacts .warnf{border:0;color:#A8420C}
+:root[data-theme="dark"] .pgrid-corridor .pfacts .warnf{color:#F08A4B}
+.pgrid-corridor .pcard .pm{margin-top:4px;font:600 .88rem/1.25 var(--face);color:var(--chalk-dim)}
+.pgrid-corridor > .pcard.pmore{grid-template-columns:1.7rem minmax(0,1fr);align-items:start;padding:14px 2px 12px}
+.pgrid-corridor > .pcard.pmore .pnum{background:transparent;color:var(--chalk-dim);font-weight:600}
+.pgrid-corridor > .pcard.pmore .pt{font-size:1.02rem}
+.pgrid-corridor > .pcard.pmore .pd{font-size:.9rem;max-width:42ch}
+.pcard.pmore{cursor:pointer;background:none;border-style:dashed}
 .tbb.tbhome svg{display:none}
 .tbring{display:grid;place-items:center;width:46px;height:46px;margin-top:-20px;border-radius:50%;
   background:var(--ink-raise);box-shadow:0 0 0 1.5px rgba(21,216,196,.55),0 6px 18px -6px rgba(27,79,216,.7);transition:box-shadow .2s}
@@ -2989,8 +3130,8 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .vhead .v
 .iqtree,.iqtrack{border:0;padding:6px 0;border-radius:0}
 .mfeat .plate > .stripe{display:none}
 .mfeat .plate .mic{background:none !important;border:0 !important;box-shadow:none !important;width:auto;height:auto;font-size:1.9rem;justify-content:start}
-#academy .lic{background:none;border:0;font-size:1.5rem}
-#academy .lic b{background:var(--chalk);color:var(--ink)}
+#academy .lic{background:var(--rule);border:0;font-size:.72rem}
+#academy .lic b{background:none;color:inherit}
 /* Flyt (iqflow) er en ekte rekkefølge: loddrett linje med punkter, ikke tre like kort side om side. */
 .iqflow{flex-direction:column;gap:0;margin:16px 0 0;margin-inline-start:9px;border-inline-start:2px solid var(--rule)}
 .iqflow > .iqarr{display:none}
@@ -3008,7 +3149,9 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .vhead .v
 #learn-list > details[open]{border-color:var(--gold-soft) !important}
 .slab.own{background:transparent !important;border:1.5px solid color-mix(in srgb,var(--chalk) 38%,transparent) !important}
 .slab.own .t{text-transform:none !important;letter-spacing:0 !important}
-.vpnb,.ldkit .kt,#spon .sharepill,.out .shareb,.iqbtn.ghost{background:transparent !important;border:1px solid color-mix(in srgb,var(--chalk) 28%,transparent) !important}
+.vpnb,#spon .sharepill,.out .shareb,.iqbtn.ghost{background:transparent !important;border:1px solid color-mix(in srgb,var(--chalk) 28%,transparent) !important}
+/* #247: kit tiles keep solid flate (not ghost/transparent Claude-pill look) */
+html[data-page="leaders"] .ldkit .kt{background:transparent !important;border:0 !important;border-bottom:1px solid var(--rule) !important}
 .llive{background:none;border:0;border-top:1px solid var(--rule);border-radius:0;padding:16px 0 4px;margin-top:18px}
 /* FAQ: en liste med hårfine skiller, ikke en stabel bokser. Spørsmålet bærer, ikonet er stille. */
 .qa{border:0;border-radius:0;background:none;margin:0;border-bottom:1px solid var(--rule)}
@@ -3027,6 +3170,12 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .vhead .v
 .pcard.pmore .mic{grid-row:1 / span 2}.pcard.pmore .pt{font-size:1.05rem}.pcard.pmore .pd{font-size:.9rem}
 .pcard.pmore::before,.pcard.pmore::after{display:none}
 .plate.feat::before,button.pcard::after{display:none}
+/* Products corridor wins over anti-mal card leftovers. */
+.pgrid-corridor > .pcard.pmore{padding:14px 2px 12px;grid-template-columns:1.7rem minmax(0,1fr);align-items:start;column-gap:12px}
+.pgrid-corridor > .pcard.pmore .pt{font-size:1.02rem}
+.pgrid-corridor > .pcard.pmore .pd{font-size:.9rem;max-width:42ch}
+.pgrid-corridor > button.pcard::after{display:none}
+
 /* Ingen farget sidekant på lister og tips (malspor): hårfin skillelinje i stedet. */
 .places > li{border-inline-start:0 !important;background:none !important;padding:14px 0;border-top:1px solid var(--rule)}
 .places > li:first-child{border-top:0}
@@ -3073,13 +3222,13 @@ html.ldvent #sh-s-leaders .shpath li.naa .t{color:var(--chalk)}
 .ldprev .lpw{display:flex;align-items:center;gap:8px;font:800 1rem/1.25 var(--face)}
 .ldprev .lpw i{font-style:normal;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#12A594;color:#fff;font-size:.75rem;flex:0 0 22px}
 .ldprev .lpu{font:600 .82rem/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--chalk-dim);word-break:break-all}
-/* PC/Mac (#232): skjema/lenke til venstre, verktøykassen ved siden av - begge synlige uten aa rulle forbi hverandre */
+/* #247: toolbox first (full width), Min side / form below — not side-by-side with form as hero */
 @media (min-width:1024px){
-  html[data-page="leaders"] #s-leaders{display:grid;grid-template-columns:minmax(0,1fr) 320px;column-gap:40px;align-items:start}
-  html[data-page="leaders"] #s-leaders > :not(.tool):not(.ldkit){grid-column:1 / -1}
-  html[data-page="leaders"] #s-leaders > .ldkit{grid-column:2;position:sticky;top:24px;margin-top:0}   /* ingen fast rad: legger seg i samme rad som skjemaet/lenken uansett tilstand */
+  html[data-page="leaders"] #s-leaders{display:grid;grid-template-columns:1fr;column-gap:0;align-items:start;max-width:720px}
+  html[data-page="leaders"] #s-leaders > :not(.tool):not(.ldkit){grid-column:1}
+  html[data-page="leaders"] #s-leaders > .ldkit{grid-column:1;position:static;margin-top:0}
   html[data-page="leaders"] #s-leaders > .tool{grid-column:1}
-  html[data-page="leaders"] #s-leaders .ldkit .kg{grid-template-columns:1fr}
+  html[data-page="leaders"] #s-leaders .ldkit .kg{display:flex;flex-direction:column}
 }
 .ldstatus{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:16px;margin:4px 0 14px;
   background:color-mix(in srgb,#16C784 10%,transparent)}
@@ -3181,30 +3330,355 @@ html[data-font="nastaliq"] .goals .goal{min-height:96px}
 .kbd{display:inline-block;min-width:1.5em;padding:1px 6px;border:1px solid var(--rule);border-bottom-width:2px;border-radius:6px;font:700 .72rem/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--chalk-dim);text-align:center}
 @media not all and (hover:hover) and (pointer:fine){.kbd{display:none}}
 
-/* #237 velkomstmodus: bare det enkle første gang (se erVelkomst) */
-html.velkomst #tape2,html.velkomst #tvtape,html.velkomst #oekt,html.velkomst #nradar,html.velkomst #keep,
-html.velkomst #menu-nav .goals,html.velkomst #menu-nav .wotd,html.velkomst #menu-nav .sharehint,html.velkomst #menu-nav .share,
-html.velkomst #menu-nav .plate[data-cat="ib"],html.velkomst #menu-nav .plate[data-cat="chat"],html.velkomst #menu-nav .plate[data-cat="faq"],
-html.velkomst #tabbar,html.velkomst .tourigjen,html.velkomst #q-open,html.velkomst #spon .owncta{display:none !important}
-html.velkomst body.has-tabbar{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
-html.velkomst #menu-nav .mlist{grid-template-columns:1fr}
-.vkfull{display:block;width:100%;margin:18px 0 6px;padding:14px 16px;border-radius:14px;border:1.5px solid var(--rule);background:transparent;color:var(--chalk);font:700 .95rem/1.2 var(--face);cursor:pointer}
-.vkfull[hidden],.vktilbake[hidden]{display:none}
-.vktilbake{position:fixed;inset-inline-start:12px;bottom:max(14px,env(safe-area-inset-bottom));z-index:56;padding:12px 18px;min-height:48px;border-radius:999px;border:0;
-  background:var(--jet);color:var(--jet-on);font:800 .9rem/1 var(--face);box-shadow:0 10px 30px -8px rgba(20,16,28,.45);cursor:pointer}
-.vkfull:focus-visible,.vktilbake:focus-visible{outline:2px solid #15D8C4;outline-offset:3px}
+/* =============================================================================
+   #323 hub craft follow-up — MERGE AFTER #271 (+ after #308 if both land)
+   Founder gate: #271 Trust foyer + #308 leder-toolbox still draft / founder preview.
+   CSS-only within B-049. Do NOT dual-edit foyer HTML (#271) or toolbox markup (#308).
+   Ban-list fail: glass · purple wash · pill clusters · card grids · radial glow blobs ·
+   Inter/system hero · multi soft-shadow «premium» · dashboard-in-hero.
+   Self-host fonts (assets/fonts) — PK. No new glass. Valg B (full pill ban) = founder.
+   ============================================================================= */
 
-/* #246 (founder 20.10 «turen lagde problemer på noen modeller»): color-mix() krever Chrome 111 / Samsung Internet 22 /
-   Safari 16.2 (2023). Eldre telefoner dropper hele deklarasjonen, og flater som ligger OVER innhold ble gjennomsiktige.
-   Her får de en vanlig farge. Moderne nettlesere hopper over blokka. Fargetoner på brikker o.l. faller bare bort (ufarlig). */
-@supports not (background: color-mix(in srgb, red 50%, blue)){
-  .topbar,html.fx .topbar,.sheet,.tvtape,.oekt,.nradar{background:var(--ink)}
-  .qans{background:var(--ink-raise,var(--ink))}
-  .vnote,.llive,.pfacts .pf,.ldpx{background:rgba(127,127,127,.08)}
-  .pfacts .warnf{border-color:#E8590C}
-  .ldprev{border-color:#15D8C4;background:rgba(21,216,196,.06)}
-  .slab.own,.vpnb,.ldkit .kt,#spon .sharepill,.out .shareb,.iqbtn.ghost{border-color:rgba(127,127,127,.4)}
-  .chip,.oekt .okchip{border-color:rgba(127,127,127,.35)}
+/* Marine vignette + micro-grain (studio depth — not flat ink, not purple orbs). */
+body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:
+  radial-gradient(120% 80% at 50% 110%,rgba(0,0,0,.42),transparent 55%),
+  radial-gradient(260px 200px at 90% -6%,rgba(21,216,196,.05),transparent 70%),
+  linear-gradient(168deg,#0A1220 0%,var(--ink) 48%,#06080E 100%)}
+body::after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.03;background:
+  repeating-linear-gradient(-12deg,transparent 0 2px,rgba(255,255,255,.55) 2px 3px);mix-blend-mode:overlay}
+:root:not([data-theme="dark"]) body::before{background:
+  radial-gradient(100% 70% at 50% 100%,rgba(11,35,65,.05),transparent 52%),
+  linear-gradient(180deg,#F3F6FA 0%,#E8EDF3 50%,#E0E6EE 100%)}
+:root:not([data-theme="dark"]) body::after{opacity:.022;mix-blend-mode:multiply}
+body{background:transparent}
+
+/* Språk/tema: B-049 ≤2 piller — behold. Øvrig chrome → tool-radius (kill pill clusters). */
+.switch .langbtn,
+.switch button,
+.switch .thm{border-radius:var(--r-pill)}
+.jump button,
+.cper button,
+.cpre button,
+.langs a,
+.script button,
+.sharemenu a,
+.sharemenu button,
+.iqchip,
+.iqbtn,
+.nextb,
+.vpnb,
+.out .apply,
+.alth b,
+.p2p .p2pv,
+#learn-list > details:not([open]),
+.keep-pill,
+.keep-go,
+.sbtn,
+.okchip,
+.oekt{border-radius:var(--r-tool) !important}
+
+/* Glass → solid (fail glassmorphism). PK / weak Android. */
+html.fx .topbar,
+.tabbar,
+.sheet,
+.tape2,
+#port .psplit{
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important}
+html.fx .topbar{
+  background:var(--ink-deep) !important;
+  border:1px solid var(--rule);
+  box-shadow:0 8px 20px -18px rgba(0,0,0,.4) !important}
+.tabbar,.sheet,.tape2{background:var(--ink-deep) !important}
+#port .psplit{background:rgba(7,10,18,.94) !important}
+
+/* Keep/clip: solid panel, not glass-pill. */
+.keep-pill{
+  border:1px solid var(--rule) !important;
+  background:var(--ink-deep) !important;
+  background-image:none !important}
+.keep.open{
+  background:var(--ink-deep);
+  border:1px solid var(--rule);
+  border-radius:var(--r-btn)}
+.clipf .play{
+  border-radius:var(--r-tool);
+  background:var(--ink-deep);
+  color:var(--chalk);
+  backdrop-filter:none;-webkit-backdrop-filter:none}
+
+/* Primary CTA: one shadow only (fail multi soft-glow «premium»). Gradient OK (B-049). */
+.slab.reg{
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.28),
+    var(--cta-shadow) !important}
+.slab.reg:hover,
+.slab.reg:active,
+:root:not([data-theme="dark"]) .slab.reg{
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.32),
+    var(--cta-shadow) !important}
+.tbb.tbhome[aria-current="page"] .tbring{
+  box-shadow:0 0 0 2px #15D8C4,0 0 12px rgba(21,216,196,.35) !important}
+
+/* Menu plates: tool-sharp list rows, not equal SaaS card grid. */
+.mfeat .plate,
+.mlist .plate,
+.plate{
+  border-radius:var(--r-btn) !important;
+  box-shadow:none !important;
+  background:var(--ink-deep) !important}
+.mfeat .plate > .mic,
+.mlist .plate .mic{
+  border-radius:var(--r-tool) !important;
+  background:transparent !important;
+  box-shadow:none !important}
+.goals .ggrid > *{border-radius:var(--r-tool) !important;box-shadow:none !important}
+
+/* Orb blobs: fail radial glow wallpaper — keep B-049 sky markup, kill intensity. */
+.sky .o1{background:radial-gradient(closest-side,rgba(21,216,196,.1),rgba(21,216,196,0))}
+.sky .o2{background:radial-gradient(closest-side,rgba(194,31,191,.06),rgba(194,31,191,0))}
+.sky .o3{background:radial-gradient(closest-side,rgba(251,225,107,.08),rgba(251,225,107,0))}
+:root[data-theme="dark"] .sky .o1{background:radial-gradient(closest-side,rgba(27,79,216,.16),rgba(27,79,216,0))}
+:root[data-theme="dark"] .sky .o2{background:radial-gradient(closest-side,rgba(194,31,191,.08),rgba(194,31,191,0))}
+
+:root[data-theme="dark"] .sky .o3{background:radial-gradient(closest-side,rgba(251,225,107,.07),rgba(251,225,107,0))}
+
+/* =============================================================================
+   Founder 7.11 / 8.11 AIM-95 — no leader chooser, quieter chrome
+   Kill sheet + conflict even if a stale SW paints old markup for one frame.
+   ============================================================================= */
+.ldpick,#nn-pick,#notice-conflict,#nc-keep,#nc-use{display:none !important}
+#notice-conflict{display:none !important}
+.msb .msi:empty{display:none}
+.msgrid{gap:6px}
+.msb{min-height:48px;padding:10px 12px}
+.tabbar .tbrow{gap:0}
+html .tabbar .tbrow .tbb span{font-size:var(--tbfs,.72rem)}
+.shell[data-view="menu"] .notices{margin-bottom:4px}
+#notice-none{padding:12px 14px}
+.shell[data-view="menu"] #notice-none h2,#notice-none h2{font-size:1rem;font-weight:700;line-height:1.3;margin:0 0 6px}
+.menu .mlede{display:none} /* lede repeats the plates */
+.shell[data-view="menu"] #notice-none{border:0;border-block:1px solid var(--rule);border-radius:0;background:transparent;box-shadow:none;padding:8px 2px 10px}
+.shell[data-view="menu"] #notice-none h2{font:650 .95rem/1.35 var(--face);color:var(--chalk);margin:0 0 8px}
+/* Home Join/Register: sentence-case calm door — not shouty UPPERCASE gradient pill. */
+.shell[data-view="menu"] #notice-none .slab.reg,
+.shell[data-view="menu"] #spon > .slab.reg{
+  border-radius:14px;min-height:46px;padding:12px 18px;margin:4px 0 0;max-width:100%;
+  background:color-mix(in srgb,var(--chalk) 8%,transparent);
+  border:1px solid color-mix(in srgb,#15D8C4 40%,var(--rule));
+  box-shadow:none !important;color:var(--chalk);text-align:start}
+.shell[data-view="menu"] #notice-none .slab.reg::after,
+.shell[data-view="menu"] #spon > .slab.reg::after{display:none}
+.shell[data-view="menu"] #notice-none .slab.reg:hover,
+.shell[data-view="menu"] #notice-none .slab.reg:active,
+.shell[data-view="menu"] #notice-none .slab.reg:focus-visible,
+.shell[data-view="menu"] #spon > .slab.reg:hover,
+.shell[data-view="menu"] #spon > .slab.reg:active,
+.shell[data-view="menu"] #spon > .slab.reg:focus-visible{
+  filter:none;transform:none;
+  background:color-mix(in srgb,#15D8C4 12%,transparent);
+  border-color:color-mix(in srgb,#15D8C4 55%,var(--rule));
+  box-shadow:none !important}
+.shell[data-view="menu"] #notice-none .slab.reg .t,
+.shell[data-view="menu"] #spon > .slab.reg .t{
+  text-transform:none !important;letter-spacing:0 !important;
+  font:700 .95rem/1.25 var(--face) !important;color:var(--chalk)}
+.shell[data-view="menu"] #notice-none .slab.reg .s,
+.shell[data-view="menu"] #spon > .slab.reg .s{color:var(--chalk-dim);opacity:1}
+#pille,#install-hint,.install,.appcta{font-size:.92rem}
+
+/* =============================================================================
+   Universal hub (founder 7.11): zero visible invite/leader credit on Home.
+   ?l= still locks sponsor silently for Register (B-023). No «{N} invited you»,
+   no Share/Follow/fingerprint strip. Invite-apply under More. No /hub/ny/.
+   ============================================================================= */
+.shell[data-view="menu"] #spon .sharepill,
+.shell[data-view="menu"] #spon .spmenu,
+.shell[data-view="menu"] #spon .sosplass,
+.shell[data-view="menu"] #spon .owngrp,
+.shell[data-view="menu"] #spon .spmore,
+.shell[data-view="menu"] #spon .dcheck,
+.shell[data-view="menu"] #spon .who,
+.shell[data-view="menu"] #spon .avi,
+.shell[data-view="menu"] #spon .ok,
+.shell[data-view="menu"] #spon .spdet,
+.shell[data-view="menu"] #nn-who,
+.shell[data-view="start"] .stegspon .ssrow,
+.shell[data-view="start"] .stegspon .ssfp{display:none !important}
+.shell[data-view="menu"] #notice-none .ownhint,
+.shell[data-view="menu"] #notice-none a.dlink[href="ledere.html"],
+.shell[data-view="menu"] #notice-none #nn-own{display:none !important}
+.shell[data-view="menu"] .goals{display:none !important}
+.shell[data-view="menu"] .menu > button.share,
+.shell[data-view="menu"] .sharehint{display:none !important}
+/* Post-merge polish: IB invite pitch + secondary plate grid fight the linktree.
+   IB door = home-tree login. Sonic/Products live in the tab bar. Academy corridor stays. */
+.shell[data-view="menu"] .mib{display:none !important}
+.shell[data-view="menu"] .mlist{display:none !important}
+.shell[data-view="menu"] .keep:not(.open){margin:8px 0 4px}
+.shell[data-view="menu"] .keep-pill{
+  width:100%;justify-content:center;min-height:40px;padding:0 12px;
+  border-radius:12px;font:650 .86rem/1.25 var(--face);color:var(--chalk-dim);
+  border:1px solid var(--rule);background:transparent;box-shadow:none}
+.shell[data-view="menu"] .wotd{margin-top:4px}
+.shell[data-view="menu"] .wotd .we{display:none} /* emoji book = clutter above markets */
+.msb .msi{display:none !important} /* More: text rows only, no emoji tiles */
+.msgrid{display:flex !important;flex-direction:column;gap:0 !important}
+.msb{
+  min-height:44px;padding:10px 4px !important;border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important;
+  flex-direction:row !important;align-items:center !important;gap:0 !important}
+.msb:last-child{border-bottom:0 !important}
+.msb .mst{font:650 .92rem/1.3 var(--face);color:var(--chalk)}
+.mstema{display:flex;gap:8px;margin:0 0 8px;padding:0 0 8px;border-bottom:1px solid var(--rule)}
+.mstema button{
+  flex:1;min-height:40px;border-radius:12px !important;border:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important;font:650 .86rem/1.2 var(--face)}
+.mstema button[aria-pressed="true"]{
+  border-color:color-mix(in srgb,#15D8C4 55%,var(--rule)) !important;
+  color:var(--chalk) !important;background:color-mix(in srgb,#15D8C4 10%,transparent) !important}
+
+/* Home linktree — calm stacked portals (not cards). URLs from links.platform. */
+.htree{margin:2px 0 10px;padding:0;max-width:var(--measure)}
+.htree .htt{margin:0 0 4px;font:650 .78rem/1.3 var(--face);letter-spacing:.02em;
+  text-transform:none;color:var(--chalk-dim)}
+.htree .hta{display:flex;align-items:center;gap:12px;min-height:50px;padding:10px 2px;
+  border:0;border-bottom:1px solid var(--rule);text-decoration:none;color:inherit;
+  background:transparent;border-radius:0;box-shadow:none;transition:opacity .15s ease}
+.htree .hta:first-of-type{border-top:1px solid var(--rule)}
+.htree .hta:active{opacity:.72}
+.htree .hta:focus-visible{outline:2px solid #15D8C4;outline-offset:3px}
+.htree .hti{width:28px;height:28px;object-fit:contain;flex:0 0 auto;border-radius:6px}
+.htree .htn{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;text-align:start}
+.htree .htn b{font:650 .92rem/1.25 var(--face);color:var(--chalk);letter-spacing:-.01em}
+.htree .htn span{font:500 .76rem/1.35 var(--face);color:var(--chalk-dim)}
+.htree .htg{flex:0 0 auto;color:var(--chalk-dim);font-size:1.05rem;line-height:1}
+html[dir="rtl"] .htree .htg{transform:scaleX(-1)}
+@media (prefers-reduced-motion:reduce){.htree .hta{transition:none}}
+/* Get set up residual after Start craft (#381): same portal hairline as linktree —
+   not an elevated feat plate shouting under calm login doors. */
+.shell[data-view="menu"] .htree{margin-bottom:0}
+.shell[data-view="menu"] .mneste{
+  margin:0 0 6px !important;padding:0;border:0 !important;border-block:0 !important;
+  background:transparent !important;gap:0 !important}
+.shell[data-view="menu"] .mneste .plate,
+.shell[data-view="menu"] .mneste .plate.feat{
+  display:grid !important;grid-template-columns:1fr auto !important;
+  grid-template-areas:"bd go" !important;align-items:center;gap:8px 12px;
+  padding:12px 2px !important;min-height:50px !important;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important;
+  animation:none !important}
+.shell[data-view="menu"] .mneste .plate > .stripe,
+.shell[data-view="menu"] .mneste .plate > .mic{display:none !important}
+.shell[data-view="menu"] .mneste .plate > .bd{grid-area:bd;padding:0 !important}
+.shell[data-view="menu"] .mneste .plate > .go{grid-area:go;position:static !important;inset:auto !important}
+.shell[data-view="menu"] .mneste .plate .t{
+  font:650 .92rem/1.25 var(--face) !important;letter-spacing:-.01em;margin:0 0 2px;color:var(--chalk)}
+.shell[data-view="menu"] .mneste .plate .d{
+  font:500 .76rem/1.35 var(--face) !important;color:var(--chalk-dim);margin:0}
+.shell[data-view="menu"] .mneste .plate .pg{margin-top:6px;max-width:12rem}
+.shell[data-view="menu"] .mneste .plate .nx{font:500 .74rem/1.3 var(--face);color:var(--chalk-dim);margin-top:4px}
+
+/* =============================================================================
+   #323 craft elevate v2 — CSS-only after #271/#308 (no foyer/toolbox HTML dual-edit)
+   Kill remaining Claude-tells: 2-col emoji feature cards, violet preview ink,
+   card-lift hover, WOTD/goals as equal SaaS tiles.
+   ============================================================================= */
+
+/* .mfeat → single-column hairline corridor (not 2-col emoji feature grid). */
+.mfeat{
+  display:flex !important;flex-direction:column;gap:0 !important;
+  border:0;border-block:1px solid var(--rule);border-radius:0 !important;
+  background:transparent !important;padding:0;margin:10px 0 14px}
+.mfeat .plate,
+.mfeat .plate.feat{
+  display:grid !important;
+  grid-template-columns:1fr auto !important;
+  grid-template-areas:"bd go" !important;
+  align-items:center;gap:8px 12px;
+  min-height:0 !important;
+  padding:14px 2px !important;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;
+  box-shadow:none !important;overflow:visible}
+.mfeat .plate:last-child{border-bottom:0 !important}
+.mfeat .plate > .stripe,
+.mfeat .plate > .mic{display:none !important}   /* emoji plate = Claude-tell */
+.mfeat .plate > .bd{grid-area:bd;padding:0 !important}
+.mfeat .plate > .go{grid-area:go;position:static !important;inset:auto !important}
+.mfeat .plate .t{font-size:1.05rem !important;margin:0 0 2px}
+.mfeat .plate .d{font-size:.86rem;line-height:1.4}
+.mneste{margin-bottom:10px !important;border-color:color-mix(in srgb,#15D8C4 35%,var(--rule))}
+.mneste .plate{border-color:transparent !important}
+
+/* Shortcut grid → one-column hairline (fail equal card tiles). */
+.mlist.mgrid{
+  display:flex !important;flex-direction:column;gap:0 !important;
+  border-block:1px solid var(--rule);padding:0;margin:8px 0 12px}
+.mlist.mgrid .plate{
+  display:grid !important;grid-template-columns:1fr auto !important;
+  grid-template-rows:auto !important;gap:6px 10px;
+  padding:12px 2px !important;border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+.mlist.mgrid .plate:last-child{border-bottom:0 !important}
+.mlist.mgrid .plate > .mic{display:none !important}
+.mlist.mgrid .plate > .bd{padding:0 !important}
+.mlist.mgrid .plate:last-child:nth-child(odd){grid-column:auto}
+@media (min-width:1024px){
+  .mlist.mgrid{grid-template-columns:none}
+  .goals .ggrid{grid-template-columns:1fr !important}
+}
+
+/* Goals: verb list, not 3/6 emoji tile strip. */
+.goals .ggrid{
+  display:flex !important;flex-direction:column;gap:0 !important;
+  border-block:1px solid var(--rule);margin-top:6px}
+.goals .ggrid > *{
+  display:flex;align-items:center;gap:10px;
+  min-height:44px;padding:10px 2px;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+.goals .ggrid > *:last-child{border-bottom:0 !important}
+.goals .gi{font-size:1rem;opacity:.85}
+
+/* Word of the day: hairline panel, not rounded promo card. */
+.wotd{
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;
+  padding:12px 2px !important;margin:8px 0 12px !important}
+.wotd .we{display:none}   /* book emoji tell */
+
+/* Remaining violet preview ink (#FBFAFD) → neutral studio paper. */
+#port .pth.light{background:#F7F8FA !important;color:#12141A}
+#tema .pv.l{background:#F7F8FA !important}
+#tema .pv.l i{background:#12141A}
+
+/* No card-lift hover (premium SaaS tell). */
+@media (hover:hover) and (pointer:fine){
+  .mlist.mgrid > li > a:hover,
+  .mlist.mgrid > li > button:hover,
+  .mlist.mgrid .plate:hover,
+  .goals .ggrid > *:hover,
+  .mfeat .plate:hover{transform:none !important}
+}
+
+/* Hero sub: calm measure — trust line, not marketing paragraph. */
+.hero p#hsub{
+  max-width:34rem;font-size:.98rem;line-height:1.45;
+  color:var(--chalk-dim);letter-spacing:.005em}
+html[data-font="nastaliq"] .hero p#hsub{font-size:1.02rem;line-height:1.7}
+
+/* Intentional motion (2–3): presence, not noise. Respect reduced-motion. */
+@keyframes hairlineIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.mfeat .plate,.mneste .plate{
+  animation:hairlineIn .48s cubic-bezier(.2,.7,.3,1) both}
+.mfeat .plate:nth-child(2){animation-delay:.07s}
+.hero p#hsub{animation:hairlineIn .55s .1s cubic-bezier(.2,.7,.3,1) both}
+.mast .wordmark{animation:hairlineIn .5s cubic-bezier(.2,.7,.3,1) both}
+@media (prefers-reduced-motion:reduce){
+  .mfeat .plate,.mneste .plate,.hero p#hsub,.mast .wordmark{animation:none !important}
 }
 </style>
 </head>
@@ -3213,7 +3687,7 @@ html.velkomst #menu-nav .mlist{grid-template-columns:1fr}
 <script>/* Telefoner med kraft faar den loepende pulsen i bakgrunnen (se .nt .cm). */
 try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory || navigator.deviceMemory >= 4)) document.documentElement.classList.add("fx"); }catch(e){}</script>
 <div class="sky" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i><div class="neon" aria-hidden="true"><div class="nt nt1"><svg viewBox="0 0 1600 100" preserveAspectRatio="none"><defs><linearGradient id="ng1" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1600" y2="0"><stop offset="0.000" stop-color="#15D8C4"/><stop offset="0.125" stop-color="#1B4FD8"/><stop offset="0.250" stop-color="#C21FBF"/><stop offset="0.375" stop-color="#FBE16B"/><stop offset="0.500" stop-color="#15D8C4"/><stop offset="0.625" stop-color="#1B4FD8"/><stop offset="0.750" stop-color="#C21FBF"/><stop offset="0.875" stop-color="#FBE16B"/><stop offset="1" stop-color="#15D8C4"/></linearGradient><linearGradient id="ng2" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1600" y2="0"><stop offset="0.000" stop-color="#C21FBF"/><stop offset="0.125" stop-color="#FBE16B"/><stop offset="0.250" stop-color="#15D8C4"/><stop offset="0.375" stop-color="#1B4FD8"/><stop offset="0.500" stop-color="#C21FBF"/><stop offset="0.625" stop-color="#FBE16B"/><stop offset="0.750" stop-color="#15D8C4"/><stop offset="0.875" stop-color="#1B4FD8"/><stop offset="1" stop-color="#C21FBF"/></linearGradient></defs><g class="nc"><line class="cu" x1="10.0" x2="10.0" y1="47.6" y2="61.0"/><rect class="cu" x="6.0" y="50.5" width="8.0" height="6.3"/><line class="cd" x1="30.0" x2="30.0" y1="47.1" y2="57.7"/><rect class="cd" x="26.0" y="50.5" width="8.0" height="2.7"/><line class="cu" x1="50.0" x2="50.0" y1="41.1" y2="55.5"/><rect class="cu" x="46.0" y="45.6" width="8.0" height="7.7"/><line class="cd" x1="70.0" x2="70.0" y1="43.5" y2="51.6"/><rect class="cd" x="66.0" y="45.6" width="8.0" height="1.2"/><line class="cu" x1="90.0" x2="90.0" y1="40.8" y2="49.1"/><rect class="cu" x="86.0" y="43.8" width="8.0" height="2.4"/><line class="cu" x1="110.0" x2="110.0" y1="29.9" y2="47.7"/><rect class="cu" x="106.0" y="35.8" width="8.0" height="8.0"/><line class="cd" x1="130.0" x2="130.0" y1="30.5" y2="39.9"/><rect class="cd" x="126.0" y="35.8" width="8.0" height="1.2"/><line class="cu" x1="150.0" x2="150.0" y1="23.1" y2="38.6"/><rect class="cu" x="146.0" y="27.6" width="8.0" height="8.3"/><line class="cu" x1="170.0" x2="170.0" y1="21.9" y2="33.1"/><rect class="cu" x="166.0" y="26.5" width="8.0" height="1.2"/><line class="cu" x1="190.0" x2="190.0" y1="21.9" y2="31.4"/><rect class="cu" x="186.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="210.0" x2="210.0" y1="21.3" y2="28.3"/><rect class="cd" x="206.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="230.0" x2="230.0" y1="21.0" y2="30.4"/><rect class="cd" x="226.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="250.0" x2="250.0" y1="22.8" y2="34.0"/><rect class="cd" x="246.0" y="26.0" width="8.0" height="5.9"/><line class="cu" x1="270.0" x2="270.0" y1="20.5" y2="35.8"/><rect class="cu" x="266.0" y="26.0" width="8.0" height="5.9"/><line class="cd" x1="290.0" x2="290.0" y1="21.1" y2="31.5"/><rect class="cd" x="286.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="310.0" x2="310.0" y1="21.1" y2="34.0"/><rect class="cd" x="306.0" y="26.0" width="8.0" height="2.3"/><line class="cd" x1="330.0" x2="330.0" y1="24.7" y2="41.6"/><rect class="cd" x="326.0" y="28.3" width="8.0" height="8.1"/><line class="cd" x1="350.0" x2="350.0" y1="32.6" y2="43.5"/><rect class="cd" x="346.0" y="36.4" width="8.0" height="1.4"/><line class="cu" x1="370.0" x2="370.0" y1="30.4" y2="40.1"/><rect class="cu" x="366.0" y="35.9" width="8.0" height="1.9"/><line class="cd" x1="390.0" x2="390.0" y1="33.3" y2="47.3"/><rect class="cd" x="386.0" y="35.9" width="8.0" height="8.6"/><line class="cu" x1="410.0" x2="410.0" y1="30.4" y2="48.2"/><rect class="cu" x="406.0" y="36.3" width="8.0" height="8.2"/><line class="cd" x1="430.0" x2="430.0" y1="31.8" y2="45.9"/><rect class="cd" x="426.0" y="36.3" width="8.0" height="6.5"/><line class="cu" x1="450.0" x2="450.0" y1="34.9" y2="46.3"/><rect class="cu" x="446.0" y="39.0" width="8.0" height="3.8"/><line class="cu" x1="470.0" x2="470.0" y1="29.2" y2="43.3"/><rect class="cu" x="466.0" y="32.6" width="8.0" height="6.4"/><line class="cu" x1="490.0" x2="490.0" y1="21.7" y2="38.2"/><rect class="cu" x="486.0" y="26.0" width="8.0" height="6.6"/><line class="cd" x1="510.0" x2="510.0" y1="21.3" y2="31.7"/><rect class="cd" x="506.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="530.0" x2="530.0" y1="20.6" y2="37.7"/><rect class="cd" x="526.0" y="26.0" width="8.0" height="5.7"/><line class="cu" x1="550.0" x2="550.0" y1="21.3" y2="34.3"/><rect class="cu" x="546.0" y="26.0" width="8.0" height="5.7"/><line class="cd" x1="570.0" x2="570.0" y1="20.6" y2="33.3"/><rect class="cd" x="566.0" y="26.0" width="8.0" height="1.5"/><line class="cd" x1="590.0" x2="590.0" y1="21.9" y2="34.2"/><rect class="cd" x="586.0" y="27.5" width="8.0" height="2.5"/><line class="cu" x1="610.0" x2="610.0" y1="22.8" y2="32.8"/><rect class="cu" x="606.0" y="27.7" width="8.0" height="2.3"/><line class="cd" x1="630.0" x2="630.0" y1="22.3" y2="32.8"/><rect class="cd" x="626.0" y="27.7" width="8.0" height="1.2"/><line class="cd" x1="650.0" x2="650.0" y1="25.4" y2="32.1"/><rect class="cd" x="646.0" y="28.5" width="8.0" height="1.3"/><line class="cd" x1="670.0" x2="670.0" y1="24.4" y2="39.7"/><rect class="cd" x="666.0" y="29.9" width="8.0" height="3.9"/><line class="cd" x1="690.0" x2="690.0" y1="31.4" y2="42.8"/><rect class="cd" x="686.0" y="33.7" width="8.0" height="3.9"/><line class="cd" x1="710.0" x2="710.0" y1="33.9" y2="45.6"/><rect class="cd" x="706.0" y="37.6" width="8.0" height="5.5"/><line class="cd" x1="730.0" x2="730.0" y1="39.9" y2="51.1"/><rect class="cd" x="726.0" y="43.0" width="8.0" height="3.0"/><line class="cd" x1="750.0" x2="750.0" y1="40.5" y2="51.3"/><rect class="cd" x="746.0" y="46.0" width="8.0" height="3.1"/><line class="cd" x1="770.0" x2="770.0" y1="44.7" y2="55.3"/><rect class="cd" x="766.0" y="49.1" width="8.0" height="4.0"/><line class="cd" x1="790.0" x2="790.0" y1="48.3" y2="60.2"/><rect class="cd" x="786.0" y="53.2" width="8.0" height="3.7"/><line class="cu" x1="810.0" x2="810.0" y1="45.0" y2="62.8"/><rect class="cu" x="806.0" y="50.5" width="8.0" height="6.3"/><line class="cd" x1="830.0" x2="830.0" y1="46.5" y2="59.3"/><rect class="cd" x="826.0" y="50.5" width="8.0" height="2.7"/><line class="cu" x1="850.0" x2="850.0" y1="42.3" y2="55.6"/><rect class="cu" x="846.0" y="45.6" width="8.0" height="7.7"/><line class="cd" x1="870.0" x2="870.0" y1="41.2" y2="48.3"/><rect class="cd" x="866.0" y="45.6" width="8.0" height="1.2"/><line class="cu" x1="890.0" x2="890.0" y1="41.0" y2="49.8"/><rect class="cu" x="886.0" y="43.8" width="8.0" height="2.4"/><line class="cu" x1="910.0" x2="910.0" y1="31.4" y2="46.4"/><rect class="cu" x="906.0" y="35.8" width="8.0" height="8.0"/><line class="cd" x1="930.0" x2="930.0" y1="33.7" y2="41.4"/><rect class="cd" x="926.0" y="35.8" width="8.0" height="1.2"/><line class="cu" x1="950.0" x2="950.0" y1="24.4" y2="41.8"/><rect class="cu" x="946.0" y="27.6" width="8.0" height="8.3"/><line class="cu" x1="970.0" x2="970.0" y1="20.9" y2="31.2"/><rect class="cu" x="966.0" y="26.5" width="8.0" height="1.2"/><line class="cu" x1="990.0" x2="990.0" y1="22.2" y2="30.5"/><rect class="cu" x="986.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="1010.0" x2="1010.0" y1="21.4" y2="30.4"/><rect class="cd" x="1006.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="1030.0" x2="1030.0" y1="21.8" y2="30.5"/><rect class="cd" x="1026.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="1050.0" x2="1050.0" y1="20.2" y2="35.9"/><rect class="cd" x="1046.0" y="26.0" width="8.0" height="5.9"/><line class="cu" x1="1070.0" x2="1070.0" y1="22.3" y2="36.8"/><rect class="cu" x="1066.0" y="26.0" width="8.0" height="5.9"/><line class="cd" x1="1090.0" x2="1090.0" y1="23.0" y2="29.2"/><rect class="cd" x="1086.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="1110.0" x2="1110.0" y1="20.1" y2="32.4"/><rect class="cd" x="1106.0" y="26.0" width="8.0" height="2.3"/><line class="cd" x1="1130.0" x2="1130.0" y1="24.1" y2="38.4"/><rect class="cd" x="1126.0" y="28.3" width="8.0" height="8.1"/><line class="cd" x1="1150.0" x2="1150.0" y1="32.7" y2="42.1"/><rect class="cd" x="1146.0" y="36.4" width="8.0" height="1.4"/><line class="cu" x1="1170.0" x2="1170.0" y1="33.8" y2="42.2"/><rect class="cu" x="1166.0" y="35.9" width="8.0" height="1.9"/><line class="cd" x1="1190.0" x2="1190.0" y1="31.4" y2="46.7"/><rect class="cd" x="1186.0" y="35.9" width="8.0" height="8.6"/><line class="cu" x1="1210.0" x2="1210.0" y1="31.8" y2="48.3"/><rect class="cu" x="1206.0" y="36.3" width="8.0" height="8.2"/><line class="cd" x1="1230.0" x2="1230.0" y1="31.6" y2="46.2"/><rect class="cd" x="1226.0" y="36.3" width="8.0" height="6.5"/><line class="cu" x1="1250.0" x2="1250.0" y1="34.1" y2="47.7"/><rect class="cu" x="1246.0" y="39.0" width="8.0" height="3.8"/><line class="cu" x1="1270.0" x2="1270.0" y1="30.5" y2="41.2"/><rect class="cu" x="1266.0" y="32.6" width="8.0" height="6.4"/><line class="cu" x1="1290.0" x2="1290.0" y1="21.3" y2="38.4"/><rect class="cu" x="1286.0" y="26.0" width="8.0" height="6.6"/><line class="cd" x1="1310.0" x2="1310.0" y1="23.0" y2="29.8"/><rect class="cd" x="1306.0" y="26.0" width="8.0" height="1.2"/><line class="cd" x1="1330.0" x2="1330.0" y1="21.6" y2="35.0"/><rect class="cd" x="1326.0" y="26.0" width="8.0" height="5.7"/><line class="cu" x1="1350.0" x2="1350.0" y1="22.5" y2="34.9"/><rect class="cu" x="1346.0" y="26.0" width="8.0" height="5.7"/><line class="cd" x1="1370.0" x2="1370.0" y1="22.5" y2="31.9"/><rect class="cd" x="1366.0" y="26.0" width="8.0" height="1.5"/><line class="cd" x1="1390.0" x2="1390.0" y1="24.3" y2="33.5"/><rect class="cd" x="1386.0" y="27.5" width="8.0" height="2.5"/><line class="cu" x1="1410.0" x2="1410.0" y1="22.6" y2="32.1"/><rect class="cu" x="1406.0" y="27.7" width="8.0" height="2.3"/><line class="cd" x1="1430.0" x2="1430.0" y1="23.4" y2="33.5"/><rect class="cd" x="1426.0" y="27.7" width="8.0" height="1.2"/><line class="cd" x1="1450.0" x2="1450.0" y1="25.3" y2="32.7"/><rect class="cd" x="1446.0" y="28.5" width="8.0" height="1.3"/><line class="cd" x1="1470.0" x2="1470.0" y1="24.6" y2="36.7"/><rect class="cd" x="1466.0" y="29.9" width="8.0" height="3.9"/><line class="cd" x1="1490.0" x2="1490.0" y1="31.0" y2="41.3"/><rect class="cd" x="1486.0" y="33.7" width="8.0" height="3.9"/><line class="cd" x1="1510.0" x2="1510.0" y1="32.8" y2="45.4"/><rect class="cd" x="1506.0" y="37.6" width="8.0" height="5.5"/><line class="cd" x1="1530.0" x2="1530.0" y1="39.8" y2="49.3"/><rect class="cd" x="1526.0" y="43.0" width="8.0" height="3.0"/><line class="cd" x1="1550.0" x2="1550.0" y1="40.7" y2="52.9"/><rect class="cd" x="1546.0" y="46.0" width="8.0" height="3.1"/><line class="cd" x1="1570.0" x2="1570.0" y1="43.7" y2="55.8"/><rect class="cd" x="1566.0" y="49.1" width="8.0" height="4.0"/><line class="cd" x1="1590.0" x2="1590.0" y1="49.8" y2="61.4"/><rect class="cd" x="1586.0" y="53.2" width="8.0" height="3.7"/></g><path class="g3" stroke="url(#ng1)" d="M0.0 46.8 C10.0 46.8 10.0 40.5 20.0 40.5 C30.0 40.5 30.0 43.3 40.0 43.3 C50.0 43.3 50.0 35.6 60.0 35.6 C70.0 35.6 70.0 36.2 80.0 36.2 C90.0 36.2 90.0 33.8 100.0 33.8 C110.0 33.8 110.0 25.8 120.0 25.8 C130.0 25.8 130.0 26.0 140.0 26.0 C150.0 26.0 150.0 17.6 160.0 17.6 C170.0 17.6 170.0 16.5 180.0 16.5 C190.0 16.5 190.0 16.0 200.0 16.0 C210.0 16.0 210.0 16.0 220.0 16.0 C230.0 16.0 230.0 16.0 240.0 16.0 C250.0 16.0 250.0 21.9 260.0 21.9 C270.0 21.9 270.0 16.0 280.0 16.0 C290.0 16.0 290.0 16.0 300.0 16.0 C310.0 16.0 310.0 18.3 320.0 18.3 C330.0 18.3 330.0 26.4 340.0 26.4 C350.0 26.4 350.0 27.7 360.0 27.7 C370.0 27.7 370.0 25.9 380.0 25.9 C390.0 25.9 390.0 34.5 400.0 34.5 C410.0 34.5 410.0 26.3 420.0 26.3 C430.0 26.3 430.0 32.7 440.0 32.7 C450.0 32.7 450.0 29.0 460.0 29.0 C470.0 29.0 470.0 22.6 480.0 22.6 C490.0 22.6 490.0 16.0 500.0 16.0 C510.0 16.0 510.0 16.0 520.0 16.0 C530.0 16.0 530.0 21.7 540.0 21.7 C550.0 21.7 550.0 16.0 560.0 16.0 C570.0 16.0 570.0 17.5 580.0 17.5 C590.0 17.5 590.0 20.0 600.0 20.0 C610.0 20.0 610.0 17.7 620.0 17.7 C630.0 17.7 630.0 18.5 640.0 18.5 C650.0 18.5 650.0 19.9 660.0 19.9 C670.0 19.9 670.0 23.7 680.0 23.7 C690.0 23.7 690.0 27.6 700.0 27.6 C710.0 27.6 710.0 33.0 720.0 33.0 C730.0 33.0 730.0 36.0 740.0 36.0 C750.0 36.0 750.0 39.1 760.0 39.1 C770.0 39.1 770.0 43.2 780.0 43.2 C790.0 43.2 790.0 46.8 800.0 46.8 L800.0 46.8 C810.0 46.8 810.0 40.5 820.0 40.5 C830.0 40.5 830.0 43.3 840.0 43.3 C850.0 43.3 850.0 35.6 860.0 35.6 C870.0 35.6 870.0 36.2 880.0 36.2 C890.0 36.2 890.0 33.8 900.0 33.8 C910.0 33.8 910.0 25.8 920.0 25.8 C930.0 25.8 930.0 26.0 940.0 26.0 C950.0 26.0 950.0 17.6 960.0 17.6 C970.0 17.6 970.0 16.5 980.0 16.5 C990.0 16.5 990.0 16.0 1000.0 16.0 C1010.0 16.0 1010.0 16.0 1020.0 16.0 C1030.0 16.0 1030.0 16.0 1040.0 16.0 C1050.0 16.0 1050.0 21.9 1060.0 21.9 C1070.0 21.9 1070.0 16.0 1080.0 16.0 C1090.0 16.0 1090.0 16.0 1100.0 16.0 C1110.0 16.0 1110.0 18.3 1120.0 18.3 C1130.0 18.3 1130.0 26.4 1140.0 26.4 C1150.0 26.4 1150.0 27.7 1160.0 27.7 C1170.0 27.7 1170.0 25.9 1180.0 25.9 C1190.0 25.9 1190.0 34.5 1200.0 34.5 C1210.0 34.5 1210.0 26.3 1220.0 26.3 C1230.0 26.3 1230.0 32.7 1240.0 32.7 C1250.0 32.7 1250.0 29.0 1260.0 29.0 C1270.0 29.0 1270.0 22.6 1280.0 22.6 C1290.0 22.6 1290.0 16.0 1300.0 16.0 C1310.0 16.0 1310.0 16.0 1320.0 16.0 C1330.0 16.0 1330.0 21.7 1340.0 21.7 C1350.0 21.7 1350.0 16.0 1360.0 16.0 C1370.0 16.0 1370.0 17.5 1380.0 17.5 C1390.0 17.5 1390.0 20.0 1400.0 20.0 C1410.0 20.0 1410.0 17.7 1420.0 17.7 C1430.0 17.7 1430.0 18.5 1440.0 18.5 C1450.0 18.5 1450.0 19.9 1460.0 19.9 C1470.0 19.9 1470.0 23.7 1480.0 23.7 C1490.0 23.7 1490.0 27.6 1500.0 27.6 C1510.0 27.6 1510.0 33.0 1520.0 33.0 C1530.0 33.0 1530.0 36.0 1540.0 36.0 C1550.0 36.0 1550.0 39.1 1560.0 39.1 C1570.0 39.1 1570.0 43.2 1580.0 43.2 C1590.0 43.2 1590.0 46.8 1600.0 46.8"/><path class="g2" stroke="url(#ng1)" d="M0.0 46.8 C10.0 46.8 10.0 40.5 20.0 40.5 C30.0 40.5 30.0 43.3 40.0 43.3 C50.0 43.3 50.0 35.6 60.0 35.6 C70.0 35.6 70.0 36.2 80.0 36.2 C90.0 36.2 90.0 33.8 100.0 33.8 C110.0 33.8 110.0 25.8 120.0 25.8 C130.0 25.8 130.0 26.0 140.0 26.0 C150.0 26.0 150.0 17.6 160.0 17.6 C170.0 17.6 170.0 16.5 180.0 16.5 C190.0 16.5 190.0 16.0 200.0 16.0 C210.0 16.0 210.0 16.0 220.0 16.0 C230.0 16.0 230.0 16.0 240.0 16.0 C250.0 16.0 250.0 21.9 260.0 21.9 C270.0 21.9 270.0 16.0 280.0 16.0 C290.0 16.0 290.0 16.0 300.0 16.0 C310.0 16.0 310.0 18.3 320.0 18.3 C330.0 18.3 330.0 26.4 340.0 26.4 C350.0 26.4 350.0 27.7 360.0 27.7 C370.0 27.7 370.0 25.9 380.0 25.9 C390.0 25.9 390.0 34.5 400.0 34.5 C410.0 34.5 410.0 26.3 420.0 26.3 C430.0 26.3 430.0 32.7 440.0 32.7 C450.0 32.7 450.0 29.0 460.0 29.0 C470.0 29.0 470.0 22.6 480.0 22.6 C490.0 22.6 490.0 16.0 500.0 16.0 C510.0 16.0 510.0 16.0 520.0 16.0 C530.0 16.0 530.0 21.7 540.0 21.7 C550.0 21.7 550.0 16.0 560.0 16.0 C570.0 16.0 570.0 17.5 580.0 17.5 C590.0 17.5 590.0 20.0 600.0 20.0 C610.0 20.0 610.0 17.7 620.0 17.7 C630.0 17.7 630.0 18.5 640.0 18.5 C650.0 18.5 650.0 19.9 660.0 19.9 C670.0 19.9 670.0 23.7 680.0 23.7 C690.0 23.7 690.0 27.6 700.0 27.6 C710.0 27.6 710.0 33.0 720.0 33.0 C730.0 33.0 730.0 36.0 740.0 36.0 C750.0 36.0 750.0 39.1 760.0 39.1 C770.0 39.1 770.0 43.2 780.0 43.2 C790.0 43.2 790.0 46.8 800.0 46.8 L800.0 46.8 C810.0 46.8 810.0 40.5 820.0 40.5 C830.0 40.5 830.0 43.3 840.0 43.3 C850.0 43.3 850.0 35.6 860.0 35.6 C870.0 35.6 870.0 36.2 880.0 36.2 C890.0 36.2 890.0 33.8 900.0 33.8 C910.0 33.8 910.0 25.8 920.0 25.8 C930.0 25.8 930.0 26.0 940.0 26.0 C950.0 26.0 950.0 17.6 960.0 17.6 C970.0 17.6 970.0 16.5 980.0 16.5 C990.0 16.5 990.0 16.0 1000.0 16.0 C1010.0 16.0 1010.0 16.0 1020.0 16.0 C1030.0 16.0 1030.0 16.0 1040.0 16.0 C1050.0 16.0 1050.0 21.9 1060.0 21.9 C1070.0 21.9 1070.0 16.0 1080.0 16.0 C1090.0 16.0 1090.0 16.0 1100.0 16.0 C1110.0 16.0 1110.0 18.3 1120.0 18.3 C1130.0 18.3 1130.0 26.4 1140.0 26.4 C1150.0 26.4 1150.0 27.7 1160.0 27.7 C1170.0 27.7 1170.0 25.9 1180.0 25.9 C1190.0 25.9 1190.0 34.5 1200.0 34.5 C1210.0 34.5 1210.0 26.3 1220.0 26.3 C1230.0 26.3 1230.0 32.7 1240.0 32.7 C1250.0 32.7 1250.0 29.0 1260.0 29.0 C1270.0 29.0 1270.0 22.6 1280.0 22.6 C1290.0 22.6 1290.0 16.0 1300.0 16.0 C1310.0 16.0 1310.0 16.0 1320.0 16.0 C1330.0 16.0 1330.0 21.7 1340.0 21.7 C1350.0 21.7 1350.0 16.0 1360.0 16.0 C1370.0 16.0 1370.0 17.5 1380.0 17.5 C1390.0 17.5 1390.0 20.0 1400.0 20.0 C1410.0 20.0 1410.0 17.7 1420.0 17.7 C1430.0 17.7 1430.0 18.5 1440.0 18.5 C1450.0 18.5 1450.0 19.9 1460.0 19.9 C1470.0 19.9 1470.0 23.7 1480.0 23.7 C1490.0 23.7 1490.0 27.6 1500.0 27.6 C1510.0 27.6 1510.0 33.0 1520.0 33.0 C1530.0 33.0 1530.0 36.0 1540.0 36.0 C1550.0 36.0 1550.0 39.1 1560.0 39.1 C1570.0 39.1 1570.0 43.2 1580.0 43.2 C1590.0 43.2 1590.0 46.8 1600.0 46.8"/><path class="g1" stroke="url(#ng1)" d="M0.0 46.8 C10.0 46.8 10.0 40.5 20.0 40.5 C30.0 40.5 30.0 43.3 40.0 43.3 C50.0 43.3 50.0 35.6 60.0 35.6 C70.0 35.6 70.0 36.2 80.0 36.2 C90.0 36.2 90.0 33.8 100.0 33.8 C110.0 33.8 110.0 25.8 120.0 25.8 C130.0 25.8 130.0 26.0 140.0 26.0 C150.0 26.0 150.0 17.6 160.0 17.6 C170.0 17.6 170.0 16.5 180.0 16.5 C190.0 16.5 190.0 16.0 200.0 16.0 C210.0 16.0 210.0 16.0 220.0 16.0 C230.0 16.0 230.0 16.0 240.0 16.0 C250.0 16.0 250.0 21.9 260.0 21.9 C270.0 21.9 270.0 16.0 280.0 16.0 C290.0 16.0 290.0 16.0 300.0 16.0 C310.0 16.0 310.0 18.3 320.0 18.3 C330.0 18.3 330.0 26.4 340.0 26.4 C350.0 26.4 350.0 27.7 360.0 27.7 C370.0 27.7 370.0 25.9 380.0 25.9 C390.0 25.9 390.0 34.5 400.0 34.5 C410.0 34.5 410.0 26.3 420.0 26.3 C430.0 26.3 430.0 32.7 440.0 32.7 C450.0 32.7 450.0 29.0 460.0 29.0 C470.0 29.0 470.0 22.6 480.0 22.6 C490.0 22.6 490.0 16.0 500.0 16.0 C510.0 16.0 510.0 16.0 520.0 16.0 C530.0 16.0 530.0 21.7 540.0 21.7 C550.0 21.7 550.0 16.0 560.0 16.0 C570.0 16.0 570.0 17.5 580.0 17.5 C590.0 17.5 590.0 20.0 600.0 20.0 C610.0 20.0 610.0 17.7 620.0 17.7 C630.0 17.7 630.0 18.5 640.0 18.5 C650.0 18.5 650.0 19.9 660.0 19.9 C670.0 19.9 670.0 23.7 680.0 23.7 C690.0 23.7 690.0 27.6 700.0 27.6 C710.0 27.6 710.0 33.0 720.0 33.0 C730.0 33.0 730.0 36.0 740.0 36.0 C750.0 36.0 750.0 39.1 760.0 39.1 C770.0 39.1 770.0 43.2 780.0 43.2 C790.0 43.2 790.0 46.8 800.0 46.8 L800.0 46.8 C810.0 46.8 810.0 40.5 820.0 40.5 C830.0 40.5 830.0 43.3 840.0 43.3 C850.0 43.3 850.0 35.6 860.0 35.6 C870.0 35.6 870.0 36.2 880.0 36.2 C890.0 36.2 890.0 33.8 900.0 33.8 C910.0 33.8 910.0 25.8 920.0 25.8 C930.0 25.8 930.0 26.0 940.0 26.0 C950.0 26.0 950.0 17.6 960.0 17.6 C970.0 17.6 970.0 16.5 980.0 16.5 C990.0 16.5 990.0 16.0 1000.0 16.0 C1010.0 16.0 1010.0 16.0 1020.0 16.0 C1030.0 16.0 1030.0 16.0 1040.0 16.0 C1050.0 16.0 1050.0 21.9 1060.0 21.9 C1070.0 21.9 1070.0 16.0 1080.0 16.0 C1090.0 16.0 1090.0 16.0 1100.0 16.0 C1110.0 16.0 1110.0 18.3 1120.0 18.3 C1130.0 18.3 1130.0 26.4 1140.0 26.4 C1150.0 26.4 1150.0 27.7 1160.0 27.7 C1170.0 27.7 1170.0 25.9 1180.0 25.9 C1190.0 25.9 1190.0 34.5 1200.0 34.5 C1210.0 34.5 1210.0 26.3 1220.0 26.3 C1230.0 26.3 1230.0 32.7 1240.0 32.7 C1250.0 32.7 1250.0 29.0 1260.0 29.0 C1270.0 29.0 1270.0 22.6 1280.0 22.6 C1290.0 22.6 1290.0 16.0 1300.0 16.0 C1310.0 16.0 1310.0 16.0 1320.0 16.0 C1330.0 16.0 1330.0 21.7 1340.0 21.7 C1350.0 21.7 1350.0 16.0 1360.0 16.0 C1370.0 16.0 1370.0 17.5 1380.0 17.5 C1390.0 17.5 1390.0 20.0 1400.0 20.0 C1410.0 20.0 1410.0 17.7 1420.0 17.7 C1430.0 17.7 1430.0 18.5 1440.0 18.5 C1450.0 18.5 1450.0 19.9 1460.0 19.9 C1470.0 19.9 1470.0 23.7 1480.0 23.7 C1490.0 23.7 1490.0 27.6 1500.0 27.6 C1510.0 27.6 1510.0 33.0 1520.0 33.0 C1530.0 33.0 1530.0 36.0 1540.0 36.0 C1550.0 36.0 1550.0 39.1 1560.0 39.1 C1570.0 39.1 1570.0 43.2 1580.0 43.2 C1590.0 43.2 1590.0 46.8 1600.0 46.8"/><path class="cm" pathLength="100" d="M0.0 46.8 C10.0 46.8 10.0 40.5 20.0 40.5 C30.0 40.5 30.0 43.3 40.0 43.3 C50.0 43.3 50.0 35.6 60.0 35.6 C70.0 35.6 70.0 36.2 80.0 36.2 C90.0 36.2 90.0 33.8 100.0 33.8 C110.0 33.8 110.0 25.8 120.0 25.8 C130.0 25.8 130.0 26.0 140.0 26.0 C150.0 26.0 150.0 17.6 160.0 17.6 C170.0 17.6 170.0 16.5 180.0 16.5 C190.0 16.5 190.0 16.0 200.0 16.0 C210.0 16.0 210.0 16.0 220.0 16.0 C230.0 16.0 230.0 16.0 240.0 16.0 C250.0 16.0 250.0 21.9 260.0 21.9 C270.0 21.9 270.0 16.0 280.0 16.0 C290.0 16.0 290.0 16.0 300.0 16.0 C310.0 16.0 310.0 18.3 320.0 18.3 C330.0 18.3 330.0 26.4 340.0 26.4 C350.0 26.4 350.0 27.7 360.0 27.7 C370.0 27.7 370.0 25.9 380.0 25.9 C390.0 25.9 390.0 34.5 400.0 34.5 C410.0 34.5 410.0 26.3 420.0 26.3 C430.0 26.3 430.0 32.7 440.0 32.7 C450.0 32.7 450.0 29.0 460.0 29.0 C470.0 29.0 470.0 22.6 480.0 22.6 C490.0 22.6 490.0 16.0 500.0 16.0 C510.0 16.0 510.0 16.0 520.0 16.0 C530.0 16.0 530.0 21.7 540.0 21.7 C550.0 21.7 550.0 16.0 560.0 16.0 C570.0 16.0 570.0 17.5 580.0 17.5 C590.0 17.5 590.0 20.0 600.0 20.0 C610.0 20.0 610.0 17.7 620.0 17.7 C630.0 17.7 630.0 18.5 640.0 18.5 C650.0 18.5 650.0 19.9 660.0 19.9 C670.0 19.9 670.0 23.7 680.0 23.7 C690.0 23.7 690.0 27.6 700.0 27.6 C710.0 27.6 710.0 33.0 720.0 33.0 C730.0 33.0 730.0 36.0 740.0 36.0 C750.0 36.0 750.0 39.1 760.0 39.1 C770.0 39.1 770.0 43.2 780.0 43.2 C790.0 43.2 790.0 46.8 800.0 46.8 L800.0 46.8 C810.0 46.8 810.0 40.5 820.0 40.5 C830.0 40.5 830.0 43.3 840.0 43.3 C850.0 43.3 850.0 35.6 860.0 35.6 C870.0 35.6 870.0 36.2 880.0 36.2 C890.0 36.2 890.0 33.8 900.0 33.8 C910.0 33.8 910.0 25.8 920.0 25.8 C930.0 25.8 930.0 26.0 940.0 26.0 C950.0 26.0 950.0 17.6 960.0 17.6 C970.0 17.6 970.0 16.5 980.0 16.5 C990.0 16.5 990.0 16.0 1000.0 16.0 C1010.0 16.0 1010.0 16.0 1020.0 16.0 C1030.0 16.0 1030.0 16.0 1040.0 16.0 C1050.0 16.0 1050.0 21.9 1060.0 21.9 C1070.0 21.9 1070.0 16.0 1080.0 16.0 C1090.0 16.0 1090.0 16.0 1100.0 16.0 C1110.0 16.0 1110.0 18.3 1120.0 18.3 C1130.0 18.3 1130.0 26.4 1140.0 26.4 C1150.0 26.4 1150.0 27.7 1160.0 27.7 C1170.0 27.7 1170.0 25.9 1180.0 25.9 C1190.0 25.9 1190.0 34.5 1200.0 34.5 C1210.0 34.5 1210.0 26.3 1220.0 26.3 C1230.0 26.3 1230.0 32.7 1240.0 32.7 C1250.0 32.7 1250.0 29.0 1260.0 29.0 C1270.0 29.0 1270.0 22.6 1280.0 22.6 C1290.0 22.6 1290.0 16.0 1300.0 16.0 C1310.0 16.0 1310.0 16.0 1320.0 16.0 C1330.0 16.0 1330.0 21.7 1340.0 21.7 C1350.0 21.7 1350.0 16.0 1360.0 16.0 C1370.0 16.0 1370.0 17.5 1380.0 17.5 C1390.0 17.5 1390.0 20.0 1400.0 20.0 C1410.0 20.0 1410.0 17.7 1420.0 17.7 C1430.0 17.7 1430.0 18.5 1440.0 18.5 C1450.0 18.5 1450.0 19.9 1460.0 19.9 C1470.0 19.9 1470.0 23.7 1480.0 23.7 C1490.0 23.7 1490.0 27.6 1500.0 27.6 C1510.0 27.6 1510.0 33.0 1520.0 33.0 C1530.0 33.0 1530.0 36.0 1540.0 36.0 C1550.0 36.0 1550.0 39.1 1560.0 39.1 C1570.0 39.1 1570.0 43.2 1580.0 43.2 C1590.0 43.2 1590.0 46.8 1600.0 46.8"/></svg></div><div class="nt nt2"><svg viewBox="0 0 1600 100" preserveAspectRatio="none"><path class="g3" stroke="url(#ng2)" d="M0.0 52.5 C12.5 52.5 12.5 56.5 25.0 56.5 C37.5 56.5 37.5 56.8 50.0 56.8 C62.5 56.8 62.5 56.9 75.0 56.9 C87.5 56.9 87.5 55.4 100.0 55.4 C112.5 55.4 112.5 62.4 125.0 62.4 C137.5 62.4 137.5 59.4 150.0 59.4 C162.5 59.4 162.5 54.5 175.0 54.5 C187.5 54.5 187.5 51.2 200.0 51.2 C212.5 51.2 212.5 47.8 225.0 47.8 C237.5 47.8 237.5 45.4 250.0 45.4 C262.5 45.4 262.5 42.1 275.0 42.1 C287.5 42.1 287.5 36.6 300.0 36.6 C312.5 36.6 312.5 34.2 325.0 34.2 C337.5 34.2 337.5 31.6 350.0 31.6 C362.5 31.6 362.5 32.5 375.0 32.5 C387.5 32.5 387.5 28.4 400.0 28.4 C412.5 28.4 412.5 22.3 425.0 22.3 C437.5 22.3 437.5 18.2 450.0 18.2 C462.5 18.2 462.5 18.8 475.0 18.8 C487.5 18.8 487.5 17.2 500.0 17.2 C512.5 17.2 512.5 20.5 525.0 20.5 C537.5 20.5 537.5 24.7 550.0 24.7 C562.5 24.7 562.5 23.5 575.0 23.5 C587.5 23.5 587.5 17.9 600.0 17.9 C612.5 17.9 612.5 25.0 625.0 25.0 C637.5 25.0 637.5 31.6 650.0 31.6 C662.5 31.6 662.5 34.2 675.0 34.2 C687.5 34.2 687.5 39.0 700.0 39.0 C712.5 39.0 712.5 41.3 725.0 41.3 C737.5 41.3 737.5 46.5 750.0 46.5 C762.5 46.5 762.5 50.1 775.0 50.1 C787.5 50.1 787.5 52.5 800.0 52.5 L800.0 52.5 C812.5 52.5 812.5 56.5 825.0 56.5 C837.5 56.5 837.5 56.8 850.0 56.8 C862.5 56.8 862.5 56.9 875.0 56.9 C887.5 56.9 887.5 55.4 900.0 55.4 C912.5 55.4 912.5 62.4 925.0 62.4 C937.5 62.4 937.5 59.4 950.0 59.4 C962.5 59.4 962.5 54.5 975.0 54.5 C987.5 54.5 987.5 51.2 1000.0 51.2 C1012.5 51.2 1012.5 47.8 1025.0 47.8 C1037.5 47.8 1037.5 45.4 1050.0 45.4 C1062.5 45.4 1062.5 42.1 1075.0 42.1 C1087.5 42.1 1087.5 36.6 1100.0 36.6 C1112.5 36.6 1112.5 34.2 1125.0 34.2 C1137.5 34.2 1137.5 31.6 1150.0 31.6 C1162.5 31.6 1162.5 32.5 1175.0 32.5 C1187.5 32.5 1187.5 28.4 1200.0 28.4 C1212.5 28.4 1212.5 22.3 1225.0 22.3 C1237.5 22.3 1237.5 18.2 1250.0 18.2 C1262.5 18.2 1262.5 18.8 1275.0 18.8 C1287.5 18.8 1287.5 17.2 1300.0 17.2 C1312.5 17.2 1312.5 20.5 1325.0 20.5 C1337.5 20.5 1337.5 24.7 1350.0 24.7 C1362.5 24.7 1362.5 23.5 1375.0 23.5 C1387.5 23.5 1387.5 17.9 1400.0 17.9 C1412.5 17.9 1412.5 25.0 1425.0 25.0 C1437.5 25.0 1437.5 31.6 1450.0 31.6 C1462.5 31.6 1462.5 34.2 1475.0 34.2 C1487.5 34.2 1487.5 39.0 1500.0 39.0 C1512.5 39.0 1512.5 41.3 1525.0 41.3 C1537.5 41.3 1537.5 46.5 1550.0 46.5 C1562.5 46.5 1562.5 50.1 1575.0 50.1 C1587.5 50.1 1587.5 52.5 1600.0 52.5"/><path class="g2" stroke="url(#ng2)" d="M0.0 52.5 C12.5 52.5 12.5 56.5 25.0 56.5 C37.5 56.5 37.5 56.8 50.0 56.8 C62.5 56.8 62.5 56.9 75.0 56.9 C87.5 56.9 87.5 55.4 100.0 55.4 C112.5 55.4 112.5 62.4 125.0 62.4 C137.5 62.4 137.5 59.4 150.0 59.4 C162.5 59.4 162.5 54.5 175.0 54.5 C187.5 54.5 187.5 51.2 200.0 51.2 C212.5 51.2 212.5 47.8 225.0 47.8 C237.5 47.8 237.5 45.4 250.0 45.4 C262.5 45.4 262.5 42.1 275.0 42.1 C287.5 42.1 287.5 36.6 300.0 36.6 C312.5 36.6 312.5 34.2 325.0 34.2 C337.5 34.2 337.5 31.6 350.0 31.6 C362.5 31.6 362.5 32.5 375.0 32.5 C387.5 32.5 387.5 28.4 400.0 28.4 C412.5 28.4 412.5 22.3 425.0 22.3 C437.5 22.3 437.5 18.2 450.0 18.2 C462.5 18.2 462.5 18.8 475.0 18.8 C487.5 18.8 487.5 17.2 500.0 17.2 C512.5 17.2 512.5 20.5 525.0 20.5 C537.5 20.5 537.5 24.7 550.0 24.7 C562.5 24.7 562.5 23.5 575.0 23.5 C587.5 23.5 587.5 17.9 600.0 17.9 C612.5 17.9 612.5 25.0 625.0 25.0 C637.5 25.0 637.5 31.6 650.0 31.6 C662.5 31.6 662.5 34.2 675.0 34.2 C687.5 34.2 687.5 39.0 700.0 39.0 C712.5 39.0 712.5 41.3 725.0 41.3 C737.5 41.3 737.5 46.5 750.0 46.5 C762.5 46.5 762.5 50.1 775.0 50.1 C787.5 50.1 787.5 52.5 800.0 52.5 L800.0 52.5 C812.5 52.5 812.5 56.5 825.0 56.5 C837.5 56.5 837.5 56.8 850.0 56.8 C862.5 56.8 862.5 56.9 875.0 56.9 C887.5 56.9 887.5 55.4 900.0 55.4 C912.5 55.4 912.5 62.4 925.0 62.4 C937.5 62.4 937.5 59.4 950.0 59.4 C962.5 59.4 962.5 54.5 975.0 54.5 C987.5 54.5 987.5 51.2 1000.0 51.2 C1012.5 51.2 1012.5 47.8 1025.0 47.8 C1037.5 47.8 1037.5 45.4 1050.0 45.4 C1062.5 45.4 1062.5 42.1 1075.0 42.1 C1087.5 42.1 1087.5 36.6 1100.0 36.6 C1112.5 36.6 1112.5 34.2 1125.0 34.2 C1137.5 34.2 1137.5 31.6 1150.0 31.6 C1162.5 31.6 1162.5 32.5 1175.0 32.5 C1187.5 32.5 1187.5 28.4 1200.0 28.4 C1212.5 28.4 1212.5 22.3 1225.0 22.3 C1237.5 22.3 1237.5 18.2 1250.0 18.2 C1262.5 18.2 1262.5 18.8 1275.0 18.8 C1287.5 18.8 1287.5 17.2 1300.0 17.2 C1312.5 17.2 1312.5 20.5 1325.0 20.5 C1337.5 20.5 1337.5 24.7 1350.0 24.7 C1362.5 24.7 1362.5 23.5 1375.0 23.5 C1387.5 23.5 1387.5 17.9 1400.0 17.9 C1412.5 17.9 1412.5 25.0 1425.0 25.0 C1437.5 25.0 1437.5 31.6 1450.0 31.6 C1462.5 31.6 1462.5 34.2 1475.0 34.2 C1487.5 34.2 1487.5 39.0 1500.0 39.0 C1512.5 39.0 1512.5 41.3 1525.0 41.3 C1537.5 41.3 1537.5 46.5 1550.0 46.5 C1562.5 46.5 1562.5 50.1 1575.0 50.1 C1587.5 50.1 1587.5 52.5 1600.0 52.5"/><path class="g1" stroke="url(#ng2)" d="M0.0 52.5 C12.5 52.5 12.5 56.5 25.0 56.5 C37.5 56.5 37.5 56.8 50.0 56.8 C62.5 56.8 62.5 56.9 75.0 56.9 C87.5 56.9 87.5 55.4 100.0 55.4 C112.5 55.4 112.5 62.4 125.0 62.4 C137.5 62.4 137.5 59.4 150.0 59.4 C162.5 59.4 162.5 54.5 175.0 54.5 C187.5 54.5 187.5 51.2 200.0 51.2 C212.5 51.2 212.5 47.8 225.0 47.8 C237.5 47.8 237.5 45.4 250.0 45.4 C262.5 45.4 262.5 42.1 275.0 42.1 C287.5 42.1 287.5 36.6 300.0 36.6 C312.5 36.6 312.5 34.2 325.0 34.2 C337.5 34.2 337.5 31.6 350.0 31.6 C362.5 31.6 362.5 32.5 375.0 32.5 C387.5 32.5 387.5 28.4 400.0 28.4 C412.5 28.4 412.5 22.3 425.0 22.3 C437.5 22.3 437.5 18.2 450.0 18.2 C462.5 18.2 462.5 18.8 475.0 18.8 C487.5 18.8 487.5 17.2 500.0 17.2 C512.5 17.2 512.5 20.5 525.0 20.5 C537.5 20.5 537.5 24.7 550.0 24.7 C562.5 24.7 562.5 23.5 575.0 23.5 C587.5 23.5 587.5 17.9 600.0 17.9 C612.5 17.9 612.5 25.0 625.0 25.0 C637.5 25.0 637.5 31.6 650.0 31.6 C662.5 31.6 662.5 34.2 675.0 34.2 C687.5 34.2 687.5 39.0 700.0 39.0 C712.5 39.0 712.5 41.3 725.0 41.3 C737.5 41.3 737.5 46.5 750.0 46.5 C762.5 46.5 762.5 50.1 775.0 50.1 C787.5 50.1 787.5 52.5 800.0 52.5 L800.0 52.5 C812.5 52.5 812.5 56.5 825.0 56.5 C837.5 56.5 837.5 56.8 850.0 56.8 C862.5 56.8 862.5 56.9 875.0 56.9 C887.5 56.9 887.5 55.4 900.0 55.4 C912.5 55.4 912.5 62.4 925.0 62.4 C937.5 62.4 937.5 59.4 950.0 59.4 C962.5 59.4 962.5 54.5 975.0 54.5 C987.5 54.5 987.5 51.2 1000.0 51.2 C1012.5 51.2 1012.5 47.8 1025.0 47.8 C1037.5 47.8 1037.5 45.4 1050.0 45.4 C1062.5 45.4 1062.5 42.1 1075.0 42.1 C1087.5 42.1 1087.5 36.6 1100.0 36.6 C1112.5 36.6 1112.5 34.2 1125.0 34.2 C1137.5 34.2 1137.5 31.6 1150.0 31.6 C1162.5 31.6 1162.5 32.5 1175.0 32.5 C1187.5 32.5 1187.5 28.4 1200.0 28.4 C1212.5 28.4 1212.5 22.3 1225.0 22.3 C1237.5 22.3 1237.5 18.2 1250.0 18.2 C1262.5 18.2 1262.5 18.8 1275.0 18.8 C1287.5 18.8 1287.5 17.2 1300.0 17.2 C1312.5 17.2 1312.5 20.5 1325.0 20.5 C1337.5 20.5 1337.5 24.7 1350.0 24.7 C1362.5 24.7 1362.5 23.5 1375.0 23.5 C1387.5 23.5 1387.5 17.9 1400.0 17.9 C1412.5 17.9 1412.5 25.0 1425.0 25.0 C1437.5 25.0 1437.5 31.6 1450.0 31.6 C1462.5 31.6 1462.5 34.2 1475.0 34.2 C1487.5 34.2 1487.5 39.0 1500.0 39.0 C1512.5 39.0 1512.5 41.3 1525.0 41.3 C1537.5 41.3 1537.5 46.5 1550.0 46.5 C1562.5 46.5 1562.5 50.1 1575.0 50.1 C1587.5 50.1 1587.5 52.5 1600.0 52.5"/><path class="cm" pathLength="100" d="M0.0 52.5 C12.5 52.5 12.5 56.5 25.0 56.5 C37.5 56.5 37.5 56.8 50.0 56.8 C62.5 56.8 62.5 56.9 75.0 56.9 C87.5 56.9 87.5 55.4 100.0 55.4 C112.5 55.4 112.5 62.4 125.0 62.4 C137.5 62.4 137.5 59.4 150.0 59.4 C162.5 59.4 162.5 54.5 175.0 54.5 C187.5 54.5 187.5 51.2 200.0 51.2 C212.5 51.2 212.5 47.8 225.0 47.8 C237.5 47.8 237.5 45.4 250.0 45.4 C262.5 45.4 262.5 42.1 275.0 42.1 C287.5 42.1 287.5 36.6 300.0 36.6 C312.5 36.6 312.5 34.2 325.0 34.2 C337.5 34.2 337.5 31.6 350.0 31.6 C362.5 31.6 362.5 32.5 375.0 32.5 C387.5 32.5 387.5 28.4 400.0 28.4 C412.5 28.4 412.5 22.3 425.0 22.3 C437.5 22.3 437.5 18.2 450.0 18.2 C462.5 18.2 462.5 18.8 475.0 18.8 C487.5 18.8 487.5 17.2 500.0 17.2 C512.5 17.2 512.5 20.5 525.0 20.5 C537.5 20.5 537.5 24.7 550.0 24.7 C562.5 24.7 562.5 23.5 575.0 23.5 C587.5 23.5 587.5 17.9 600.0 17.9 C612.5 17.9 612.5 25.0 625.0 25.0 C637.5 25.0 637.5 31.6 650.0 31.6 C662.5 31.6 662.5 34.2 675.0 34.2 C687.5 34.2 687.5 39.0 700.0 39.0 C712.5 39.0 712.5 41.3 725.0 41.3 C737.5 41.3 737.5 46.5 750.0 46.5 C762.5 46.5 762.5 50.1 775.0 50.1 C787.5 50.1 787.5 52.5 800.0 52.5 L800.0 52.5 C812.5 52.5 812.5 56.5 825.0 56.5 C837.5 56.5 837.5 56.8 850.0 56.8 C862.5 56.8 862.5 56.9 875.0 56.9 C887.5 56.9 887.5 55.4 900.0 55.4 C912.5 55.4 912.5 62.4 925.0 62.4 C937.5 62.4 937.5 59.4 950.0 59.4 C962.5 59.4 962.5 54.5 975.0 54.5 C987.5 54.5 987.5 51.2 1000.0 51.2 C1012.5 51.2 1012.5 47.8 1025.0 47.8 C1037.5 47.8 1037.5 45.4 1050.0 45.4 C1062.5 45.4 1062.5 42.1 1075.0 42.1 C1087.5 42.1 1087.5 36.6 1100.0 36.6 C1112.5 36.6 1112.5 34.2 1125.0 34.2 C1137.5 34.2 1137.5 31.6 1150.0 31.6 C1162.5 31.6 1162.5 32.5 1175.0 32.5 C1187.5 32.5 1187.5 28.4 1200.0 28.4 C1212.5 28.4 1212.5 22.3 1225.0 22.3 C1237.5 22.3 1237.5 18.2 1250.0 18.2 C1262.5 18.2 1262.5 18.8 1275.0 18.8 C1287.5 18.8 1287.5 17.2 1300.0 17.2 C1312.5 17.2 1312.5 20.5 1325.0 20.5 C1337.5 20.5 1337.5 24.7 1350.0 24.7 C1362.5 24.7 1362.5 23.5 1375.0 23.5 C1387.5 23.5 1387.5 17.9 1400.0 17.9 C1412.5 17.9 1412.5 25.0 1425.0 25.0 C1437.5 25.0 1437.5 31.6 1450.0 31.6 C1462.5 31.6 1462.5 34.2 1475.0 34.2 C1487.5 34.2 1487.5 39.0 1500.0 39.0 C1512.5 39.0 1512.5 41.3 1525.0 41.3 C1537.5 41.3 1537.5 46.5 1550.0 46.5 C1562.5 46.5 1562.5 50.1 1575.0 50.1 C1587.5 50.1 1587.5 52.5 1600.0 52.5"/></svg></div></div></div>
-<div class="skyline" aria-hidden="true"><div class="tape"><svg viewBox="0 0 800 110" preserveAspectRatio="none" focusable="false"><defs><linearGradient id="skyline" x1="0" x2="1"><stop offset="0" stop-color="#15D8C4"/><stop offset=".5" stop-color="#1B4FD8"/><stop offset="1" stop-color="#C21FBF"/></linearGradient><linearGradient id="skyfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15D8C4" stop-opacity=".16"/><stop offset="1" stop-color="#15D8C4" stop-opacity="0"/></linearGradient></defs><path class="area" d="M0 64 C20 60 32 46 50 50 S78 70 96 62 S124 34 142 40 S170 72 188 66 S214 44 232 48 S262 30 280 36 S306 66 326 60 S352 46 370 52 S392 64 400 64 L 400 64 C 420 60 432 46 450 50 S 478 70 496 62 S 524 34 542 40 S 570 72 588 66 S 614 44 632 48 S 662 30 680 36 S 706 66 726 60 S 752 46 770 52 S 792 64 800 64 L 800 110 L 0 110 Z"/><path d="M0 64 C20 60 32 46 50 50 S78 70 96 62 S124 34 142 40 S170 72 188 66 S214 44 232 48 S262 30 280 36 S306 66 326 60 S352 46 370 52 S392 64 400 64 L 400 64 C 420 60 432 46 450 50 S 478 70 496 62 S 524 34 542 40 S 570 72 588 66 S 614 44 632 48 S 662 30 680 36 S 706 66 726 60 S 752 46 770 52 S 792 64 800 64"/></svg></div></div><main class="shell">
+<div class="skyline" aria-hidden="true"><div class="tape"><svg viewBox="0 0 800 110" preserveAspectRatio="none" focusable="false"><defs><linearGradient id="skyline" x1="0" x2="1"><stop offset="0" stop-color="#15D8C4"/><stop offset=".5" stop-color="#1B4FD8"/><stop offset="1" stop-color="#C21FBF"/></linearGradient><linearGradient id="skyfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15D8C4" stop-opacity=".16"/><stop offset="1" stop-color="#15D8C4" stop-opacity="0"/></linearGradient></defs><path class="area" d="M0 64 C20 60 32 46 50 50 S78 70 96 62 S124 34 142 40 S170 72 188 66 S214 44 232 48 S262 30 280 36 S306 66 326 60 S352 46 370 52 S392 64 400 64 L 400 64 C 420 60 432 46 450 50 S 478 70 496 62 S 524 34 542 40 S 570 72 588 66 S 614 44 632 48 S 662 30 680 36 S 706 66 726 60 S 752 46 770 52 S 792 64 800 64 L 800 110 L 0 110 Z"/><path d="M0 64 C20 60 32 46 50 50 S78 70 96 62 S124 34 142 40 S170 72 188 66 S214 44 232 48 S262 30 280 36 S306 66 326 60 S352 46 370 52 S392 64 400 64 L 400 64 C 420 60 432 46 450 50 S 478 70 496 62 S 524 34 542 40 S 570 72 588 66 S 614 44 632 48 S 662 30 680 36 S 706 66 726 60 S 752 46 770 52 S 792 64 800 64"/></svg></div></div><main class="shell" data-view="menu">
   <div class="inappbar" id="inapp-bar" role="status" hidden><p id="inapp-t"></p><div class="iab-row"><a id="inapp-go" class="iab-go" hidden></a><span id="inapp-ios" class="iab-ios" hidden></span><button type="button" class="iab-x" id="inapp-x" aria-label="Close">×</button></div></div>
 
   <header class="mast">
@@ -3231,21 +3705,18 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 
   <section class="hero">
     <h1><span id="h1">Start here.</span><br><span id="h2">Aim for it.</span></h1>
-    <p id="hsub">Learn trading honestly. Get started safely, step by step. Copy Sonic — with the risk in plain sight.</p>
+    <p id="hsub">Academy — honest lessons with the risk in plain sight. No advice. No income promises.</p>
     <div class="spon" id="spon" hidden></div>
   </section>
   <!-- #100: toppen staar ferdig i HTML-en og faar riktig spraak/tema/retning her, foer det store
        skriptet nederst er lastet - saa telefonen kan tegne den mens resten fortsatt kommer. -->
-  <script>(function(){try{var H={"en":["Start here.","Aim for it.","Learn trading honestly. Get started safely, step by step. Copy Sonic — with the risk in plain sight.","ltr","en","latin"],"no":["Start her.","Sikt høyt.","Lær trading ærlig. Kom i gang trygt, steg for steg. Kopier Sonic — med risikoen synlig.","ltr","no","latin"],"hi":["यहाँ से शुरू करें।","अपने लक्ष्य की ओर बढ़ें।","Trading ईमानदारी से सीखें। कदम-दर-कदम सुरक्षित तरीके से शुरू करें। Sonic को copy करें — जोखिम साफ़ सामने रखकर।","ltr","hi","deva"],"ar":["ابدأ من هنا.","وامضِ نحو هدفك.","تعلّم التداول بصراحة. ابدأ بأمان، خطوة بخطوة. انسخ Sonic — والمخاطر واضحة أمامك.","rtl","ar","naskh"],"ur":["یہیں سے شروع کریں۔","اپنے مقصد کی طرف بڑھیں۔","Trading ایمانداری سے سیکھیں۔ قدم بہ قدم محفوظ طریقے سے شروع کریں۔ Sonic کو copy کریں — خطرہ صاف سامنے رکھ کر۔","rtl","ur","naskh"],"ar_rm":["Ibda' min huna.","Wamdi nahwa hadafak.","Ta3allam al-tadawul bi-saraha. Ibda' bi-aman, khutwa bi-khutwa. Insakh Sonic — wal-makhatir wadiha amamak.","ltr","ar-Latn","latin"],"ur_rm":["Yahin se shuru karein.","Apne maqsad ki taraf barhein.","Trading imandari se seekhein. Qadam ba qadam mehfooz tareeqe se shuru karein. Sonic ko copy karein — khatra saaf saamne rakh kar.","ltr","ur-Latn","latin"]},d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},L=g("aimpire.lang"),t=g("aimpire.theme.v2");try{var q=new URLSearchParams(location.search).get("lang");if(q&&H[q])L=q}catch(e){}if(!H[L]){var n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||""];for(var i=0;i<n.length&&!H[L];i++){var x=String(n[i]||"").toLowerCase().replace(/^(nb|nn)(?=-|$)/,"no");for(var c in H){if(x===c||x.indexOf(c+"-")===0){L=c;break}}}}if(!H[L])L="en";if(t)d.setAttribute("data-theme",t);var h=H[L];d.lang=h[4];d.dir=h[3];d.setAttribute("data-font",h[5]);document.getElementById("h1").textContent=h[0];document.getElementById("h2").textContent=h[1];document.getElementById("hsub").textContent=h[2]}catch(e){}})();</script>
+  <script>(function(){try{var H={"en":["Start here.","Aim for it.","Academy — honest lessons with the risk in plain sight. No advice. No income promises.","ltr","en","latin"],"no":["Start her.","Sikt høyt.","Academy — ærlige leksjoner med risikoen synlig. Ingen råd. Ingen inntektsløfter.","ltr","no","latin"],"hi":["यहाँ से शुरू करें।","अपने लक्ष्य की ओर बढ़ें।","Academy — ईमानदार lessons, जोखिम साफ़ सामने। सलाह नहीं। आय का वादा नहीं।","ltr","hi","deva"],"ar":["ابدأ من هنا.","وامضِ نحو هدفك.","Academy — دروس صادقة والمخاطر واضحة. لا نصيحة. لا وعود بدخل.","rtl","ar","naskh"],"ur":["یہیں سے شروع کریں۔","اپنے مقصد کی طرف بڑھیں۔","Academy — ایماندار سبق، خطرہ صاف سامنے۔ مشورہ نہیں۔ کمائی کا وعدہ نہیں۔","rtl","ur","naskh"],"ar_rm":["Ibda' min huna.","Wamdi nahwa hadafak.","Academy — durus sadiqa wal-makhatir wadiha. La nasiha. La wu3ud bi-dakhl.","ltr","ar-Latn","latin"],"ur_rm":["Yahin se shuru karein.","Apne maqsad ki taraf barhein.","Academy — imandaar sabaq, khatra saaf saamne. Mashwara nahi. Kamai ka wada nahi.","ltr","ur-Latn","latin"]},d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},L=g("aimpire.lang"),t=g("aimpire.theme.v2");try{var q=new URLSearchParams(location.search).get("lang");if(q&&H[q])L=q}catch(e){}if(!H[L]){var n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||""];for(var i=0;i<n.length&&!H[L];i++){var x=String(n[i]||"").toLowerCase().replace(/^(nb|nn)(?=-|$)/,"no");for(var c in H){if(x===c||x.indexOf(c+"-")===0){L=c;break}}}}if(!H[L])L="en";if(t)d.setAttribute("data-theme",t);var h=H[L];d.lang=h[4];d.dir=h[3];d.setAttribute("data-font",h[5]);document.getElementById("h1").textContent=h[0];document.getElementById("h2").textContent=h[1];document.getElementById("hsub").textContent=h[2]}catch(e){}})();</script>
 
   <div class="notices" id="notices">
     <div class="notice" id="notice-none" hidden>
       <h2 id="nn-t"></h2><p id="nn-b"></p><p class="foot" id="nn-f"></p>
     </div>
-    <div class="notice alert" id="notice-conflict" hidden>
-      <p id="nc-t"></p>
-      <div class="choice"><button id="nc-keep"></button><button id="nc-use"></button></div>
-    </div>
+    <!-- Founder 8.11 AIM-95: conflict chooser DOM removed (was Velg din leder A/B). CSS still kills #notice-conflict if an old SW paints it. -->
   </div>
 
   <div class="sheet" id="q-sheet" hidden role="dialog" aria-modal="true">
@@ -3269,7 +3740,10 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
     </details>
   </div>
   <nav class="menu" id="menu-nav" aria-label="Sections"></nav>
-  <button type="button" class="mknow" id="mk-now" hidden></button>
+  <details class="mk-box" id="mk-box">
+    <summary id="mk-sum">Markets</summary>
+    <button type="button" class="mknow" id="mk-now" hidden></button>
+  </details>
   <div class="topbar" id="topbar" hidden>
     <button class="back" id="back" type="button"></button>
     <span class="minip" id="minip" hidden><span id="minip-t"></span><i><b id="minip-b"></b></i></span>
@@ -3410,13 +3884,14 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
   </section>
 
   <section class="sec" id="s-learn" data-cat="learn" hidden>
-    <h2 id="t-learn"></h2>
-    <p class="lede" id="learn-lede"></p>
+    <!-- Academy corridor first (hero + lessons); dictionary is secondary under it. -->
+    <h2 class="aca-t" id="aca-t" hidden></h2>
+    <p class="lede aca-lede" id="aca-lede" hidden></p>
+    <div id="academy" class="learn acorridor"></div>
     <div class="llive" id="learn-live" hidden></div>
+    <h3 id="t-learn"></h3>
+    <p class="lede" id="learn-lede"></p>
     <div id="learn-list"></div>
-    <h3 class="aca-t" id="aca-t" hidden></h3>
-    <p class="lede" id="aca-lede" hidden></p>
-    <div id="academy" class="learn"></div>
   </section>
 
   <!-- #162: halal i Laer, egen kategori - ikke paa Sonic-siden (founder 19.10 00:42). Fakta med kilde (K-41, K-105), ingen fatwa. -->
@@ -3591,7 +4066,10 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 
   <section class="sec" id="s-leaders">
     <h2 id="t-leaders"></h2>
-    <div class="tool">
+    <!-- #247: toolbox first; Min side / søknad er sekundært under (#ld-mine) -->
+    <div class="ldkit" id="ld-kit" hidden></div>
+    <div class="tool" id="ld-mine">
+      <h3 class="ldmine-h" id="ld-mine-h" hidden></h3>
       <p id="ld-body"></p>
       <a id="ld-portal" class="portalbtn" href="https://aitech.ibportal.io/profile" target="_blank" rel="noopener noreferrer"><span class="pi" aria-hidden="true"></span><span id="ld-portal-t"></span><span class="pa" aria-hidden="true">↗</span></a>
       <input id="ld-in" type="url" autocomplete="off" spellcheck="false" enterkeyhint="next">
@@ -3609,7 +4087,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
       <button id="ld-btn" onclick="makeLink()"></button>
       <div class="out" id="ld-out" hidden></div>
     </div>
-    <div class="ldkit" id="ld-kit" hidden></div>
   </section>
 
   <p class="risk" id="risk"></p>
@@ -3619,6 +4096,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.b0dae4d6f9.js" defer></script>
+<script src="app-l.1e6d1cb6d8.js" defer></script>
 </body>
 </html>
