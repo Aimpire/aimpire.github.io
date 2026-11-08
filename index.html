@@ -105,18 +105,19 @@ if(!treg){s.media="all";return;}document.documentElement.setAttribute("data-skri
 :root{
   /* Aimpires egne farger, fra logoen: svart + gradienten blaa -> turkis ->
      magenta -> gul. IKKE AiTech (marine + himmelblaa) og IKKE Tag (lime).
-     Lys modus: hvit med farge, ikke graa. Kontrast maalt mot #FFFFFF. */
-  /* #323 craft: nøytral sideflate (ikke fiolett #FBFAFD — Claude-tell sky noterte på #271). */
-  --ink:#F7F8FA;
-  --ink-deep:#FFFFFF;
-  --ink-raise:#FFFFFF;
+     Lys modus: marine mist (Nesté grammar) — ikke kritt-hvit / ikke varm graa. */
+  /* AIM-115: boring white/plain → cool marine page + soft raised panels. #379 stays draft. */
+  --ink:#EEF3F8;
+  --ink-deep:#F5F9FC;
+  --ink-raise:#FAFCFE;
+  --paper:#F5F9FC;
   --gold:#A3159F;           /* FLATE: knapp, aktiv fane, marg - magenta 10:1 med hvit tekst */
   --gold-soft:#0B7C72;      /* TEKSTaksent: dyp turkis, 5,1:1              */
   --gold-deep:#A3159F;
   --lime:#0F7A4A; --red:#C0392B;
   --chalk:#12141A;          /* broedtekst: nøytral, ikke lilla-undertone    */
   --chalk-dim:#4A4E58;      /* guidetekst                                  */
-  --rule:#E2E5EA;
+  --rule:#D5DEE8;
   --edge-ui:#7A7F8A;
   --ember:#C24F15;
   --gold-metal:#FBE16B;     /* FLATE: markoerer og stegtall - merke-gult   */
@@ -135,12 +136,13 @@ if(!treg){s.media="all";return;}document.documentElement.setAttribute("data-skri
   --display:"Archivo","Montserrat",system-ui,sans-serif;
 }
 :root[data-theme="dark"]{
-  --ink:#08080B; --ink-deep:#121217; --ink-raise:#1A1A22;
+  /* Nesté studio marine — not flat near-black / not purple wash. */
+  --ink:#070B14; --ink-deep:#0E1522; --ink-raise:#152032; --paper:#0E1522;
   --gold:#C21FBF; --gold-soft:#5EE6D6; --gold-deep:#E04DDE;
-  --chalk:#F4F2F7; --chalk-dim:#A9A4B5; --rule:#27242F;
+  --chalk:#F4F2F7; --chalk-dim:#A9A4B5; --rule:#1E2A3A;
   --edge-ui:#6F6A7C; --ember:#F08A4B;
   --v1:#5B8BFF; --v2:#2FE0CC; --v3:#E04DDE; --v4:#FBE16B;
-  --gold-metal:#FBE16B; --gold-ink:#FBE16B; --jet:#F4F2F7; --jet-on:#08080B;
+  --gold-metal:#FBE16B; --gold-ink:#FBE16B; --jet:#F4F2F7; --jet-on:#070B14;
   --grad-ink:var(--grad);
 }
 html[data-font="deva"]{ --face:"Noto Sans Devanagari","Montserrat",sans-serif }
@@ -1954,7 +1956,7 @@ html[data-font="nastaliq"] :is(.switch button,.jump button,.cper button){line-he
 .shell[data-view="menu"] .spon{align-items:center}
 
 .portalbtn{display:inline-flex;align-items:center;gap:10px;min-height:46px;margin:6px 0 14px;padding:10px 16px 10px 12px;
-  border-radius:999px;border:1.5px solid var(--rule-strong, rgba(20,16,28,.18));background:var(--paper, #fff);
+  border-radius:999px;border:1.5px solid var(--rule-strong, rgba(20,16,28,.18));background:var(--paper, var(--ink-deep));
   color:var(--jet);font:700 .95rem/1.2 var(--face);text-decoration:none;
   box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 6px 16px -10px rgba(20,16,28,.45),0 1px 3px rgba(20,16,28,.10);
   transition:transform .15s ease,box-shadow .15s ease}
@@ -1977,7 +1979,7 @@ html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
 .ssbar .now::after{content:"";position:absolute;top:-3px;left:-3px;width:8px;height:8px;border-radius:50%;background:var(--jet)}
 .ssbar .tk{position:absolute;bottom:3px;font-size:.66rem;color:var(--chalk-dim);transform:translateX(-50%)}
 .sslist{list-style:none;margin:0 0 10px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.sslist li{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:12px;border:1px solid var(--rule, rgba(20,16,28,.08));background:var(--paper, #fff)}
+.sslist li{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:12px;border:1px solid var(--rule, rgba(20,16,28,.08));background:var(--paper, var(--ink-deep))}
 .sslist .cn{display:flex;align-items:center;gap:8px;font-weight:700}
 .sslist .dot{width:10px;height:10px;border-radius:50%;flex:0 0 10px}
 .sslist .hr{font-size:.9rem;font-variant-numeric:tabular-nums}
@@ -2006,7 +2008,7 @@ html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
 .ssbar{display:none}
 /* Urskiven (#92 v2) */
 .ssdial{max-width:340px;margin:6px auto 14px;--dial-in:#1d1830;--dial-out:#0b0912}
-:root[data-theme="light"] .ssdial{--dial-in:#ffffff;--dial-out:#eef0f7}
+:root[data-theme="light"] .ssdial{--dial-in:var(--ink-raise);--dial-out:var(--ink)}
 .ssdial svg{display:block;width:100%;height:auto;overflow:visible}
 .ssdial .face{stroke:var(--rule, rgba(255,255,255,.08));stroke-width:1}
 .ssdial .day{fill:none;stroke:#E3B505;stroke-opacity:.28;stroke-width:6;stroke-linecap:round}
@@ -2200,7 +2202,10 @@ html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
 #tema.vis{transform:none}
 /* #148 Velkomstporten: svart flate, hilsenene som en avgangstavle i hver sin skrift, én tynn
    neonlinje som tegnes under valget. Ingen kort, ingen rammer rundt hvert valg. */
-#port{position:fixed;inset:0;z-index:120;display:flex;flex-direction:column;background:#07070A;color:#F4F2F7;
+/* AIM-115: language port uses Nesté marine studio (not flat #07070A). Always dark chalk. */
+#port{position:fixed;inset:0;z-index:120;display:flex;flex-direction:column;background:#070B14;
+  background-image:radial-gradient(90% 55% at 50% -8%,rgba(21,120,180,.14),transparent 58%),linear-gradient(180deg,#0B1221 0%,#070B14 55%);
+  color:#F4F2F7;
   padding:max(18px,env(safe-area-inset-top)) 0 max(18px,env(safe-area-inset-bottom));opacity:0;transition:opacity .35s ease}
 #port::before{content:"";position:absolute;inset:auto -10% 0 -10%;height:46%;pointer-events:none;
   background:radial-gradient(60% 70% at 20% 100%,rgba(27,79,216,.28),transparent 70%),radial-gradient(50% 60% at 85% 100%,rgba(194,31,191,.22),transparent 70%)}
@@ -3481,17 +3486,21 @@ html[data-font="nastaliq"] .goals .goal{min-height:96px}
    Self-host fonts (assets/fonts) — PK. No new glass. Valg B (full pill ban) = founder.
    ============================================================================= */
 
-/* Marine vignette + micro-grain (studio depth — not flat ink, not purple orbs). */
+/* AIM-115 atmosphere — Nesté marine vignette both themes (all folders inherit).
+   Steal grammar from craft-pivot/#379; do NOT merge #379; do NOT change IA (AIM-112). */
 body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:
-  radial-gradient(120% 80% at 50% 110%,rgba(0,0,0,.42),transparent 55%),
-  radial-gradient(260px 200px at 90% -6%,rgba(21,216,196,.05),transparent 70%),
-  linear-gradient(168deg,#0A1220 0%,var(--ink) 48%,#06080E 100%)}
-body::after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.03;background:
-  repeating-linear-gradient(-12deg,transparent 0 2px,rgba(255,255,255,.55) 2px 3px);mix-blend-mode:overlay}
+  radial-gradient(90% 55% at 50% -8%,rgba(21,120,180,.16),transparent 58%),
+  radial-gradient(70% 40% at 100% 0%,rgba(21,216,196,.06),transparent 55%),
+  radial-gradient(120% 80% at 50% 110%,rgba(0,0,0,.48),transparent 55%),
+  linear-gradient(180deg,#0A1424 0%,#070B14 42%,#05080F 100%)}
+body::after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.028;background:
+  repeating-linear-gradient(-12deg,transparent 0 2px,rgba(255,255,255,.5) 2px 3px);mix-blend-mode:overlay}
 :root:not([data-theme="dark"]) body::before{background:
+  radial-gradient(90% 50% at 50% -10%,rgba(27,79,216,.09),transparent 55%),
+  radial-gradient(65% 38% at 100% 8%,rgba(14,143,134,.06),transparent 52%),
   radial-gradient(100% 70% at 50% 100%,rgba(11,35,65,.05),transparent 52%),
-  linear-gradient(180deg,#F3F6FA 0%,#E8EDF3 50%,#E0E6EE 100%)}
-:root:not([data-theme="dark"]) body::after{opacity:.022;mix-blend-mode:multiply}
+  linear-gradient(180deg,#E6ECF5 0%,#EEF3F8 38%,#E4EBF3 100%)}
+:root:not([data-theme="dark"]) body::after{opacity:.02;mix-blend-mode:multiply}
 body{background:transparent}
 
 /* Språk/tema: B-049 ≤2 piller — behold. Øvrig chrome → tool-radius (kill pill clusters). */
@@ -3577,14 +3586,53 @@ html.fx .topbar{
   box-shadow:none !important}
 .goals .ggrid > *{border-radius:var(--r-tool) !important;box-shadow:none !important}
 
-/* Orb blobs: fail radial glow wallpaper — keep B-049 sky markup, kill intensity. */
-.sky .o1{background:radial-gradient(closest-side,rgba(21,216,196,.1),rgba(21,216,196,0))}
-.sky .o2{background:radial-gradient(closest-side,rgba(194,31,191,.06),rgba(194,31,191,0))}
-.sky .o3{background:radial-gradient(closest-side,rgba(251,225,107,.08),rgba(251,225,107,0))}
-:root[data-theme="dark"] .sky .o1{background:radial-gradient(closest-side,rgba(27,79,216,.16),rgba(27,79,216,0))}
-:root[data-theme="dark"] .sky .o2{background:radial-gradient(closest-side,rgba(194,31,191,.08),rgba(194,31,191,0))}
+/* Orb blobs: marine teal→blue only (no magenta/yellow wash on light/dark). Keep markup. */
+.sky .o1{background:radial-gradient(closest-side,rgba(21,216,196,.14),rgba(21,216,196,0))}
+.sky .o2{background:radial-gradient(closest-side,rgba(27,79,216,.10),rgba(27,79,216,0))}
+.sky .o3{background:radial-gradient(closest-side,rgba(14,143,134,.08),rgba(14,143,134,0))}
+:root[data-theme="dark"] .sky .o1{background:radial-gradient(closest-side,rgba(27,79,216,.20),rgba(27,79,216,0))}
+:root[data-theme="dark"] .sky .o2{background:radial-gradient(closest-side,rgba(21,216,196,.10),rgba(21,216,196,0))}
+:root[data-theme="dark"] .sky .o3{background:radial-gradient(closest-side,rgba(27,79,216,.08),rgba(27,79,216,0))}
 
-:root[data-theme="dark"] .sky .o3{background:radial-gradient(closest-side,rgba(251,225,107,.07),rgba(251,225,107,0))}
+/* AIM-115 — empty/plain panels across folders: soft marine face, not chalk slabs.
+   Tokens cascade to Products/Academy hairline corridors (do not re-card .pcard).
+   Structure IA = AIM-112 · slurv Products tools = AIM-111. */
+.rows,
+.learn details,
+.places > li,
+.ib > section,
+.notice,
+.out,
+.vnote,
+.ssbar,
+.sslist li,
+.vpnbox,
+.iqex,
+.sncalc,
+.snhalal{
+  background:var(--ink-deep);
+  border-color:var(--rule)}
+:root:not([data-theme="dark"]) .rows,
+:root:not([data-theme="dark"]) .learn details,
+:root:not([data-theme="dark"]) .places > li,
+:root:not([data-theme="dark"]) .ib > section,
+:root:not([data-theme="dark"]) .notice,
+:root:not([data-theme="dark"]) .out,
+:root:not([data-theme="dark"]) .sslist li,
+:root:not([data-theme="dark"]) .portalbtn{
+  box-shadow:0 1px 0 rgba(255,255,255,.55) inset,0 8px 20px -18px rgba(11,35,65,.18)}
+:root[data-theme="dark"] .rows,
+:root[data-theme="dark"] .learn details,
+:root[data-theme="dark"] .places > li,
+:root[data-theme="dark"] .ib > section,
+:root[data-theme="dark"] .notice,
+:root[data-theme="dark"] .out,
+:root[data-theme="dark"] .sslist li,
+:root[data-theme="dark"] .portalbtn,
+:root[data-theme="dark"] .plate{
+  box-shadow:inset 0 1px 0 rgba(94,230,214,.04)}
+.srcbtn img{background:var(--ink-raise)}
+.iab-go{background:var(--ink-raise);color:var(--jet)}
 
 /* =============================================================================
    Founder 7.11 / 8.11 AIM-95 — no leader chooser, quieter chrome
