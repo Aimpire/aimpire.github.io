@@ -2328,7 +2328,7 @@ html[dir="rtl"] #port .prow::after{background:linear-gradient(270deg,#15D8C4,#1B
 .tbprog b{display:block;height:100%;width:100%;transform-origin:0 50%;transform:scaleX(0);
   background:linear-gradient(90deg,#15D8C4,#1B4FD8,#C21FBF)}
 html[dir="rtl"] .tbprog b{transform-origin:100% 50%}
-.tbrow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));max-width:560px;margin:0 auto}
+.tbrow{display:grid;grid-template-columns:repeat(var(--tb-n,6),minmax(0,1fr));width:100%;max-width:none;margin:0;gap:0}
 .tbrow .tbb{min-width:0;padding-inline:0}
 @media (max-width:340px){.tabbar{inset-inline:6px;padding:0 2px}.tbrow .tbb{padding-inline:0}}
 html .tabbar .tbrow .tbb span{font-size:var(--tbfs,.68rem);letter-spacing:-.01em}
@@ -2371,7 +2371,7 @@ html .tabbar .tbrow .tbb span{font-size:var(--tbfs,.68rem);letter-spacing:-.01em
   display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 2px 8px;cursor:pointer;
   min-height:54px;position:relative;-webkit-tap-highlight-color:transparent}
 .tbb svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.tbb span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tbb span{max-width:100%;overflow:visible;text-overflow:clip;white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-height:1.15;text-align:center;hyphens:manual}
 .tbb[aria-current="page"]{color:var(--chalk)}
 .tbb[aria-current="page"] svg{stroke:url(#tbgrad);stroke-width:2.3}
 .tbb[aria-current="page"]::before{content:"";position:absolute;top:0;width:22px;height:3px;border-radius:0 0 3px 3px;
@@ -2654,6 +2654,7 @@ html,body{touch-action:pan-y pinch-zoom}
 .shell[data-view="start"] #prog .bar .segs{display:none}
 .shell[data-view="start"] #prog .bar > #prog-i{display:block;height:100%;background:color-mix(in srgb,var(--chalk) 42%,transparent);border-radius:2px}
 .shell[data-view="start"] .askspon{display:none !important}
+.shell[data-view="start"] #guide > li.current .askspon{display:inline-flex !important}
 .shell[data-view="start"] .plfold{border:0;border-radius:0;background:transparent;border-bottom:1px solid var(--rule);margin:0 0 8px}
 .shell[data-view="start"] .plfold > summary{padding:12px 0;border-radius:0}
 .shell[data-view="start"] .plfold > summary::after{color:var(--chalk-dim);font-weight:500}
@@ -3164,13 +3165,12 @@ button.pcard::after{content:"";position:absolute;inset-inline:0;top:0;height:3px
 .prodview .vhead .vtx span{max-width:40ch;font-size:.98rem;line-height:1.45}
 .prodview .ppath{margin:0 0 14px;padding:0 0 12px;border-bottom:1px solid var(--rule);
   font:600 .82rem/1.45 var(--face);color:var(--chalk-dim);letter-spacing:.01em;max-width:42ch}
-.prodview .ptools{margin:18px 0 8px;padding-top:14px;border-top:1px solid var(--rule)}
-.prodview .ptools-t{margin:0 0 10px;font:600 .82rem/1.3 var(--display);letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-dim)}
-.prodview .ptools-list{display:grid;gap:0}
-.prodview .ptool{display:block;width:100%;text-align:start;padding:12px 0;margin:0;border:0;border-bottom:1px solid var(--rule);border-radius:0;background:transparent;color:inherit;cursor:pointer}
-.prodview .ptool:last-child{border-bottom:0}
-.prodview .ptool .pt{display:block;font:700 1.02rem/1.25 var(--display);color:var(--chalk)}
-.prodview .ptool .pd{display:block;margin-top:2px;font-size:.9rem;line-height:1.4;color:var(--chalk-dim)}
+.prodview .ptools{display:none !important} /* retired: tools are not products */
+.prodview .ptools-door{
+  display:block;width:100%;text-align:start;margin:18px 0 8px;padding:14px 0 4px;
+  border:0;border-top:1px solid var(--rule);border-radius:0;background:transparent;color:inherit;cursor:pointer}
+.prodview .ptools-door .pt{display:block;font:650 .95rem/1.3 var(--display);color:var(--chalk)}
+.prodview .ptools-door .pd{display:block;margin-top:4px;font:500 .88rem/1.4 var(--face);color:var(--chalk-dim);max-width:42ch}
 .prodview .ptool .pm{display:block;margin-top:4px;font-size:.86rem;color:var(--gold-soft,#15D8C4)}
 .pgrid-corridor{gap:0;margin:4px 0 18px;border-block:1px solid var(--rule)}
 .pgrid-corridor > .pcard.pstep{
@@ -3634,6 +3634,19 @@ html.fx .topbar{
 .srcbtn img{background:var(--ink-raise)}
 .iab-go{background:var(--ink-raise);color:var(--jet)}
 
+
+/* AIM-112 Ask-help folder craft (light+dark): same hairline grammar as Start/Academy. */
+.shell[data-view="faq"] #vhead{margin:4px 0 10px;padding:0}
+.shell[data-view="faq"] #vhead .vtx b{font-size:1.85rem;max-width:14ch}
+.shell[data-view="faq"] #vhead .vtx span{max-width:40ch;font-size:.98rem;line-height:1.45}
+.shell[data-view="faq"] #s-faq{margin-top:4px}
+.shell[data-view="faq"] .qa{border:0;border-bottom:1px solid var(--rule);border-radius:0;background:transparent;box-shadow:none;margin:0}
+.shell[data-view="faq"] .qa > summary{padding:12px 2px;font:700 1.02rem/1.35 var(--display)}
+html[data-theme="light"] .shell[data-view="faq"] .qa > summary{color:var(--chalk)}
+.shell[data-view="tools"] #vhead{margin:4px 0 10px;padding:0}
+.shell[data-view="tools"] #vhead .vtx b{font-size:1.65rem}
+.shell[data-view="earn"] #vhead .vtx b,.shell[data-view="prod"] .prodview .vhead .vtx b{letter-spacing:-.02em}
+
 /* =============================================================================
    Founder 7.11 / 8.11 AIM-95 — no leader chooser, quieter chrome
    Kill sheet + conflict even if a stale SW paints old markup for one frame.
@@ -3644,6 +3657,15 @@ html.fx .topbar{
 .msgrid{gap:6px}
 .msb{min-height:48px;padding:10px 12px}
 .tabbar .tbrow{gap:0}
+/* AIM-113: full-width equal slots; no left-clump / empty-right (was repeat(7) with 5 kids). */
+.tabbar .tbrow{width:100%}
+.tabbar .tbrow .tbb{flex:1 1 0;width:auto;min-width:0;padding-inline:2px}
+html .tabbar .tbrow .tbb span{font-size:var(--tbfs,.72rem);overflow:visible}
+@media (min-width:600px){
+  .tabbar{width:min(640px,calc(100% - 20px))}
+  .tabbar .tbrow .tbb span{font-size:.78rem}
+}
+
 html .tabbar .tbrow .tbb span{font-size:var(--tbfs,.72rem)}
 .shell[data-view="menu"] .notices{margin-bottom:4px}
 #notice-none{padding:12px 14px}
@@ -3714,6 +3736,12 @@ html .tabbar .tbrow .tbb span{font-size:var(--tbfs,.72rem)}
 .shell[data-view="menu"] .wotd{margin-top:4px}
 .shell[data-view="menu"] .wotd .we{display:none} /* emoji book = clutter above markets */
 .msb .msi{display:none !important} /* More: text rows only, no emoji tiles */
+.mslede{margin:0 0 12px;max-width:36ch;font:500 .92rem/1.45 var(--face);color:var(--chalk-dim);text-wrap:pretty}
+html[data-font="nastaliq"] .mslede{font-size:.98rem;line-height:1.75;max-width:42ch}
+.mgruppe{margin:18px 0 4px;padding-top:12px;border-top:1px solid var(--rule);font:700 .78rem/1.35 var(--face);letter-spacing:.02em;color:var(--chalk-dim)}
+.mgruppe:first-of-type{margin-top:2px;padding-top:0;border-top:0}
+.msb.valgfri .mst{color:var(--chalk-dim);font-weight:500}
+
 .msgrid{display:flex !important;flex-direction:column;gap:0 !important}
 .msb{
   min-height:44px;padding:10px 4px !important;border:0 !important;border-bottom:1px solid var(--rule) !important;
@@ -4287,6 +4315,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.2bf36abb32.js" defer></script>
+<script src="app-m.dbef06a86a.js" defer></script>
 </body>
 </html>
