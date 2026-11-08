@@ -3655,6 +3655,9 @@ html.fx .topbar{
 .shell[data-view="faq"] #vhead{margin:4px 0 10px;padding:0}
 .shell[data-view="faq"] #vhead .vtx b{font-size:1.85rem;max-width:14ch}
 .shell[data-view="faq"] #vhead .vtx span{max-width:40ch;font-size:.98rem;line-height:1.45}
+/* Ask folder: one title like Academy — hide duplicate section title + lede (vhead already carries both).
+   EN titles.faq «Questions and answers» ≠ menu «Questions & answers», so .dupl misses it. */
+.shell[data-view="faq"] #t-faq,.shell[data-view="faq"] #faq-lede{display:none}
 .shell[data-view="faq"] #s-faq{margin-top:4px}
 .shell[data-view="faq"] .qa{border:0;border-bottom:1px solid var(--rule);border-radius:0;background:transparent;box-shadow:none;margin:0}
 .shell[data-view="faq"] .qa > summary{padding:12px 2px;font:700 1.02rem/1.35 var(--display)}
