@@ -3168,50 +3168,128 @@ button.pcard::after{content:"";position:absolute;inset-inline:0;top:0;height:3px
 /* Structure: Start dumpster fold must never paint empty on Home/Products/Academy. */
 .shell:not([data-view="start"]) #start-more{display:none !important}
 #start-more[hidden]{display:none !important}
-.prodview .vhead{margin:4px 0 8px;padding:0}
+/* AIM-124 Products craft: Sonic = sole product stage; Tools = clear door.
+   Tabbar contrast = AIM-123 — do not touch .tabbar/.tbb here. Never #379. */
+.prodview .vhead{margin:4px 0 14px;padding:0}
 .prodview .vhead .vtx b{font-size:1.85rem;max-width:14ch}
-.prodview .vhead .vtx span{max-width:40ch;font-size:.98rem;line-height:1.45}
+.prodview .vhead .vtx span{
+  max-width:40ch;font-size:1.05rem;line-height:1.5;font-weight:500;
+  color:color-mix(in srgb,var(--chalk) 90%,var(--chalk-dim))}
+:root[data-theme="dark"] .prodview .vhead .vtx span{color:#E6E2EE}
+:root:not([data-theme="dark"]) .prodview .vhead .vtx span{color:#2A2E38}
 .prodview .ppath{margin:0 0 14px;padding:0 0 12px;border-bottom:1px solid var(--rule);
   font:600 .82rem/1.45 var(--face);color:var(--chalk-dim);letter-spacing:.01em;max-width:42ch}
 .prodview .ptools{display:none !important} /* retired: tools are not products */
-.prodview .ptools-door{
-  display:block;width:100%;text-align:start;margin:18px 0 8px;padding:14px 0 4px;
-  border:0;border-top:1px solid var(--rule);border-radius:0;background:transparent;color:inherit;cursor:pointer;
-  scroll-margin-bottom:calc(88px + env(safe-area-inset-bottom, 0px))}
 /* Sole product: drop empty number column (Sonic is the only product — not a numbered list). */
-.pgrid-corridor.pone > .pcard.pstep{grid-template-columns:minmax(0,1fr)}
+.pgrid-corridor.pone{margin:0 0 16px;border:0;gap:0}
+.pgrid-corridor.pone > .pcard.pstep{
+  grid-template-columns:minmax(0,1fr);
+  margin:0;padding:22px 18px 20px;border:1px solid var(--rule);border-radius:20px;
+  background:var(--ink-raise);overflow:hidden;position:relative;
+  box-shadow:inset 0 1px 0 color-mix(in srgb,#15D8C4 10%,transparent)}
+.pgrid-corridor.pone > .pcard.pstep::before{
+  content:"";position:absolute;inset-inline:0;top:0;height:3px;
+  background:linear-gradient(90deg,#15D8C4,#1B4FD8 55%,#C21FBF);opacity:.95;pointer-events:none}
+.pgrid-corridor.pone > .pcard.pstep::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(120% 80% at 0% 0%,color-mix(in srgb,#15D8C4 14%,transparent),transparent 55%)}
 .pgrid-corridor.pone > .pcard.pstep > .pnum{display:none}
-.prodview .ptools-door .pt{display:block;font:650 .95rem/1.3 var(--display);color:var(--chalk)}
-.prodview .ptools-door .pd{display:block;margin-top:4px;font:500 .88rem/1.4 var(--face);color:var(--chalk-dim);max-width:42ch}
-.prodview .ptool .pm{display:block;margin-top:4px;font-size:.86rem;color:var(--gold-soft,#15D8C4)}
-.pgrid-corridor{gap:0;margin:4px 0 18px;border-block:1px solid var(--rule)}
-.pgrid-corridor > .pcard.pstep{
+.pgrid-corridor.pone .pbody{position:relative;z-index:1}
+:root:not([data-theme="dark"]) .pgrid-corridor.pone > .pcard.pstep{
+  background:#fff;border-color:color-mix(in srgb,var(--rule) 55%,#0B8F84);
+  box-shadow:0 1px 0 rgba(255,255,255,.75) inset,0 18px 34px -18px rgba(11,35,65,.26)}
+:root[data-theme="dark"] .pgrid-corridor.pone > .pcard.pstep{
+  background:color-mix(in srgb,var(--ink-raise) 82%,#0E1522);
+  border-color:color-mix(in srgb,var(--rule) 55%,#15D8C4);
+  box-shadow:inset 0 1px 0 rgba(94,230,214,.10),0 22px 40px -22px rgba(0,0,0,.65)}
+.pgrid-corridor.pone .pcard .pt{font:900 1.62rem/1.1 var(--display);letter-spacing:-.025em}
+.pgrid-corridor.pone .pcard .pd{
+  font-size:1.05rem;line-height:1.55;max-width:40ch;font-weight:500}
+:root[data-theme="dark"] .pgrid-corridor.pone .pcard .pd{color:#EDEAF2}
+:root:not([data-theme="dark"]) .pgrid-corridor.pone .pcard .pd{color:#1A1D26}
+.pgrid-corridor.pone .plive{
+  padding:5px 10px;border-radius:999px;gap:6px;
+  background:color-mix(in srgb,#15D8C4 16%,transparent);
+  font:700 .72rem/1 var(--display);color:var(--gold-soft,#15D8C4);letter-spacing:.02em}
+.pgrid-corridor.pone .plive i{width:7px;height:7px}
+.pgrid-corridor.pone .pfacts{gap:0;margin:6px 0 2px;flex-wrap:wrap}
+.pgrid-corridor.pone .pfacts .pf{
+  padding:0;border:0;border-radius:0;background:none;
+  font:650 .88rem/1.45 var(--face);color:color-mix(in srgb,var(--chalk) 78%,var(--chalk-dim))}
+.pgrid-corridor.pone .pfacts .pf + .pf::before{content:"·";margin-inline:8px;opacity:.5;font-weight:500}
+.pgrid-corridor.pone .pfacts .warnf{border:0;color:#A8420C;font-weight:700}
+:root[data-theme="dark"] .pgrid-corridor.pone .pfacts .warnf{color:#F08A4B}
+.pgrid-corridor.pone .pcard .pm{
+  margin-top:8px;font:700 .95rem/1.25 var(--face);color:var(--gold-soft,#15D8C4);
+  text-decoration-color:color-mix(in srgb,#15D8C4 55%,transparent)}
+.pgrid-corridor.pone .pbody{gap:8px}
+/* Multi-step path (if ever restored): keep hairline corridor, not card souk. */
+.pgrid-corridor:not(.pone){gap:0;margin:4px 0 18px;border-block:1px solid var(--rule)}
+.pgrid-corridor:not(.pone) > .pcard.pstep{
   display:grid;grid-template-columns:1.7rem minmax(0,1fr);column-gap:12px;row-gap:0;align-items:start;
   border:0;border-radius:0;border-bottom:1px solid var(--rule);background:transparent;
   padding:14px 2px 16px;overflow:visible;box-shadow:none}
-.pgrid-corridor > .pcard.pstep:last-child{border-bottom:0}
+.pgrid-corridor:not(.pone) > .pcard.pstep:last-child{border-bottom:0}
 .pgrid-corridor > .pcard.pstep > .spark{display:none}
 .pcard .pnum{display:inline-grid;place-items:center;min-width:1.6rem;height:1.6rem;border-radius:8px;font:700 .78rem/1 var(--display);background:var(--rule);color:var(--chalk)}
 .pgrid-corridor .pcard .pnum{width:1.7rem;height:1.7rem;min-width:1.7rem;margin-top:2px;font:700 .72rem/1 var(--display)}
 .pgrid-corridor .pbody{display:grid;gap:5px;min-width:0}
 .pgrid-corridor .pcard .ptop{justify-content:flex-start;gap:10px;align-items:baseline}
-.pgrid-corridor .pcard .pt{font:700 1.05rem/1.25 var(--display);letter-spacing:-.01em}
-.pgrid-corridor .pcard .pd{font-size:.92rem;line-height:1.45;max-width:42ch}
-.pgrid-corridor .plive{padding:0;border-radius:0;background:none;gap:5px;
+.pgrid-corridor:not(.pone) .pcard .pt{font:700 1.05rem/1.25 var(--display);letter-spacing:-.01em}
+.pgrid-corridor:not(.pone) .pcard .pd{font-size:.92rem;line-height:1.45;max-width:42ch;
+  color:color-mix(in srgb,var(--chalk) 82%,var(--chalk-dim))}
+.pgrid-corridor:not(.pone) .plive{padding:0;border-radius:0;background:none;gap:5px;
   font:600 .75rem/1.2 var(--face);color:var(--chalk-dim);letter-spacing:0}
-.pgrid-corridor .plive i{width:6px;height:6px}
-.pgrid-corridor .pfacts{gap:0;margin:2px 0 0;flex-wrap:wrap}
-.pgrid-corridor .pfacts .pf{padding:0;border:0;border-radius:0;background:none;
+.pgrid-corridor:not(.pone) .plive i{width:6px;height:6px}
+.pgrid-corridor:not(.pone) .pfacts{gap:0;margin:2px 0 0;flex-wrap:wrap}
+.pgrid-corridor:not(.pone) .pfacts .pf{padding:0;border:0;border-radius:0;background:none;
   font:600 .8rem/1.4 var(--face);color:var(--chalk-dim)}
-.pgrid-corridor .pfacts .pf + .pf::before{content:"·";margin-inline:8px;opacity:.45;font-weight:500}
-.pgrid-corridor .pfacts .warnf{border:0;color:#A8420C}
-:root[data-theme="dark"] .pgrid-corridor .pfacts .warnf{color:#F08A4B}
-.pgrid-corridor .pcard .pm{margin-top:4px;font:600 .88rem/1.25 var(--face);color:var(--chalk-dim)}
+.pgrid-corridor:not(.pone) .pfacts .pf + .pf::before{content:"·";margin-inline:8px;opacity:.45;font-weight:500}
+.pgrid-corridor:not(.pone) .pfacts .warnf{border:0;color:#A8420C}
+:root[data-theme="dark"] .pgrid-corridor:not(.pone) .pfacts .warnf{color:#F08A4B}
+.pgrid-corridor:not(.pone) .pcard .pm{margin-top:4px;font:600 .88rem/1.25 var(--face);color:var(--chalk-dim)}
 .pgrid-corridor > .pcard.pmore{grid-template-columns:1.7rem minmax(0,1fr);align-items:start;padding:14px 2px 12px}
 .pgrid-corridor > .pcard.pmore .pnum{background:transparent;color:var(--chalk-dim);font-weight:600}
 .pgrid-corridor > .pcard.pmore .pt{font-size:1.02rem}
 .pgrid-corridor > .pcard.pmore .pd{font-size:.9rem;max-width:42ch}
 .pcard.pmore{cursor:pointer;background:none;border-style:dashed}
+/* Tools door — quieter than Sonic, but clearly a door (not another product). */
+.prodview .ptools-door{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:12px;
+  width:100%;text-align:start;margin:10px 0 12px;padding:13px 12px 13px 14px;
+  border:1px dashed color-mix(in srgb,var(--rule) 70%,transparent);border-radius:14px;
+  background:transparent;color:inherit;cursor:pointer;
+  scroll-margin-bottom:calc(88px + env(safe-area-inset-bottom, 0px));
+  transition:border-color .15s ease,background .15s ease}
+.prodview .ptools-door:active{transform:scale(.992)}
+.prodview .ptools-door .pdoor-body{display:grid;gap:3px;min-width:0}
+.prodview .ptools-door .pt{display:block;font:700 1rem/1.25 var(--display);color:var(--chalk);letter-spacing:-.01em}
+.prodview .ptools-door .pd{
+  display:block;font:500 .88rem/1.4 var(--face);max-width:36ch}
+:root[data-theme="dark"] .prodview .ptools-door .pd{color:#D2CDDA}
+:root:not([data-theme="dark"]) .prodview .ptools-door .pd{color:#3A3E48}
+.prodview .ptools-door .pdoor-go{
+  flex:0 0 auto;width:1.75rem;height:1.75rem;border-radius:50%;
+  display:grid;place-items:center;font:800 1.05rem/1 var(--display);
+  color:var(--gold-soft,#15D8C4);
+  background:color-mix(in srgb,#15D8C4 14%,transparent);
+  border:1px solid color-mix(in srgb,#15D8C4 35%,var(--rule))}
+html[dir="rtl"] .prodview .ptools-door .pdoor-go{transform:scaleX(-1)}
+:root:not([data-theme="dark"]) .prodview .ptools-door{
+  background:color-mix(in srgb,#fff 70%,transparent);
+  border-color:color-mix(in srgb,var(--rule) 85%,#1B4FD8)}
+:root[data-theme="dark"] .prodview .ptools-door{
+  background:color-mix(in srgb,var(--ink-deep) 55%,transparent);
+  border-color:color-mix(in srgb,var(--rule) 75%,#1B4FD8)}
+.prodview .ptool .pm{display:block;margin-top:4px;font-size:.86rem;color:var(--gold-soft,#15D8C4)}
+@media (prefers-reduced-motion:no-preference){
+  .pgrid-corridor.pone > .pcard.pstep{transition:border-color .2s ease,box-shadow .2s ease}
+  .prodview .ptools-door .pdoor-go{transition:transform .15s ease,background .15s ease}
+  .prodview .ptools-door:active .pdoor-go{transform:translateX(2px)}
+  html[dir="rtl"] .prodview .ptools-door:active .pdoor-go{transform:scaleX(-1) translateX(2px)}
+}
+/* AIM-123 owns tabbar invert (#146). Do not reassert .tabbar background here —
+   AIM-115 `.tabbar{background:var(--ink-deep)!important}` currently flattens the invert. */
 .tbb.tbhome svg{display:none}
 .tbring{display:grid;place-items:center;width:46px;height:46px;margin-top:-20px;border-radius:50%;
   background:var(--ink-raise);box-shadow:0 0 0 1.5px rgba(21,216,196,.55),0 6px 18px -6px rgba(27,79,216,.7);transition:box-shadow .2s}
@@ -4335,6 +4413,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.db06c9cfcb.js" defer></script>
+<script src="app-l.8f46502e09.js" defer></script>
 </body>
 </html>
