@@ -2738,12 +2738,19 @@ html[data-theme="light"] .shell[data-view="start"] #guide > li.current::after{
 .shell[data-view="start"] #guide .subs > li > span{max-width:36ch}
 .shell[data-view="start"] #guide > li.current .subs,
 .shell[data-view="start"] #guide > li.current .subbtn,
+.shell[data-view="start"] #guide > li.current .stegreg,
 .shell[data-view="start"] #guide > li.current .chk,
 .shell[data-view="start"] #guide > li.current .markd,
 .shell[data-view="start"] #guide > li.current .stuck,
 .shell[data-view="start"] #guide > li.current .askspon,
 .shell[data-view="start"] #guide > li.current .lesopp,
 .shell[data-view="start"] #guide > li.current .vnote{margin-inline:8px}
+/* AIM-108: filled primary open CTA in corridor (not ghost outline). */
+.shell[data-view="start"] #guide .stegreg.slab.reg{
+  display:block;width:100%;max-width:430px;margin-top:10px;margin-bottom:4px;
+  padding:14px 18px;min-height:48px;text-align:center}
+.shell[data-view="start"] #guide .stegreg.slab.reg .t{
+  font-size:1rem;letter-spacing:.04em}
 /* Confirmation = the forward bubble (marine/teal, not green). */
 .shell[data-view="start"] #guide .chk{
   margin-top:14px;padding:14px 15px;border-radius:14px;
@@ -4220,6 +4227,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.78533dc1a7.js" defer></script>
+<script src="app-l.7c523563d2.js" defer></script>
 </body>
 </html>
