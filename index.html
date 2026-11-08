@@ -67,7 +67,7 @@ try{ if(window.top !== window.self){ document.documentElement.style.visibility =
 <meta name="mobile-web-app-capable" content="yes">
 <!-- #100/#154 (20.10): skriftene ligger hos oss (assets/fonts, OFL), utvalgt til tegnsettene vi bruker. Ingen kall til
      Google Fonts: ingen avhengighet av at de svarer fra Pakistan, ingen IP til tredjepart, mindre data. -->
-<noscript><style>html:not(.klar) .shell>*,html:not(.klar) .hero>*{visibility:visible!important}</style></noscript>
+<noscript><style>html:not(.klar) .shell > *,html:not(.klar) .hero > *{visibility:visible !important}</style></noscript>
 <style id="skrift" media="print">
 /* SKRIFT-START (tools/skrift/lag_skrift.py – ikke rediger for hånd) */
 @font-face{font-family:'Archivo';font-style:normal;font-weight:500 800;font-stretch:85% 100%;font-display:swap;src:url(assets/fonts/archivo-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
@@ -3151,11 +3151,22 @@ button.pcard::after{content:"";position:absolute;inset-inline:0;top:0;height:3px
 @media (prefers-reduced-motion:no-preference){.plive i::after{animation:plpuls 1.8s ease-in-out infinite}}
 @keyframes plpuls{0%{transform:scale(1);opacity:1}50%{transform:scale(2.4);opacity:0}100%{transform:scale(1);opacity:0}}
 /* Products corridor: numbered Sonic→MT5 hairline path (Academy/Start grammar — not card souk). */
+/* Structure: Start dumpster fold must never paint empty on Home/Products/Academy. */
+.shell:not([data-view="start"]) #start-more{display:none !important}
+#start-more[hidden]{display:none !important}
 .prodview .vhead{margin:4px 0 8px;padding:0}
 .prodview .vhead .vtx b{font-size:1.85rem;max-width:14ch}
 .prodview .vhead .vtx span{max-width:40ch;font-size:.98rem;line-height:1.45}
 .prodview .ppath{margin:0 0 14px;padding:0 0 12px;border-bottom:1px solid var(--rule);
   font:600 .82rem/1.45 var(--face);color:var(--chalk-dim);letter-spacing:.01em;max-width:42ch}
+.prodview .ptools{margin:18px 0 8px;padding-top:14px;border-top:1px solid var(--rule)}
+.prodview .ptools-t{margin:0 0 10px;font:600 .82rem/1.3 var(--display);letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-dim)}
+.prodview .ptools-list{display:grid;gap:0}
+.prodview .ptool{display:block;width:100%;text-align:start;padding:12px 0;margin:0;border:0;border-bottom:1px solid var(--rule);border-radius:0;background:transparent;color:inherit;cursor:pointer}
+.prodview .ptool:last-child{border-bottom:0}
+.prodview .ptool .pt{display:block;font:700 1.02rem/1.25 var(--display);color:var(--chalk)}
+.prodview .ptool .pd{display:block;margin-top:2px;font-size:.9rem;line-height:1.4;color:var(--chalk-dim)}
+.prodview .ptool .pm{display:block;margin-top:4px;font-size:.86rem;color:var(--gold-soft,#15D8C4)}
 .pgrid-corridor{gap:0;margin:4px 0 18px;border-block:1px solid var(--rule)}
 .pgrid-corridor > .pcard.pstep{
   display:grid;grid-template-columns:1.7rem minmax(0,1fr);column-gap:12px;row-gap:0;align-items:start;
@@ -4030,11 +4041,12 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
   <section class="sec" id="s-alt" data-cat="learn"><div class="alt" id="alt" hidden></div></section>
   <section class="sec" id="s-halal" data-cat="learn" hidden><h2 id="t-halal"></h2><p class="lede" id="hl-lede"></p><div class="hlgrid" id="hl-grid"></div></section>
 
-  <section class="sec" id="s-video" data-cat="start"><h2 id="t-video"></h2><div id="video-links"></div></section>
-  <section class="sec" id="s-docs" data-cat="start"><h2 id="t-docs"></h2><div id="docs-links"></div></section>
-  <section class="sec" id="s-help" data-cat="start"><h2 id="t-help"></h2><div id="help-links"></div></section>
+  <!-- Structure pass: video → Academy; docs/help → Ask help (FAQ). Not Start dumpster. -->
+  <section class="sec" id="s-video" data-cat="learn"><h2 id="t-video"></h2><div id="video-links"></div></section>
+  <section class="sec" id="s-docs" data-cat="faq"><h2 id="t-docs"></h2><div id="docs-links"></div></section>
+  <section class="sec" id="s-help" data-cat="faq"><h2 id="t-help"></h2><div id="help-links"></div></section>
   <!-- #130: navnets betydning er merkevare, ikke et steg - nederst paa Start, etter det praktiske. -->
-  <section class="sec" id="s-values" data-cat="start"><h2 id="t-values"></h2><ul class="tiers" id="tiers"></ul></section>
+  <section class="sec" id="s-values" data-cat="faq"><h2 id="t-values"></h2><ul class="tiers" id="tiers"></ul></section>
 
   <section class="sec" id="s-ib" data-cat="ib" hidden>
     <h2 id="t-ib"></h2>
@@ -4227,6 +4239,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.6d33f6184b.js" defer></script>
+<script src="app-m.0b78ef617f.js" defer></script>
 </body>
 </html>
