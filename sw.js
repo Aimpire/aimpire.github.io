@@ -5,7 +5,7 @@
    - Google-fonter: cache foerst (gstatic er uforanderlig), CSS-en oppdateres i bakgrunnen.
    - ALDRI cache: godkjent-lista (Google-arket), ledere.txt, skjemaet. De skal vaere ferske.
    Cachenavnet baerer bygg-id, saa hver publisering rydder den forrige. */
-const BUILD = "295f038bff";
+const BUILD = "793e22f038";
 const CACHE = "aimpire-" + BUILD;
 const SHELL = ["./", "./ledere.html"];
 
@@ -81,7 +81,8 @@ self.addEventListener("fetch", function(e){
     e.respondWith(caches.match(req).then(function(c){
       if(c) return c;
       return fetch(req).then(function(r){
-        if(r && (r.ok || r.type === "opaque")){ const kopi = r.clone(); caches.open(CACHE).then(function(cc){ cc.put(req, kopi); }); }
+        /* Opaque responses (no-cors fonts/CDN) cannot be validated — skip cache put. */
+        if(r && r.ok){ const kopi = r.clone(); caches.open(CACHE).then(function(cc){ cc.put(req, kopi); }); }
         return r;
       });
     }));
