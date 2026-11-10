@@ -1364,8 +1364,12 @@ html[data-font="naskh"] .plate .t{font-family:var(--face);letter-spacing:0}
 .guide > li.folded > h3:focus-visible{outline:2px solid var(--gold-soft);outline-offset:2px;border-radius:6px}
 .guide > li.folded:not(.done) > h3{color:var(--chalk-dim)}
 .guide > li.current > h3{font-size:1.15rem}
-.guide .stuck{display:inline-flex;align-items:center;max-width:100%;min-height:36px;margin:10px 0 0;color:var(--gold-soft);font-size:.9rem;text-decoration:none;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+/* Round four: one-line nowrap+ellipsis hid ~75% of Stuck at 360 (scrollW 953 vs
+   clientW 252). Short copy in guide_ui + 3-line clamp (UR naskh needs 3 at 230 px
+   content width) — hoppTilAktivtSteg still clears the tab. */
+.guide .stuck{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;
+  max-width:100%;min-height:36px;margin:10px 0 0;color:var(--gold-soft);font-size:.9rem;line-height:1.35;
+  text-decoration:none;overflow:hidden;text-overflow:ellipsis;overflow-wrap:anywhere;
   scroll-margin-bottom:calc(88px + env(safe-area-inset-bottom, 0px))}
 .guide .stuck:hover,.guide .stuck:focus-visible{text-decoration:underline;text-underline-offset:3px}
 /* ---------- apper ---------- */
@@ -4420,6 +4424,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.ebb2277c47.js" defer></script>
+<script src="app-m.73c380a14c.js" defer></script>
 </body>
 </html>
