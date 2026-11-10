@@ -1168,6 +1168,16 @@ html[data-page="leaders"] .tape2,html[data-page="leaders"] .nradar,html[data-pag
    (~214 px) above the jump; flow started under the tab. Keep strips off Sonic teaching only. */
 .shell.navd:is([data-view="start"],[data-view="learn"],[data-view="faq"],[data-view="ib"],[data-view="prod"]) :is(.tape2,.nradar,.oekt,.tvtape){display:none !important}
 .shell.navd[data-view="earn"][data-tab="sonic"] :is(.tape2,.nradar,.oekt,.tvtape){display:none !important}
+/* Round nine after #408 (360 EN/UR): Sonic teaching short — EN chips only ~81 px above tab,
+   UR chips visiblePx=0 (Nastaliq lede+flow taller). Tighten short stack + folder vhead on
+   sonic tab only so the 24×/70%/4.2% chips clear the tab. Not Products stage. */
+.shell[data-view="earn"][data-tab="sonic"] #vhead{margin:8px 0 2px}
+.shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify > h2{margin-bottom:8px}
+.shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify > p.lede{margin-bottom:8px}
+.shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify .iqflow{margin-top:8px}
+.shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify .iqflow > .iqnode{padding-block:4px}
+.shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify .shchips{margin-top:8px}
+.shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify .shchip{padding-block:8px}
 /* #254 (founder 20.10 02:54 «mye som skjer på toppen … mer passe psyken til folk»): Hjem er for å komme i gang, ikke en
    tradingterminal. Kurser, økter og nyhetsradar står på trading-fanene (Verktøy, Produkter); på Hjem samler «Markedene nå»
    det i ett rolig kort lenger ned. Røde/grønne tall øverst er det første en nybegynner ser - det vekker uro, ikke tillit. */
