@@ -3180,6 +3180,8 @@ button.pcard::after{content:"";position:absolute;inset-inline:0;top:0;height:3px
 /* AIM-124 Products craft: Sonic = sole product stage; Tools = clear door.
    Tabbar contrast = AIM-123 — do not touch .tabbar/.tbb here. Never #379. */
 .prodview .vhead{margin:4px 0 14px;padding:0}
+/* AIM-138: title→lede was 3px @360 (UR Nastaliq title h≈43) — cramped after #406 reclaim. */
+.prodview .vhead .vtx{display:grid;gap:8px}
 .prodview .vhead .vtx b{font-size:1.85rem;max-width:14ch}
 .prodview .vhead .vtx span{
   max-width:40ch;font-size:1.05rem;line-height:1.5;font-weight:500;
@@ -3220,6 +3222,8 @@ button.pcard::after{content:"";position:absolute;inset-inline:0;top:0;height:3px
   padding:5px 10px;border-radius:999px;gap:6px;
   background:color-mix(in srgb,#15D8C4 16%,transparent);
   font:700 .72rem/1 var(--display);color:var(--gold-soft,#15D8C4);letter-spacing:.02em}
+/* AIM-138: light Live badge measured 4.55 on mint pill — nudge ink for AA headroom. */
+:root:not([data-theme="dark"]) .pgrid-corridor.pone .plive{color:#09665E}
 .pgrid-corridor.pone .plive i{width:7px;height:7px}
 .pgrid-corridor.pone .pfacts{gap:0;margin:6px 0 2px;flex-wrap:wrap}
 .pgrid-corridor.pone .pfacts .pf{
@@ -4426,6 +4430,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.e60e71e8bb.js" defer></script>
+<script src="app-m.4e5541178e.js" defer></script>
 </body>
 </html>
