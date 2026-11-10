@@ -1595,6 +1595,8 @@ html[data-font="nastaliq"] .qa summary{font-weight:400}
 .minip i{display:block;width:70px;height:5px;border-radius:3px;background:var(--rule);overflow:hidden}
 .minip b{display:block;height:100%;background:var(--gold-metal);transition:width .2s}
 .shell:not([data-view="start"]) .minip{display:none}
+/* AIM-137: empty topbar must not reserve sticky space outside Start / jump folders. */
+.shell:not([data-view="start"]):not([data-view="tools"]):not([data-view="earn"]) #topbar{display:none !important}
 .back{display:inline-flex;align-items:center;gap:9px;
   margin:0;padding:9px 17px;background:var(--ink);
   border:1px solid var(--rule);border-radius:999px;font:inherit;
@@ -4424,6 +4426,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.d082e540fb.js" defer></script>
+<script src="app-m.e60e71e8bb.js" defer></script>
 </body>
 </html>
