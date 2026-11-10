@@ -2380,8 +2380,8 @@ html .tabbar .tbrow .tbb span{font-size:var(--tbfs,.68rem);letter-spacing:-.01em
   display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 2px 8px;cursor:pointer;
   min-height:54px;position:relative;-webkit-tap-highlight-color:transparent}
 .tbb svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.tbb span{max-width:100%;overflow:visible;text-overflow:clip;white-space:normal;display:block;line-height:1.15;text-align:center;hyphens:manual;overflow-wrap:anywhere;word-break:normal}
-/* AIM-113: never ellipsis-truncate tab labels — wrap or tbTilpass shrinks. */
+.tbb span{max-width:100%;overflow:visible;text-overflow:clip;white-space:nowrap;display:block;line-height:1.15;text-align:center;hyphens:manual;overflow-wrap:normal;word-break:normal}
+/* AIM-135: no mid-word wrap (Products→Product/s at 360 current). nowrap + tbTilpass shrink; Sonic-only tab. */
 .tbb[aria-current="page"]{color:var(--chalk)}
 .tbb[aria-current="page"] svg{stroke:url(#tbgrad);stroke-width:2.3}
 .tbb[aria-current="page"]::before{content:"";position:absolute;top:0;width:22px;height:3px;border-radius:0 0 3px 3px;
@@ -4424,6 +4424,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.73c380a14c.js" defer></script>
+<script src="app-m.d082e540fb.js" defer></script>
 </body>
 </html>
