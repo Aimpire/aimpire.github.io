@@ -2781,10 +2781,13 @@ html[data-theme="light"] .shell[data-view="start"] #guide > li.current::after{
 /* AIM-108: filled primary open CTA in corridor (not ghost outline). */
 .shell[data-view="start"] #guide .stegreg.slab.reg{
   display:block;width:100%;max-width:430px;margin-top:10px;margin-bottom:4px;
-  padding:14px 18px;min-height:48px;text-align:center;
+  padding:14px 18px;min-height:48px;text-align:center;cursor:pointer;font:inherit;
   scroll-margin-bottom:calc(88px + env(safe-area-inset-bottom, 0px))}
+.shell[data-view="start"] #guide button.stegreg.slab.reg{appearance:none;-webkit-appearance:none}
 .shell[data-view="start"] #guide .stegreg.slab.reg .t{
   font-size:1rem;letter-spacing:.04em}
+/* Step1: private-chat share menu under the green ask CTA (spoerMeny). */
+.shell[data-view="start"] #guide > li.current .stegreg + .sharemenu{margin:8px 8px 4px}
 /* Confirmation = the forward bubble (marine/teal, not green). */
 .shell[data-view="start"] #guide .chk{
   margin-top:14px;padding:14px 15px;border-radius:14px;
@@ -4443,6 +4446,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.9876396bcd.js" defer></script>
+<script src="app-l.0c4b388c03.js" defer></script>
 </body>
 </html>
