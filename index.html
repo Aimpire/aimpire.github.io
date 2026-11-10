@@ -1364,7 +1364,9 @@ html[data-font="naskh"] .plate .t{font-family:var(--face);letter-spacing:0}
 .guide > li.folded > h3:focus-visible{outline:2px solid var(--gold-soft);outline-offset:2px;border-radius:6px}
 .guide > li.folded:not(.done) > h3{color:var(--chalk-dim)}
 .guide > li.current > h3{font-size:1.15rem}
-.guide .stuck{display:inline-flex;align-items:center;min-height:36px;margin:10px 0 0;color:var(--gold-soft);font-size:.9rem;text-decoration:none}
+.guide .stuck{display:inline-flex;align-items:center;max-width:100%;min-height:36px;margin:10px 0 0;color:var(--gold-soft);font-size:.9rem;text-decoration:none;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  scroll-margin-bottom:calc(88px + env(safe-area-inset-bottom, 0px))}
 .guide .stuck:hover,.guide .stuck:focus-visible{text-decoration:underline;text-underline-offset:3px}
 /* ---------- apper ---------- */
 .appc{background:var(--ink-deep);border:1px solid var(--rule);border-radius:14px;
@@ -2781,7 +2783,8 @@ html[data-theme="light"] .shell[data-view="start"] #guide .chk-t{color:#0B8F84}
 .shell[data-view="start"] #guide .markd{
   margin-top:12px;min-height:44px;padding:11px 14px;border-radius:10px;
   background:transparent;border:1px solid var(--rule);
-  font:650 .9rem/1.25 var(--face);color:var(--chalk);justify-content:center}
+  font:650 .9rem/1.25 var(--face);color:var(--chalk);justify-content:center;
+  scroll-margin-bottom:calc(88px + env(safe-area-inset-bottom, 0px))}
 .shell[data-view="start"] #guide .markd::before{display:none}
 .shell[data-view="start"] #guide .markd[aria-pressed="true"]{
   border-color:color-mix(in srgb,#15D8C4 40%,var(--rule));
@@ -3529,8 +3532,9 @@ html[data-font="nastaliq"] .goals .goal{min-height:96px}
   #tb-more{margin-top:auto}
   .tbb .dot{top:12px;inset-inline-start:30px}
   /* Paa mobil er menyen bevisst i MOTSATT farge (#146) for aa skille seg fra innholdet. En sidemeny skal derimot
-     hvile i samme flate som siden - ellers blir den en lysende vegg ved siden av moerkt innhold. */
-  :root[data-theme="dark"] .tabbar.tabbar,:root:not([data-theme="dark"]) .tabbar.tabbar{background:var(--ink-deep);border-inline-end:1px solid var(--rule)}
+     hvile i samme flate som siden - ellers blir den en lysende vegg ved siden av moerkt innhold.
+     !important beats the mobile dark light-pill reassert after AIM-115 solid. */
+  :root[data-theme="dark"] .tabbar.tabbar,:root:not([data-theme="dark"]) .tabbar.tabbar{background:var(--ink-deep) !important;border-inline-end:1px solid var(--rule)}
   :root[data-theme="dark"] .tbrow .tbb.tbb,:root:not([data-theme="dark"]) .tbrow .tbb.tbb{color:var(--chalk-dim)}
   :root[data-theme="dark"] .tbrow .tbb.tbb[aria-current="page"],:root:not([data-theme="dark"]) .tbrow .tbb.tbb[aria-current="page"]{color:var(--chalk)}
   :root[data-theme="dark"] .tbrow .tbb[aria-current="page"]:not(.tbhome){background:rgba(27,79,216,.18)}
@@ -3632,6 +3636,9 @@ html.fx .topbar{
   border:1px solid var(--rule);
   box-shadow:0 8px 20px -18px rgba(0,0,0,.4) !important}
 .tabbar,.sheet,.tape2{background:var(--ink-deep) !important}
+/* AIM-126 / round three: AIM-115 solid rule above flattens #146 dark light-pill.
+   Reassert opposite-theme pill so #396 idle ink (#4B5270) has contrast again. */
+:root[data-theme="dark"] .tabbar{background:#F3F5FA !important}
 /* LIGHT menu ink vs solid white/marine pill (live white-on-white). Dark untouched. */
 :root:not([data-theme="dark"]) .tabbar .tbb{color:#4B5270}
 :root:not([data-theme="dark"]) .tabbar .tbb[aria-current="page"]{color:#0B1020}
@@ -4413,6 +4420,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.9471c9a0d0.js" defer></script>
+<script src="app-m.ebb2277c47.js" defer></script>
 </body>
 </html>
