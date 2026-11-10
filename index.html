@@ -1162,9 +1162,12 @@ html[data-page="leaders"] .sec:not(#s-leaders){display:none !important}
 html:not([data-page="leaders"]) #s-leaders{display:none !important}
 /* #150: ledersiden er et skjema - kursbanner og nyhetsrad hjelper ikke der. */
 html[data-page="leaders"] .tape2,html[data-page="leaders"] .nradar,html[data-page="leaders"] .oekt,html[data-page="leaders"] .tvtape{display:none !important}
-/* #155: kurser og nyheter hjelper paa Verktoey / inne i Sonic — paa Products-lista
-   (prod), Start/Laer/FAQ/IB stjaeler de forste viewport. .navd = etter brukerens eget bytte. */
+/* #155: kurser og nyheter hjelper paa Verktoey / earn calc·results·withdraw — paa Products-lista
+   (prod), Start/Laer/FAQ/IB stjaeler de forste viewport. .navd = etter brukerens eget bytte.
+   Round eight after #407 (360 EN/UR): earn[data-tab=sonic] teaching short had markets+tvtape
+   (~214 px) above the jump; flow started under the tab. Keep strips off Sonic teaching only. */
 .shell.navd:is([data-view="start"],[data-view="learn"],[data-view="faq"],[data-view="ib"],[data-view="prod"]) :is(.tape2,.nradar,.oekt,.tvtape){display:none !important}
+.shell.navd[data-view="earn"][data-tab="sonic"] :is(.tape2,.nradar,.oekt,.tvtape){display:none !important}
 /* #254 (founder 20.10 02:54 «mye som skjer på toppen … mer passe psyken til folk»): Hjem er for å komme i gang, ikke en
    tradingterminal. Kurser, økter og nyhetsradar står på trading-fanene (Verktøy, Produkter); på Hjem samler «Markedene nå»
    det i ett rolig kort lenger ned. Røde/grønne tall øverst er det første en nybegynner ser - det vekker uro, ikke tillit. */
