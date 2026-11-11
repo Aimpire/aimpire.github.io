@@ -134,8 +134,9 @@ if(!treg){s.media="all";return;}document.documentElement.setAttribute("data-skri
   --face:"Montserrat",system-ui,-apple-system,sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
   --display:"Archivo","Montserrat",system-ui,sans-serif;
-  /* AIM-188 design architecture — brand gold from BRAND.md; type/space/folder chrome.
-     Siblings own Home/Shuru/risk copy; this is the shared infrastructure they rebase onto. */
+  /* Design architecture (AIM-188 → infra harden): ONE token authority.
+     Brand gold = BRAND.md. --gold remains magenta FILL (legacy name — do not rename in this pass).
+     Siblings rebase Home/Shuru/risk copy onto these roles — never invent parallel hex/radius. */
   --brand-gold:#E8B84B;
   --brand-gold-deep:#C99A2E;
   --teal-live:#15D8C4;
@@ -160,6 +161,15 @@ if(!treg){s.media="all";return;}document.documentElement.setAttribute("data-skri
   --folder-hair-h:3px;
   --folder-sub-max:38ch;
   --tbfs:var(--fs-nav);
+  /* Radius + CTA roles (was a second :root — consolidated here). */
+  --aim:var(--grad-ink);
+  --r-card:16px;--r-btn:14px;--r-tool:12px;--r-pill:999px;--r-chip:12px;--r-in:12px;
+  --cta-shadow:0 10px 22px -16px rgba(12,127,120,.28);
+  --cta-primary-bg:var(--jet);
+  --cta-primary-fg:var(--jet-on);
+  --cta-primary-tick:var(--aim);
+  --cta-quiet-border:color-mix(in srgb,var(--chalk) 28%,transparent);
+  --cta-quiet-bg:transparent;
 }
 :root[data-theme="dark"]{
   /* Nesté studio marine — not flat near-black / not purple wash. */
@@ -170,6 +180,9 @@ if(!treg){s.media="all";return;}document.documentElement.setAttribute("data-skri
   --v1:#5B8BFF; --v2:#2FE0CC; --v3:#E04DDE; --v4:#FBE16B;
   --gold-metal:#FBE16B; --gold-ink:#FBE16B; --jet:#F4F2F7; --jet-on:#070B14;
   --grad-ink:var(--grad);
+  --cta-shadow:0 12px 26px -16px rgba(21,216,196,.40);
+  --cta-primary-bg:var(--jet);
+  --cta-primary-fg:var(--jet-on);
 }
 html[data-font="deva"]{ --face:"Noto Sans Devanagari","Montserrat",sans-serif }
 html[data-font="nastaliq"]{ --face:"Noto Nastaliq Urdu","Montserrat",serif }
@@ -199,14 +212,14 @@ html[lang="ur"][data-font="naskh"] :is(.slab .t,.tneste,button){letter-spacing:0
 .sky{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;contain:strict;clip-path:inset(0)}   /* clip-path: Safari klipper animerte lag i faste lag paalitelig */
 .sky .orb{position:absolute;border-radius:50%;will-change:transform;transform:translate3d(0,0,0)}
 .sky .o1{width:78vmax;height:78vmax;inset-inline-start:-30vmax;top:-34vmax;
-  background:radial-gradient(closest-side,rgba(21,216,196,.40),rgba(21,216,196,0))}
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--teal-live) 34%,transparent),transparent)}
 .sky .o2{width:64vmax;height:64vmax;inset-inline-end:-26vmax;top:-20vmax;
-  background:radial-gradient(closest-side,rgba(194,31,191,.30),rgba(194,31,191,0))}
+  background:radial-gradient(closest-side,rgba(27,79,216,.22),transparent);opacity:.4}
 .sky .o3{width:58vmax;height:58vmax;inset-inline-start:18vw;top:42vh;
-  background:radial-gradient(closest-side,rgba(251,225,107,.34),rgba(251,225,107,0))}
-:root[data-theme="dark"] .sky .o1{background:radial-gradient(closest-side,rgba(27,79,216,.46),rgba(27,79,216,0))}
-:root[data-theme="dark"] .sky .o2{background:radial-gradient(closest-side,rgba(194,31,191,.30),rgba(194,31,191,0))}
-:root[data-theme="dark"] .sky .o3{background:radial-gradient(closest-side,rgba(21,216,196,.20),rgba(21,216,196,0))}
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--brand-gold) 22%,transparent),transparent)}
+:root[data-theme="dark"] .sky .o1{background:radial-gradient(closest-side,rgba(27,79,216,.40),transparent)}
+:root[data-theme="dark"] .sky .o2{background:radial-gradient(closest-side,color-mix(in srgb,var(--teal-live) 18%,transparent),transparent);opacity:.32}
+:root[data-theme="dark"] .sky .o3{background:radial-gradient(closest-side,color-mix(in srgb,var(--teal-live) 16%,transparent),transparent)}
 .skyline{position:absolute;z-index:-1;pointer-events:none;overflow:hidden;contain:paint;inset-inline:0;top:112px;height:120px;opacity:.55;
   -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%);
           mask-image:linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%);
@@ -1666,20 +1679,17 @@ html[data-font="nastaliq"] .qa summary{font-weight:400}
    knappenivaaer, én regel for aktive brikker (fylt jet), to fremhevede kort
    paa menyen og resten som liste. Bare CSS + menyens gruppering; ingen tekst.
    ============================================================ */
-/* #323 craft: radius-hierarki — pill kun primary CTA + språk/tema (B-049); øvrig tool. */
-:root{--aim:var(--grad-ink);--r-card:16px;--r-btn:14px;--r-tool:12px;--r-pill:999px;--r-chip:12px;--r-in:12px;
-  --cta-shadow:0 14px 32px -18px rgba(21,216,196,.45)}
-:root:not([data-theme="dark"]){--cta-shadow:0 12px 28px -16px rgba(12,127,120,.32)}
+/* #323 craft: radius/CTA tokens live in primary :root (design architecture). Pill = språk/tema only (B-049). */
 
 /* --- Nivaa 1: hovedhandling. Fylt jet, siktelinje under teksten. --- */
 .out .apply,.nextb,.joinbtn{
   position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;
   min-height:52px;padding:14px 22px 16px;border:0;border-radius:var(--r-btn);
-  background:var(--jet);color:var(--jet-on);font:800 1rem/1.15 var(--display);
+  background:var(--cta-primary-bg);color:var(--cta-primary-fg);font:800 1rem/1.15 var(--display);
   letter-spacing:0;text-decoration:none;cursor:pointer;filter:none;
   transition:transform .12s ease,filter .18s ease}
 .out .apply::after,.nextb::after,.joinbtn::after{content:"";position:absolute;inset-inline:18px;bottom:8px;height:2px;
-  border-radius:2px;background:var(--aim);opacity:.95}
+  border-radius:2px;background:var(--cta-primary-tick);opacity:.95}
 .out .apply:hover,.nextb:hover,.joinbtn:hover,.joinbtn:focus-visible{filter:brightness(1.07)}
 .out .apply:active,.nextb:active,.joinbtn:active{transform:scale(.985)}
 .out .apply{width:100%;margin-top:14px}
@@ -3960,19 +3970,25 @@ html.fx .topbar{
   color:var(--chalk);
   backdrop-filter:none;-webkit-backdrop-filter:none}
 
-/* Primary CTA: one shadow only (fail multi soft-glow «premium»). Gradient OK (B-049). */
-.slab.reg{
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.28),
-    var(--cta-shadow) !important}
+/* Primary CTA roles: jet + brand tick on leaders/IB/out. Kill rainbow soft-glow default.
+   Home foyer door stays quiet teal wash — AIM-182/194 (menu #notice-none). */
+.slab.reg{position:relative;box-shadow:var(--cta-shadow) !important}
+html[data-page="leaders"] .slab.reg,
+.out .slab.reg,
+.ib .slab.reg{
+  background:var(--cta-primary-bg) !important;
+  color:var(--cta-primary-fg) !important;
+  border:0 !important}
+html[data-page="leaders"] .slab.reg::after,
+.out .slab.reg::after,
+.ib .slab.reg::after{
+  content:"";position:absolute;inset-inline:18px;bottom:9px;height:2px;border-radius:2px;
+  background:var(--cta-primary-tick);opacity:.95;pointer-events:none}
 .slab.reg:hover,
 .slab.reg:active,
-:root:not([data-theme="dark"]) .slab.reg{
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.32),
-    var(--cta-shadow) !important}
+.slab.reg:focus-visible{filter:brightness(1.05)}
 .tbb.tbhome[aria-current="page"] .tbring{
-  box-shadow:0 0 0 2px #15D8C4,0 0 12px rgba(21,216,196,.35) !important}
+  box-shadow:0 0 0 2px var(--teal-live),0 0 12px color-mix(in srgb,var(--teal-live) 35%,transparent) !important}
 
 /* Menu plates: tool-sharp list rows, not equal SaaS card grid. */
 .mfeat .plate,
@@ -3988,13 +4004,16 @@ html.fx .topbar{
   box-shadow:none !important}
 .goals .ggrid > *{border-radius:var(--r-tool) !important;box-shadow:none !important}
 
-/* Orb blobs: marine teal→blue only (no magenta/yellow wash on light/dark). Keep markup. */
-.sky .o1{background:radial-gradient(closest-side,rgba(21,216,196,.14),rgba(21,216,196,0))}
-.sky .o2{background:radial-gradient(closest-side,rgba(27,79,216,.10),rgba(27,79,216,0))}
-.sky .o3{background:radial-gradient(closest-side,rgba(14,143,134,.08),rgba(14,143,134,0))}
-:root[data-theme="dark"] .sky .o1{background:radial-gradient(closest-side,rgba(27,79,216,.20),rgba(27,79,216,0))}
-:root[data-theme="dark"] .sky .o2{background:radial-gradient(closest-side,rgba(21,216,196,.10),rgba(21,216,196,0))}
-:root[data-theme="dark"] .sky .o3{background:radial-gradient(closest-side,rgba(27,79,216,.08),rgba(27,79,216,0))}
+/* Orb blobs: marine teal→blue only (no magenta/yellow wash). Kill fintech-AI rainbow atmosphere. */
+.sky .o1{background:radial-gradient(closest-side,color-mix(in srgb,var(--teal-live) 14%,transparent),transparent)}
+.sky .o2{background:radial-gradient(closest-side,rgba(27,79,216,.10),transparent)}
+.sky .o3{background:radial-gradient(closest-side,color-mix(in srgb,var(--teal-ink) 10%,transparent),transparent)}
+:root[data-theme="dark"] .sky .o1{background:radial-gradient(closest-side,rgba(27,79,216,.18),transparent)}
+:root[data-theme="dark"] .sky .o2{background:radial-gradient(closest-side,color-mix(in srgb,var(--teal-live) 12%,transparent),transparent)}
+:root[data-theme="dark"] .sky .o3{background:radial-gradient(closest-side,rgba(27,79,216,.08),transparent)}
+/* Magenta orb channel stays in markup but stays visually off (specialist atmosphere). */
+.sky .o2{opacity:.35}
+:root[data-theme="dark"] .sky .o2{opacity:.28}
 
 /* AIM-115 — empty/plain panels across folders: soft marine face, not chalk slabs.
    Tokens cascade to Products/Academy hairline corridors (do not re-card .pcard).
@@ -4347,12 +4366,13 @@ html[data-font="nastaliq"] .hero p#hsub{font-size:1.02rem;line-height:1.7}
 }
 
 /* =============================================================================
-   AIM-188 — live hub design architecture (tokens → type → folder chrome → nav).
-   Infrastructure only. Never #379. Keep Archivo/Montserrat. No purple glass.
-   Home/Shuru/risk copy owned by sibling tasks — rebase onto this foundation.
+   Design architecture cascade — tokens → type → folder chrome → CTA roles → nav.
+   Harden pass: one authority, no purple-glass AI atmosphere. Never #379.
+   Home/Shuru/risk copy → AIM-193/194. This block is shared infrastructure only.
    ============================================================================= */
 
 /* Type scale wired to shared tokens (Archivo display · Montserrat face). */
+body{font-size:var(--fs-body);line-height:var(--lh-body)}
 .sec > h2,.short > h2{
   font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;
   font-size:var(--fs-section);line-height:1.12;letter-spacing:-.012em}
@@ -4360,6 +4380,9 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .sec > h2
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .short > h2{
   font-family:var(--face);font-stretch:normal}
 .lede{font-size:var(--fs-lede);line-height:var(--lh-body);max-width:var(--measure)}
+/* Quiet secondary CTA role (outline) — path green stays ask-sheet only. */
+.back,.menu .share,#notice-none .dlink,#spon .dlink{
+  border-color:var(--cta-quiet-border);background:var(--cta-quiet-bg)}
 
 /* Folder shells — one grammar for Start · Academy · Sonic · Tools · Ask · Products. */
 .shell[data-view="learn"] #vhead,
@@ -4383,14 +4406,19 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .short > 
 .shell[data-view="earn"] #vhead .vtx span,
 .prodview .vhead .vtx span{
   font-size:var(--fs-lede);line-height:1.4;max-width:var(--folder-sub-max);color:var(--chalk-dim)}
-/* Brand gold hairline under every folder title (Start sticky also keeps bottom rule). */
+/* Brand metal rule under folder titles — optical weight from type + deep gold on light. */
 .shell[data-view="learn"] #vhead .vtx b::after,
 .shell[data-view="faq"] #vhead .vtx b::after,
 .shell[data-view="tools"] #vhead .vtx b::after,
 .shell[data-view="earn"] #vhead .vtx b::after,
 .prodview .vhead .vtx b::after{
   content:"";display:block;width:var(--folder-hair-w);height:var(--folder-hair-h);
-  margin-top:7px;border-radius:2px;background:var(--brand-gold);opacity:.95}
+  margin-top:7px;border-radius:1px;background:var(--brand-gold-deep);opacity:.92}
+:root[data-theme="dark"] .shell[data-view="learn"] #vhead .vtx b::after,
+:root[data-theme="dark"] .shell[data-view="faq"] #vhead .vtx b::after,
+:root[data-theme="dark"] .shell[data-view="tools"] #vhead .vtx b::after,
+:root[data-theme="dark"] .shell[data-view="earn"] #vhead .vtx b::after,
+:root[data-theme="dark"] .prodview .vhead .vtx b::after{background:var(--brand-gold);opacity:.95}
 html[dir="rtl"] .shell[data-view="learn"] #vhead .vtx b::after,
 html[dir="rtl"] .shell[data-view="faq"] #vhead .vtx b::after,
 html[dir="rtl"] .shell[data-view="tools"] #vhead .vtx b::after,
