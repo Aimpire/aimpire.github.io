@@ -584,6 +584,15 @@ button.row:first-child{border-top:0}
   text-decoration:none;padding:14px 16px;border-radius:var(--r-btn);text-align:center;
   font-weight:800;font-size:1rem;font-family:var(--display);min-height:48px}
 .joinbtn:hover,.joinbtn:focus-visible{filter:brightness(1.12)}
+/* AIM-189: Element X store-first, then invite (never matrix.to multi-app first). */
+.eljoin{display:grid;gap:10px;margin:10px 0 4px}
+.eljoin .eljoin-acc{margin:0;color:var(--chalk-dim);font-size:.9rem;line-height:1.45}
+.eljoin .eljoin-store.apps{margin:0}
+.eljoin .eljoin-invite{margin:0}
+.eljoin .eljoin-ready{display:block;margin:2px 0 0;font-size:.86rem;color:var(--chalk-dim);
+  text-decoration:underline;text-underline-offset:3px}
+.eljoin .eljoin-ready:hover,.eljoin .eljoin-ready:focus-visible{color:var(--chalk)}
+#notice-none .eljoin,#spon .eljoin{margin-top:12px}
 
 /* Ordlista. Lukket til man trykker, saa den som bare vil la Sonic gaa
    slipper aa scrolle forbi tolv begreper. */
@@ -3056,7 +3065,7 @@ html[dir="rtl"] .fbs{justify-self:start}
 .cmtips{list-style:none;margin:6px 0 16px;padding:0;display:grid;gap:10px}
 .cmtips li{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:start;font-size:.92rem;line-height:1.45}
 .cmtips .e{font-size:1.15rem;line-height:1.2}
-.cmgo{margin:4px 0 10px}
+.cmgo{display:block;margin:4px 0 10px}
 .lesopp{display:inline-flex;align-items:center;gap:6px;margin:10px 8px 0 0;padding:10px 14px;border-radius:999px;border:1px solid var(--rule);
   background:var(--ink-raise);color:var(--chalk);font:700 .85rem/1.2 var(--display);cursor:pointer}
 .lesopp::before{content:"\1F50A"}
@@ -4387,7 +4396,7 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
     <p class="lede" id="cm-lede"></p>
     <ul class="cmrooms" id="cm-rooms"></ul>
     <ol class="cmtips" id="cm-tips"></ol>
-    <a class="slab reg cmgo" id="cm-go" target="_blank" rel="noopener noreferrer"></a>
+    <div class="eljoin cmgo" id="cm-go"></div>
     <p class="vnote" id="cm-note"></p>
   </section>
 
@@ -4709,6 +4718,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.7f4dd93de1.js" defer></script>
+<script src="app-l.33271a6a1c.js" defer></script>
 </body>
 </html>
