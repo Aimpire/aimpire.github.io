@@ -2634,18 +2634,20 @@ html,body{touch-action:pan-y pinch-zoom}
 .shell[data-view="start"] #vhead{margin:4px 0 10px;padding:0}
 .shell[data-view="start"] #vhead .vtx b{font-size:1.85rem;max-width:14ch}
 .shell[data-view="start"] #vhead .vtx span{max-width:36ch;font-size:.98rem;line-height:1.45}
-/* Quiet phase rail — Academy/Products grammar, no emoji circles or gradient track. */
+/* Quiet phase rail — Academy/Products grammar, no emoji circles or gradient track.
+   AIM-177: fit all 5 chips in the 360 fold (min-width:4.2rem + hidden scrollbar clipped MT5). */
 .shell[data-view="start"] #s-guide .shpath{
-  display:flex;flex-wrap:nowrap;gap:0;margin:0 0 18px;padding:0 0 14px;overflow-x:auto;
-  border-bottom:1px solid var(--rule);-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.shell[data-view="start"] #s-guide .shpath::-webkit-scrollbar{display:none}
+  display:flex;flex-wrap:nowrap;gap:0;margin:0 0 18px;padding:0 0 14px;overflow-x:hidden;
+  border-bottom:1px solid var(--rule)}
 .shell[data-view="start"] #s-guide .shpath::before{display:none}
-.shell[data-view="start"] #s-guide .shpath li{flex:1 1 0;min-width:4.2rem;animation:none;gap:6px}
-.shell[data-view="start"] #s-guide .shpath .shgo{gap:6px;min-height:44px}
+.shell[data-view="start"] #s-guide .shpath li{flex:1 1 0;min-width:0;animation:none;gap:4px}
+.shell[data-view="start"] #s-guide .shpath .shgo{gap:4px;min-height:44px;width:100%;min-width:0}
 .shell[data-view="start"] #s-guide .shpath .e{
   width:1.7rem;height:1.7rem;border-radius:8px;font:700 .72rem/1 var(--display);
-  background:var(--rule);color:var(--chalk);border:0;box-shadow:none}
-.shell[data-view="start"] #s-guide .shpath .t{font:600 .68rem/1.2 var(--face);letter-spacing:.01em;color:var(--chalk-dim)}
+  background:var(--rule);color:var(--chalk);border:0;box-shadow:none;flex:0 0 auto}
+.shell[data-view="start"] #s-guide .shpath .t{
+  font:600 .62rem/1.2 var(--face);letter-spacing:.01em;color:var(--chalk-dim);
+  max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .shell[data-view="start"] #s-guide .shpath li.ok .e{background:color-mix(in srgb,var(--chalk) 16%,transparent)}
 .shell[data-view="start"] #s-guide .shpath li.ok .e::after{display:none}
 .shell[data-view="start"] #s-guide .shpath li.nu .e{background:color-mix(in srgb,var(--chalk) 28%,transparent);color:var(--chalk)}
