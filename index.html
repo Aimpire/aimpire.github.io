@@ -946,10 +946,11 @@ html[data-font="naskh"] .notice h2,html[data-font="deva"] .notice h2{font-family
 .shell[data-view]:not([data-view="menu"]) .hero{padding:18px 0 0}
 /* Varslene hoerer hjemme der beslutningen tas: forsiden og «Kom i gang». */
 .shell[data-view]:not([data-view="menu"]):not([data-view="start"]):not(.conflict) .notices{display:none}
-/* Paa forsiden er «ingen sponsorlenke» bare overskriften - ellers fyller den
-   hele foerste skjerm og menyen havner under bretten. Hele forklaringen staar
-   i «Kom i gang». Konflikt-valget beholdes helt: det krever et svar. */
+/* AIM-182 bio foyer: Home must carry the private-ask meaning itself.
+   Older rule hid every <p> so strangers only saw a hollow title + CTA.
+   Keep foot/ownhint quiet; show #nn-b as the curiosity red thread. */
 .shell[data-view="menu"] #notice-none p{display:none}
+.shell[data-view="menu"] #notice-none p#nn-b{display:block} /* type set in AIM-182 foyer craft below */
 .shell[data-view="menu"] #notice-none p.ownhint{display:block}
 /* ---- Kort inntjeningsguide (s-ibq) ---- */
 #s-ibq .iqh{margin:26px 0 10px;font:800 1.05rem/1.25 var(--display)}
@@ -3900,18 +3901,47 @@ html .tabbar .tbrow .tbb span{font-size:var(--tbfs,.72rem);overflow:visible;text
   .tabbar{width:min(720px,calc(100% - 24px));margin-inline:auto;border-radius:16px 16px 0 0}
   .tabbar .tbrow .tbb span{font-size:max(var(--tbfs),.78rem)}
 }
-.shell[data-view="menu"] .notices{margin-bottom:4px}
+/* AIM-182 Home IA only — tokens/shells owned by AIM-188 (no parallel design system).
+   Reuse :root --display/--face/--chalk/--gold-soft/--gold-metal/--rule/--r-btn/--measure.
+   Hero type stays on global .hero h1 (Archivo via --display). */
+.shell[data-view="menu"] .hero{padding:36px 0 8px}
+.shell[data-view="menu"] .hero p#hsub{
+  margin:14px 0 0;max-width:32ch;
+  font:500 .98rem/1.5 var(--face);color:var(--chalk-dim);text-wrap:pretty}
+html[data-font="nastaliq"] .shell[data-view="menu"] .hero p#hsub,
+html[data-font="naskh"] .shell[data-view="menu"] .hero p#hsub{
+  font-size:1.04rem;line-height:1.75;max-width:36ch}
+/* Hairline: Start grammar, tokenized for AIM-188 (--gold-metal). */
+.shell[data-view="menu"] .hero::after{
+  content:"";display:block;width:2.25rem;height:3px;margin-top:18px;border-radius:2px;
+  background:var(--gold-metal)}
+html[dir="rtl"] .shell[data-view="menu"] .hero::after{margin-inline-start:auto}
+.shell[data-view="menu"] .notices{margin:0}
 #notice-none{padding:12px 14px}
 .shell[data-view="menu"] #notice-none h2,#notice-none h2{font-size:1rem;font-weight:700;line-height:1.3;margin:0 0 6px}
 .menu .mlede{display:none} /* lede repeats the plates */
-.shell[data-view="menu"] #notice-none{border:0;border-block:1px solid var(--rule);border-radius:0;background:transparent;box-shadow:none;padding:8px 2px 10px}
-.shell[data-view="menu"] #notice-none h2{font:650 .95rem/1.35 var(--face);color:var(--chalk);margin:0 0 8px}
-/* Home Join/Register: sentence-case calm door — not shouty UPPERCASE gradient pill. */
+.shell[data-view="menu"] #notice-none{
+  border:0;border-block:0;border-radius:0;background:transparent;box-shadow:none;
+  padding:20px 2px 10px;margin:0;max-width:var(--measure)}
+.shell[data-view="menu"] #notice-none h2{
+  font:800 1.08rem/1.25 var(--display);letter-spacing:-.01em;color:var(--chalk);
+  margin:0 0 10px;max-width:18ch}
+html[data-font="nastaliq"] .shell[data-view="menu"] #notice-none h2,
+html[data-font="naskh"] .shell[data-view="menu"] #notice-none h2,
+html[data-font="deva"] .shell[data-view="menu"] #notice-none h2{
+  font-family:var(--face);font-weight:700;letter-spacing:0;font-size:1.05rem;max-width:22ch}
+.shell[data-view="menu"] #notice-none p#nn-b{
+  display:block;margin:0 0 14px;max-width:34ch;
+  font:500 .94rem/1.5 var(--face);color:var(--chalk-dim);text-wrap:pretty}
+html[data-font="nastaliq"] .shell[data-view="menu"] #notice-none p#nn-b,
+html[data-font="naskh"] .shell[data-view="menu"] #notice-none p#nn-b{
+  font-size:1.02rem;line-height:1.75;max-width:38ch}
+/* Primary door: existing .slab.reg shell + token calm overrides (no new CTA system). */
 .shell[data-view="menu"] #notice-none .slab.reg,
 .shell[data-view="menu"] #spon > .slab.reg{
-  border-radius:14px;min-height:46px;padding:12px 18px;margin:4px 0 0;max-width:100%;
-  background:color-mix(in srgb,var(--chalk) 8%,transparent);
-  border:1px solid color-mix(in srgb,#15D8C4 40%,var(--rule));
+  border-radius:var(--r-btn);min-height:50px;padding:13px 18px;margin:0;max-width:100%;
+  background:color-mix(in srgb,var(--gold-soft) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--gold-soft) 45%,var(--rule));
   box-shadow:none !important;color:var(--chalk);text-align:start}
 .shell[data-view="menu"] #notice-none .slab.reg::after,
 .shell[data-view="menu"] #spon > .slab.reg::after{display:none}
@@ -3922,13 +3952,17 @@ html .tabbar .tbrow .tbb span{font-size:var(--tbfs,.72rem);overflow:visible;text
 .shell[data-view="menu"] #spon > .slab.reg:active,
 .shell[data-view="menu"] #spon > .slab.reg:focus-visible{
   filter:none;transform:none;
-  background:color-mix(in srgb,#15D8C4 12%,transparent);
-  border-color:color-mix(in srgb,#15D8C4 55%,var(--rule));
+  background:color-mix(in srgb,var(--gold-soft) 18%,transparent);
+  border-color:color-mix(in srgb,var(--gold-soft) 60%,var(--rule));
   box-shadow:none !important}
 .shell[data-view="menu"] #notice-none .slab.reg .t,
 .shell[data-view="menu"] #spon > .slab.reg .t{
-  text-transform:none !important;letter-spacing:0 !important;
-  font:700 .95rem/1.25 var(--face) !important;color:var(--chalk)}
+  text-transform:none !important;letter-spacing:-.01em !important;
+  font:800 1rem/1.2 var(--display) !important;color:var(--chalk)}
+html[data-font="nastaliq"] .shell[data-view="menu"] #notice-none .slab.reg .t,
+html[data-font="naskh"] .shell[data-view="menu"] #notice-none .slab.reg .t,
+html[data-font="deva"] .shell[data-view="menu"] #notice-none .slab.reg .t{
+  font-family:var(--face) !important;font-weight:700 !important}
 .shell[data-view="menu"] #notice-none .slab.reg .s,
 .shell[data-view="menu"] #spon > .slab.reg .s{color:var(--chalk-dim);opacity:1}
 #pille,#install-hint,.install,.appcta{font-size:.92rem}
@@ -4008,9 +4042,21 @@ html[data-font="nastaliq"] .mslede{font-size:.98rem;line-height:1.75;max-width:4
 .htree .htg{flex:0 0 auto;color:var(--chalk-dim);font-size:1.05rem;line-height:1}
 html[dir="rtl"] .htree .htg{transform:scaleX(-1)}
 @media (prefers-reduced-motion:reduce){.htree .hta{transition:none}}
+/* AIM-182: member tools after foyer — hairline divider, below bio first paint @360
+   (CTA ~484px; tabbar ~56 → keep portals under usable fold). */
+.shell[data-view="menu"] #menu-nav{
+  margin-top:max(96px, calc(100dvh - 56px - 500px));
+  padding-top:20px;border-top:1px solid var(--rule)}
+@supports not (height: 100dvh){
+  .shell[data-view="menu"] #menu-nav{margin-top:160px}
+}
+.shell[data-view="menu"] .htree{margin:0 0 0;padding-top:0}
+.shell[data-view="menu"] .htree .htt{
+  margin:0 0 6px;font:650 .72rem/1.3 var(--face);letter-spacing:.04em;
+  text-transform:uppercase;color:var(--chalk-dim);opacity:.9}
 /* Get set up residual after Start craft (#381): same portal hairline as linktree —
-   not an elevated feat plate shouting under calm login doors. */
-.shell[data-view="menu"] .htree{margin-bottom:0}
+   not an elevated feat plate shouting under calm login doors.
+   Fresh bio: CTA already opens Start — hide duplicate plate (see renderMenu). */
 .shell[data-view="menu"] .mneste{
   margin:0 0 6px !important;padding:0;border:0 !important;border-block:0 !important;
   background:transparent !important;gap:0 !important}
@@ -4156,13 +4202,13 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
   <div class="nradar" id="nradar" dir="ltr" hidden><div class="nrtrk" id="nradar-trk"></div></div>
 
   <section class="hero">
-    <h1><span id="h1">Start here.</span><br><span id="h2">Aim for it.</span></h1>
-    <p id="hsub">Academy — honest lessons with the risk in plain sight. No advice. No income promises.</p>
+    <h1><span id="h1">Learn trading here.</span><br><span id="h2">Ask who shared this.</span></h1>
+    <p id="hsub">Academy and calm setup — risk in plain sight. No advice. No income promises.</p>
     <div class="spon" id="spon" hidden></div>
   </section>
   <!-- #100: toppen staar ferdig i HTML-en og faar riktig spraak/tema/retning her, foer det store
        skriptet nederst er lastet - saa telefonen kan tegne den mens resten fortsatt kommer. -->
-  <script>(function(){try{var H={"en":["Start here.","Aim for it.","Academy — honest lessons with the risk in plain sight. No advice. No income promises.","ltr","en","latin"],"no":["Start her.","Sikt høyt.","Academy — ærlige leksjoner med risikoen synlig. Ingen råd. Ingen inntektsløfter.","ltr","no","latin"],"hi":["यहाँ से शुरू करें।","अपने लक्ष्य की ओर बढ़ें।","Academy — ईमानदार lessons, जोखिम साफ़ सामने। सलाह नहीं। आय का वादा नहीं।","ltr","hi","deva"],"ar":["ابدأ من هنا.","وامضِ نحو هدفك.","Academy — دروس صادقة والمخاطر واضحة. لا نصيحة. لا وعود بدخل.","rtl","ar","naskh"],"ur":["یہیں سے شروع کریں۔","اپنے مقصد کی طرف بڑھیں۔","Academy — ایماندار سبق، خطرہ صاف سامنے۔ مشورہ نہیں۔ کمائی کا وعدہ نہیں۔","rtl","ur","naskh"],"ar_rm":["Ibda' min huna.","Wamdi nahwa hadafak.","Academy — durus sadiqa wal-makhatir wadiha. La nasiha. La wu3ud bi-dakhl.","ltr","ar-Latn","latin"],"ur_rm":["Yahin se shuru karein.","Apne maqsad ki taraf barhein.","Academy — imandaar sabaq, khatra saaf saamne. Mashwara nahi. Kamai ka wada nahi.","ltr","ur-Latn","latin"]},d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},L=g("aimpire.lang"),t=g("aimpire.theme.v2");try{var q=new URLSearchParams(location.search).get("lang");if(q&&H[q])L=q}catch(e){}if(!H[L]){var n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||""];for(var i=0;i<n.length&&!H[L];i++){var x=String(n[i]||"").toLowerCase().replace(/^(nb|nn)(?=-|$)/,"no");for(var c in H){if(x===c||x.indexOf(c+"-")===0){L=c;break}}}}if(!H[L])L="en";if(t)d.setAttribute("data-theme",t);var h=H[L];d.lang=h[4];d.dir=h[3];d.setAttribute("data-font",h[5]);document.getElementById("h1").textContent=h[0];document.getElementById("h2").textContent=h[1];document.getElementById("hsub").textContent=h[2]}catch(e){}})();</script>
+  <script>(function(){try{var H={"en":["Learn trading here.","Ask who shared this.","Academy and calm setup — risk in plain sight. No advice. No income promises.","ltr","en","latin"],"no":["Lær trading her.","Spør den som delte.","Academy og rolig oppsett — risikoen synlig. Ingen råd. Ingen inntektsløfter.","ltr","no","latin"],"hi":["Trading यहाँ सीखें।","जिसने share किया, उनसे पूछें।","Academy और शांत setup — जोखिम साफ़ सामने। सलाह नहीं। आय का वादा नहीं।","ltr","hi","deva"],"ar":["تعلّم التداول هنا.","اسأل من شارك الرابط.","Academy وإعداد هادئ — المخاطر واضحة. لا نصيحة. لا وعود بدخل.","rtl","ar","naskh"],"ur":["Trading یہاں سیکھیں۔","جس نے شیئر کیا، اُس سے پوچھیں۔","Academy اور پرسکون setup — خطرہ صاف سامنے۔ مشورہ نہیں۔ کمائی کا وعدہ نہیں۔","rtl","ur","naskh"],"ar_rm":["Ta'allam at-tadawul huna.","Is'al man sharaka ar-rabit.","Academy wa i'dad hadi' — al-makhatir wadiha. La nasiha. La wu'ud bi-dakhl.","ltr","ar-Latn","latin"],"ur_rm":["Trading yahin seekhein.","Jis ne share kiya, us se poochein.","Academy aur pur-sukoon setup — khatra saaf saamne. Mashwara nahi. Kamai ka wada nahi.","ltr","ur-Latn","latin"]},d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},L=g("aimpire.lang"),t=g("aimpire.theme.v2");try{var q=new URLSearchParams(location.search).get("lang");if(q&&H[q])L=q}catch(e){}if(!H[L]){var n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||""];for(var i=0;i<n.length&&!H[L];i++){var x=String(n[i]||"").toLowerCase().replace(/^(nb|nn)(?=-|$)/,"no");for(var c in H){if(x===c||x.indexOf(c+"-")===0){L=c;break}}}}if(!H[L])L="en";if(t)d.setAttribute("data-theme",t);var h=H[L];d.lang=h[4];d.dir=h[3];d.setAttribute("data-font",h[5]);document.getElementById("h1").textContent=h[0];document.getElementById("h2").textContent=h[1];document.getElementById("hsub").textContent=h[2]}catch(e){}})();</script>
 
   <div class="notices" id="notices">
     <div class="notice" id="notice-none" hidden>
@@ -4551,6 +4597,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.46b479e6a6.js" defer></script>
+<script src="app-m.8ee34c1db6.js" defer></script>
 </body>
 </html>
