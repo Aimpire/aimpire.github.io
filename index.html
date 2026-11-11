@@ -2817,6 +2817,52 @@ html[data-theme="light"] .shell[data-view="start"] #guide .chk-t{color:#0B8F84}
 html[data-font="nastaliq"] .shell[data-view="start"] #guide-lede{line-height:1.55;font-size:.92rem}
 html[data-font="nastaliq"] .shell[data-view="start"] #guide .subs > li{line-height:1.7}
 html[data-font="nastaliq"] .shell[data-view="start"] #guide .chk-d{line-height:1.75}
+/* =============================================================================
+   AIM-159 Start craft — Aimpire brand + placement (founder 11.11).
+   Oppsett step1 CTA JS untouched (#414). Sonic / earn stage untouched.
+   Never #379. Brand gold from BRAND.md (#E8B84B); mute magenta purple-AI sky.
+   ============================================================================= */
+/* Sticky folder brand so Oppsett scroll never buries «Get set up». */
+.shell[data-view="start"] #vhead{
+  position:sticky;top:0;z-index:6;margin:0 0 8px;padding:10px 4px 10px;
+  background:color-mix(in srgb,var(--ink) 94%,transparent);
+  border-bottom:1px solid color-mix(in srgb,#E8B84B 28%,var(--rule))}
+html.fx .shell[data-view="start"] #vhead{
+  background:color-mix(in srgb,var(--ink) 78%,transparent);
+  -webkit-backdrop-filter:blur(12px) saturate(140%);backdrop-filter:blur(12px) saturate(140%)}
+html[data-theme="light"] .shell[data-view="start"] #vhead{
+  background:color-mix(in srgb,#fff 94%,transparent);
+  border-bottom-color:color-mix(in srgb,#C99A2E 32%,var(--rule))}
+.shell[data-view="start"] #vhead .vtx b{
+  font-size:1.55rem;letter-spacing:-.02em;color:var(--chalk);max-width:18ch}
+.shell[data-view="start"] #vhead .vtx b::after{
+  content:"";display:block;width:2.25rem;height:3px;margin-top:7px;border-radius:2px;
+  background:#E8B84B}
+html[dir="rtl"] .shell[data-view="start"] #vhead .vtx b::after{margin-inline-start:auto}
+.shell[data-view="start"] #vhead .vtx span{max-width:38ch;font-size:.9rem;line-height:1.4;color:var(--chalk-dim)}
+html[data-font="nastaliq"] .shell[data-view="start"] #vhead .vtx b{font-size:1.35rem;line-height:1.45;max-width:none}
+/* Start sky: keep marine/teal/gold whisper; mute magenta orb (purple-AI). */
+html:has(.shell[data-view="start"]) .sky .o2{opacity:.05}
+html:has(.shell[data-view="start"]) .sky .o1{opacity:.24}
+html:has(.shell[data-view="start"]) .sky .o3{opacity:.18}
+/* Active Start tab: teal wash, not purple-blue pill. */
+html:has(.shell[data-view="start"]) .tbb[aria-current="page"]:not(.tbhome)::after{
+  background:rgba(21,216,196,.16)}
+:root:not([data-theme="dark"]):has(.shell[data-view="start"]) .tbb[aria-current="page"]:not(.tbhome)::after{
+  background:rgba(11,143,132,.12)}
+/* Phase rail current: teal brand tick (quiet). */
+.shell[data-view="start"] #s-guide .shpath li.nu .e{
+  background:color-mix(in srgb,#15D8C4 32%,transparent);color:var(--chalk)}
+.shell[data-view="start"] #s-guide .shpath li.nu .t{color:#15D8C4;font-weight:700}
+/* Tight rail/prog so brand + open step sit higher @360. */
+.shell[data-view="start"] #prog{margin:0 0 6px;padding:4px 2px 8px}
+.shell[data-view="start"] #s-guide .shpath{margin:0 0 6px;padding:0 0 4px}
+/* Sibling folders (not Sonic): same gold brand hairline under title. */
+.shell[data-view="learn"] #vhead .vtx b::after,
+.shell[data-view="faq"] #vhead .vtx b::after,
+.shell[data-view="tools"] #vhead .vtx b::after{
+  content:"";display:block;width:2rem;height:2px;margin-top:7px;border-radius:2px;
+  background:#E8B84B;opacity:.9}
 /* Fibonacci + journalkurve + median (K-118). */
 .fbcalc{display:grid;gap:12px}.fbcalc .cin{flex:none}
 .fbseg{grid-template-columns:repeat(2,1fr);margin:0}
@@ -4446,6 +4492,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.30f1f91996.js" defer></script>
+<script src="app-m.6cc07c7ed2.js" defer></script>
 </body>
 </html>
