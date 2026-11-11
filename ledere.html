@@ -134,6 +134,32 @@ if(!treg){s.media="all";return;}document.documentElement.setAttribute("data-skri
   --face:"Montserrat",system-ui,-apple-system,sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
   --display:"Archivo","Montserrat",system-ui,sans-serif;
+  /* AIM-188 design architecture — brand gold from BRAND.md; type/space/folder chrome.
+     Siblings own Home/Shuru/risk copy; this is the shared infrastructure they rebase onto. */
+  --brand-gold:#E8B84B;
+  --brand-gold-deep:#C99A2E;
+  --teal-live:#15D8C4;
+  --teal-ink:#0B8F84;
+  --nav-wash:rgba(21,216,196,.16);
+  --nav-wash-light:rgba(11,143,132,.12);
+  --fs-display:clamp(2.15rem,8vw,3.05rem);
+  --fs-folder:1.85rem;
+  --fs-folder-sticky:1.55rem;
+  --fs-section:1.6rem;
+  --fs-lede:.95rem;
+  --fs-body:1rem;
+  --fs-nav:.72rem;
+  --fs-label:.78rem;
+  --fs-chip:.62rem;
+  --lh-display:1.05;
+  --lh-body:1.45;
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:22px;--space-6:50px;
+  --folder-vhead-m:4px 0 10px;
+  --folder-vhead-p:4px 0 2px;
+  --folder-hair-w:2.25rem;
+  --folder-hair-h:3px;
+  --folder-sub-max:38ch;
+  --tbfs:var(--fs-nav);
 }
 :root[data-theme="dark"]{
   /* Nesté studio marine — not flat near-black / not purple wash. */
@@ -2942,33 +2968,29 @@ html[data-font="nastaliq"] .shell[data-view="start"] #guide .chk-d{line-height:1
 .shell[data-view="start"] #vhead{
   position:sticky;top:0;z-index:6;margin:0 0 8px;padding:10px 4px 10px;
   background:color-mix(in srgb,var(--ink) 94%,transparent);
-  border-bottom:1px solid color-mix(in srgb,#E8B84B 28%,var(--rule))}
+  border-bottom:1px solid color-mix(in srgb,var(--brand-gold) 28%,var(--rule))}
 html.fx .shell[data-view="start"] #vhead{
   background:color-mix(in srgb,var(--ink) 78%,transparent);
   -webkit-backdrop-filter:blur(12px) saturate(140%);backdrop-filter:blur(12px) saturate(140%)}
 html[data-theme="light"] .shell[data-view="start"] #vhead{
   background:color-mix(in srgb,#fff 94%,transparent);
-  border-bottom-color:color-mix(in srgb,#C99A2E 32%,var(--rule))}
+  border-bottom-color:color-mix(in srgb,var(--brand-gold-deep) 32%,var(--rule))}
 .shell[data-view="start"] #vhead .vtx b{
-  font-size:1.55rem;letter-spacing:-.02em;color:var(--chalk);max-width:18ch}
+  font-size:var(--fs-folder-sticky);letter-spacing:-.02em;color:var(--chalk);max-width:18ch}
 .shell[data-view="start"] #vhead .vtx b::after{
-  content:"";display:block;width:2.25rem;height:3px;margin-top:7px;border-radius:2px;
-  background:#E8B84B}
+  content:"";display:block;width:var(--folder-hair-w);height:var(--folder-hair-h);margin-top:7px;border-radius:2px;
+  background:var(--brand-gold)}
 html[dir="rtl"] .shell[data-view="start"] #vhead .vtx b::after{margin-inline-start:auto}
-.shell[data-view="start"] #vhead .vtx span{max-width:38ch;font-size:.9rem;line-height:1.4;color:var(--chalk-dim)}
+.shell[data-view="start"] #vhead .vtx span{max-width:var(--folder-sub-max);font-size:.9rem;line-height:1.4;color:var(--chalk-dim)}
+html[data-font="nastaliq"] .shell[data-view="start"] #vhead .vtx b{font-size:1.35rem;line-height:1.45;max-width:none}
 /* Start sky: keep marine/teal/gold whisper; mute magenta orb (purple-AI). */
 html:has(.shell[data-view="start"]) .sky .o2{opacity:.05}
 html:has(.shell[data-view="start"]) .sky .o1{opacity:.24}
 html:has(.shell[data-view="start"]) .sky .o3{opacity:.18}
-/* Active Start tab: teal wash, not purple-blue pill. */
-html:has(.shell[data-view="start"]) .tbb[aria-current="page"]:not(.tbhome)::after{
-  background:rgba(21,216,196,.16)}
-:root:not([data-theme="dark"]):has(.shell[data-view="start"]) .tbb[aria-current="page"]:not(.tbhome)::after{
-  background:rgba(11,143,132,.12)}
 /* Phase rail current: teal brand tick (quiet). */
 .shell[data-view="start"] #s-guide .shpath li.nu .e{
-  background:color-mix(in srgb,#15D8C4 32%,transparent);color:var(--chalk)}
-.shell[data-view="start"] #s-guide .shpath li.nu .t{color:#15D8C4;font-weight:700}
+  background:color-mix(in srgb,var(--teal-live) 32%,transparent);color:var(--chalk)}
+.shell[data-view="start"] #s-guide .shpath li.nu .t{color:var(--teal-live);font-weight:700}
 /* Tight rail/prog so brand + open step sit higher @360. */
 .shell[data-view="start"] #prog{margin:0 0 6px;padding:4px 2px 8px}
 .shell[data-view="start"] #s-guide .shpath{margin:0 0 6px;padding:0 0 4px}
@@ -3037,12 +3059,7 @@ html[data-font="naskh"] .shell[data-view="start"] #guide .stegreg.slab.reg .t{
   width:auto;max-width:100%;min-width:0;box-sizing:border-box}
 .shell[data-view="start"] #guide > li.current .asksheet-wa{
   margin-inline:0;display:flex}
-/* Sibling folders (not Sonic): same gold brand hairline under title. */
-.shell[data-view="learn"] #vhead .vtx b::after,
-.shell[data-view="faq"] #vhead .vtx b::after,
-.shell[data-view="tools"] #vhead .vtx b::after{
-  content:"";display:block;width:2rem;height:2px;margin-top:7px;border-radius:2px;
-  background:#E8B84B;opacity:.9}
+/* Sibling folder hairlines: tokenized below (AIM-188 unified folder chrome). */
 /* Fibonacci + journalkurve + median (K-118). */
 .fbcalc{display:grid;gap:12px}.fbcalc .cin{flex:none}
 .fbseg{grid-template-columns:repeat(2,1fr);margin:0}
@@ -3586,8 +3603,9 @@ body.has-tabbar #pille{bottom:calc(90px + env(safe-area-inset-bottom))}
 .tbb:not(.tbhome)::after{content:"";position:absolute;top:6px;left:50%;width:46px;height:28px;margin-left:-23px;border-radius:14px;
   background:transparent;transition:background .2s;z-index:-1}
 .tbb{isolation:isolate}
-:root[data-theme="dark"] .tbb[aria-current="page"]:not(.tbhome)::after{background:rgba(27,79,216,.12)}
-:root:not([data-theme="dark"]) .tbb[aria-current="page"]:not(.tbhome)::after{background:rgba(27,79,216,.12)}
+/* AIM-188: active tab wash = teal brand (not purple-blue Claude pill). */
+:root[data-theme="dark"] .tbb[aria-current="page"]:not(.tbhome)::after{background:var(--nav-wash)}
+:root:not([data-theme="dark"]) .tbb[aria-current="page"]:not(.tbhome)::after{background:var(--nav-wash-light)}
 .tbb[aria-current="page"] span{font-weight:800}
 .tbring{margin-top:-18px;width:48px;height:48px}
 .tabbar .tbprog{top:auto;bottom:3px;inset-inline:26px;height:2px;border-radius:2px;overflow:hidden}
@@ -4299,6 +4317,100 @@ html[data-font="nastaliq"] .hero p#hsub{font-size:1.02rem;line-height:1.7}
 @media (prefers-reduced-motion:reduce){
   .mfeat .plate,.mneste .plate,.hero p#hsub,.mast .wordmark{animation:none !important}
 }
+
+/* =============================================================================
+   AIM-188 — live hub design architecture (tokens → type → folder chrome → nav).
+   Infrastructure only. Never #379. Keep Archivo/Montserrat. No purple glass.
+   Home/Shuru/risk copy owned by sibling tasks — rebase onto this foundation.
+   ============================================================================= */
+
+/* Type scale wired to shared tokens (Archivo display · Montserrat face). */
+.sec > h2,.short > h2{
+  font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;
+  font-size:var(--fs-section);line-height:1.12;letter-spacing:-.012em}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .sec > h2,
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .short > h2{
+  font-family:var(--face);font-stretch:normal}
+.lede{font-size:var(--fs-lede);line-height:var(--lh-body);max-width:var(--measure)}
+
+/* Folder shells — one grammar for Start · Academy · Sonic · Tools · Ask · Products. */
+.shell[data-view="learn"] #vhead,
+.shell[data-view="faq"] #vhead,
+.shell[data-view="tools"] #vhead,
+.shell[data-view="earn"] #vhead,
+.prodview .vhead{
+  margin:var(--folder-vhead-m);padding:var(--folder-vhead-p);gap:0;
+  background:none;border:0;border-radius:0;box-shadow:none}
+.shell[data-view="learn"] #vhead .vtx b,
+.shell[data-view="faq"] #vhead .vtx b,
+.shell[data-view="tools"] #vhead .vtx b,
+.shell[data-view="earn"] #vhead .vtx b,
+.prodview .vhead .vtx b{
+  font-family:"Archivo",var(--display);font-stretch:88%;font-weight:900;
+  font-size:var(--fs-folder);line-height:var(--lh-display);letter-spacing:-.018em;
+  color:var(--chalk);max-width:16ch}
+.shell[data-view="learn"] #vhead .vtx span,
+.shell[data-view="faq"] #vhead .vtx span,
+.shell[data-view="tools"] #vhead .vtx span,
+.shell[data-view="earn"] #vhead .vtx span,
+.prodview .vhead .vtx span{
+  font-size:var(--fs-lede);line-height:1.4;max-width:var(--folder-sub-max);color:var(--chalk-dim)}
+/* Brand gold hairline under every folder title (Start sticky also keeps bottom rule). */
+.shell[data-view="learn"] #vhead .vtx b::after,
+.shell[data-view="faq"] #vhead .vtx b::after,
+.shell[data-view="tools"] #vhead .vtx b::after,
+.shell[data-view="earn"] #vhead .vtx b::after,
+.prodview .vhead .vtx b::after{
+  content:"";display:block;width:var(--folder-hair-w);height:var(--folder-hair-h);
+  margin-top:7px;border-radius:2px;background:var(--brand-gold);opacity:.95}
+html[dir="rtl"] .shell[data-view="learn"] #vhead .vtx b::after,
+html[dir="rtl"] .shell[data-view="faq"] #vhead .vtx b::after,
+html[dir="rtl"] .shell[data-view="tools"] #vhead .vtx b::after,
+html[dir="rtl"] .shell[data-view="earn"] #vhead .vtx b::after,
+html[dir="rtl"] .prodview .vhead .vtx b::after{margin-inline-start:auto}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  :is(.shell[data-view="learn"],.shell[data-view="faq"],.shell[data-view="tools"],.shell[data-view="earn"]) #vhead .vtx b,
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .prodview .vhead .vtx b{
+  font-family:var(--face);font-stretch:normal;font-size:1.55rem;line-height:1.4;max-width:none}
+
+/* Home foyer brand tick — same gold designator as folders (lightweight meaning). */
+.shell[data-view="menu"] .hero h1{
+  font-family:"Archivo",var(--display);font-stretch:88%;font-weight:900;
+  font-size:var(--fs-display);line-height:1.08;letter-spacing:-.02em;text-wrap:balance}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .shell[data-view="menu"] .hero h1{
+  font-family:var(--face);font-stretch:normal}
+.shell[data-view="menu"] .hero h1::after{
+  content:"";display:block;width:var(--folder-hair-w);height:var(--folder-hair-h);
+  margin-top:10px;border-radius:2px;background:var(--brand-gold)}
+html[dir="rtl"] .shell[data-view="menu"] .hero h1::after{margin-inline-start:auto}
+
+/* Nav designators — equal slots, Archivo-weight active label, teal wash (tokens). */
+.tabbar .tbrow .tbb span{font-size:var(--fs-nav);font-family:var(--face);font-weight:650;letter-spacing:.01em}
+.tbb[aria-current="page"] span{font-weight:800}
+.tbb.tbhome[aria-current="page"] .tbring{
+  box-shadow:0 0 0 2px var(--teal-live),0 0 12px color-mix(in srgb,var(--teal-live) 35%,transparent) !important}
+
+/* More sheet group designators — Archivo micro-labels + gold tick (not emoji tiles). */
+.mgruppe{
+  display:flex;align-items:center;gap:8px;margin:var(--space-4) 0 var(--space-1);
+  padding-top:var(--space-3);border-top:1px solid var(--rule);
+  font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;
+  font-size:var(--fs-label);line-height:1.3;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--chalk-dim)}
+.mgruppe:first-of-type{margin-top:var(--space-1);padding-top:0;border-top:0}
+.mgruppe::before{
+  content:"";flex:0 0 10px;height:2px;border-radius:1px;background:var(--brand-gold);opacity:.9}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .mgruppe{
+  font-family:var(--face);font-stretch:normal;text-transform:none;letter-spacing:0}
+.htree .htt{
+  font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;
+  font-size:var(--fs-label);letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-dim)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .htree .htt{
+  font-family:var(--face);font-stretch:normal;text-transform:none;letter-spacing:0}
+
+/* Focus rings use teal live (brand), not purple. */
+.htree .hta:focus-visible,.msb:focus-visible,.mstema button:focus-visible{
+  outline-color:var(--teal-live)}
 </style>
 </head>
 <body>
