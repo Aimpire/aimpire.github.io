@@ -2899,7 +2899,6 @@ html[data-theme="light"] .shell[data-view="start"] #vhead{
   background:#E8B84B}
 html[dir="rtl"] .shell[data-view="start"] #vhead .vtx b::after{margin-inline-start:auto}
 .shell[data-view="start"] #vhead .vtx span{max-width:38ch;font-size:.9rem;line-height:1.4;color:var(--chalk-dim)}
-html[data-font="nastaliq"] .shell[data-view="start"] #vhead .vtx b{font-size:1.35rem;line-height:1.45;max-width:none}
 /* Start sky: keep marine/teal/gold whisper; mute magenta orb (purple-AI). */
 html:has(.shell[data-view="start"]) .sky .o2{opacity:.05}
 html:has(.shell[data-view="start"]) .sky .o1{opacity:.24}
@@ -2916,6 +2915,29 @@ html:has(.shell[data-view="start"]) .tbb[aria-current="page"]:not(.tbhome)::afte
 /* Tight rail/prog so brand + open step sit higher @360. */
 .shell[data-view="start"] #prog{margin:0 0 6px;padding:4px 2px 8px}
 .shell[data-view="start"] #s-guide .shpath{margin:0 0 6px;padding:0 0 4px}
+/* =============================================================================
+   AIM-184 Shuru — structure + copy only (founder 11.11).
+   Design tokens / fonts / cross-tab chrome → AIM-188. Invite chips → AIM-186.
+   Never #379. No .sharemenu restyle. No one-off type stack.
+   ============================================================================= */
+/* Fold: mast/hero off on Start — sticky #vhead (shared folder grammar) carries place. */
+html:has(.shell[data-view="start"]) .mast,
+html:has(.shell[data-view="start"]) .hero{display:none !important}
+/* Emoji folder glyph off — shared #vhead title + gold hairline remain. */
+.shell[data-view="start"] #vhead{gap:0}
+.shell[data-view="start"] #vhead .vic{display:none !important}
+/* Path map LTR under RTL (arrows + fagtermer). */
+.shell[data-view="start"] #vhead .vtx span{
+  unicode-bidi:isolate;direction:ltr;text-align:start}
+html[dir="rtl"] .shell[data-view="start"] #vhead .vtx span{text-align:right}
+.shell[data-view="start"] #guide-lede{unicode-bidi:plaintext}
+/* Progress duplicates sticky minip + phase rail. */
+.shell[data-view="start"] #prog{display:none !important}
+/* Formulation: sentence-case corridor CTAs (shared .slab.reg tokens otherwise). */
+.shell[data-view="start"] #guide .stegreg.slab.reg .t{
+  text-transform:none !important;letter-spacing:.01em}
+.shell[data-view="start"] #guide > li.current .stegreg.slab.reg{
+  scroll-margin-top:72px}
 /* Sibling folders (not Sonic): same gold brand hairline under title. */
 .shell[data-view="learn"] #vhead .vtx b::after,
 .shell[data-view="faq"] #vhead .vtx b::after,
@@ -4597,6 +4619,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.8ee34c1db6.js" defer></script>
+<script src="app-m.4f252ab616.js" defer></script>
 </body>
 </html>
