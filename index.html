@@ -2349,14 +2349,16 @@ html.portaapen.iabvis #port .prows > :first-child{margin-top:auto}
 html.portaapen.iabvis #port .prows > :last-child{margin-bottom:auto}
 #port .pline{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
 #port .pline path{fill:none;stroke-linejoin:round;stroke-linecap:round}
-#port .pline .pl{stroke:url(#plg);stroke-width:2.2;opacity:.48;stroke-dasharray:100;stroke-dashoffset:100}
+#port .pline .pl{stroke:url(#plg);stroke-width:2.2;opacity:.28;stroke-dasharray:100;stroke-dashoffset:100}
 #port .pline .pp{stroke:#E8FFFC;stroke-width:3;stroke-dasharray:4 96;stroke-dashoffset:4;opacity:0;filter:drop-shadow(0 0 6px #15D8C4) drop-shadow(0 0 14px rgba(21,216,196,.7))}
 #port.inn .pline .pl{animation:pdraw 1.8s cubic-bezier(.4,0,.2,1) .1s forwards}
 #port.inn .pline .pp{animation:prun 3.6s cubic-bezier(.45,0,.55,1) 1.9s infinite}
 @keyframes pdraw{to{stroke-dashoffset:0}}
 @keyframes prun{0%{stroke-dashoffset:4;opacity:0}6%{opacity:1}90%{opacity:1}100%{stroke-dashoffset:-96;opacity:0}}
 #port .prows,#port .ptop{position:relative;z-index:1}
-#port .pf{position:absolute;inset-inline-end:26px;top:50%;font-size:2.3rem;line-height:1;transform:translateY(-50%);filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
+/* Flags stay on the physical right for every row. dir=rtl on AR/UR rows used to
+   flip inset-inline-end → left, so the chooser zigzagged (measured AIM-215 @360). */
+#port .pf{position:absolute;inset-inline:auto;left:auto;right:26px;top:50%;font-size:2.3rem;line-height:1;transform:translateY(-50%);filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
 #port.inn .pf{animation:pflag .6s cubic-bezier(.2,.9,.3,1.4) calc(var(--i) * 80ms + 500ms) both}
 @keyframes pflag{from{transform:translateY(-50%) scale(.3) rotate(-12deg);opacity:0}to{transform:translateY(-50%) scale(1);opacity:1}}
 #port .prow:active .pf{transform:translateY(-50%) scale(1.15) rotate(-6deg)}
@@ -2364,18 +2366,20 @@ html.portaapen.iabvis #port .prows > :last-child{margin-bottom:auto}
 #port .ptop{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;padding:0 22px}
 #port .px{min-width:44px;min-height:44px;border:0;background:none;color:rgba(244,242,247,.45);font-size:1.5rem;cursor:pointer}
 #port .prows{position:relative;flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 0 4vh}
+/* Layout chrome is LTR so greetings + flags share one column; lang/dir stay on
+   the text for fonts and bidi. Room on the right for the flag. */
 #port .prow,#port .phalf{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;
-  padding:14px 26px 16px;border:0;background:none;color:inherit;cursor:pointer;text-align:start;-webkit-tap-highlight-color:transparent}
+  direction:ltr;padding:14px 72px 16px 26px;border:0;background:none;color:inherit;cursor:pointer;text-align:start;-webkit-tap-highlight-color:transparent}
+#port .prow .pg,#port .prow .pn,#port .phalf .pg,#port .phalf .pn{unicode-bidi:plaintext}
 #port .prow + .prow{border-top:1px solid rgba(244,242,247,.08)}
 #port .pg{font:800 clamp(2rem,9.5vw,3rem)/1.15 "Archivo","Montserrat",sans-serif;font-stretch:88%;letter-spacing:-.01em}
 #port [data-f="deva"] .pg{font-family:"Noto Sans Devanagari",sans-serif;font-weight:800;font-stretch:normal}
 #port [data-f="naskh"] .pg{font-family:"Noto Naskh Arabic",serif;font-weight:700;font-stretch:normal;line-height:1.5}
 #port [lang="ur"] .pg,#port [data-f="nastaliq"] .pg{font-family:"Noto Nastaliq Urdu",serif;font-weight:700;font-stretch:normal;line-height:1.9;font-size:clamp(1.7rem,8vw,2.5rem)}
 #port .pn{font:500 .82rem/1.3 "Montserrat","Noto Sans Devanagari","Noto Naskh Arabic","Noto Nastaliq Urdu",sans-serif;color:rgba(244,242,247,.5)}
-#port .prow::after,#port .phalf::after{content:"";position:absolute;inset-inline-start:26px;bottom:8px;height:2px;width:0;
+#port .prow::after,#port .phalf::after{content:"";position:absolute;inset-inline:auto;right:auto;left:26px;bottom:8px;height:2px;width:0;
   background:linear-gradient(90deg,#15D8C4,#1B4FD8,#C21FBF);transition:width .38s cubic-bezier(.2,.8,.3,1)}
-html[dir="rtl"] #port .prow::after{background:linear-gradient(270deg,#15D8C4,#1B4FD8,#C21FBF)}
-#port .prow:hover::after,#port .prow:focus-visible::after,#port .valgt::after,#port .phalf:hover::after{width:calc(100% - 52px)}
+#port .prow:hover::after,#port .prow:focus-visible::after,#port .valgt::after,#port .phalf:hover::after{width:calc(100% - 98px)}
 #port .prow:focus-visible,#port .phalf:focus-visible{outline:none}
 #port .bort{opacity:0;max-height:0;padding-block:0;overflow:hidden;pointer-events:none;transition:opacity .25s,max-height .35s,padding .35s}
 #port .prow{max-height:9rem}
@@ -2390,8 +2394,8 @@ html[dir="rtl"] #port .prow::after{background:linear-gradient(270deg,#15D8C4,#1B
 #port .psplit .phalf + .phalf{border-inline-start:1px solid rgba(244,242,247,.1)}
 #port .psplit .pg{font-size:clamp(1.5rem,7vw,2.2rem)}
 #port .psplit [data-f="nastaliq"] .pg{font-size:clamp(1.35rem,6.4vw,2rem)}
-#port .psplit .phalf{padding:22px 18px 24px}
-#port .psplit .phalf::after{inset-inline-start:18px}
+#port .psplit .phalf{direction:ltr;padding:22px 18px 24px}
+#port .psplit .phalf::after{inset-inline:auto;right:auto;left:18px}
 #port .psplit .phalf:hover::after,#port .psplit .valgt::after{width:calc(100% - 36px)}
 @media (prefers-reduced-motion:no-preference){
   #port .prow{opacity:0;transform:translateY(10px);transition:opacity .45s ease calc(var(--i) * 70ms + 120ms),transform .45s cubic-bezier(.2,.8,.3,1) calc(var(--i) * 70ms + 120ms),max-height .35s,padding .35s}
@@ -4090,8 +4094,10 @@ html[data-theme="light"] .shell[data-view="faq"] .qa > summary{color:var(--chalk
 .msgrid{gap:6px}
 .msb{min-height:48px;padding:10px 12px}
 .tabbar .tbrow{gap:0}
-/* AIM-113: full-width equal slots; craft labels — no truncate, no left-clump. */
-.tabbar{width:100%;max-width:none;padding-inline:4px}
+/* AIM-113: full-width equal slots; craft labels — no truncate, no left-clump.
+   Must reset #178 inset-inline:10px — width:100% + left:10 spilled More past 360
+   (measured AIM-215: #tb-more right 366 / RTL left −6). */
+.tabbar{inset-inline:0;width:100%;max-width:none;padding-inline:4px;border-radius:0}
 .tabbar .tbrow{width:100%;max-width:none;margin:0;gap:0;grid-template-columns:repeat(var(--tb-n,6),minmax(0,1fr))}
 .tabbar .tbrow .tbb{width:auto;min-width:0;max-width:none;padding:9px 1px 8px;gap:3px}
 html .tabbar .tbrow .tbb span{font-size:var(--tbfs,.72rem);overflow:visible;text-overflow:clip;-webkit-line-clamp:unset;line-clamp:unset}
@@ -5140,6 +5146,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.d7aa235f58.js" defer></script>
+<script src="app-m.ac4a616365.js" defer></script>
 </body>
 </html>
