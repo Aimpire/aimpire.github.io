@@ -4802,6 +4802,166 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
   .shell[data-view="menu"] .htree .hta{
     grid-template-columns:36px minmax(0,1fr) auto;gap:10px}
 }
+
+/* =============================================================================
+   AIM-209 Academy craft elevation — specialist bar (live hub only).
+   Own learn corridor + dictionary. More sheet/menu → AIM-217 (do not touch).
+   Leave Home (#434) and Products/Sonic (AIM-210) alone.
+   No glass · no purple glow · no Inter · no emoji tiles · no decorative cards.
+   ============================================================================= */
+
+/* Learn atmosphere — quiet marine depth (not Claude purple wash). */
+html:has(.shell[data-view="learn"]) .skyline{
+  top:88px;height:120px;opacity:.58;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 48%,transparent);
+  mask-image:linear-gradient(180deg,#000 0%,#000 48%,transparent)}
+html[data-theme="dark"]:has(.shell[data-view="learn"]) .skyline{opacity:.72}
+html:has(.shell[data-view="learn"]) .sky .o3{
+  opacity:.7;
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--brand-gold) 12%,transparent),transparent)}
+html:not([data-theme="dark"]):has(.shell[data-view="learn"]) body::before{
+  background:
+    radial-gradient(90% 42% at 6% -10%,rgba(21,216,196,.08),transparent 55%),
+    radial-gradient(70% 36% at 100% 0%,rgba(27,79,216,.07),transparent 52%),
+    linear-gradient(180deg,#E4ECF4 0%,#EEF3F8 42%,#E8EEF5 100%)}
+html[data-theme="dark"]:has(.shell[data-view="learn"]) body::before{
+  background:
+    radial-gradient(80% 44% at 10% -8%,color-mix(in srgb,var(--teal-live) 14%,transparent),transparent 56%),
+    radial-gradient(65% 38% at 100% 0%,rgba(27,79,216,.10),transparent 52%),
+    linear-gradient(180deg,#09111F 0%,#070B14 42%,#05080F 100%)}
+
+/* Academy folder head — Archivo weight + brand tick; one lede under vhead. */
+.shell[data-view="learn"] #vhead{
+  margin:6px 0 12px;padding:2px 0 4px;max-width:100%}
+.shell[data-view="learn"] #vhead .vtx b{
+  font-size:clamp(1.7rem,7.2vw,2.05rem);letter-spacing:-.02em}
+.shell[data-view="learn"] #vhead .vtx b::after{
+  width:2.75rem;height:3px;margin-top:10px;
+  background:linear-gradient(90deg,var(--brand-gold),color-mix(in srgb,var(--teal-live) 50%,var(--brand-gold)));
+  border-radius:2px}
+.shell[data-view="learn"] #vhead .vtx span{
+  margin-top:2px;max-width:36ch;font:500 .94rem/1.45 var(--face)}
+.shell[data-view="learn"] #aca-lede{
+  display:none !important} /* vhead span carries the place lede */
+.shell[data-view="learn"] #aca-path{
+  margin:0 0 10px;padding:0;border:0;
+  font:650 .78rem/1.35 var(--face);letter-spacing:.04em;
+  text-transform:uppercase;color:var(--chalk-dim);opacity:.92}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="learn"] #aca-path{
+  text-transform:none;letter-spacing:0;font-weight:600}
+
+/* Lesson corridor — tactile rows (interactive doors), not flat SaaS list / not cards. */
+#academy.acorridor{
+  margin:0 0 22px;border-bottom-color:color-mix(in srgb,var(--rule) 85%,transparent);
+  max-width:100%;overflow-x:clip}
+#academy.acorridor > details > summary{
+  gap:14px;padding:15px 4px 16px !important;
+  transition:background .16s ease,border-color .16s ease}
+#academy.acorridor > details > summary:hover,
+#academy.acorridor > details > summary:focus-visible{
+  background:color-mix(in srgb,var(--teal-live) 5%,transparent)}
+#academy.acorridor > details > summary:active{opacity:.92}
+#academy.acorridor > details[open] > summary{
+  background:color-mix(in srgb,var(--teal-live) 6%,transparent);
+  border-bottom-color:color-mix(in srgb,var(--teal-live) 22%,var(--rule)) !important}
+#academy .lic{
+  width:1.85rem;height:1.85rem;margin-top:1px;border-radius:9px;
+  font:800 .7rem/1 var(--display);letter-spacing:-.01em;
+  color:var(--teal-ink);
+  background:color-mix(in srgb,var(--teal-live) 12%,var(--ink-raise));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb,var(--teal-live) 34%,var(--rule)),
+    inset 0 1px 0 color-mix(in srgb,#fff 45%,transparent)}
+:root[data-theme="dark"] #academy .lic{
+  color:var(--teal-live);
+  background:color-mix(in srgb,var(--teal-live) 10%,var(--ink-raise));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb,var(--teal-live) 40%,var(--rule)),
+    inset 0 1px 0 color-mix(in srgb,var(--teal-live) 8%,transparent)}
+#academy summary.done .lic{
+  color:var(--chalk-dim);
+  background:color-mix(in srgb,var(--chalk) 10%,transparent);
+  box-shadow:inset 0 0 0 1px var(--rule)}
+#academy .ltx{gap:6px}
+#academy .ltx .lt{
+  font:800 1.06rem/1.22 var(--display);letter-spacing:-.015em}
+#academy .ltx .sub{
+  font:500 .9rem/1.45 var(--face);max-width:40ch}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) #academy .ltx .lt{
+  font-family:var(--face);font-weight:700}
+#academy summary::after{
+  color:var(--teal-ink);font-weight:700;opacity:.75}
+:root[data-theme="dark"] #academy summary::after{color:var(--teal-live)}
+#academy .lpro{
+  padding:12px 4px 14px;
+  font:650 .8rem/1.35 var(--face);letter-spacing:.01em}
+#academy .lpro i{
+  height:3px;border-radius:2px;
+  background:color-mix(in srgb,var(--rule) 90%,transparent)}
+#academy .lpro i b{
+  background:linear-gradient(90deg,var(--teal-live),color-mix(in srgb,var(--brand-gold) 55%,var(--teal-live)))}
+#academy .lbadge{
+  padding:12px 4px 6px;font:600 .88rem/1.45 var(--face)}
+#academy .les{
+  padding:10px 4px 20px !important;
+  border-top-color:color-mix(in srgb,var(--teal-live) 18%,var(--rule))}
+#academy .les h4{
+  margin:16px 0 6px;font:800 1.02rem/1.28 var(--display);letter-spacing:-.012em}
+#academy .les p{font-size:.93rem;line-height:1.58;max-width:42ch}
+
+/* Dictionary under corridor — quiet chips, not gradient 999px Claude pills. */
+#s-learn > #t-learn{
+  margin:26px 0 6px;
+  font:800 .95rem/1.25 var(--display);letter-spacing:-.01em;color:var(--chalk)}
+#s-learn > #learn-lede{font:500 .9rem/1.45 var(--face);color:var(--chalk-dim);max-width:40ch}
+#learn-list{gap:8px;max-width:100%}
+#learn-list > details:not([open]){
+  border-radius:var(--r-chip) !important;
+  background:var(--ink-raise) !important;
+  border:1px solid var(--rule) !important;
+  box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 40%,transparent)}
+:root[data-theme="dark"] #learn-list > details:not([open]){
+  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--teal-live) 6%,transparent)}
+#learn-list > details:not([open]) > summary{
+  padding:9px 13px !important;font:650 .88rem/1.25 var(--face) !important}
+#learn-list > details[open]{
+  border-radius:var(--r-card) !important;
+  border-color:color-mix(in srgb,var(--brand-gold) 45%,var(--rule)) !important;
+  background:var(--ink-deep) !important}
+
+/* Intentional motion — brand tick + corridor rise. */
+@keyframes acaRowIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:none}}
+@keyframes brandTickAca{
+  from{width:0;opacity:0}
+  to{width:2.75rem;opacity:1}}
+@media (prefers-reduced-motion:no-preference){
+  .shell[data-view="learn"] #vhead .vtx b::after{
+    animation:brandTickAca .65s .12s cubic-bezier(.2,.7,.3,1) both}
+  #academy.acorridor > details{
+    animation:acaRowIn .48s cubic-bezier(.2,.7,.3,1) both}
+  #academy.acorridor > details:nth-of-type(2){animation-delay:.05s}
+  #academy.acorridor > details:nth-of-type(3){animation-delay:.09s}
+  #academy.acorridor > details:nth-of-type(4){animation-delay:.13s}
+  #academy.acorridor > details:nth-of-type(5){animation-delay:.17s}
+  #academy.acorridor > details:nth-of-type(6){animation-delay:.21s}
+}
+@media (prefers-reduced-motion:reduce){
+  .shell[data-view="learn"] #vhead .vtx b::after,
+  #academy.acorridor > details{animation:none !important}
+  .shell[data-view="learn"] #vhead .vtx b::after{width:2.75rem}
+}
+
+/* Hard contain @360 — lesson rows never escape frame. */
+.shell[data-view="learn"] #vhead,
+.shell[data-view="learn"] #academy,
+.shell[data-view="learn"] #s-learn{
+  max-width:100%;box-sizing:border-box;overflow-x:clip}
+@media (max-width:380px){
+  #academy.acorridor > details > summary{gap:12px;padding-inline:2px !important}
+}
 </style>
 </head>
 <body>
