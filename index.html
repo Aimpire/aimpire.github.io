@@ -341,7 +341,9 @@ html:not(.klar) .shell > :not(.hero):not(.mast),html:not(.klar) .hero > :not(h1)
 .mast{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
   padding:26px 0 0;border-bottom:1px solid var(--rule)}
 .wordmark{display:flex;align-items:center;gap:11px;padding-bottom:12px}
+.apstage{display:inline-grid;place-items:center;line-height:0;flex:0 0 auto}
 .mono{width:40px;height:40px;flex:0 0 auto;display:block}
+.apstage .mono{width:40px;height:40px}
 /* #155: språk, tema og søk i samme rad som logoen - ingen egen språkrad. */
 .mast{flex-wrap:nowrap}
 .mast .switch{flex:0 0 auto;padding-bottom:12px;overflow:visible;gap:6px}
@@ -4474,6 +4476,251 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .htree .h
 /* Focus rings use teal live (brand), not purple. */
 .htree .hta:focus-visible,.msb:focus-visible,.mstema button:focus-visible{
   outline-color:var(--teal-live)}
+
+/* =============================================================================
+   AIM-214 Home craft again — specialist elevation (live hub only; never #379).
+   Brand-first foyer · atmosphere · dragon/AP mark · tactile portals · jet door.
+   No glass · no purple glow pill clusters · no Inter · no decorative cards.
+   ============================================================================= */
+
+/* AP / dragon stage — hero-level brand signal (crop-nav still reads Aimpire). */
+.shell[data-view="menu"] .mast .wordmark{gap:14px;padding-bottom:14px;align-items:center}
+.shell[data-view="menu"] .apstage{
+  position:relative;display:grid;place-items:center;
+  width:56px;height:56px;flex:0 0 auto;isolation:isolate}
+.shell[data-view="menu"] .apstage::before{
+  content:"";position:absolute;inset:-10px;border-radius:50%;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(closest-side,color-mix(in srgb,var(--teal-live) 22%,transparent),transparent 72%),
+    conic-gradient(from 210deg,
+      color-mix(in srgb,#1B4FD8 55%,transparent),
+      color-mix(in srgb,#15D8C4 50%,transparent),
+      color-mix(in srgb,#C21FBF 35%,transparent),
+      color-mix(in srgb,#FBE16B 40%,transparent),
+      color-mix(in srgb,#1B4FD8 55%,transparent));
+  opacity:.55;filter:saturate(1.05)}
+.shell[data-view="menu"] .apstage::after{
+  content:"";position:absolute;inset:2px;border-radius:50%;pointer-events:none;z-index:0;
+  background:color-mix(in srgb,var(--ink-deep) 88%,transparent);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--brand-gold) 35%,var(--rule))}
+:root[data-theme="dark"] .shell[data-view="menu"] .apstage::after{
+  background:color-mix(in srgb,var(--ink-raise) 70%,#070B14);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--brand-gold) 45%,transparent)}
+.shell[data-view="menu"] .apstage .mono{
+  position:relative;z-index:1;width:44px;height:44px;
+  filter:drop-shadow(0 6px 14px color-mix(in srgb,#1B4FD8 28%,transparent))}
+.shell[data-view="menu"] .wordmark .wm{
+  font-size:21px;letter-spacing:.05em;line-height:1}
+.shell[data-view="menu"] .wordmark .tag{
+  margin-top:6px;font-size:10px;letter-spacing:.26em;
+  color:var(--brand-gold-deep);font-weight:700}
+:root[data-theme="dark"] .shell[data-view="menu"] .wordmark .tag{color:var(--brand-gold)}
+@media (max-width:350px){
+  .shell[data-view="menu"] .apstage{width:48px;height:48px}
+  .shell[data-view="menu"] .apstage .mono{width:38px;height:38px}
+}
+
+/* Home atmosphere — depth without flat chalk / without AI purple wash.
+   Selectors must be on html itself (:root html … never matches). */
+html:has(.shell[data-view="menu"]) .skyline{
+  top:96px;height:148px;opacity:.72;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent);
+  mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent)}
+html[data-theme="dark"]:has(.shell[data-view="menu"]) .skyline{opacity:.88}
+html:has(.shell[data-view="menu"]) .sky .o1{opacity:.95}
+html:has(.shell[data-view="menu"]) .sky .o3{
+  opacity:.85;
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--brand-gold) 16%,transparent),transparent)}
+html[data-theme="dark"]:has(.shell[data-view="menu"]) .sky .o3{
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--brand-gold) 14%,transparent),transparent)}
+/* Dark Home vignette (default when data-theme=dark). */
+html[data-theme="dark"]:has(.shell[data-view="menu"]) body::before{
+  background:
+    radial-gradient(85% 48% at 12% -6%,color-mix(in srgb,var(--teal-live) 18%,transparent),transparent 58%),
+    radial-gradient(70% 42% at 100% 0%,rgba(27,79,216,.14),transparent 55%),
+    radial-gradient(90% 55% at 50% 108%,rgba(0,0,0,.42),transparent 58%),
+    linear-gradient(180deg,#09111F 0%,#070B14 40%,#05080F 100%)}
+/* Light Home vignette — marine mist, not chalk-flat. */
+html:not([data-theme="dark"]):has(.shell[data-view="menu"]) body::before{
+  background:
+    radial-gradient(88% 46% at 8% -8%,rgba(21,216,196,.11),transparent 56%),
+    radial-gradient(70% 40% at 100% 4%,rgba(27,79,216,.10),transparent 54%),
+    radial-gradient(100% 60% at 50% 100%,rgba(11,35,65,.07),transparent 55%),
+    linear-gradient(180deg,#E2EBF5 0%,#EEF3F8 36%,#E6EDF5 100%)}
+
+/* Hero composition — brand tick draws; type stays Archivo display. */
+.shell[data-view="menu"] .hero{padding:28px 0 6px}
+.shell[data-view="menu"] .hero h1::after{
+  width:0;max-width:2.75rem;height:3px;margin-top:12px;
+  background:linear-gradient(90deg,var(--brand-gold),color-mix(in srgb,var(--teal-live) 55%,var(--brand-gold)));
+  border-radius:2px}
+.shell[data-view="menu"] .hero p#hsub{
+  margin-top:12px;max-width:30ch;
+  font:500 .96rem/1.5 var(--face);color:var(--chalk-dim)}
+
+/* Primary door — jet + brand tick (expensive, usable). Contained @360. */
+.shell[data-view="menu"] #notice-none{
+  padding:22px 0 8px;margin:0;max-width:100%;box-sizing:border-box}
+.shell[data-view="menu"] #notice-none h2{
+  font:800 1.18rem/1.22 var(--display);letter-spacing:-.018em;max-width:20ch;margin:0 0 8px}
+.shell[data-view="menu"] #notice-none p#nn-b{
+  margin:0 0 16px;max-width:34ch;font:500 .93rem/1.5 var(--face)}
+.shell[data-view="menu"] #notice-none .slab.reg,
+.shell[data-view="menu"] #spon > .slab.reg{
+  display:flex;align-items:center;justify-content:flex-start;
+  width:100%;max-width:100%;box-sizing:border-box;
+  min-height:54px;padding:14px 18px;margin:0;
+  border-radius:var(--r-btn);
+  background:var(--cta-primary-bg) !important;
+  color:var(--cta-primary-fg) !important;
+  border:0 !important;
+  box-shadow:var(--cta-shadow) !important;
+  position:relative;overflow:hidden;
+  text-align:start}
+.shell[data-view="menu"] #notice-none .slab.reg::after,
+.shell[data-view="menu"] #spon > .slab.reg::after{
+  content:"";display:block;position:absolute;inset-inline:16px;bottom:9px;
+  height:2px;border-radius:2px;background:var(--cta-primary-tick);opacity:.95;pointer-events:none}
+.shell[data-view="menu"] #notice-none .slab.reg .t,
+.shell[data-view="menu"] #spon > .slab.reg .t{
+  font:800 1.02rem/1.2 var(--display) !important;
+  letter-spacing:-.01em !important;text-transform:none !important;
+  color:var(--cta-primary-fg) !important}
+.shell[data-view="menu"] #notice-none .slab.reg:hover,
+.shell[data-view="menu"] #notice-none .slab.reg:focus-visible,
+.shell[data-view="menu"] #spon > .slab.reg:hover,
+.shell[data-view="menu"] #spon > .slab.reg:focus-visible{
+  filter:brightness(1.06);transform:none;
+  background:var(--cta-primary-bg) !important;
+  border:0 !important;box-shadow:var(--cta-shadow) !important}
+.shell[data-view="menu"] #notice-none .slab.reg:active,
+.shell[data-view="menu"] #spon > .slab.reg:active{
+  transform:translateY(1px) scale(.992);filter:brightness(.98)}
+
+/* Portals — tactile linktree doors (interactive, not decorative cards). */
+.shell[data-view="menu"] #menu-nav{
+  margin-top:max(48px, calc(100dvh - 56px - 560px));
+  padding-top:16px;border-top:1px solid var(--rule);
+  max-width:100%;overflow-x:clip}
+@supports not (height: 100dvh){
+  .shell[data-view="menu"] #menu-nav{margin-top:72px}
+}
+.shell[data-view="menu"] .htree{
+  margin:0 0 10px;padding:0;max-width:100%;box-sizing:border-box}
+.shell[data-view="menu"] .htree .htt{
+  margin:0 0 10px;opacity:1;
+  font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;
+  font-size:var(--fs-label);letter-spacing:.05em;text-transform:uppercase;
+  color:var(--chalk-dim)}
+.shell[data-view="menu"] .htree .htt::before{
+  content:"";display:inline-block;width:10px;height:2px;margin-inline-end:8px;
+  border-radius:1px;background:var(--brand-gold);vertical-align:middle;opacity:.95}
+.shell[data-view="menu"] .htree .hta{
+  display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:12px;
+  width:100%;max-width:100%;box-sizing:border-box;
+  min-height:58px;margin:0 0 8px;padding:12px 12px 12px 10px;
+  border:1px solid var(--rule);border-radius:var(--r-btn);
+  background:var(--ink-raise);
+  box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 55%,transparent);
+  transition:border-color .18s ease,background .18s ease,transform .15s ease}
+.shell[data-view="menu"] .htree .hta:first-of-type{border-top:1px solid var(--rule)}
+.shell[data-view="menu"] .htree .hta:last-child{margin-bottom:0}
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta{
+  background:color-mix(in srgb,var(--ink-raise) 88%,#0A1220);
+  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--teal-live) 8%,transparent)}
+.shell[data-view="menu"] .htree .hta:hover,
+.shell[data-view="menu"] .htree .hta:focus-visible{
+  border-color:color-mix(in srgb,var(--teal-live) 45%,var(--rule));
+  background:color-mix(in srgb,var(--teal-live) 6%,var(--ink-raise))}
+.shell[data-view="menu"] .htree .hta:active{
+  opacity:1;transform:translateY(1px) scale(.995)}
+.shell[data-view="menu"] .htree .hti{
+  width:32px;height:32px;border-radius:10px;
+  background:color-mix(in srgb,var(--ink-deep) 80%,transparent);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--rule) 80%,transparent)}
+.shell[data-view="menu"] .htree .htn b{
+  font:700 .98rem/1.25 var(--display);letter-spacing:-.015em;color:var(--chalk)}
+.shell[data-view="menu"] .htree .htn span{
+  font:500 .78rem/1.35 var(--face);color:var(--chalk-dim)}
+.shell[data-view="menu"] .htree .htg{
+  width:28px;height:28px;border-radius:50%;
+  display:grid;place-items:center;
+  font:800 1rem/1 var(--display);color:var(--teal-ink);
+  background:color-mix(in srgb,var(--teal-live) 14%,transparent);
+  border:1px solid color-mix(in srgb,var(--teal-live) 32%,var(--rule))}
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .htg{color:var(--teal-live)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="menu"] .htree .htn b{font-family:var(--face);font-weight:700}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="menu"] .htree .htt{
+  font-family:var(--face);font-stretch:normal;text-transform:none;letter-spacing:0}
+
+/* Continue-setup plate matches portal grammar when present. */
+.shell[data-view="menu"] .mneste .plate,
+.shell[data-view="menu"] .mneste .plate.feat{
+  width:100%;max-width:100%;box-sizing:border-box;
+  min-height:58px !important;margin:0 0 8px !important;padding:12px 12px 12px 14px !important;
+  border:1px solid var(--rule) !important;border-radius:var(--r-btn) !important;
+  background:var(--ink-raise) !important;
+  box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 55%,transparent) !important}
+
+/* Specialist bar — metal ring, no purple multi-glow Claude tell. */
+.tbb.tbhome .tbring{
+  box-shadow:
+    0 0 0 1.5px color-mix(in srgb,var(--teal-live) 70%,transparent),
+    0 8px 18px -10px rgba(11,35,65,.55) !important}
+.tbb.tbhome[aria-current="page"] .tbring{
+  box-shadow:
+    0 0 0 2px var(--teal-live),
+    0 10px 20px -12px rgba(11,35,65,.55) !important}
+:root[data-theme="dark"] .tbb.tbhome[aria-current="page"] .tbring{
+  box-shadow:
+    0 0 0 2px var(--teal-live),
+    0 10px 22px -12px rgba(0,0,0,.7) !important}
+.tbb[aria-current="page"]:not(.tbhome)::after{
+  border-radius:10px !important}
+
+/* Intentional motion (2–3): mark presence, tick draw, portal rise. */
+@keyframes apBreathe{
+  0%,100%{transform:scale(1);opacity:.55}
+  50%{transform:scale(1.04);opacity:.72}}
+@keyframes brandTick{
+  from{width:0;opacity:0}
+  to{width:2.75rem;opacity:1}}
+@keyframes portalRise{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:no-preference){
+  .shell[data-view="menu"] .apstage::before{animation:apBreathe 5.5s ease-in-out infinite}
+  .shell[data-view="menu"] .hero h1::after{animation:brandTick .7s .15s cubic-bezier(.2,.7,.3,1) both}
+  .shell[data-view="menu"] .htree .hta{
+    animation:portalRise .5s cubic-bezier(.2,.7,.3,1) both}
+  .shell[data-view="menu"] .htree .hta:nth-of-type(2){animation-delay:.07s}
+  .shell[data-view="menu"] .htree .hta:nth-of-type(3){animation-delay:.12s}
+  .shell[data-view="menu"] #notice-none .slab.reg{
+    animation:portalRise .48s .08s cubic-bezier(.2,.7,.3,1) both}
+}
+@media (prefers-reduced-motion:reduce){
+  .shell[data-view="menu"] .apstage::before,
+  .shell[data-view="menu"] .hero h1::after,
+  .shell[data-view="menu"] .htree .hta,
+  .shell[data-view="menu"] #notice-none .slab.reg{animation:none !important}
+  .shell[data-view="menu"] .hero h1::after{width:2.75rem}
+}
+
+/* Hard contain — CTAs/portals never escape 360 frame. */
+.shell[data-view="menu"] .notices,
+.shell[data-view="menu"] #notice-none,
+.shell[data-view="menu"] #menu-nav,
+.shell[data-view="menu"] .htree{
+  max-width:100%;overflow-x:clip}
+@media (max-width:380px){
+  .shell[data-view="menu"] #notice-none .slab.reg,
+  .shell[data-view="menu"] .htree .hta{
+    padding-inline:12px}
+  .shell[data-view="menu"] .htree .hta{
+    grid-template-columns:36px minmax(0,1fr) auto;gap:10px}
+}
 </style>
 </head>
 <body>
@@ -4486,7 +4733,7 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 
   <header class="mast">
     <div class="wordmark">
-      <img class="mono" src="assets/ap-gradient-96.png" alt="" width="40" height="40" fetchpriority="high">
+      <span class="apstage" aria-hidden="true"><img class="mono" src="assets/ap-gradient-96.png" alt="" width="52" height="52" fetchpriority="high"></span>
       <span><span class="wm">Aim<em>pire</em></span><span class="tag">Aim for it</span></span>
     </div>
     <nav class="switch" id="switch" aria-label="Language"></nav>
