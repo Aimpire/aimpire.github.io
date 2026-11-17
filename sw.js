@@ -5,7 +5,7 @@
    - Google-fonter: cache foerst (gstatic er uforanderlig), CSS-en oppdateres i bakgrunnen.
    - ALDRI cache: godkjent-lista (Google-arket), ledere.txt, skjemaet. De skal vaere ferske.
    Cachenavnet baerer bygg-id, saa hver publisering rydder den forrige. */
-const BUILD = "a5be28ec1d";
+const BUILD = "e0a9730c82";
 const CACHE = "aimpire-" + BUILD;
 const SHELL = ["./", "./ledere.html"];
 

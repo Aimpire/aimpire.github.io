@@ -998,9 +998,10 @@ html[data-font="naskh"] .notice h2,html[data-font="deva"] .notice h2{font-family
 .shell[data-view]:not([data-view="menu"]):not([data-view="start"]):not(.conflict) .notices{display:none}
 /* AIM-182 bio foyer: Home must carry the private-ask meaning itself.
    Older rule hid every <p> so strangers only saw a hollow title + CTA.
-   Keep foot/ownhint quiet; show #nn-b as the curiosity red thread. */
+   Show #nn-b (private ask) + #nn-f (Element store-first foot, AIM-206). */
 .shell[data-view="menu"] #notice-none p{display:none}
 .shell[data-view="menu"] #notice-none p#nn-b{display:block} /* type set in AIM-182 foyer craft below */
+.shell[data-view="menu"] #notice-none p#nn-f{display:block}
 .shell[data-view="menu"] #notice-none p.ownhint{display:block}
 /* ---- Kort inntjeningsguide (s-ibq) ---- */
 #s-ibq .iqh{margin:26px 0 10px;font:800 1.05rem/1.25 var(--display)}
@@ -4752,12 +4753,12 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 
   <section class="hero">
     <h1><span id="h1">Learn trading here.</span><br><span id="h2">Ask who shared this.</span></h1>
-    <p id="hsub">Academy and calm setup — risk in plain sight. No advice. No income promises.</p>
+    <p id="hsub">Academy — honest lessons and calm setup — risk in plain sight. No advice. No income promises.</p>
     <div class="spon" id="spon" hidden></div>
   </section>
   <!-- #100: toppen staar ferdig i HTML-en og faar riktig spraak/tema/retning her, foer det store
        skriptet nederst er lastet - saa telefonen kan tegne den mens resten fortsatt kommer. -->
-  <script>(function(){try{var H={"en":["Learn trading here.","Ask who shared this.","Academy and calm setup — risk in plain sight. No advice. No income promises.","ltr","en","latin"],"no":["Lær trading her.","Spør den som delte.","Academy og rolig oppsett — risikoen synlig. Ingen råd. Ingen inntektsløfter.","ltr","no","latin"],"hi":["Trading यहाँ सीखें।","जिसने share किया, उनसे पूछें।","Academy और शांत setup — जोखिम साफ़ सामने। सलाह नहीं। आय का वादा नहीं।","ltr","hi","deva"],"ar":["تعلّم التداول هنا.","اسأل من شارك الرابط.","Academy وإعداد هادئ — المخاطر واضحة. لا نصيحة. لا وعود بدخل.","rtl","ar","naskh"],"ur":["Trading یہاں سیکھیں۔","جس نے شیئر کیا، اُس سے پوچھیں۔","Academy اور پرسکون setup — خطرہ صاف سامنے۔ مشورہ نہیں۔ کمائی کا وعدہ نہیں۔","rtl","ur","naskh"],"ar_rm":["Ta'allam at-tadawul huna.","Is'al man sharaka ar-rabit.","Academy wa i'dad hadi' — al-makhatir wadiha. La nasiha. La wu'ud bi-dakhl.","ltr","ar-Latn","latin"],"ur_rm":["Trading yahin seekhein.","Jis ne share kiya, us se poochein.","Academy aur pur-sukoon setup — khatra saaf saamne. Mashwara nahi. Kamai ka wada nahi.","ltr","ur-Latn","latin"]},d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},L=g("aimpire.lang"),t=g("aimpire.theme.v2");try{var q=new URLSearchParams(location.search).get("lang");if(q&&H[q])L=q}catch(e){}if(!H[L]){var n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||""];for(var i=0;i<n.length&&!H[L];i++){var x=String(n[i]||"").toLowerCase().replace(/^(nb|nn)(?=-|$)/,"no");for(var c in H){if(x===c||x.indexOf(c+"-")===0){L=c;break}}}}if(!H[L])L="en";if(t)d.setAttribute("data-theme",t);var h=H[L];d.lang=h[4];d.dir=h[3];d.setAttribute("data-font",h[5]);document.getElementById("h1").textContent=h[0];document.getElementById("h2").textContent=h[1];document.getElementById("hsub").textContent=h[2]}catch(e){}})();</script>
+  <script>(function(){try{var H={"en":["Learn trading here.","Ask who shared this.","Academy — honest lessons and calm setup — risk in plain sight. No advice. No income promises.","ltr","en","latin"],"no":["Lær trading her.","Spør den som delte.","Academy — ærlige leksjoner og rolig oppsett — risikoen synlig. Ingen råd. Ingen inntektsløfter.","ltr","no","latin"],"hi":["Trading यहाँ सीखें।","जिसने share किया, उनसे पूछें।","Academy — ईमानदार lessons और शांत setup — जोखिम साफ़ सामने। सलाह नहीं। आय का वादा नहीं।","ltr","hi","deva"],"ar":["تعلّم التداول هنا.","اسأل من شارك الرابط.","Academy — دروس صادقة وإعداد هادئ — المخاطر واضحة. لا نصيحة. لا وعود بدخل.","rtl","ar","naskh"],"ur":["Trading یہاں سیکھیں۔","جس نے شیئر کیا، اُس سے پوچھیں۔","Academy — ایماندار سبق اور پرسکون setup — خطرہ صاف سامنے۔ مشورہ نہیں۔ کمائی کا وعدہ نہیں۔","rtl","ur","naskh"],"ar_rm":["Ta'allam at-tadawul huna.","Is'al man sharaka ar-rabit.","Academy — durus sadiqa wa i'dad hadi' — al-makhatir wadiha. La nasiha. La wu'ud bi-dakhl.","ltr","ar-Latn","latin"],"ur_rm":["Trading yahin seekhein.","Jis ne share kiya, us se poochein.","Academy — imandaar sabaq aur pur-sukoon setup — khatra saaf saamne. Mashwara nahi. Kamai ka wada nahi.","ltr","ur-Latn","latin"]},d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},L=g("aimpire.lang"),t=g("aimpire.theme.v2");try{var q=new URLSearchParams(location.search).get("lang");if(q&&H[q])L=q}catch(e){}if(!H[L]){var n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||""];for(var i=0;i<n.length&&!H[L];i++){var x=String(n[i]||"").toLowerCase().replace(/^(nb|nn)(?=-|$)/,"no");for(var c in H){if(x===c||x.indexOf(c+"-")===0){L=c;break}}}}if(!H[L])L="en";if(t)d.setAttribute("data-theme",t);var h=H[L];d.lang=h[4];d.dir=h[3];d.setAttribute("data-font",h[5]);document.getElementById("h1").textContent=h[0];document.getElementById("h2").textContent=h[1];document.getElementById("hsub").textContent=h[2]}catch(e){}})();</script>
 
   <div class="notices" id="notices">
     <div class="notice" id="notice-none" hidden>
@@ -5146,6 +5147,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.ac4a616365.js" defer></script>
+<script src="app-m.e871840601.js" defer></script>
 </body>
 </html>
