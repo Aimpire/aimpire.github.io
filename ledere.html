@@ -740,35 +740,22 @@ html[dir="rtl"] .learn dd.fx{border-radius:5px 0 0 5px}
 /* Confirmation bubble («Du vet at det virket» psychology): soft marine panel
    that sits FORWARD — opaque raise + shadow + teal rim. Same hierarchy as the
    old green bubble (icon | bold title + muted body), never success-green. */
-.chk{display:grid;grid-template-columns:auto 1fr;gap:11px 12px;align-items:start;
-  margin:16px 0 0;padding:14px 15px;border-radius:14px;position:relative;z-index:1;
-  background:var(--ink-raise);
-  border:1px solid color-mix(in srgb,#15D8C4 34%,var(--rule));
-  box-shadow:
-    0 0 0 1px color-mix(in srgb,#15D8C4 10%,transparent),
-    0 10px 28px color-mix(in srgb,#000 42%,transparent),
-    0 2px 0 color-mix(in srgb,#15D8C4 12%,transparent);
-  font-size:.9rem;color:var(--chalk)}
-.chk-ico{flex:0 0 auto;width:1.7rem;height:1.7rem;margin-top:0;border-radius:9px;
-  display:grid;place-items:center;
-  background:color-mix(in srgb,#15D8C4 22%,transparent);
-  border:1px solid color-mix(in srgb,#15D8C4 55%,var(--rule));
-  color:#15D8C4;font:800 .78rem/1 var(--display);
-  box-shadow:0 0 12px color-mix(in srgb,#15D8C4 22%,transparent)}
-.chk-ico::before{content:"\2713"}
-.chk-bd{min-width:0;display:grid;gap:5px;padding-top:1px}
-.chk-t{display:block;margin:0;font:750 .95rem/1.3 var(--display);
-  letter-spacing:-.01em;color:#15D8C4}
-.chk-d{margin:0;font:500 .92rem/1.55 var(--face);color:var(--chalk-dim);max-width:36ch}
-html[data-theme="light"] .chk{
-  background:#fff;
-  border-color:color-mix(in srgb,#0B8F84 32%,var(--rule));
-  box-shadow:0 8px 22px color-mix(in srgb,#08080B 12%,transparent),0 0 0 1px color-mix(in srgb,#0B8F84 8%,transparent)}
-html[data-theme="light"] .chk-t{color:#0B8F84}
-html[data-theme="light"] .chk-ico{color:#0B8F84;background:color-mix(in srgb,#0B8F84 12%,transparent);
-  border-color:color-mix(in srgb,#0B8F84 40%,var(--rule));box-shadow:none}
-html[data-font="nastaliq"] .chk-t{font-size:.98rem;line-height:1.55}
-html[data-font="nastaliq"] .chk-d{font-size:.95rem;line-height:1.7}
+/* AIM-233: criteria = quiet reading hint, never a faux primary CTA. */
+.chk{display:block;margin:10px 0 0;padding:8px 0 8px 12px;border-radius:0;
+  position:relative;z-index:0;background:transparent;
+  border:0;border-inline-start:2px solid color-mix(in srgb,var(--chalk) 22%,var(--rule));
+  box-shadow:none;font-size:.82rem;color:var(--chalk-dim)}
+.chk-ico{display:none !important}
+.chk-bd{min-width:0;display:grid;gap:3px}
+.chk-t{display:block;margin:0;font:650 .72rem/1.25 var(--face);
+  letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-dim)}
+.chk-d{margin:0;font:500 .84rem/1.45 var(--face);color:var(--chalk-dim);max-width:42ch}
+html[data-theme="light"] .chk{background:transparent;border-color:color-mix(in srgb,#08080B 18%,var(--rule));box-shadow:none}
+html[data-theme="light"] .chk-t{color:var(--chalk-dim)}
+html[data-font="nastaliq"] .chk-t{font-size:.78rem;line-height:1.45;letter-spacing:0;text-transform:none}
+html[data-font="nastaliq"] .chk-d{font-size:.88rem;line-height:1.7}
+html[data-font="naskh"] .chk-t{font-size:.78rem;line-height:1.4;letter-spacing:0;text-transform:none}
+html[data-font="naskh"] .chk-d{font-size:.88rem;line-height:1.65}
 
 .vnote{margin:13px 0 0;padding:13px 15px;background:var(--ink-deep);
   border:1px solid var(--rule);border-inline-start:4px solid var(--gold-metal);
@@ -1230,12 +1217,13 @@ html[data-page="leaders"] .sec:not(#s-leaders){display:none !important}
 html:not([data-page="leaders"]) #s-leaders{display:none !important}
 /* #150: ledersiden er et skjema - kursbanner og nyhetsrad hjelper ikke der. */
 html[data-page="leaders"] .tape2,html[data-page="leaders"] .nradar,html[data-page="leaders"] .oekt,html[data-page="leaders"] .tvtape{display:none !important}
-/* #155: kurser og nyheter hjelper paa Verktoey / earn calc·results·withdraw — paa Products-lista
-   (prod), Start/Laer/FAQ/IB stjaeler de forste viewport. .navd = etter brukerens eget bytte.
-   Round eight after #407 (360 EN/UR): earn[data-tab=sonic] teaching short had markets+tvtape
-   (~214 px) above the jump; flow started under the tab. Keep strips off Sonic teaching only. */
+/* #155 + AIM-230: markets chrome teaches on Market hours and on earn calc/results/withdraw.
+   Size & risk / Journal / Links lost the first viewport to TV+session+radar (~180 px) before
+   the Tools folder head — hide strips there. Products / Start / Academy / FAQ / IB stay clean.
+   .navd = after the member's own navigation (first paint may still reserve on Home only). */
 .shell.navd:is([data-view="start"],[data-view="learn"],[data-view="faq"],[data-view="ib"],[data-view="prod"]) :is(.tape2,.nradar,.oekt,.tvtape){display:none !important}
-.shell.navd[data-view="earn"][data-tab="sonic"] :is(.tape2,.nradar,.oekt,.tvtape){display:none !important}
+.shell[data-view="tools"]:not([data-tab="hours"]) :is(.tape2,.nradar,.oekt,.tvtape){display:none !important}
+.shell[data-view="earn"]:not([data-tab="calc"]):not([data-tab="results"]):not([data-tab="withdraw"]) :is(.tape2,.nradar,.oekt,.tvtape){display:none !important}
 /* Round nine after #408 (360 EN/UR): Sonic teaching short — EN chips only ~81 px above tab,
    UR chips visiblePx=0 (Nastaliq lede+flow taller). Tighten short stack + folder vhead on
    sonic tab only so the 24×/70%/4.2% chips clear the tab. Not Products stage. */
@@ -1329,7 +1317,7 @@ html[dir="rtl"] .vhead::after{-webkit-mask-image:linear-gradient(270deg,transpar
 .mneste{margin-bottom:18px}
 .mneste .plate{min-height:0;border-color:color-mix(in srgb,#15D8C4 45%,var(--rule))}
 .mib{margin-top:14px}
-.mfeat .plate{display:flex;flex-direction:column;align-items:flex-start;gap:0;padding:16px 14px 14px;min-height:168px;position:relative;overflow:hidden}
+.mfeat .plate{display:flex;flex-direction:column;align-items:flex-start;gap:0;padding:16px 14px 14px;min-height:168px;position:relative;overflow:visible;height:auto;max-height:none}
 .mfeat .plate > .stripe{position:absolute;inset:0 0 auto 0;height:3px;min-height:0;width:auto;background:var(--grad)}
 .mfeat .plate > .bd{padding:6px 0 0}
 .mfeat .plate > .go{position:absolute;bottom:14px;inset-inline-end:2px}
@@ -1356,7 +1344,7 @@ html[dir="rtl"] .vhead::after{-webkit-mask-image:linear-gradient(270deg,transpar
 .menu .sharehint + .share{margin-top:8px}
 .plate{display:grid;grid-template-columns:5px 1fr 30px;align-items:center;gap:0 18px;
   width:100%;text-align:start;font:inherit;color:inherit;background:var(--ink-deep);
-  border:1px solid var(--rule);border-radius:16px;padding:0;overflow:hidden;cursor:pointer;
+  border:1px solid var(--rule);border-radius:16px;padding:0;overflow:visible;height:auto;max-height:none;cursor:pointer;
   transition:border-color .18s ease,box-shadow .18s ease,transform .12s ease}
 .plate > .stripe{align-self:stretch;min-height:94px;background:var(--rule)}
 .plate > .bd{padding:19px 0}
@@ -1419,17 +1407,19 @@ html[data-font="naskh"] .plate .t{font-family:var(--face);letter-spacing:0}
 [dir=rtl] .clipf .play::before{border-width:7px 12px 7px 0;border-color:transparent #FBE16B transparent transparent}
 .clipf:hover img{opacity:.7}
 /* ---------- avkryssing ---------- */
-.markd{display:flex;align-items:center;gap:10px;margin:14px 0 0;padding:11px 16px;
-  min-height:46px;width:100%;max-width:22rem;background:none;font:inherit;font-weight:600;
-  color:var(--chalk);border:1.5px dashed var(--edge-ui);border-radius:10px;cursor:pointer;
-  text-align:start;transition:background .15s,border-color .15s}
-.markd::before{content:"";flex:0 0 20px;height:20px;border-radius:5px;
-  border:2px solid var(--edge-ui);box-sizing:border-box}
-.markd:hover{border-color:var(--gold-soft)}
-.markd[aria-pressed="true"]{border-style:solid;border-color:var(--gold-metal);
-  color:var(--chalk-dim);font-weight:500}
+.markd{display:flex;align-items:flex-start;gap:12px;margin:12px 0 0;padding:12px 14px;
+  min-height:48px;width:100%;max-width:100%;box-sizing:border-box;background:color-mix(in srgb,var(--chalk) 4%,transparent);
+  border:1.5px solid color-mix(in srgb,var(--chalk) 28%,var(--rule));border-radius:12px;color:var(--chalk);cursor:pointer;
+  text-align:start;font:inherit}
+.markd-t{flex:1;min-width:0;font:650 .9rem/1.35 var(--face)}
+.markd::before{content:"";flex:0 0 22px;width:22px;height:22px;margin-top:1px;border-radius:6px;
+  border:1.5px solid color-mix(in srgb,var(--chalk) 35%,var(--rule));background:transparent;box-sizing:border-box}
+.markd:hover{border-color:color-mix(in srgb,#15D8C4 40%,var(--rule));
+  background:color-mix(in srgb,#15D8C4 6%,transparent)}
+.markd[aria-pressed="true"]{border-style:solid;border-color:color-mix(in srgb,#15D8C4 45%,var(--rule));
+  color:var(--chalk-dim);background:color-mix(in srgb,#15D8C4 10%,transparent)}
 .markd[aria-pressed="true"]::before{content:"\2713";display:grid;place-items:center;
-  background:var(--gold-metal);border-color:var(--gold-metal);color:#0C1118;font-size:.8rem;font-weight:800}
+  font:800 .75rem/1 var(--face);color:#fff;background:#15D8C4;border-color:#15D8C4}
 .progn{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 .progn .alld{color:var(--chalk);font-family:var(--face);font-size:.95rem;font-weight:600}
 .nextb{background:none;border:1px solid var(--rule);border-radius:999px;padding:7px 14px;
@@ -1445,13 +1435,13 @@ html[data-font="naskh"] .plate .t{font-family:var(--face);letter-spacing:0}
 .guide > li.folded > h3:focus-visible{outline:2px solid var(--gold-soft);outline-offset:2px;border-radius:6px}
 .guide > li.folded:not(.done) > h3{color:var(--chalk-dim)}
 .guide > li.current > h3{font-size:1.15rem}
-/* Round four: one-line nowrap+ellipsis hid ~75% of Stuck at 360 (scrollW 953 vs
-   clientW 252). Short copy in guide_ui + 3-line clamp (UR naskh needs 3 at 230 px
-   content width) — hoppTilAktivtSteg still clears the tab. */
-.guide .stuck{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;
-  max-width:100%;min-height:36px;margin:10px 0 0;color:var(--gold-soft);font-size:.9rem;line-height:1.35;
-  text-decoration:none;overflow:hidden;text-overflow:ellipsis;overflow-wrap:anywhere;
+/* Stuck help: never clamp/clip copy (founder: no overflow:hidden / fixed heights
+   that cut body text). Wrap freely; hoppTilAktivtSteg still clears the tab. */
+.guide .stuck{display:block;max-width:100%;min-height:36px;margin:10px 0 0;color:var(--gold-soft);
+  font-size:.9rem;line-height:1.55;padding-block:2px;text-decoration:none;overflow:visible;overflow-wrap:anywhere;
+  max-height:none;-webkit-line-clamp:unset;line-clamp:unset;text-overflow:clip;
   scroll-margin-bottom:calc(88px + env(safe-area-inset-bottom, 0px))}
+html[data-font="nastaliq"] .guide .stuck,html[data-font="naskh"] .guide .stuck{line-height:1.75;padding-block:4px}
 .guide .stuck:hover,.guide .stuck:focus-visible{text-decoration:underline;text-underline-offset:3px}
 /* ---------- apper ---------- */
 .appc{background:var(--ink-deep);border:1px solid var(--rule);border-radius:14px;
@@ -1944,8 +1934,8 @@ html.fx .topbar{background:color-mix(in srgb,var(--ink) 62%,transparent) !import
 
 
 /* --- Varselboksen (ingen sponsor): rolig flate med siktelinje oeverst, ikke tykk marg. --- */
-.notice{position:relative;overflow:hidden;border:1px solid var(--rule);border-radius:var(--r-card);
-  border-inline-start:1px solid var(--rule)}
+.notice{position:relative;overflow:visible !important;border:1px solid var(--rule);border-radius:var(--r-card);
+  border-inline-start:1px solid var(--rule);height:auto;max-height:none}
 .notice::before{content:"";position:absolute;inset-inline:0;top:0;height:3px;background:var(--aim)}
 .notice.alert{border-color:var(--ember)}
 .notice.alert::before{background:var(--ember)}
@@ -1969,7 +1959,7 @@ html[dir="rtl"] #notice-conflict .choice .ncp{transform:scaleX(-1)}
 .plate > .go{margin-inline-end:0;color:var(--chalk-dim)}
 .plate[data-cat]{--cat:transparent;background:var(--ink-deep);border-color:var(--rule)}
 :root:not([data-theme="dark"]) .plate[data-cat]:not([data-cat="start"]){background:var(--ink-deep);border-color:var(--rule)}
-.plate.feat{overflow:hidden}
+.plate.feat{overflow:visible;height:auto;max-height:none}
 /* #163: IB-flisen over hele bredden - et halvt kort ved siden av et tomt felt så uferdig ut */
 .plate.feat[data-cat="ib"]{grid-column:1/-1}
 .plate.feat::before{content:"";position:absolute;inset-inline:0;top:0;height:3px;background:var(--aim)}
@@ -2967,36 +2957,35 @@ html[dir="rtl"] .shell[data-view="start"] #guide-lede{border-radius:10px 0 0 10p
 .shell[data-view="start"] #guide > li{
   padding:12px 0 14px;padding-inline-start:3.1rem;
   border-bottom:1px solid var(--rule)}
-/* Current step: quiet hairline title; body actions sit in a soft marine scrim
-   so checklist lines + confirmation read forward vs neon graph. */
+/* Current step: growing marine plate (height:auto). AIM-233 on AIM-230 tip —
+   absolute ::after scrim fought multi-paragraph bodies; plate grows with copy.
+   syncStartStepScrim stays; ::after disabled so measured top is unused. */
 .shell[data-view="start"] #guide > li.current{
-  margin:0;padding:12px 0 18px;padding-inline-start:3.1rem;
-  border:0;border-bottom:1px solid var(--rule);border-radius:0;
-  background:transparent;box-shadow:none}
-.shell[data-view="start"] #guide > li.current > h3{
-  /* Title stays above the marine scrim — never share a hairline with the body card. */
-  font-size:1.14rem;line-height:1.4;margin:0 0 14px;padding-block:2px 0;color:var(--chalk);
-  position:relative;z-index:1;overflow:visible}
-.shell[data-view="start"] #guide > li.current .tick{
-  inset-inline-start:0;top:10px}
-/* Soft marine scrim behind the open step's working copy (not a second card stack). */
-.shell[data-view="start"] #guide > li.current > :not(.tick):not(h3){
-  position:relative;z-index:0}
-.shell[data-view="start"] #guide > li.current::after{
-  content:"";position:absolute;z-index:-1;pointer-events:none;
-  /* AIM-205 + AIM-231: one-line budget struck «referral» on the wrap
-     («Ask for the AiTech referral»). Clear two title lines; no top hairline. */
-  inset-block-start:calc(12px + (1.14rem * 1.4 * 2) + 14px);
-  inset-block-end:4px;inset-inline:0;
-  border-radius:14px;
+  position:relative;margin:0 0 8px;padding:12px 10px 18px;padding-inline-start:3.1rem;
+  border:1px solid color-mix(in srgb,#15D8C4 14%,var(--rule));border-radius:14px;
   background:color-mix(in srgb,var(--ink-raise) 78%,transparent);
-  border:1px solid color-mix(in srgb,#15D8C4 14%,var(--rule));
-  border-top-width:0;
-  box-shadow:0 12px 30px color-mix(in srgb,#000 26%,transparent)}
-.shell[data-view="start"] #guide > li.current{position:relative}
-html[data-theme="light"] .shell[data-view="start"] #guide > li.current::after{
+  box-shadow:0 12px 30px color-mix(in srgb,#000 26%,transparent);
+  overflow:visible !important;max-height:none !important;height:auto !important}
+html[data-theme="light"] .shell[data-view="start"] #guide > li.current{
   background:color-mix(in srgb,#fff 92%,transparent);
   box-shadow:0 10px 24px color-mix(in srgb,#08080B 8%,transparent)}
+.shell[data-view="start"] #guide > li.current > h3{
+  font-size:1.14rem;line-height:1.4;margin:0 0 12px;padding-block:2px 0;color:var(--chalk);
+  position:relative;z-index:1;overflow:visible;max-height:none;height:auto}
+.shell[data-view="start"] #guide > li.current > p,
+.shell[data-view="start"] #guide > li.current .stegbody,
+.shell[data-view="start"] #guide > li.current .stegbody p,
+.shell[data-view="start"] #guide > li.current .vnote,
+.shell[data-view="start"] #guide > li.current ul.acts,
+.shell[data-view="start"] #guide > li.current .chk,
+.shell[data-view="start"] #guide > li.current .chk-d,
+.shell[data-view="start"] #guide > li.current .markd,
+.shell[data-view="start"] #guide > li.current .markd-t,
+.shell[data-view="start"] #guide > li.current .stuck{
+  overflow:visible !important;max-height:none !important;height:auto !important;
+  -webkit-line-clamp:unset;line-clamp:unset}
+.shell[data-view="start"] #guide > li.current .tick{inset-inline-start:8px;top:12px}
+.shell[data-view="start"] #guide > li.current::after{content:none !important;display:none !important}
 .shell[data-view="start"] #guide .subs{margin:4px 0 0;padding:0 8px;display:grid;gap:1px}
 .shell[data-view="start"] #guide .subs > li{
   padding:8px 0;gap:12px;align-items:flex-start;
@@ -3005,42 +2994,63 @@ html[data-theme="light"] .shell[data-view="start"] #guide > li.current::after{
 .shell[data-view="start"] #guide > li.current .subs,
 .shell[data-view="start"] #guide > li.current .subbtn,
 .shell[data-view="start"] #guide > li.current .stegreg,
+.shell[data-view="start"] #guide > li.current .stegbody,
 .shell[data-view="start"] #guide > li.current .chk,
 .shell[data-view="start"] #guide > li.current .markd,
 .shell[data-view="start"] #guide > li.current .stuck,
 .shell[data-view="start"] #guide > li.current .askspon,
 .shell[data-view="start"] #guide > li.current .lesopp,
-.shell[data-view="start"] #guide > li.current .vnote{margin-inline:8px}
+.shell[data-view="start"] #guide > li.current .vnote,
+.shell[data-view="start"] #guide > li.current ul.acts{margin-inline:8px}
 /* AIM-108 base: corridor CTA. AIM-191 contain/scale override lands after AIM-184. */
 .shell[data-view="start"] #guide button.stegreg.slab.reg{appearance:none;-webkit-appearance:none}
 .shell[data-view="start"] #guide > li.current .stegreg + .asksheet{
   margin:10px 8px 8px;width:calc(100% - 16px);max-width:calc(100% - 16px);min-width:0;box-sizing:border-box}
-/* Confirmation = the forward bubble (marine/teal, not green). */
+
+/* AIM-233: screen-friendly Start type @320–390. */
+@media (max-width:390px){
+  .shell[data-view="start"] #guide > li.current > h3{font-size:.98rem}
+  .shell[data-view="start"] #guide .stegbody p,.shell[data-view="start"] #guide > li.current > p{font-size:.86rem;line-height:1.45}
+  .shell[data-view="start"] #guide .markd-t{font-size:.84rem}
+  .shell[data-view="start"] #guide .chk-d{font-size:.8rem}
+}
+/* AIM-233 Start: quiet criteria + clear mark-done (checkbox visible). */
 .shell[data-view="start"] #guide .chk{
-  margin-top:14px;padding:14px 15px;border-radius:var(--r-btn);
-  background:var(--ink-raise);
-  border:1px solid color-mix(in srgb,#15D8C4 38%,var(--rule));
-  box-shadow:
-    0 0 0 1px color-mix(in srgb,#15D8C4 12%,transparent),
-    0 14px 32px color-mix(in srgb,#000 48%,transparent)}
+  margin:8px 8px 0;padding:8px 0 10px 10px;border-radius:0;
+  background:transparent;border:0;border-inline-start:2px solid var(--rule);
+  box-shadow:none}
 html[data-theme="light"] .shell[data-view="start"] #guide .chk{
-  background:#fff;border-color:color-mix(in srgb,#0B8F84 34%,var(--rule));
-  box-shadow:0 10px 24px color-mix(in srgb,#08080B 12%,transparent)}
-.shell[data-view="start"] #guide .chk-t{color:#15D8C4;font-size:.96rem}
-html[data-theme="light"] .shell[data-view="start"] #guide .chk-t{color:#0B8F84}
-.shell[data-view="start"] #guide .chk-d{font-size:.92rem;line-height:1.55;color:var(--chalk-dim)}
+  background:transparent;border-color:var(--rule);box-shadow:none}
+.shell[data-view="start"] #guide .chk-t{color:var(--chalk-dim);font-size:.7rem;letter-spacing:.04em;text-transform:uppercase}
+html[data-theme="light"] .shell[data-view="start"] #guide .chk-t{color:var(--chalk-dim)}
+.shell[data-view="start"] #guide .chk-d{font-size:.82rem;line-height:1.5;color:var(--chalk-dim);max-width:none;padding-bottom:4px}
 .shell[data-view="start"] #guide .markd{
-  margin-top:12px;min-height:44px;padding:11px 14px;border-radius:10px;
-  background:transparent;border:1px solid var(--rule);
-  font:650 .9rem/1.25 var(--face);color:var(--chalk);justify-content:center;
+  margin:10px 8px 0;min-height:48px;padding:12px 14px;border-radius:12px;width:calc(100% - 16px);max-width:calc(100% - 16px);
+  background:color-mix(in srgb,var(--chalk) 5%,transparent);border:1.5px solid color-mix(in srgb,var(--chalk) 28%,var(--rule));
+  font:650 .88rem/1.3 var(--face);color:var(--chalk);justify-content:flex-start;align-items:flex-start;
   scroll-margin-bottom:calc(88px + env(safe-area-inset-bottom, 0px))}
-.shell[data-view="start"] #guide .markd::before{display:none}
+.shell[data-view="start"] #guide .markd::before{display:grid;place-items:center}
+.shell[data-view="start"] #guide .markd-t{flex:1;min-width:0}
 .shell[data-view="start"] #guide .markd[aria-pressed="true"]{
-  border-color:color-mix(in srgb,#15D8C4 40%,var(--rule));
-  color:var(--chalk-dim);background:color-mix(in srgb,#15D8C4 8%,transparent)}
-.shell[data-view="start"] #guide .vnote{
-  margin-top:10px;border-radius:10px;
-  background:color-mix(in srgb,var(--ink) 70%,transparent)}
+  border-color:color-mix(in srgb,#15D8C4 45%,var(--rule));
+  color:var(--chalk-dim);background:color-mix(in srgb,#15D8C4 10%,transparent)}
+.shell[data-view="start"] #guide .vnote,
+.shell[data-view="start"] #guide ul.acts.vnote{
+  margin-top:10px;border-radius:10px;padding-bottom:16px;
+  background:color-mix(in srgb,var(--ink) 70%,transparent);
+  overflow:visible !important;max-height:none !important;height:auto !important}
+.shell[data-view="start"] #guide .stegbody{
+  margin:2px 8px 0;display:grid;gap:8px;max-width:36rem;padding-bottom:4px;
+  overflow:visible !important;max-height:none !important;height:auto !important}
+.shell[data-view="start"] #guide .stegbody p{
+  margin:0;color:var(--chalk-dim);font-size:.9rem;line-height:1.5;padding-bottom:2px;
+  overflow:visible !important;max-height:none !important;height:auto !important;
+  -webkit-line-clamp:unset;line-clamp:unset;display:block}
+.guide .stegbody{margin:4px 0 0;display:grid;gap:8px;overflow:visible;max-height:none;height:auto}
+.guide .stegbody p{margin:0;color:var(--chalk-dim);font-size:.95rem;line-height:1.45;overflow:visible;max-height:none;height:auto}
+html[data-font="nastaliq"] .shell[data-view="start"] #guide .stegbody p{font-size:.9rem;line-height:1.75;padding-bottom:4px}
+html[data-font="naskh"] .shell[data-view="start"] #guide .stegbody p{font-size:.9rem;line-height:1.65}
+html[data-font="nastaliq"] .shell[data-view="start"] #guide .chk-d{line-height:1.75;padding-bottom:6px}
 html[data-font="nastaliq"] .shell[data-view="start"] #guide-lede{line-height:1.55;font-size:.92rem}
 html[data-font="nastaliq"] .shell[data-view="start"] #guide .subs > li{line-height:1.7}
 html[data-font="nastaliq"] .shell[data-view="start"] #guide .chk-d{line-height:1.75}
@@ -3124,7 +3134,9 @@ html[dir="rtl"] .shell[data-view="start"] #vhead .vtx span{text-align:right}
   box-shadow:0 8px 18px -10px color-mix(in srgb,#16C784 55%,transparent) !important;
   filter:none !important;transform:none !important;
   color:#fff !important;
-  overflow:hidden;
+  /* Shimmer ::before/::after already off on Start — keep label glyphs (Nastaliq
+     descenders) unclipped. */
+  overflow:visible;
   scroll-margin-bottom:calc(88px + env(safe-area-inset-bottom, 0px))}
 html[data-theme="light"] .shell[data-view="start"] #guide .stegreg.slab.reg{
   background:#16C784 !important;
@@ -3139,14 +3151,15 @@ html[data-theme="light"] .shell[data-view="start"] #guide .stegreg.slab.reg{
 .shell[data-view="start"] #guide .stegreg.slab.reg .t{
   display:block;flex:1 1 auto;min-width:0;
   font-family:var(--face) !important;font-weight:700 !important;
-  font-size:.9rem !important;line-height:1.35 !important;
+  font-size:.9rem !important;line-height:1.45 !important;
   text-transform:none !important;letter-spacing:.01em !important;
   white-space:normal !important;overflow-wrap:anywhere;hyphens:auto;
-  color:#fff !important}
+  overflow:visible;max-height:none;color:#fff !important}
 html[data-font="nastaliq"] .shell[data-view="start"] #guide .stegreg.slab.reg .t,
 html[data-font="naskh"] .shell[data-view="start"] #guide .stegreg.slab.reg .t{
   font-family:var(--face) !important;font-weight:600 !important;
-  font-size:.92rem !important;line-height:1.5 !important;letter-spacing:0 !important}
+  font-size:.92rem !important;line-height:1.65 !important;letter-spacing:0 !important;
+  padding-block:2px;overflow:visible}
 .shell[data-view="start"] #guide > li.current .asksheet,
 .shell[data-view="start"] #guide > li.current .asksheet-wa{
   width:auto;max-width:100%;min-width:0;box-sizing:border-box}
@@ -3237,7 +3250,10 @@ html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
    «stengt» i helgen i stedet for aa late som de beveger seg. */
 .tape2{position:relative;z-index:1;overflow:hidden;margin:2px -16px 0;padding:8px 0;border-block:1px solid var(--rule);background:var(--ink);background:color-mix(in srgb,var(--ink) 78%,transparent);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.tape2[hidden]{display:block !important;visibility:hidden;min-height:41px}
+/* AIM-230: [hidden] must collapse off Home. Old reserve rules kept ~160 px of ghost chrome
+   on Tools (sizing/journal/toolkit) even when tape/radar were "off". */
+.tape2[hidden]{display:none !important}
+.shell[data-view="menu"] .tape2[hidden]{display:block !important;visibility:hidden;min-height:41px}
 #switch{min-height:48px}   /* #100: språkknappene bygges av skriptet - plassen holdes, ellers skyves alt ned (CLS 0,17 på lenke-veien) */   /* #100: plassen holdes fra start - ellers skyver kursene innholdet ned (CLS) */
 .tape2 .trk{display:flex;width:max-content;gap:0}
 .tape2 .grp{display:flex;gap:26px;padding-inline-end:26px}
@@ -3263,7 +3279,8 @@ html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
 .oekt{display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:10px;row-gap:5px;width:calc(100% + 32px);margin:0 -16px;min-height:54px;padding:8px 16px;box-sizing:border-box;
   border:0;border-bottom:1px solid var(--rule);background:color-mix(in srgb,var(--ink) 70%,transparent);color:var(--chalk);
   font:700 .84rem/1.2 var(--face);text-align:start;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.oekt[hidden]{display:grid !important;visibility:hidden}
+.oekt[hidden]{display:none !important}
+.shell[data-view="menu"] .oekt[hidden]{display:grid !important;visibility:hidden}
 .oekt .r1{grid-column:1;display:flex;align-items:center;gap:7px;min-width:0;overflow:hidden;white-space:nowrap;
   padding:6px 0 6px 8px;margin:-6px 0 -6px -8px}   /* plass til pulsringen innenfor overflow:hidden */
 html[dir="rtl"] .oekt .r1{padding:6px 8px 6px 0;margin:-6px -8px -6px 0}
@@ -3288,7 +3305,8 @@ html[dir="rtl"] .oekt .go{transform:scaleX(-1)}
 .nradar{position:relative;z-index:1;margin:0 -16px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none;
   -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;background:color-mix(in srgb,var(--ink) 70%,transparent)}
 .nradar::-webkit-scrollbar{display:none}
-.nradar[hidden]{display:block !important;visibility:hidden;height:61px}
+.nradar[hidden]{display:none !important}
+.shell[data-view="menu"] .nradar[hidden]{display:block !important;visibility:hidden;height:61px}
 .nradar{height:61px;box-sizing:border-box}.tape2{min-height:41px;box-sizing:border-box}   /* fast høyde også når de er tomme - ingen hopp */   /* #100: samme for nyhetsraden */
 .nrtrk{display:flex;align-items:stretch;width:max-content;padding:8px 16px;gap:0}
 .nrlab{scroll-snap-align:start;align-self:center;font:800 .74rem/1 var(--display);color:var(--chalk-dim);padding-inline-end:14px;white-space:nowrap}
@@ -3493,7 +3511,7 @@ html[dir="rtl"] .mkrow .go{transform:scaleX(-1)}
 }
 @media (prefers-reduced-motion:reduce){.tape2{overflow-x:auto}.tape2 .grp + .grp{display:none}}
 /* Levende chart-linje i mappehoder og produktkort: pynt, tydelig som pynt (ingen tall). */
-.vhead,.pcard{position:relative;overflow:hidden}
+.vhead,.pcard{position:relative;overflow:visible;height:auto;max-height:none}
 .spark{position:absolute;inset-inline-end:0;bottom:0;width:62%;height:70%;pointer-events:none;opacity:.5}
 html[dir="rtl"] .spark{transform:scaleX(-1)}
 .spark path.l{fill:none;stroke:url(#sparkg);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -3513,7 +3531,7 @@ html[dir="rtl"] .spark{transform:scaleX(-1)}
 .prodview{margin-top:14px;padding-bottom:calc(88px + env(safe-area-inset-bottom, 0px))}
 .pgrid{display:grid;gap:12px;margin-top:16px}
 .pcard{appearance:none;font:inherit;color:var(--chalk);text-align:start;display:grid;gap:6px;padding:18px;border-radius:20px;
-  background:var(--ink-raise);border:1px solid var(--rule);cursor:pointer;position:relative;overflow:hidden}
+  background:var(--ink-raise);border:1px solid var(--rule);cursor:pointer;position:relative;overflow:visible;height:auto;max-height:none}
 button.pcard::after{content:"";position:absolute;inset-inline:0;top:0;height:3px;background:linear-gradient(90deg,var(--teal-live),var(--brand-blue),var(--brand-magenta))}
 .pcard .ptop{display:flex;align-items:center;justify-content:space-between}
 .pcard .mic{font-size:1.5rem}
@@ -4301,7 +4319,7 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
 .msb[data-k="ib"] .msg{opacity:.9;color:var(--teal-live)}
 .mgruppe#mg-invite{color:var(--chalk)}
 /* Tools section titles = label grammar (not competing folder titles). */
-.shell[data-view="tools"] :is(#s-fib,#s-pos,#s-margin,#s-streak,#s-journal,#s-tools,#s-apps,#s-growth,#s-market,#s-sessions) > h2{
+.shell[data-view="tools"] :is(#s-fib,#s-pos,#s-margin,#s-breakeven,#s-streak,#s-journal,#s-tools,#s-apps,#s-growth,#s-market,#s-sessions) > h2{
   margin:var(--space-5) 0 var(--space-2);padding-top:var(--space-3);border-top:1px solid var(--rule);
   font:800 var(--fs-label)/1.3 "Archivo",var(--display);font-stretch:90%;
   letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-dim)}
@@ -4312,10 +4330,14 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
 .shell[data-view="tools"][data-tab="toolkit"] #s-tools > h2{
   border-top:0;padding-top:0;margin-top:var(--space-2)}
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
-  .shell[data-view="tools"] :is(#s-fib,#s-pos,#s-margin,#s-streak,#s-journal,#s-tools,#s-apps,#s-growth,#s-market,#s-sessions) > h2{
+  .shell[data-view="tools"] :is(#s-fib,#s-pos,#s-margin,#s-breakeven,#s-streak,#s-journal,#s-tools,#s-apps,#s-growth,#s-market,#s-sessions) > h2{
   font-family:var(--face);font-stretch:normal;text-transform:none;letter-spacing:0}
-.shell[data-view="tools"] :is(#s-fib,#s-pos,#s-margin,#s-streak,#s-journal,#s-apps,#s-growth,#s-market,#s-sessions) > .lede{
+.shell[data-view="tools"] :is(#s-fib,#s-pos,#s-margin,#s-breakeven,#s-streak,#s-journal,#s-apps,#s-growth,#s-market,#s-sessions) > .lede{
   max-width:var(--folder-sub-max);font-size:var(--fs-lede);line-height:1.45;color:var(--chalk-dim);text-wrap:pretty;margin:0 0 var(--space-3)}
+/* AIM-230: Tools folder head sits under mast when markets chrome is off (sizing/journal/toolkit). */
+.shell[data-view="tools"]:not([data-tab="hours"]) #topbar{margin-top:2px}
+.shell[data-view="tools"]:not([data-tab="hours"]) #vhead{margin-top:var(--space-2)}
+.shell[data-view="tools"] #s-breakeven .psout .k strong{font-variant-numeric:tabular-nums}
 /* Size & risk / journal: hairline fields, no migraine paper cards. */
 .shell[data-view="tools"] .psgrid input,
 .shell[data-view="tools"] .psgrid textarea,
@@ -4839,13 +4861,14 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .htree .h
    «referral» on wrap kissed the card edge. Never #379. Never #home-tree.
    ============================================================================= */
 .shell[data-view="start"] #vhead{
-  overflow:visible;padding-block:12px}
-.shell[data-view="start"] #vhead .vtx{gap:6px}
+  overflow:visible;max-height:none;padding-block:12px}
+.shell[data-view="start"] #vhead .vtx{gap:6px;overflow:visible;max-height:none}
 .shell[data-view="start"] #vhead .vtx b{
-  line-height:var(--lh-display);padding-block:1px 0}
+  line-height:var(--lh-display);padding-block:1px 0;overflow:visible}
 .shell[data-view="start"] #vhead .vtx b::after{margin-top:10px}
 .shell[data-view="start"] #vhead .vtx span{
-  line-height:1.45;padding-block:2px 0;margin-top:2px}
+  line-height:1.55;padding-block:4px 2px;margin-top:2px;overflow:visible;max-height:none;
+  -webkit-line-clamp:unset;line-clamp:unset;text-overflow:clip;white-space:normal}
 .shell[data-view="learn"] #vhead .vtx b,
 .shell[data-view="faq"] #vhead .vtx b,
 .shell[data-view="tools"] #vhead .vtx b,
@@ -5845,6 +5868,18 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
     <p class="vnote" id="mg-formula"></p>
   </section>
 
+  <!-- AIM-230: break-even after a loss — pure arithmetic learners misread (B-030: maths, not a forecast). -->
+  <section class="sec" id="s-breakeven" data-cat="tools" data-tab="sizing">
+    <h2 id="be-t"></h2>
+    <p class="lede" id="be-lede"></p>
+    <div class="psgrid">
+      <label class="flab" for="be-loss" id="be-loss-l"></label>
+      <input id="be-loss" type="number" inputmode="decimal" min="0.1" max="95" step="any" value="40" dir="ltr">
+    </div>
+    <div class="psout" id="be-out" aria-live="polite"></div>
+    <p class="vnote" id="be-note"></p>
+  </section>
+
   <section class="sec" id="s-streak" data-cat="tools" data-tab="sizing">
     <h2 id="t-streak"></h2>
     <p class="lede" id="sk-lede"></p>
@@ -5952,6 +5987,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.2674c0aa30.js" defer></script>
+<script src="app-l.cdeceb5ea7.js" defer></script>
 </body>
 </html>
