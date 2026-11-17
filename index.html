@@ -159,7 +159,7 @@ if(!treg){s.media="all";return;}document.documentElement.setAttribute("data-skri
   --fs-nav:clamp(.62rem,.2vw + .56rem,.72rem);
   --fs-label:clamp(.68rem,.2vw + .62rem,.78rem);
   --fs-chip:clamp(.56rem,.15vw + .52rem,.62rem);
-  --lh-display:1.05;
+  --lh-display:1.22; /* AIM-231: was 1.05 — ascenders kissed hairlines */
   --lh-body:1.45;
   --space-1:4px;--space-2:clamp(6px,.8vw,8px);--space-3:clamp(8px,1.6vw,12px);
   --space-4:clamp(10px,2.2vw,16px);--space-5:clamp(14px,3vw,22px);--space-6:clamp(28px,6vw,50px);
@@ -669,7 +669,7 @@ button.row:first-child{border-top:0}
 .learn dt{font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;
   color:var(--chalk-dim);font-family:var(--display);font-weight:700}
 .learn dd{margin:0 0 9px;font-size:.9rem;color:var(--chalk-dim)}
-.aca-t{margin:4px 0 6px;font-size:1.55rem;font-weight:800;letter-spacing:-.02em;line-height:1.2;color:var(--chalk)}
+.aca-t{margin:4px 0 6px;font-size:1.55rem;font-weight:800;letter-spacing:-.02em;line-height:1.32;color:var(--chalk)}
 .aca-lede{margin:0 0 14px;max-width:36rem;font-size:1.02rem;line-height:1.5;color:var(--chalk-dim)}
 html[data-font="nastaliq"] .aca-t{font-size:1.45rem;line-height:1.55}
 html[data-font="nastaliq"] .aca-lede{font-size:1.05rem;line-height:1.75}
@@ -1302,7 +1302,7 @@ html[dir="rtl"] .wotd .wm{unicode-bidi:plaintext}
 /* Mappehode */
 #guide h3 .sti{margin-inline-end:8px;font-size:1.05em}
 .sec > h2.dupl{display:none}
-.vhead{display:flex;align-items:center;gap:14px;margin:16px 0 4px;padding:14px 16px;border-radius:18px;position:relative;overflow:hidden;
+.vhead{display:flex;align-items:center;gap:14px;margin:16px 0 4px;padding:14px 16px;border-radius:18px;position:relative;overflow:visible;
   background:linear-gradient(var(--ink-raise,#1A1A22),var(--ink-raise,#1A1A22)) padding-box,var(--grad) border-box;border:1.5px solid transparent}
 .vhead[hidden]{display:none}
 .vhead::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
@@ -1311,8 +1311,8 @@ html[dir="rtl"] .wotd .wm{unicode-bidi:plaintext}
 html[dir="rtl"] .vhead::after{-webkit-mask-image:linear-gradient(270deg,transparent,#000);mask-image:linear-gradient(270deg,transparent,#000)}
 .vhead .vic{flex:0 0 52px;height:52px;border-radius:15px;display:grid;place-items:center;font-size:1.7rem;background:var(--ink);border:1px solid var(--rule)}
 .vhead .vtx{display:flex;flex-direction:column;gap:3px;min-width:0;position:relative;z-index:1}
-.vhead .vtx b{font:800 1.3rem/1.15 var(--display)}
-.vhead .vtx span{font-size:.86rem;line-height:1.35;color:var(--chalk-dim)}
+.vhead .vtx b{font:800 1.3rem/1.28 var(--display)}
+.vhead .vtx span{font-size:.86rem;line-height:1.4;color:var(--chalk-dim)}
 
 /* #142 Snarveier etter oppgave: store, like ruter, ett trykk. */
 .goals{margin:0 0 18px}
@@ -2975,8 +2975,8 @@ html[dir="rtl"] .shell[data-view="start"] #guide-lede{border-radius:10px 0 0 10p
   background:transparent;box-shadow:none}
 .shell[data-view="start"] #guide > li.current > h3{
   /* Title stays above the marine scrim — never share a hairline with the body card. */
-  font-size:1.14rem;line-height:1.3;margin:0 0 12px;color:var(--chalk);
-  position:relative;z-index:1}
+  font-size:1.14rem;line-height:1.4;margin:0 0 14px;padding-block:2px 0;color:var(--chalk);
+  position:relative;z-index:1;overflow:visible}
 .shell[data-view="start"] #guide > li.current .tick{
   inset-inline-start:0;top:10px}
 /* Soft marine scrim behind the open step's working copy (not a second card stack). */
@@ -2984,10 +2984,9 @@ html[dir="rtl"] .shell[data-view="start"] #guide-lede{border-radius:10px 0 0 10p
   position:relative;z-index:0}
 .shell[data-view="start"] #guide > li.current::after{
   content:"";position:absolute;z-index:-1;pointer-events:none;
-  /* AIM-205: fixed 2.6rem sat mid-glyph on step-1 («Ask for your sponsor link»)
-     at 360 — top border read as a strike. Start below one title line; no top hairline
-     so a wrap never paints a horizontal strike through glyphs. */
-  inset-block-start:calc(12px + (1.14rem * 1.3) + 12px);
+  /* AIM-205 + AIM-231: one-line budget struck «referral» on the wrap
+     («Ask for the AiTech referral»). Clear two title lines; no top hairline. */
+  inset-block-start:calc(12px + (1.14rem * 1.4 * 2) + 14px);
   inset-block-end:4px;inset-inline:0;
   border-radius:14px;
   background:color-mix(in srgb,var(--ink-raise) 78%,transparent);
@@ -3734,12 +3733,12 @@ body.has-tabbar #pille{bottom:calc(var(--tab-clear) + 6px)}
    Prinsipp: typografi og luft bærer hierarkiet; gradienten brukes bare der noe er i bevegelse
    (neonlinja, framdrift, valgt fane). ===== */
 .sec > h2 b,.short > h2 b{display:none}
-.sec > h2,.short > h2{font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;font-size:1.6rem;line-height:1.12;letter-spacing:-.012em;word-spacing:.08em}
+.sec > h2,.short > h2{font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;font-size:1.6rem;line-height:1.28;letter-spacing:-.012em;word-spacing:.08em}
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .sec > h2,html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .short > h2{font-family:var(--face);font-stretch:normal}
-.vhead{background:none;border:0;border-radius:0;padding:4px 0 2px;margin:18px 0 6px;gap:0}
+.vhead{background:none;border:0;border-radius:0;padding:4px 0 2px;margin:18px 0 6px;gap:0;overflow:visible}
 .vhead::after{display:none}
 .vhead .vic{display:none}
-.vhead .vtx b{font-family:"Archivo",var(--display);font-stretch:88%;font-weight:900;font-size:2.15rem;line-height:1.02;letter-spacing:-.018em;word-spacing:.08em}
+.vhead .vtx b{font-family:"Archivo",var(--display);font-stretch:88%;font-weight:900;font-size:2.15rem;line-height:1.22;letter-spacing:-.018em;word-spacing:.08em}
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .vhead .vtx b{font-family:var(--face);font-stretch:normal;font-size:1.7rem;line-height:1.4}
 .vhead .vtx span{font-size:.95rem;max-width:34ch}
 .vhead .spark{display:none}
@@ -3856,7 +3855,7 @@ html.ldvent #sh-s-leaders .shpath li.naa .t{color:var(--chalk)}
 .ldagain{margin:14px 0 0;padding:8px 0;border:0;background:none;color:var(--chalk-dim);font:600 .86rem/1.3 var(--face);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .tool:not(.ldsendt) .ldagain{display:none}
 /* Delseksjonstitler (h3 rett under en seksjon, f.eks. «Aimpire Academy») i samme skrift som overskriftene. */
-.sec > h3{font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;font-size:1.32rem;line-height:1.15;letter-spacing:-.01em;word-spacing:.08em}
+.sec > h3{font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;font-size:1.32rem;line-height:1.28;letter-spacing:-.01em;word-spacing:.08em}
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .sec > h3{font-family:var(--face);font-stretch:normal;letter-spacing:0;line-height:1.5}
 /* Merknad/advarsel: ikke farget sidekant (malspor), men et lite tegn foran - ⓘ for merknad, ! for advarsel. */
 .vnote,.warn{position:relative;border-inline-start:0 !important;padding-inline-start:44px !important}
@@ -4180,7 +4179,7 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .shell[da
   font-size:var(--fs-lede);line-height:1.4;max-width:var(--folder-sub-max);color:var(--chalk-dim)}
 .shell[data-view="ib"] #vhead .vtx b::after{
   content:"";display:block;width:var(--folder-hair-w);height:var(--folder-hair-h);
-  margin-top:7px;border-radius:1px;background:var(--brand-gold-deep);opacity:.92}
+  margin-top:9px;border-radius:1px;background:var(--brand-gold-deep);opacity:.92}
 :root[data-theme="dark"] .shell[data-view="ib"] #vhead .vtx b::after{background:var(--brand-gold);opacity:.95}
 html[dir="rtl"] .shell[data-view="ib"] #vhead .vtx b::after{margin-inline-start:auto}
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .shell[data-view="ib"] #vhead .vtx b{
@@ -4740,7 +4739,7 @@ html[data-font="nastaliq"] .hero p#hsub{font-size:1.02rem;line-height:1.7}
 body{font-size:var(--fs-body);line-height:var(--lh-body)}
 .sec > h2,.short > h2{
   font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;
-  font-size:var(--fs-section);line-height:1.12;letter-spacing:-.012em}
+  font-size:var(--fs-section);line-height:1.28;letter-spacing:-.012em}
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .sec > h2,
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .short > h2{
   font-family:var(--face);font-stretch:normal}
@@ -4778,7 +4777,7 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .short > 
 .shell[data-view="earn"] #vhead .vtx b::after,
 .prodview .vhead .vtx b::after{
   content:"";display:block;width:var(--folder-hair-w);height:var(--folder-hair-h);
-  margin-top:7px;border-radius:1px;background:var(--brand-gold-deep);opacity:.92}
+  margin-top:9px;border-radius:1px;background:var(--brand-gold-deep);opacity:.92}
 :root[data-theme="dark"] .shell[data-view="learn"] #vhead .vtx b::after,
 :root[data-theme="dark"] .shell[data-view="faq"] #vhead .vtx b::after,
 :root[data-theme="dark"] .shell[data-view="tools"] #vhead .vtx b::after,
@@ -4797,7 +4796,7 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .prodview
 /* Home foyer brand tick — same gold designator as folders (lightweight meaning). */
 .shell[data-view="menu"] .hero h1{
   font-family:"Archivo",var(--display);font-stretch:88%;font-weight:900;
-  font-size:var(--fs-display);line-height:1.08;letter-spacing:-.02em;text-wrap:balance}
+  font-size:var(--fs-display);line-height:1.18;letter-spacing:-.02em;text-wrap:balance}
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .shell[data-view="menu"] .hero h1{
   font-family:var(--face);font-stretch:normal}
 .shell[data-view="menu"] .hero h1::after{
@@ -4832,6 +4831,29 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .htree .h
 /* Focus rings use teal live (brand), not purple. */
 .htree .hta:focus-visible,.msb:focus-visible,.mstema button:focus-visible{
   outline-color:var(--focus-ring)}
+
+/* =============================================================================
+   AIM-231 — hub-wide text-edge breathing (titles vs hairlines / sticky chrome).
+   Measured: .vhead overflow:hidden clipped sticky Start subtitle; display lh
+   1.02–1.15 put glyphs on rules; Start step scrim budgeted one title line so
+   «referral» on wrap kissed the card edge. Never #379. Never #home-tree.
+   ============================================================================= */
+.shell[data-view="start"] #vhead{
+  overflow:visible;padding-block:12px}
+.shell[data-view="start"] #vhead .vtx{gap:6px}
+.shell[data-view="start"] #vhead .vtx b{
+  line-height:var(--lh-display);padding-block:1px 0}
+.shell[data-view="start"] #vhead .vtx b::after{margin-top:10px}
+.shell[data-view="start"] #vhead .vtx span{
+  line-height:1.45;padding-block:2px 0;margin-top:2px}
+.shell[data-view="learn"] #vhead .vtx b,
+.shell[data-view="faq"] #vhead .vtx b,
+.shell[data-view="tools"] #vhead .vtx b,
+.shell[data-view="earn"] #vhead .vtx b,
+.prodview .vhead .vtx b{
+  line-height:var(--lh-display);padding-block:2px 0}
+.shell[data-view="menu"] .hero h1{
+  line-height:1.18;padding-block:2px 0}
 
 /* AIM-212 Products chrome — shelf (#441) + legacy .pone alias share :root stops. */
 .prodview .ppath{font-size:var(--fs-chip);letter-spacing:.02em}
@@ -4966,8 +4988,8 @@ html:not([data-theme="dark"]):has(.shell[data-view="menu"]) body::before{
 /* AIM-225: short newcomer CTA under hero, then portals (Share first from #443). */
 .shell[data-view="menu"] .hero{padding:18px 0 4px}
 .shell[data-view="menu"] .hero h1{
-  font-size:clamp(1.5rem,6vw,2.1rem);line-height:1.12}
-.shell[data-view="menu"] .hero h1::after{margin-top:6px}
+  font-size:clamp(1.5rem,6vw,2.1rem);line-height:1.18}
+.shell[data-view="menu"] .hero h1::after{margin-top:8px}
 .shell[data-view="menu"] .hero p#hsub{margin:6px 0 0;max-width:36ch;font-size:.86rem;line-height:1.4}
 .shell[data-view="menu"] #home-tree.htree{
   margin:8px 0 0;padding:0;max-width:100%;box-sizing:border-box}
