@@ -4160,9 +4160,264 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .shell[da
 .shell[data-view="tools"] #s-sessions .lede{max-width:36ch;text-wrap:pretty}
 .shell[data-view="ib"] #vhead{margin:var(--folder-vhead-m);padding:var(--folder-vhead-p)}
 .shell[data-view="ib"] #iq-lede{max-width:40ch;text-wrap:pretty;color:var(--chalk-dim)}
-.shell[data-view="tools"] #vhead{margin:4px 0 10px;padding:0}
-.shell[data-view="tools"] #vhead .vtx b{font-size:1.65rem}
+/* AIM-223 More destinations: Home portals never ride into FAQ/Tools/IB folders. */
+.shell[data-view]:not([data-view="menu"]) #home-tree,
+.shell[data-view]:not([data-view="menu"]) .htree{display:none !important}
+.shell[data-view]:not([data-view="menu"]) .hero{display:none !important}
+/* Mast stays for search/lang; hair under chrome in More folders. */
+.shell[data-view="ib"] .mast,
+.shell[data-view="faq"] .mast,
+.shell[data-view="tools"] .mast{padding-bottom:0;border-bottom:1px solid var(--rule);margin-bottom:var(--space-2)}
+/* IB joins folder grammar (token sizes — AIM-224 owns 320). */
+.shell[data-view="ib"] #vhead{
+  margin:var(--folder-vhead-m);padding:var(--folder-vhead-p);gap:0;
+  background:none;border:0;border-radius:0;box-shadow:none}
+.shell[data-view="ib"] #vhead .vtx b{
+  font-family:"Archivo",var(--display);font-stretch:88%;font-weight:900;
+  font-size:var(--fs-folder);line-height:var(--lh-display);letter-spacing:-.018em;
+  color:var(--chalk);max-width:18ch}
+.shell[data-view="ib"] #vhead .vtx span{
+  font-size:var(--fs-lede);line-height:1.4;max-width:var(--folder-sub-max);color:var(--chalk-dim)}
+.shell[data-view="ib"] #vhead .vtx b::after{
+  content:"";display:block;width:var(--folder-hair-w);height:var(--folder-hair-h);
+  margin-top:7px;border-radius:1px;background:var(--brand-gold-deep);opacity:.92}
+:root[data-theme="dark"] .shell[data-view="ib"] #vhead .vtx b::after{background:var(--brand-gold);opacity:.95}
+html[dir="rtl"] .shell[data-view="ib"] #vhead .vtx b::after{margin-inline-start:auto}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .shell[data-view="ib"] #vhead .vtx b{
+  font-family:var(--face);font-stretch:normal;font-size:var(--fs-folder-script);line-height:1.4;max-width:none}
+.shell[data-view="ib"] #iq-t{display:none}
+.shell[data-view="ib"] #s-ibq{margin-top:var(--space-2)}
+.shell[data-view="ib"] #iq-chips{
+  display:flex;gap:var(--space-2);overflow-x:auto;padding:var(--space-1) 0 var(--space-3);
+  margin:0 0 var(--space-2);scrollbar-width:none;border-bottom:1px solid var(--rule)}
+.shell[data-view="ib"] #iq-chips::-webkit-scrollbar{display:none}
+.shell[data-view="ib"] .iqchip{
+  flex:0 0 auto;min-height:36px;padding:0 12px;border-radius:var(--r-chip);
+  border:1px solid var(--rule);background:transparent;color:var(--chalk-dim);
+  font:650 .78rem/1.2 var(--face);white-space:nowrap;cursor:pointer}
+.shell[data-view="ib"] .iqchip:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.shell[data-view="ib"] #s-ibq .iqh{
+  margin:var(--space-5) 0 var(--space-2);padding-top:var(--space-3);border-top:1px solid var(--rule);
+  font:800 var(--fs-label)/1.3 "Archivo",var(--display);font-stretch:90%;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-dim)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .shell[data-view="ib"] #s-ibq .iqh{
+  font-family:var(--face);font-stretch:normal;text-transform:none;letter-spacing:0}
+.shell[data-view="ib"] #s-ibq .iqh:first-of-type{border-top:0;padding-top:0}
+.shell[data-view="ib"] .iqbtn{
+  border-radius:var(--r-btn);min-height:44px;padding:0 14px;
+  background:var(--cta-primary-bg);color:var(--cta-primary-fg);box-shadow:none}
+.shell[data-view="ib"] .iqbtn.ghost{
+  background:transparent;color:var(--chalk);border:1px solid var(--cta-quiet-border)}
+.shell[data-view="ib"] .iqsteps li{
+  border:0;border-bottom:1px solid var(--rule);border-radius:0;padding:12px 2px 12px 48px}
+html[dir="rtl"] .shell[data-view="ib"] .iqsteps li{padding:12px 48px 12px 2px}
+.shell[data-view="ib"] .iqsteps li::before{
+  inset-inline-start:2px;top:12px;width:28px;height:28px;background:var(--cta-primary-bg);color:var(--cta-primary-fg)}
+.shell[data-view="ib"] .iqex,.shell[data-view="ib"] .iqtree{
+  border:0;border-block:1px solid var(--rule);border-radius:0;background:transparent;padding:12px 2px}
+.shell[data-view="ib"] .ibmore{
+  margin-top:var(--space-4);border:0;border-top:1px solid var(--rule);border-radius:0;padding:0}
+.shell[data-view="ib"] .ibmore > summary{font:650 .92rem/1.3 var(--face);min-height:44px}
+.shell[data-view="ib"] #iq-honest{
+  margin:var(--space-4) 0 0;padding:12px 2px;border-top:1px solid var(--rule);
+  font:500 .86rem/1.45 var(--face);color:var(--chalk-dim);max-width:40ch;text-wrap:pretty}
+.shell[data-view="ib"] .iqnode{
+  border-radius:0;border:0;border-bottom:1px solid var(--rule);background:transparent;padding:10px 4px}
+.shell[data-view="ib"] .iqic{width:36px;height:36px}
+/* FAQ: secondary help blocks quieter under Ask folder. */
+.shell[data-view="faq"] #s-help,.shell[data-view="faq"] #s-docs,.shell[data-view="faq"] #s-values{
+  margin-top:var(--space-5);padding-top:var(--space-3);border-top:1px solid var(--rule)}
+.shell[data-view="faq"] #s-help > h2,.shell[data-view="faq"] #s-docs > h2,.shell[data-view="faq"] #s-values > h2{
+  font:800 var(--fs-label)/1.3 "Archivo",var(--display);font-stretch:90%;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-dim);margin:0 0 var(--space-2)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="faq"] :is(#s-help,#s-docs,#s-values) > h2{
+  font-family:var(--face);font-stretch:normal;text-transform:none;letter-spacing:0}
+/* Element from More: community-only corridor (hide Start dump). */
+.shell[data-view="start"][data-dest="community"] #vhead,
+.shell[data-view="start"][data-dest="community"] #s-guide,
+.shell[data-view="start"][data-dest="community"] #s-places,
+.shell[data-view="start"][data-dest="community"] #s-platform,
+.shell[data-view="start"][data-dest="community"] #topbar{display:none !important}
+.shell[data-view="start"][data-dest="community"] #s-community{margin-top:var(--space-2)}
+.shell[data-view="start"][data-dest="community"] #cm-t{
+  font-family:"Archivo",var(--display);font-stretch:88%;font-weight:900;
+  font-size:var(--fs-folder);line-height:var(--lh-display);letter-spacing:-.018em;margin:0 0 4px;max-width:16ch}
+.shell[data-view="start"][data-dest="community"] #cm-t::after{
+  content:"";display:block;width:var(--folder-hair-w);height:var(--folder-hair-h);
+  margin-top:7px;border-radius:1px;background:var(--brand-gold);opacity:.95}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="start"][data-dest="community"] #cm-t{
+  font-family:var(--face);font-stretch:normal;font-size:var(--fs-folder-script);line-height:1.4;max-width:none}
+.shell[data-view="start"][data-dest="community"] #cm-lede{
+  font-size:var(--fs-lede);line-height:1.4;max-width:var(--folder-sub-max);color:var(--chalk-dim);margin:0 0 var(--space-3)}
+.shell[data-view="start"][data-dest="community"] .cmrooms li{
+  border:0;border-bottom:1px solid var(--rule);border-radius:0;background:transparent;padding:12px 2px;gap:2px}
+.shell[data-view="start"][data-dest="community"] .cmrooms b{font:650 .92rem/1.3 var(--face)}
+.shell[data-view="start"][data-dest="community"] .cmrooms span{font:500 .8rem/1.4 var(--face);color:var(--chalk-dim)}
+.shell[data-view="start"][data-dest="community"] .cmtips li{
+  display:grid;grid-template-columns:1.4rem 1fr;gap:8px;padding:8px 2px;border:0;background:none}
+.shell[data-view="start"][data-dest="community"] .eljoin{margin-top:var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--rule)}
+/* Tools: quieter jump; progress + markets use label grammar. */
+.shell[data-view="tools"] .jump button,
+.shell[data-view="tools"] .topbar .jump button{
+  border-radius:var(--r-chip);border:1px solid var(--rule);background:transparent;box-shadow:none}
+.shell[data-view="tools"] .jump button[aria-selected="true"],
+.shell[data-view="tools"] .topbar .jump button[aria-selected="true"]{
+  border-color:color-mix(in srgb,var(--teal-live) 45%,var(--rule));
+  background:color-mix(in srgb,var(--teal-live) 10%,transparent);color:var(--chalk)}
+.shell[data-view="tools"] #s-apps .appc{
+  border:0;border-bottom:1px solid var(--rule);border-radius:0;background:transparent;padding:12px 2px;box-shadow:none}
+.shell[data-view="tools"] #s-market > h2,
+.shell[data-view="tools"] #s-sessions > h2,
+.shell[data-view="tools"] #s-growth .grh{
+  font:800 var(--fs-label)/1.3 "Archivo",var(--display);font-stretch:90%;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-dim)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="tools"] :is(#s-market,#s-sessions) > h2,
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="tools"] #s-growth .grh{
+  font-family:var(--face);font-stretch:normal;text-transform:none;letter-spacing:0}
+.shell[data-view="tools"] #s-growth .grout{font:800 1.05rem/1.35 var(--face);margin:var(--space-3) 0 var(--space-2)}
+.shell[data-view="tools"] #s-growth .psgrid{margin-top:var(--space-2)}
+/* Share sheet quieter — Home owns share prominence. */
+.hspanel{padding:12px;gap:6px}
+.hslede{font-size:.86rem;max-width:34ch}
+.hsb{min-height:42px;border-radius:var(--r-btn);font:650 .86rem/1.2 var(--face)}
+
+/* Tools folder head uses shared --fs-folder grammar (below) — do not override to 1.65rem. */
 .shell[data-view="earn"] #vhead .vtx b,.shell[data-view="prod"] .prodview .vhead .vtx b{letter-spacing:-.02em}
+
+/* =============================================================================
+   AIM-229 More destinations — same craft as Home/Start/Products on every
+   inner page after Mazeed. Jump tiles stay Tools-only (AIM-228 owns leaks).
+   Flatten cards → hairline lists; calm light surfaces; Invite row readable.
+   ============================================================================= */
+/* Invite programme row — full weight, quiet teal wash so commission is findable. */
+.msb[data-k="ib"]{
+  margin:4px 0 2px;padding:12px 10px !important;border:1px solid color-mix(in srgb,var(--teal-live) 28%,var(--rule)) !important;
+  border-radius:var(--r-btn) !important;
+  background:color-mix(in srgb,var(--teal-live) 8%,transparent) !important}
+.msb[data-k="ib"] .mst{font-weight:750;color:var(--chalk)}
+.msb[data-k="ib"] .msg{opacity:.9;color:var(--teal-live)}
+.mgruppe#mg-invite{color:var(--chalk)}
+/* Tools section titles = label grammar (not competing folder titles). */
+.shell[data-view="tools"] :is(#s-fib,#s-pos,#s-margin,#s-streak,#s-journal,#s-tools,#s-apps,#s-growth,#s-market,#s-sessions) > h2{
+  margin:var(--space-5) 0 var(--space-2);padding-top:var(--space-3);border-top:1px solid var(--rule);
+  font:800 var(--fs-label)/1.3 "Archivo",var(--display);font-stretch:90%;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-dim)}
+.shell[data-view="tools"] :is(#s-fib,#s-pos,#s-market,#s-growth) > h2:first-child,
+.shell[data-view="tools"][data-tab="sizing"] #s-fib > h2,
+.shell[data-view="tools"][data-tab="hours"] #s-market > h2,
+.shell[data-view="tools"][data-tab="journal"] #s-growth > h2,
+.shell[data-view="tools"][data-tab="toolkit"] #s-tools > h2{
+  border-top:0;padding-top:0;margin-top:var(--space-2)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="tools"] :is(#s-fib,#s-pos,#s-margin,#s-streak,#s-journal,#s-tools,#s-apps,#s-growth,#s-market,#s-sessions) > h2{
+  font-family:var(--face);font-stretch:normal;text-transform:none;letter-spacing:0}
+.shell[data-view="tools"] :is(#s-fib,#s-pos,#s-margin,#s-streak,#s-journal,#s-apps,#s-growth,#s-market,#s-sessions) > .lede{
+  max-width:var(--folder-sub-max);font-size:var(--fs-lede);line-height:1.45;color:var(--chalk-dim);text-wrap:pretty;margin:0 0 var(--space-3)}
+/* Size & risk / journal: hairline fields, no migraine paper cards. */
+.shell[data-view="tools"] .psgrid input,
+.shell[data-view="tools"] .psgrid textarea,
+.shell[data-view="tools"] .psinst button,
+.shell[data-view="tools"] .skrun{
+  border-radius:var(--r-in);border:1px solid var(--rule);background:transparent;color:var(--chalk);
+  box-shadow:none;min-height:44px}
+.shell[data-view="tools"] .psinst button[aria-pressed="true"]{
+  border-color:color-mix(in srgb,var(--teal-live) 45%,var(--rule));
+  background:color-mix(in srgb,var(--teal-live) 12%,transparent);color:var(--chalk)}
+.shell[data-view="tools"] .psout{gap:0;grid-template-columns:1fr;margin:var(--space-2) 0}
+.shell[data-view="tools"] .psout .k{
+  display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  padding:12px 2px;border:0;border-bottom:1px solid var(--rule);border-radius:0;background:transparent}
+.shell[data-view="tools"] .psout .k small{font:500 .78rem/1.3 var(--face);color:var(--chalk-dim)}
+.shell[data-view="tools"] .psout .k strong{font:800 1.15rem/1.1 var(--face);font-variant-numeric:tabular-nums;color:var(--chalk)}
+.shell[data-view="tools"] .psout .warn2{
+  margin-top:var(--space-2);padding:10px 2px;border:0;border-top:1px solid var(--rule);border-radius:0;
+  background:transparent;font:500 .86rem/1.45 var(--face);color:var(--chalk-dim)}
+.shell[data-view="tools"] .psout.three{grid-template-columns:1fr}
+.shell[data-view="tools"] .skfig{
+  margin:var(--space-2) 0;border:0;border-block:1px solid var(--rule);border-radius:0;background:transparent}
+.shell[data-view="tools"] .skrun.jnadd,
+.shell[data-view="tools"] .jnadd{
+  border-radius:var(--r-btn);background:var(--cta-primary-bg);color:var(--cta-primary-fg);border-color:transparent}
+.shell[data-view="tools"] .jnlist{gap:0}
+.shell[data-view="tools"] .jnlist li{
+  padding:12px 2px;border:0;border-bottom:1px solid var(--rule);border-radius:0;background:transparent}
+.shell[data-view="tools"] .cin input,
+.shell[data-view="tools"] .cinw{
+  border-radius:var(--r-in);border-color:var(--rule);background:transparent;color:var(--chalk)}
+.shell[data-view="tools"] .cper button,
+.shell[data-view="tools"] .cpre button{
+  border-radius:var(--r-chip);border:1px solid var(--rule);background:transparent;color:var(--chalk-dim)}
+.shell[data-view="tools"] .cper button[aria-pressed="true"],
+.shell[data-view="tools"] .cpre button[aria-pressed="true"]{
+  border-color:color-mix(in srgb,var(--teal-live) 45%,var(--rule));
+  background:color-mix(in srgb,var(--teal-live) 10%,transparent);color:var(--chalk)}
+.shell[data-view="tools"] .cbig,
+.shell[data-view="tools"] .calc.cterm{
+  border:0;background:transparent;box-shadow:none;padding-inline:0}
+/* Markets / hours: quiet list, not card grid. */
+.shell[data-view="tools"] #mkt-px.mkpx{
+  display:grid;grid-template-columns:1fr;gap:0;margin:var(--space-2) 0}
+.shell[data-view="tools"] #mkt-px .mkk{
+  display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+  border:0;border-bottom:1px solid var(--rule);border-radius:0;background:transparent;
+  box-shadow:none;padding:10px 2px}
+.shell[data-view="tools"] .sslist{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.shell[data-view="tools"] .sslist li{
+  padding:12px 2px;border:0;border-bottom:1px solid var(--rule);border-radius:0;background:transparent}
+.shell[data-view="tools"] .ssnow,.shell[data-view="tools"] .ssyou{
+  font:650 .9rem/1.4 var(--face);color:var(--chalk);margin:0 0 var(--space-2)}
+.shell[data-view="tools"] #s-apps .appc .ah img{
+  border-radius:var(--r-tool);border:1px solid var(--rule)}
+.shell[data-view="tools"] #s-apps .appc h3{font:650 .95rem/1.3 var(--face);color:var(--chalk)}
+.shell[data-view="tools"] #s-apps .appc p{font:500 .82rem/1.4 var(--face);color:var(--chalk-dim)}
+.shell[data-view="tools"] #s-growth .grfig,
+.shell[data-view="tools"] #s-growth .grfig img{
+  border-radius:var(--r-tool);border:1px solid var(--rule);background:transparent}
+.shell[data-view="tools"] #s-growth .grol{color:var(--chalk-dim)}
+/* IB earn / bonuses under Invite programme — same hairline grammar. */
+.shell[data-view="ib"] #s-earn > h2,
+.shell[data-view="ib"] #s-bonus > h2,
+.shell[data-view="ib"] #s-ib > h2{
+  margin:var(--space-5) 0 var(--space-2);padding-top:var(--space-3);border-top:1px solid var(--rule);
+  font:800 var(--fs-label)/1.3 "Archivo",var(--display);font-stretch:90%;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-dim)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="ib"] :is(#s-earn,#s-bonus,#s-ib) > h2{
+  font-family:var(--face);font-stretch:normal;text-transform:none;letter-spacing:0}
+.shell[data-view="ib"] .earn > li{
+  padding:14px 2px 14px 18px;border-bottom:1px solid var(--rule);max-width:var(--measure)}
+.shell[data-view="ib"] .earn > li:last-child{border-bottom:0}
+.shell[data-view="ib"] .earn h3{font:700 .98rem/1.3 var(--face)}
+.shell[data-view="ib"] .earn p{font:500 .9rem/1.45 var(--face);color:var(--chalk-dim)}
+.shell[data-view="ib"] .bnl article{
+  border:0;border-bottom:1px solid var(--rule);border-radius:0;background:transparent;margin:0;padding:0 0 var(--space-3)}
+.shell[data-view="ib"] .bnl article h3{
+  background:transparent;color:var(--chalk);padding:12px 2px 4px;font:700 .95rem/1.3 var(--face)}
+/* Light theme: no migraine pure-white tool cards on More destinations. */
+html[data-theme="light"] .shell[data-view="tools"] .psgrid input,
+html[data-theme="light"] .shell[data-view="tools"] .psgrid textarea,
+html[data-theme="light"] .shell[data-view="tools"] .psinst button,
+html[data-theme="light"] .shell[data-view="tools"] .skrun,
+html[data-theme="light"] .shell[data-view="tools"] .jnlist li,
+html[data-theme="light"] .shell[data-view="tools"] .psout .k{
+  background:transparent;color:var(--chalk)}
+html[data-theme="light"] .shell[data-view="faq"] #faq-q{
+  background:color-mix(in srgb,var(--ink-deep) 55%,transparent);border-color:var(--rule)}
+html[data-theme="light"] .mspanel{
+  background:var(--ink);box-shadow:0 18px 40px -14px rgba(11,35,65,.18)}
+html[data-theme="light"] .msb[data-k="ib"]{
+  background:color-mix(in srgb,var(--teal-live) 6%,var(--ink));
+  border-color:color-mix(in srgb,var(--teal-live) 32%,var(--rule)) !important}
+/* 320–390: jump labels wrap cleanly; no mid-word break. */
+@media (max-width:390px){
+  .shell[data-view="tools"] .topbar .jump button .tl{font-size:.68rem;line-height:1.15}
+  .shell[data-view="tools"] #vhead .vtx b{max-width:14ch}
+  .msb[data-k="ib"]{padding:11px 8px !important}
+}
 
 /* =============================================================================
    Founder 7.11 / 8.11 AIM-95 — no leader chooser, quieter chrome
@@ -5675,6 +5930,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.bb9b343bb1.js" defer></script>
+<script src="app-m.1a6bc5f5ac.js" defer></script>
 </body>
 </html>
