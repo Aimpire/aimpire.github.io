@@ -4678,18 +4678,21 @@ html:not([data-theme="dark"]):has(.shell[data-view="menu"]) body::before{
 .shell[data-view="menu"] #spon > .slab.reg:active{
   transform:translateY(1px) scale(.992);filter:brightness(.98)}
 
-/* Portals — tactile linktree doors (interactive, not decorative cards). */
+/* Portals — first viewport under hero (AIM-218/219). Begin setup is secondary below. */
+.shell[data-view="menu"] .hero{padding:18px 0 4px}
+.shell[data-view="menu"] .hero h1{
+  font-size:clamp(1.5rem,6vw,2.1rem);line-height:1.12}
+.shell[data-view="menu"] .hero h1::after{margin-top:6px}
+.shell[data-view="menu"] .hero p#hsub{margin:6px 0 0;max-width:36ch;font-size:.86rem;line-height:1.4}
+.shell[data-view="menu"] #home-tree.htree{
+  margin:10px 0 0;padding:0;max-width:100%;box-sizing:border-box}
 .shell[data-view="menu"] #menu-nav{
-  margin-top:max(48px, calc(100dvh - 56px - 560px));
-  padding-top:16px;border-top:1px solid var(--rule);
+  margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);
   max-width:100%;overflow-x:clip}
-@supports not (height: 100dvh){
-  .shell[data-view="menu"] #menu-nav{margin-top:72px}
-}
 .shell[data-view="menu"] .htree{
-  margin:0 0 10px;padding:0;max-width:100%;box-sizing:border-box}
+  margin:0 0 8px;padding:0;max-width:100%;box-sizing:border-box}
 .shell[data-view="menu"] .htree .htt{
-  margin:0 0 10px;opacity:1;
+  margin:0 0 8px;opacity:1;
   font-family:"Archivo",var(--display);font-stretch:90%;font-weight:800;
   font-size:var(--fs-label);letter-spacing:.05em;text-transform:uppercase;
   color:var(--chalk-dim)}
@@ -4697,15 +4700,43 @@ html:not([data-theme="dark"]):has(.shell[data-view="menu"]) body::before{
   content:"";display:inline-block;width:10px;height:2px;margin-inline-end:8px;
   border-radius:1px;background:var(--brand-gold);vertical-align:middle;opacity:.95}
 .shell[data-view="menu"] .htree .hta{
-  display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:12px;
+  appearance:none;display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:10px;
   width:100%;max-width:100%;box-sizing:border-box;
-  min-height:58px;margin:0 0 8px;padding:12px 12px 12px 10px;
+  min-height:44px;margin:0 0 4px;padding:8px 10px 8px 8px;
   border:1px solid var(--rule);border-radius:var(--r-btn);
-  background:var(--ink-raise);
+  background:var(--ink-raise);color:inherit;font:inherit;text-align:start;text-decoration:none;cursor:pointer;
   box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 55%,transparent);
   transition:border-color .18s ease,background .18s ease,transform .15s ease}
 .shell[data-view="menu"] .htree .hta:first-of-type{border-top:1px solid var(--rule)}
-.shell[data-view="menu"] .htree .hta:last-child{margin-bottom:0}
+.shell[data-view="menu"] .htree .hta:last-of-type{margin-bottom:0}
+.shell[data-view="menu"] .htree .hti.glyph{
+  display:grid;place-items:center;width:32px;height:32px;border-radius:9px;
+  background:color-mix(in srgb,var(--teal-live) 12%,var(--ink-deep));
+  border:1px solid color-mix(in srgb,var(--teal-live) 28%,var(--rule));
+  font:800 .68rem/1 "Archivo",var(--display);letter-spacing:.02em;color:var(--teal-ink)}
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hti.glyph{color:var(--teal-live)}
+.shell[data-view="menu"] .htree .htref{
+  display:block;margin:-1px 0 6px;padding:0 2px 0 46px;max-width:42ch;
+  font:500 .72rem/1.35 var(--face);color:var(--chalk-dim);text-wrap:pretty}
+html[dir="rtl"] .shell[data-view="menu"] .htree .htref{padding:0 46px 0 2px}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="menu"] .htree .htref{font-size:.8rem;line-height:1.5;max-width:46ch}
+/* Begin setup block is secondary once portals own first paint. */
+.shell[data-view="menu"] #notice-none{
+  padding:14px 2px 8px;margin:4px 0 0}
+.shell[data-view="menu"] #notice-none h2{
+  font-size:1rem;line-height:1.25;margin:0 0 6px;max-width:28ch}
+.shell[data-view="menu"] #notice-none p#nn-b{
+  margin:0 0 8px;max-width:38ch;font-size:.86rem;line-height:1.4}
+.shell[data-view="menu"] #notice-none p#nn-f{
+  margin:0 0 8px;font-size:.78rem;line-height:1.4;color:var(--chalk-dim)}
+.shell[data-view="menu"] #notice-none .slab.reg#nn-chat{
+  min-height:44px;padding:10px 14px;margin:0;
+  background:transparent;
+  border:1px solid var(--rule);
+  box-shadow:none !important}
+.shell[data-view="menu"] #notice-none .slab.reg#nn-chat .t{
+  font:700 .92rem/1.2 var(--display) !important}
 :root[data-theme="dark"] .shell[data-view="menu"] .htree .hta{
   background:color-mix(in srgb,var(--ink-raise) 88%,#0A1220);
   box-shadow:inset 0 1px 0 color-mix(in srgb,var(--teal-live) 8%,transparent)}
@@ -4720,13 +4751,13 @@ html:not([data-theme="dark"]):has(.shell[data-view="menu"]) body::before{
   background:color-mix(in srgb,var(--ink-deep) 80%,transparent);
   box-shadow:0 0 0 1px color-mix(in srgb,var(--rule) 80%,transparent)}
 .shell[data-view="menu"] .htree .htn b{
-  font:700 .98rem/1.25 var(--display);letter-spacing:-.015em;color:var(--chalk)}
+  font:700 .92rem/1.2 var(--display);letter-spacing:-.015em;color:var(--chalk)}
 .shell[data-view="menu"] .htree .htn span{
-  font:500 .78rem/1.35 var(--face);color:var(--chalk-dim)}
+  font:500 .74rem/1.3 var(--face);color:var(--chalk-dim)}
 .shell[data-view="menu"] .htree .htg{
-  width:28px;height:28px;border-radius:50%;
+  width:24px;height:24px;border-radius:50%;
   display:grid;place-items:center;
-  font:800 1rem/1 var(--display);color:var(--teal-ink);
+  font:800 .9rem/1 var(--display);color:var(--teal-ink);
   background:color-mix(in srgb,var(--teal-live) 14%,transparent);
   border:1px solid color-mix(in srgb,var(--teal-live) 32%,var(--rule))}
 :root[data-theme="dark"] .shell[data-view="menu"] .htree .htg{color:var(--teal-live)}
@@ -4776,8 +4807,12 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
   .shell[data-view="menu"] .hero h1::after{animation:brandTick .7s .15s cubic-bezier(.2,.7,.3,1) both}
   .shell[data-view="menu"] .htree .hta{
     animation:portalRise .5s cubic-bezier(.2,.7,.3,1) both}
-  .shell[data-view="menu"] .htree .hta:nth-of-type(2){animation-delay:.07s}
-  .shell[data-view="menu"] .htree .hta:nth-of-type(3){animation-delay:.12s}
+  .shell[data-view="menu"] .htree .hta:nth-of-type(2){animation-delay:.05s}
+  .shell[data-view="menu"] .htree .hta:nth-of-type(3){animation-delay:.09s}
+  .shell[data-view="menu"] .htree .hta:nth-of-type(4){animation-delay:.13s}
+  .shell[data-view="menu"] .htree .hta:nth-of-type(5){animation-delay:.17s}
+  .shell[data-view="menu"] .htree .hta:nth-of-type(6){animation-delay:.21s}
+  .shell[data-view="menu"] .htree .hta:nth-of-type(7){animation-delay:.25s}
   .shell[data-view="menu"] #notice-none .slab.reg{
     animation:portalRise .48s .08s cubic-bezier(.2,.7,.3,1) both}
 }
@@ -5381,6 +5416,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.05e6c985f5.js" defer></script>
+<script src="app-l.404b18740f.js" defer></script>
 </body>
 </html>
