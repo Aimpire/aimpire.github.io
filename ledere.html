@@ -3495,8 +3495,9 @@ button.pcard::after{content:"";position:absolute;inset-inline:0;top:0;height:3px
 /* Structure: Start dumpster fold must never paint empty on Home/Products/Academy. */
 .shell:not([data-view="start"]) #start-more{display:none !important}
 #start-more[hidden]{display:none !important}
-/* AIM-124 Products craft: Sonic = sole product stage; Tools = clear door.
-   Tabbar contrast = AIM-123 — do not touch .tabbar/.tbb here. Never #379. */
+/* AIM-210 Products shelf: folder = Products; Sonic = first tappable product.
+   Jet CTA + plain risk beside it. No rainbow glow strip. Never #379.
+   Tabbar / menu.tabs rename = AIM-216 — do not touch .tabbar/.tbb here. */
 .prodview .vhead{margin:4px 0 14px;padding:0}
 /* AIM-138: title→lede was 3px @360 (UR Nastaliq title h≈43) — cramped after #406 reclaim. */
 .prodview .vhead .vtx{display:grid;gap:8px}
@@ -3509,81 +3510,86 @@ button.pcard::after{content:"";position:absolute;inset-inline:0;top:0;height:3px
 .prodview .ppath{margin:0 0 14px;padding:0 0 12px;border-bottom:1px solid var(--rule);
   font:600 .82rem/1.45 var(--face);color:var(--chalk-dim);letter-spacing:.01em;max-width:42ch}
 .prodview .ptools{display:none !important} /* retired: tools are not products */
-/* Sole product: drop empty number column (Sonic is the only product — not a numbered list). */
-.pgrid-corridor.pone{margin:0 0 16px;border:0;gap:0}
-.pgrid-corridor.pone > .pcard.pstep{
-  grid-template-columns:minmax(0,1fr);
-  margin:0;padding:22px 18px 20px;border:1px solid var(--rule);border-radius:20px;
+/* Product shelf — first card featured; more products stack without renaming the folder. */
+.pgrid-corridor.pshelf{display:grid;gap:12px;margin:0 0 16px;border:0}
+.pgrid-corridor.pshelf > .pcard.pstep{
+  display:grid;grid-template-columns:minmax(0,1fr);
+  margin:0;padding:20px 16px 16px;border:1px solid var(--rule);border-radius:16px;
   background:var(--ink-raise);overflow:hidden;position:relative;
-  box-shadow:inset 0 1px 0 color-mix(in srgb,#15D8C4 10%,transparent)}
-.pgrid-corridor.pone > .pcard.pstep::before{
-  content:"";position:absolute;inset-inline:0;top:0;height:3px;
-  background:linear-gradient(90deg,#15D8C4,#1B4FD8 55%,#C21FBF);opacity:.95;pointer-events:none}
-.pgrid-corridor.pone > .pcard.pstep::after{
-  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:radial-gradient(120% 80% at 0% 0%,color-mix(in srgb,#15D8C4 14%,transparent),transparent 55%)}
-.pgrid-corridor.pone > .pcard.pstep > .pnum{display:none}
-.pgrid-corridor.pone .pbody{position:relative;z-index:1}
-:root:not([data-theme="dark"]) .pgrid-corridor.pone > .pcard.pstep{
-  background:#fff;border-color:color-mix(in srgb,var(--rule) 55%,#0B8F84);
-  box-shadow:0 1px 0 rgba(255,255,255,.75) inset,0 18px 34px -18px rgba(11,35,65,.26)}
-:root[data-theme="dark"] .pgrid-corridor.pone > .pcard.pstep{
-  background:color-mix(in srgb,var(--ink-raise) 82%,#0E1522);
-  border-color:color-mix(in srgb,var(--rule) 55%,#15D8C4);
-  box-shadow:inset 0 1px 0 rgba(94,230,214,.10),0 22px 40px -22px rgba(0,0,0,.65)}
-.pgrid-corridor.pone .pcard .pt{font:900 1.62rem/1.1 var(--display);letter-spacing:-.025em}
-.pgrid-corridor.pone .pcard .pd{
-  font-size:1.05rem;line-height:1.55;max-width:40ch;font-weight:500}
-:root[data-theme="dark"] .pgrid-corridor.pone .pcard .pd{color:#EDEAF2}
-:root:not([data-theme="dark"]) .pgrid-corridor.pone .pcard .pd{color:#1A1D26}
-.pgrid-corridor.pone .plive{
+  box-shadow:none}
+.pgrid-corridor.pshelf > .pcard.pstep::before,
+.pgrid-corridor.pshelf > .pcard.pstep::after{display:none !important;content:none !important}
+.pgrid-corridor.pshelf > .pcard.pstep > .pnum{display:none}
+.pgrid-corridor.pshelf .pbody{position:relative;z-index:1;display:grid;gap:10px;min-width:0}
+:root:not([data-theme="dark"]) .pgrid-corridor.pshelf > .pcard.pstep{
+  background:#fff;border-color:color-mix(in srgb,var(--rule) 70%,#0B8F84);
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 14px 28px -20px rgba(11,35,65,.22)}
+:root[data-theme="dark"] .pgrid-corridor.pshelf > .pcard.pstep{
+  background:color-mix(in srgb,var(--ink-raise) 88%,#0E1522);
+  border-color:color-mix(in srgb,var(--rule) 65%,var(--teal-live,#15D8C4));
+  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--teal-live,#15D8C4) 12%,transparent)}
+/* Featured first product (Sonic): brand-gold hairline, not rainbow strip. */
+.pgrid-corridor.pshelf > .pcard.pfeat{
+  padding:22px 18px 18px}
+.pgrid-corridor.pshelf > .pcard.pfeat::before{
+  display:block !important;content:"" !important;position:absolute;inset-inline:0;top:0;
+  height:2px;border-radius:0;background:var(--brand-gold-deep,var(--brand-gold,#E8B84B));
+  opacity:.92;pointer-events:none}
+:root[data-theme="dark"] .pgrid-corridor.pshelf > .pcard.pfeat::before{
+  background:var(--brand-gold,#E8B84B);opacity:.95}
+.pgrid-corridor.pshelf .pcard .pt{font:900 1.55rem/1.12 var(--display);letter-spacing:-.025em}
+.pgrid-corridor.pshelf .pcard .pd{
+  font-size:1.02rem;line-height:1.5;max-width:40ch;font-weight:500}
+:root[data-theme="dark"] .pgrid-corridor.pshelf .pcard .pd{color:#EDEAF2}
+:root:not([data-theme="dark"]) .pgrid-corridor.pshelf .pcard .pd{color:#1A1D26}
+.pgrid-corridor.pshelf .plive{
   padding:5px 10px;border-radius:999px;gap:6px;
-  background:color-mix(in srgb,#15D8C4 16%,transparent);
-  font:700 .72rem/1 var(--display);color:var(--gold-soft,#15D8C4);letter-spacing:.02em}
-/* AIM-138: light Live badge measured 4.55 on mint pill — nudge ink for AA headroom. */
-:root:not([data-theme="dark"]) .pgrid-corridor.pone .plive{color:#09665E}
-.pgrid-corridor.pone .plive i{width:7px;height:7px}
-.pgrid-corridor.pone .pfacts{gap:0;margin:6px 0 2px;flex-wrap:wrap}
-.pgrid-corridor.pone .pfacts .pf{
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 16%,transparent);
+  font:700 .72rem/1 var(--display);color:var(--teal-live,#15D8C4);letter-spacing:.02em}
+:root:not([data-theme="dark"]) .pgrid-corridor.pshelf .plive{color:#09665E}
+.pgrid-corridor.pshelf .plive i{width:7px;height:7px}
+.pgrid-corridor.pshelf .pfacts{gap:0;margin:2px 0 0;flex-wrap:wrap}
+.pgrid-corridor.pshelf .pfacts .pf{
   padding:0;border:0;border-radius:0;background:none;
   font:650 .88rem/1.45 var(--face);color:color-mix(in srgb,var(--chalk) 78%,var(--chalk-dim))}
-.pgrid-corridor.pone .pfacts .pf + .pf::before{content:"·";margin-inline:8px;opacity:.5;font-weight:500}
-.pgrid-corridor.pone .pfacts .warnf{border:0;color:#A8420C;font-weight:700}
-:root[data-theme="dark"] .pgrid-corridor.pone .pfacts .warnf{color:#F08A4B}
-.pgrid-corridor.pone .pcard .pm{
-  margin-top:8px;font:700 .95rem/1.25 var(--face);color:var(--gold-soft,#15D8C4);
-  text-decoration-color:color-mix(in srgb,#15D8C4 55%,transparent)}
-.pgrid-corridor.pone .pbody{gap:8px}
-/* Multi-step path (if ever restored): keep hairline corridor, not card souk. */
-.pgrid-corridor:not(.pone){gap:0;margin:4px 0 18px;border-block:1px solid var(--rule)}
-.pgrid-corridor:not(.pone) > .pcard.pstep{
-  display:grid;grid-template-columns:1.7rem minmax(0,1fr);column-gap:12px;row-gap:0;align-items:start;
-  border:0;border-radius:0;border-bottom:1px solid var(--rule);background:transparent;
-  padding:14px 2px 16px;overflow:visible;box-shadow:none}
-.pgrid-corridor:not(.pone) > .pcard.pstep:last-child{border-bottom:0}
+.pgrid-corridor.pshelf .pfacts .pf + .pf::before{content:"·";margin-inline:8px;opacity:.5;font-weight:500}
+/* Jet primary CTA — solid control, not underlined orphan link. */
+.pgrid-corridor.pshelf .pcta{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:4px;min-height:44px;padding:11px 16px;width:100%;max-width:22rem;
+  border:0;border-radius:12px;cursor:pointer;pointer-events:none;
+  background:var(--cta-primary-bg,var(--jet,#0B1020));
+  color:var(--cta-primary-fg,var(--jet-on,#F2EFEA));
+  font:800 .98rem/1.15 var(--display);letter-spacing:-.01em;
+  box-shadow:var(--cta-shadow);position:relative;text-decoration:none !important}
+.pgrid-corridor.pshelf .pcta::after{
+  content:"";position:absolute;inset-inline:14px;bottom:7px;height:2px;border-radius:2px;
+  background:var(--cta-primary-tick,var(--aim,#E8B84B));opacity:.95}
+html[dir="rtl"] .pgrid-corridor.pshelf .pcta{font-family:var(--face)}
+/* Risk beside / under CTA — same viewport weight as the action (B-030). */
+.pgrid-corridor.pshelf .prisk{
+  margin:2px 0 0;max-width:42ch;
+  font:600 .86rem/1.45 var(--face);color:#A8420C}
+:root[data-theme="dark"] .pgrid-corridor.pshelf .prisk{color:#F08A4B}
+.pgrid-corridor.pshelf .pcard .pm{display:none}
+.pgrid-corridor.pshelf .pcard .ptop{justify-content:flex-start;gap:10px;align-items:baseline}
+/* Later products (non-featured): quieter shelf row — ready without a rename. */
+.pgrid-corridor.pshelf > .pcard.pstep:not(.pfeat){
+  padding:16px 14px}
+.pgrid-corridor.pshelf > .pcard.pstep:not(.pfeat) .pt{font-size:1.15rem;font-weight:800}
+.pgrid-corridor.pshelf > .pcard.pstep:not(.pfeat) .pd{font-size:.95rem}
 .pgrid-corridor > .pcard.pstep > .spark{display:none}
 .pcard .pnum{display:inline-grid;place-items:center;min-width:1.6rem;height:1.6rem;border-radius:8px;font:700 .78rem/1 var(--display);background:var(--rule);color:var(--chalk)}
 .pgrid-corridor .pcard .pnum{width:1.7rem;height:1.7rem;min-width:1.7rem;margin-top:2px;font:700 .72rem/1 var(--display)}
-.pgrid-corridor .pbody{display:grid;gap:5px;min-width:0}
-.pgrid-corridor .pcard .ptop{justify-content:flex-start;gap:10px;align-items:baseline}
-.pgrid-corridor:not(.pone) .pcard .pt{font:700 1.05rem/1.25 var(--display);letter-spacing:-.01em}
-.pgrid-corridor:not(.pone) .pcard .pd{font-size:.92rem;line-height:1.45;max-width:42ch;
-  color:color-mix(in srgb,var(--chalk) 82%,var(--chalk-dim))}
-.pgrid-corridor:not(.pone) .plive{padding:0;border-radius:0;background:none;gap:5px;
-  font:600 .75rem/1.2 var(--face);color:var(--chalk-dim);letter-spacing:0}
-.pgrid-corridor:not(.pone) .plive i{width:6px;height:6px}
-.pgrid-corridor:not(.pone) .pfacts{gap:0;margin:2px 0 0;flex-wrap:wrap}
-.pgrid-corridor:not(.pone) .pfacts .pf{padding:0;border:0;border-radius:0;background:none;
-  font:600 .8rem/1.4 var(--face);color:var(--chalk-dim)}
-.pgrid-corridor:not(.pone) .pfacts .pf + .pf::before{content:"·";margin-inline:8px;opacity:.45;font-weight:500}
-.pgrid-corridor:not(.pone) .pfacts .warnf{border:0;color:#A8420C}
-:root[data-theme="dark"] .pgrid-corridor:not(.pone) .pfacts .warnf{color:#F08A4B}
-.pgrid-corridor:not(.pone) .pcard .pm{margin-top:4px;font:600 .88rem/1.25 var(--face);color:var(--chalk-dim)}
 .pgrid-corridor > .pcard.pmore{grid-template-columns:1.7rem minmax(0,1fr);align-items:start;padding:14px 2px 12px}
 .pgrid-corridor > .pcard.pmore .pnum{background:transparent;color:var(--chalk-dim);font-weight:600}
 .pgrid-corridor > .pcard.pmore .pt{font-size:1.02rem}
 .pgrid-corridor > .pcard.pmore .pd{font-size:.9rem;max-width:42ch}
 .pcard.pmore{cursor:pointer;background:none;border-style:dashed}
+/* Legacy .pone alias → shelf featured (older tours / selectors). */
+.pgrid-corridor.pone{margin:0 0 16px;border:0;gap:0}
+.pgrid-corridor.pone > .pcard.pstep{grid-template-columns:minmax(0,1fr)}
+.pgrid-corridor.pone > .pcard.pstep > .pnum{display:none}
 /* Tools door — quieter than Sonic, but clearly a door (not another product). */
 .prodview .ptools-door{
   display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:12px;
@@ -3614,10 +3620,15 @@ html[dir="rtl"] .prodview .ptools-door .pdoor-go{transform:scaleX(-1)}
   border-color:color-mix(in srgb,var(--rule) 75%,#1B4FD8)}
 .prodview .ptool .pm{display:block;margin-top:4px;font-size:.86rem;color:var(--gold-soft,#15D8C4)}
 @media (prefers-reduced-motion:no-preference){
-  .pgrid-corridor.pone > .pcard.pstep{transition:border-color .2s ease,box-shadow .2s ease}
+  .pgrid-corridor.pshelf > .pcard.pstep{transition:border-color .2s ease,box-shadow .2s ease}
+  .pgrid-corridor.pshelf > .pcard.pfeat{animation:hairlineIn .45s cubic-bezier(.2,.7,.3,1) both}
+  .pgrid-corridor.pshelf .pcta{transition:transform .15s ease,box-shadow .15s ease}
   .prodview .ptools-door .pdoor-go{transition:transform .15s ease,background .15s ease}
   .prodview .ptools-door:active .pdoor-go{transform:translateX(2px)}
   html[dir="rtl"] .prodview .ptools-door:active .pdoor-go{transform:scaleX(-1) translateX(2px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .pgrid-corridor.pshelf > .pcard.pfeat{animation:none !important}
 }
 /* AIM-123 owns tabbar invert (#146). Do not reassert .tabbar background here —
    AIM-115 `.tabbar{background:var(--ink-deep)!important}` currently flattens the invert. */
@@ -5192,6 +5203,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.87406529b6.js" defer></script>
+<script src="app-l.05e6c985f5.js" defer></script>
 </body>
 </html>
