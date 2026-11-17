@@ -77,9 +77,9 @@ try{ if(window.top !== window.self){ document.documentElement.style.visibility =
 @font-face{font-family:'Noto Naskh Arabic';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/noto-naskh-arabic-arabic.woff2) format('woff2');unicode-range:U+0600-06FF,U+200C-200F,U+2010-2011,U+204F,U+25CC}
 @font-face{font-family:'Noto Naskh Arabic';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/noto-naskh-arabic-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:'Noto Naskh Arabic';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/noto-naskh-arabic-latin-ext.woff2) format('woff2');unicode-range:U+0100-017F,U+02BF,U+1E24-1E25,U+1E6C-1E6D,U+2190-2199,U+21BB,U+2212,U+221E,U+2248,U+2260,U+22EE-22EF}
+/* AIM-239: Arabic-range only for Nastaliq. Own Latin glyphs are serif and
+   block Montserrat fallback (LAERDOM) — English terms then look odd mid-Urdu. */
 @font-face{font-family:'Noto Nastaliq Urdu';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/noto-nastaliq-urdu-arabic.woff2) format('woff2');unicode-range:U+0600-06FF,U+200C-200F,U+2010-2011,U+204F,U+25CC}
-@font-face{font-family:'Noto Nastaliq Urdu';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/noto-nastaliq-urdu-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:'Noto Nastaliq Urdu';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/noto-nastaliq-urdu-latin-ext.woff2) format('woff2');unicode-range:U+0100-017F,U+02BF,U+1E24-1E25,U+1E6C-1E6D,U+2190-2199,U+21BB,U+2212,U+221E,U+2248,U+2260,U+22EE-22EF}
 @font-face{font-family:'Noto Sans';font-style:normal;font-weight:400 700;font-stretch:100%;font-display:swap;src:url(assets/fonts/noto-sans-devanagari.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+25CC,U+A830-A839,U+A8E0-A8FF}
 @font-face{font-family:'Noto Sans';font-style:normal;font-weight:400 700;font-stretch:100%;font-display:swap;src:url(assets/fonts/noto-sans-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:'Noto Sans';font-style:normal;font-weight:400 700;font-stretch:100%;font-display:swap;src:url(assets/fonts/noto-sans-latin-ext.woff2) format('woff2');unicode-range:U+0100-017F,U+02BF,U+1E24-1E25,U+1E6C-1E6D,U+2190-2199,U+21BB,U+2212,U+221E,U+2248,U+2260,U+22EE-22EF}
@@ -199,16 +199,21 @@ if(!treg){s.media="all";return;}document.documentElement.setAttribute("data-skri
   --cta-primary-fg:var(--jet-on);
 }
 html[data-font="deva"]{ --face:"Noto Sans Devanagari","Montserrat",sans-serif }
-html[data-font="nastaliq"]{ --face:"Noto Nastaliq Urdu","Montserrat",serif }
-html[data-font="naskh"]{ --face:"Noto Naskh Arabic","Montserrat",serif }
-/* #154 (founder 18.10 18:17 «vanlig urdu ser ikke bra ut … like clean som roman urdu»): urdu bruker
-   arabiskens oppsett (linjehøyder/størrelser), men en ren, moderne urdu-skrift i all tekst. Nastaliq
-   er beholdt der den gir identitet: hovedoverskriften og velkomstporten. */
-html[lang="ur"][data-font="naskh"]{ --face:"Noto Sans Arabic","Noto Sans",sans-serif; --display:"Noto Sans Arabic","Noto Sans",sans-serif }
-/* #191 (founder 19.10 05:08 «urdu-siden … tung å se på, ikke symmetrisk»): ÉN skriftfamilie i hele urdu-siden.
-   Engelske ord midt i urdu («account», «Sonic») settes i Noto Sans, som er tegnet for aa passe med Noto Sans
-   Arabic (samme hoeyde og vekt) - ikke Montserrat, som var bredere og tyngre og ga hoppete linjer.
-   Lettere vekter og strammere linjeavstand; Nastaliq bare i velkomstporten. */
+/* AIM-239: real Urdu = Nastaliq hub-wide (LAERDOM: Naskh reads as «Arabic»).
+   Arabic UI = Noto Sans Arabic (Hindi-clean density), not book Naskh. */
+html[data-font="nastaliq"]{
+  --face:"Noto Nastaliq Urdu","Montserrat",serif;
+  --display:"Noto Nastaliq Urdu","Montserrat",serif;
+}
+html[data-font="naskh"]{
+  --face:"Noto Sans Arabic","Noto Sans",sans-serif;
+  --display:"Noto Sans Arabic","Noto Sans",sans-serif;
+}
+/* Legacy: old sessions may still have ur+naskh — keep the clean Sans path. */
+html[lang="ur"][data-font="naskh"]{
+  --face:"Noto Sans Arabic","Noto Sans",sans-serif;
+  --display:"Noto Sans Arabic","Noto Sans",sans-serif;
+}
 html[lang="ur"][data-font="naskh"] body{line-height:1.55}
 html[lang="ur"][data-font="naskh"] :is(h1,h2,h3,h4,.t,.vtx b,.pt){font-weight:600;letter-spacing:0}
 html[lang="ur"][data-font="naskh"] :is(b,strong){font-weight:600}
@@ -315,143 +320,180 @@ html,body{max-width:100%}
 @supports (overflow:clip){body{overflow-x:clip}}
 body{background:var(--ink);color:var(--chalk);font-family:var(--face);
   font-size:1.0625rem;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-/* AIM-234: match Roman Urdu / latin density hub-wide.
-   Old 18px root + lh 1.9 made ur/ar type+buttons ~13% larger and much taller
-   than ur_rm (founder screenshot). Same 16px root; modest script lh only.
-   Never #379. */
-html[data-font="nastaliq"],
+/* =============================================================================
+   AIM-239 — Nastaliq (Urdu) + Naskh/Sans (Arabic) craft.
+   Keep AIM-234 wins: 16px root (never 18), no hub-wide lh 1.9, no clip traps.
+   Hindi (deva) + Roman Urdu (latin) untouched. Never #379.
+   Nastaliq: hanging forms need room → body lh ~1.68, tighter display clamps,
+   extra padding on chrome (not max-height clips).
+   Arabic naskh face = Noto Sans Arabic → match Hindi-clean density.
+   ============================================================================= */
 html[data-font="naskh"],
 html[data-font="deva"]{font-size:16px}
-html[data-font="nastaliq"] body,
-html[data-font="naskh"] body{line-height:1.55}
+/* AIM-239v2: Nastaliq strokes read ~12–15% heavier than Deva at same px.
+   Founder: still too large/messy vs Hindi — drop root, keep air via lh. */
+html[data-font="nastaliq"]{font-size:12.75px}
 html[data-font="deva"] body{line-height:1.55}
-/* Noto Nastaliq Urdu finnes i 400 og 700. Ber vi om 800 eller 900, lager
-   nettleseren syntetisk fet — og paa en skrift der strekene allerede
-   overlapper, smoerer det teksten ut i stedet for aa framheve den. */
+html[data-font="naskh"] body{line-height:1.55;font-size:1.02rem}
+html[data-font="nastaliq"] body{line-height:1.62;font-size:1.02rem;font-weight:400}
+/* Noto Nastaliq Urdu: only 400/700. 800/900 = synthetic smear. */
 html[data-font="nastaliq"] h1,html[data-font="nastaliq"] h2,
 html[data-font="nastaliq"] h3,html[data-font="nastaliq"] .t{font-weight:500}
 html[data-font="nastaliq"] strong,html[data-font="nastaliq"] b,
 html[data-font="nastaliq"] .wm{font-weight:700}
-/* Overskriftene skal IKKE foelge den loeftede roten - da blir de vegger.
-   Egne tak, i em av seg selv, saa brodteksten kan vaere lesbar uten at
-   titlene roper. */
-html[data-font="nastaliq"] .sec > h2,html[data-font="nastaliq"] .short > h2{font-size:1.16rem;line-height:1.45}
-html[data-font="nastaliq"] .plate .t{font-size:1.04rem;line-height:1.45}
-html[data-font="nastaliq"] .plate[data-cat="start"] .t{font-size:1.08rem}
-html[data-font="nastaliq"] .plate .d{font-size:.9rem;line-height:1.55}
-/* =============================================================================
-   AIM-234 — Urdu/Arabic density = Roman Urdu hub-wide (320–390+).
-   No oversized rem bumps. Cap script titles; match CTA/tab/portal rhythm.
-   ============================================================================= */
+html[data-font="naskh"] :is(h1,h2,h3,h4,.t,.vtx b,.pt){font-weight:600;letter-spacing:0}
+html[data-font="naskh"] :is(b,strong){font-weight:600}
+html[data-font="nastaliq"] .sec > h2,html[data-font="nastaliq"] .short > h2{font-size:1.02rem;line-height:1.5}
+html[data-font="nastaliq"] .plate .t{font-size:.94rem;line-height:1.45}
+html[data-font="nastaliq"] .plate[data-cat="start"] .t{font-size:.98rem}
+html[data-font="nastaliq"] .plate .d{font-size:.82rem;line-height:1.6}
+html[data-font="naskh"] .sec > h2,html[data-font="naskh"] .short > h2{font-size:1.12rem;line-height:1.4}
+html[data-font="naskh"] .plate .t{font-size:1.02rem;line-height:1.4}
+html[data-font="naskh"] .plate .d{font-size:.9rem;line-height:1.55}
 html[data-font="nastaliq"],
 html[data-font="naskh"]{
-  --fs-display:clamp(1.45rem,5.2vw + .6rem,2.7rem);
-  --fs-folder:clamp(1.25rem,3vw + .75rem,1.7rem);
-  --fs-folder-sticky:clamp(1.12rem,2.2vw + .7rem,1.45rem);
-  --fs-folder-script:clamp(1.12rem,2.4vw + .65rem,1.45rem);
-  --fs-section:clamp(1.12rem,2.5vw + .65rem,1.5rem);
+  --fs-display:clamp(1.4rem,5vw + .55rem,2.5rem);
+  --fs-folder:clamp(1.2rem,2.8vw + .7rem,1.6rem);
+  --fs-folder-sticky:clamp(1.08rem,2vw + .65rem,1.38rem);
+  --fs-folder-script:clamp(1.08rem,2.2vw + .6rem,1.38rem);
+  --fs-section:clamp(1.08rem,2.3vw + .6rem,1.42rem);
   --fs-lede:clamp(.84rem,.3vw + .76rem,.92rem);
-  --lh-display:1.28;
-  --lh-body:1.5;
+  --lh-display:1.35;
+  --lh-body:1.55;
   --shell-pad-x:clamp(12px,4.2vw,40px);
+}
+html[data-font="nastaliq"]{
+  --lh-display:1.42;
+  --lh-body:1.62;
+  --fs-display:clamp(1.18rem,4vw + .4rem,1.85rem);
+  --fs-folder:clamp(1.08rem,2.4vw + .55rem,1.4rem);
+  --fs-folder-sticky:clamp(1rem,1.8vw + .55rem,1.25rem);
+  --fs-folder-script:clamp(.98rem,1.8vw + .5rem,1.2rem);
+  --fs-section:clamp(1rem,2vw + .5rem,1.28rem);
+  --fs-lede:clamp(.8rem,.25vw + .72rem,.88rem);
+  --fs-nav:clamp(.55rem,.15vw + .5rem,.64rem);
 }
 html[data-font="nastaliq"] .shell,
 html[data-font="naskh"] .shell{overflow-x:clip}
 html[data-font="nastaliq"] :is(h1,h2,h3,.vtx b,.pt,.aca-t,.wm,.htt b),
 html[data-font="naskh"] :is(h1,h2,h3,.vtx b,.pt,.aca-t,.wm,.htt b){
-  overflow-wrap:anywhere;word-break:normal;hyphens:manual}
-/* Hero: same optical size as latin/ur_rm — kill naskh-larger clamps. */
-html[data-font="nastaliq"] .hero h1,
-html[data-font="naskh"] .hero h1,
-html[lang="ur"] .hero h1{
-  font-size:clamp(1.45rem,6vw,2.2rem);line-height:1.35}
+  overflow-wrap:anywhere;word-break:normal;hyphens:manual;
+  overflow:visible;max-height:none}
+/* Hero: Nastaliq uses --face (not Noto Sans Arabic override). Room for flourishes. */
+html[data-font="nastaliq"] .hero h1{
+  font-family:var(--face);font-size:clamp(1.2rem,4.8vw,1.7rem);line-height:1.45;
+  letter-spacing:0;font-weight:700;overflow:visible}
+html[data-font="naskh"] .hero h1{
+  font-family:var(--face);font-size:clamp(1.4rem,5.8vw,2.15rem);line-height:1.38;
+  letter-spacing:0;font-weight:700}
 @media (max-height:700px){
-  html[data-font="nastaliq"] .hero h1,
-  html[data-font="naskh"] .hero h1,
-  html[lang="ur"] .hero h1{font-size:clamp(1.35rem,5.6vw,1.95rem);line-height:1.32}
+  html[data-font="nastaliq"] .hero h1{font-size:clamp(1.15rem,4.5vw,1.6rem);line-height:1.42}
+  html[data-font="naskh"] .hero h1{font-size:clamp(1.32rem,5.4vw,1.95rem);line-height:1.35}
   html[data-font="nastaliq"] .hero,
-  html[data-font="naskh"] .hero{padding:20px 0 16px}
+  html[data-font="naskh"] .hero{padding:18px 0 14px}
 }
 html[data-font="nastaliq"] .hero p,
+html[data-font="nastaliq"] .hero p#hsub{font-size:.9rem;line-height:1.65;margin-top:12px}
 html[data-font="naskh"] .hero p,
-html[data-font="nastaliq"] .hero p#hsub,
-html[data-font="naskh"] .hero p#hsub{font-size:1rem;line-height:1.5;margin-top:16px}
-/* CTA / buttons: latin padding, not +air. */
-html[data-font="nastaliq"] .slab .t,
-html[data-font="naskh"] .slab .t{font-size:1.15rem;line-height:1.25}
-html[data-font="nastaliq"] .slab.reg,
+html[data-font="naskh"] .hero p#hsub{font-size:1rem;line-height:1.55;margin-top:16px}
+html[data-font="nastaliq"] .slab .t{font-size:.95rem;line-height:1.4}
+html[data-font="naskh"] .slab .t{font-size:1.12rem;line-height:1.3}
+html[data-font="nastaliq"] .slab.reg{padding:12px 14px 13px}
 html[data-font="naskh"] .slab.reg{padding:11px 14px}
 html[data-font="nastaliq"] #notice-none .slab.reg .t,
+html[data-font="nastaliq"] .spon .slab.reg .t{font-size:.92rem;line-height:1.45}
 html[data-font="naskh"] #notice-none .slab.reg .t,
-html[data-font="nastaliq"] .spon .slab.reg .t,
-html[data-font="naskh"] .spon .slab.reg .t{font-size:.95rem;line-height:1.25}
-html[data-font="nastaliq"] :is(.out .apply,.nextb,.joinbtn),
+html[data-font="naskh"] .spon .slab.reg .t{font-size:.95rem;line-height:1.3}
+/* CTAs: pad for ink — never clip. Nastaliq descenders optically drop the
+   glyph box; extra top pad + flex center keeps the label looking centered. */
+html[data-font="nastaliq"] :is(.out .apply,.nextb,.joinbtn,.slab.reg){
+  display:inline-flex;align-items:center;justify-content:center;
+  padding-block:10px 12px;line-height:1.35;font-size:.9rem;overflow:visible}
 html[data-font="naskh"] :is(.out .apply,.nextb,.joinbtn){
-  padding-block:10px;line-height:1.25;font-size:1rem}
-html[data-font="nastaliq"] :is(.switch button,.jump button,.cper button,.langbtn),
+  padding-block:10px;line-height:1.3;font-size:1rem;overflow:visible}
+html[data-font="nastaliq"] :is(.switch button,.jump button,.cper button,.langbtn){
+  line-height:1.4;padding-block:8px;overflow:visible}
 html[data-font="naskh"] :is(.switch button,.jump button,.cper button,.langbtn){
-  line-height:1.25;padding-block:7px}
-/* Tab labels: same --fs-nav as latin; room for ink, no 1.9 lh. */
+  line-height:1.3;padding-block:7px;overflow:visible}
+/* Tab labels: same --fs-nav as latin; Nastaliq hair more lh, never 1.9. */
 html[data-font="nastaliq"] .tbb span,
+html[data-font="nastaliq"] .tabbar .tbrow .tbb span{
+  font-size:var(--fs-nav);line-height:1.3;margin-top:0;padding-block:1px 2px;
+  overflow:visible;max-height:none;font-weight:500}
 html[data-font="naskh"] .tbb span,
-html[data-font="nastaliq"] .tabbar .tbrow .tbb span,
 html[data-font="naskh"] .tabbar .tbrow .tbb span{
   font-size:var(--fs-nav);line-height:1.25;margin-top:0;padding-block:1px 2px;
   overflow:visible;max-height:none}
-html[data-font="nastaliq"] .tbb,
+html[data-font="nastaliq"] .tbb{padding-bottom:5px}
 html[data-font="naskh"] .tbb{padding-bottom:4px}
-/* Folders / Academy / FAQ titles. */
-html[data-font="nastaliq"] .vhead .vtx b,
-html[data-font="naskh"] .vhead .vtx b{font-size:clamp(1.25rem,4.5vw,1.55rem);line-height:1.3;max-width:100%}
-html[data-font="nastaliq"] .vhead .vtx span,
+/* Folders / Academy / FAQ / Start titles. */
+html[data-font="nastaliq"] .vhead .vtx b{font-size:clamp(1.08rem,3.6vw,1.28rem);line-height:1.4;max-width:100%}
+html[data-font="naskh"] .vhead .vtx b{font-size:clamp(1.22rem,4.3vw,1.5rem);line-height:1.35;max-width:100%}
+html[data-font="nastaliq"] .vhead .vtx span{font-size:.84rem;line-height:1.55}
 html[data-font="naskh"] .vhead .vtx span{font-size:.86rem;line-height:1.4}
-html[data-font="nastaliq"] .aca-t,
-html[data-font="naskh"] .aca-t{font-size:1.35rem;line-height:1.35}
+html[data-font="nastaliq"] .aca-t{font-size:1.25rem;line-height:1.45}
+html[data-font="naskh"] .aca-t{font-size:1.3rem;line-height:1.35}
 html[data-font="nastaliq"] .aca-lede,
+html[data-font="nastaliq"] .mslede{font-size:.92rem;line-height:1.65}
 html[data-font="naskh"] .aca-lede,
-html[data-font="nastaliq"] .mslede,
 html[data-font="naskh"] .mslede{font-size:.95rem;line-height:1.5}
 html[data-font="nastaliq"] .shell[data-view="learn"] #vhead .vtx b,
-html[data-font="naskh"] .shell[data-view="learn"] #vhead .vtx b,
 html[data-font="nastaliq"] .shell[data-view="start"] #vhead .vtx b,
+html[data-font="nastaliq"] .shell[data-view="faq"] #vhead .vtx b{
+  font-size:clamp(1.15rem,3.8vw,1.38rem);line-height:1.45;max-width:100%}
+html[data-font="naskh"] .shell[data-view="learn"] #vhead .vtx b,
 html[data-font="naskh"] .shell[data-view="start"] #vhead .vtx b,
-html[data-font="nastaliq"] .shell[data-view="faq"] #vhead .vtx b,
 html[data-font="naskh"] .shell[data-view="faq"] #vhead .vtx b{
-  font-size:clamp(1.2rem,4.2vw,1.45rem);line-height:1.3;max-width:100%}
-html[data-font="nastaliq"] .guide > li.current > h3,
+  font-size:clamp(1.18rem,4vw,1.42rem);line-height:1.35;max-width:100%}
+html[data-font="nastaliq"] .guide > li.current > h3{font-size:.95rem;line-height:1.45}
 html[data-font="naskh"] .guide > li.current > h3{font-size:1.05rem;line-height:1.35}
 html[data-font="nastaliq"] .guide p,
+html[data-font="nastaliq"] .guide .stegbody p{font-size:.92rem;line-height:1.7;overflow-wrap:anywhere;overflow:visible}
 html[data-font="naskh"] .guide p,
-html[data-font="nastaliq"] .guide .stegbody p,
-html[data-font="naskh"] .guide .stegbody p{line-height:1.5;overflow-wrap:anywhere}
+html[data-font="naskh"] .guide .stegbody p{line-height:1.55;overflow-wrap:anywhere}
+html[data-font="nastaliq"] .guide button.stegreg.slab.reg,
+html[data-font="nastaliq"] .guide .stegreg{
+  padding-block:14px 11px;line-height:1.4;overflow:visible}
 html[data-font="nastaliq"] .notice,
+html[data-font="nastaliq"] .vnote{overflow-wrap:anywhere;line-height:1.65;overflow:visible}
 html[data-font="naskh"] .notice,
-html[data-font="nastaliq"] .vnote,
 html[data-font="naskh"] .vnote{overflow-wrap:anywhere;line-height:1.5}
 html[data-font="nastaliq"] .htree .hta,
 html[data-font="naskh"] .htree .hta{min-height:48px}
-html[data-font="nastaliq"] .htree .htt,
+html[data-font="nastaliq"] .htree .htt{font-size:.88rem;line-height:1.45}
 html[data-font="naskh"] .htree .htt{font-size:1rem;line-height:1.35}
 html[data-font="nastaliq"] .goals .goal{min-height:0}
-html[data-font="nastaliq"] .goals .gl,
+html[data-font="nastaliq"] .goals .gl{line-height:1.55;font-size:.76rem}
 html[data-font="naskh"] .goals .gl{line-height:1.45;font-size:.78rem}
-/* Portal chooser: denser Nastaliq/Naskh rows. */
+/* More sheet rows — script faces need air, not clip. */
+html[data-font="nastaliq"] .msb,
+html[data-font="naskh"] .msb{overflow:visible}
+html[data-font="nastaliq"] .msb .mstitle{font-size:.92rem;line-height:1.4;overflow:visible}
+html[data-font="nastaliq"] .msb .msg{font-size:.78rem;line-height:1.45}
+html[data-font="naskh"] .msb .mstitle{line-height:1.35}
+html[data-font="nastaliq"] .mgruppe{line-height:1.5}
+/* Portal chooser: real Nastaliq greeting; Sans for Arabic. Cap lh (no 1.9). */
 #port [data-f="nastaliq"] .pg,
-#port [lang="ur"] .pg{font-size:clamp(1.35rem,6.5vw,2rem);line-height:1.45}
-#port [data-f="naskh"] .pg{line-height:1.35}
-#port .psq b{font-size:1.15rem;line-height:1.45}
+#port [lang="ur"] .pg{
+  font-family:"Noto Nastaliq Urdu",serif;font-weight:700;font-stretch:normal;
+  font-size:clamp(1.35rem,6.2vw,2rem);line-height:1.55}
+#port [data-f="naskh"] .pg{
+  font-family:"Noto Sans Arabic","Noto Sans",sans-serif;font-weight:700;font-stretch:normal;
+  line-height:1.35}
+#port .psq b{font-size:1.12rem;line-height:1.55}
 @media (max-width:390px){
   html[data-font="nastaliq"] .sec > h2,
-  html[data-font="nastaliq"] .short > h2,
+  html[data-font="nastaliq"] .short > h2{font-size:1.02rem;line-height:1.5}
   html[data-font="naskh"] .sec > h2,
   html[data-font="naskh"] .short > h2{font-size:1.05rem;line-height:1.35}
-  html[data-font="nastaliq"] .plate .t,
+  html[data-font="nastaliq"] .plate .t{font-size:.94rem;line-height:1.5}
   html[data-font="naskh"] .plate .t{font-size:.95rem;line-height:1.35}
-  html[data-font="nastaliq"] .plate .d,
+  html[data-font="nastaliq"] .plate .d{font-size:.84rem;line-height:1.65}
   html[data-font="naskh"] .plate .d{font-size:.84rem;line-height:1.5}
-  html[data-font="nastaliq"] .slab .t,
+  html[data-font="nastaliq"] .slab .t{font-size:1rem}
   html[data-font="naskh"] .slab .t{font-size:1.05rem}
 }
+
 .shell{max-width:46rem;margin:0 auto;padding:0 var(--shell-pad-x) 72px}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
@@ -518,13 +560,16 @@ html:not(.klar) .shell > :not(.hero):not(.mast),html:not(.klar) .hero > :not(h1)
   font-variation-settings:"wdth" 88;
   font-size:clamp(2.5rem,10.5vw,4.6rem);line-height:.94;letter-spacing:-.028em;
   text-transform:none;text-wrap:balance}
-html[data-font="deva"] .hero h1,html[data-font="nastaliq"] .hero h1,html[data-font="naskh"] .hero h1{
+html[data-font="deva"] .hero h1{
   font-family:var(--face);text-transform:none;letter-spacing:0;line-height:1.3;
   font-size:clamp(2rem,8vw,3.4rem)}
-/* Maa staa ETTER den felles regelen over - samme spesifisitet, saa det er
-   rekkefoelgen som avgjoer. Foerste forsoek laa foran og ble overstyrt:
-   maalt 36px i stedet for 28,8. */
-html[data-font="nastaliq"] .hero h1{font-size:clamp(1.6rem,6.4vw,2.5rem);line-height:1.42}
+/* AIM-239: Nastaliq/Naskh hero sizes after the latin/deva base — cascade wins. */
+html[data-font="nastaliq"] .hero h1{
+  font-family:var(--face);text-transform:none;letter-spacing:0;
+  font-size:clamp(1.2rem,4.8vw,1.7rem);line-height:1.45;font-weight:700;overflow:visible}
+html[data-font="naskh"] .hero h1{
+  font-family:var(--face);text-transform:none;letter-spacing:0;
+  font-size:clamp(1.4rem,5.8vw,2.15rem);line-height:1.38;font-weight:700}
 .hero h1 span{display:inline}   /* #100: én tekstblokk (to linjer via <br>) = LCP-kandidaten er hele overskriften, synlig fra første tegning */
 /* Gradienten bor i logoen og i regelstreken under hver h2. Paa overskriften
    ble den dekorasjon — og halvt usynlig paa hvitt. Dyp blaa i stedet: 9,33:1,
@@ -540,7 +585,8 @@ html[data-font="nastaliq"] .hero h1{font-size:clamp(1.6rem,6.4vw,2.5rem);line-he
   .hero h1{animation:rise .55s cubic-bezier(.2,.7,.3,1) backwards}
 }
 @keyframes rise{from{transform:translateY(.35em)}to{transform:none}}
-html[lang="ur"] .hero h1{font-family:"Noto Sans Arabic","Noto Sans",sans-serif;font-weight:700;font-size:clamp(1.5rem,6vw,2.3rem);line-height:1.45;letter-spacing:0}   /* ingen opasitet 0: usynlig tekst teller ikke som tegnet (LCP) */
+/* AIM-239: ur hero uses data-font face (Nastaliq). Legacy ur+naskh keeps Sans. */
+html[lang="ur"][data-font="naskh"] .hero h1{font-family:var(--face);font-weight:700;font-size:clamp(1.5rem,6vw,2.3rem);line-height:1.45;letter-spacing:0}
 
 /* Paa korte skjermer (360x640 og mindre, de vanligste billige telefonene) tok
    logo, spraakvalg, overskrift og sponsorvarselet hele foerste skjerm, saa det
@@ -552,8 +598,9 @@ html[lang="ur"] .hero h1{font-family:"Noto Sans Arabic","Noto Sans",sans-serif;f
   .wordmark{margin-bottom:2px}
   .hero{padding:26px 0 22px}
   .hero h1{font-size:clamp(2rem,8.4vw,3.2rem)}
-  html[data-font="deva"] .hero h1,html[data-font="naskh"] .hero h1{font-size:clamp(1.7rem,6.6vw,2.6rem)}
-  html[data-font="nastaliq"] .hero h1{font-size:clamp(1.45rem,5.6vw,2.1rem)}
+  html[data-font="deva"] .hero h1{font-size:clamp(1.7rem,6.6vw,2.6rem)}
+  html[data-font="naskh"] .hero h1{font-size:clamp(1.32rem,5.4vw,1.95rem);line-height:1.35}
+  html[data-font="nastaliq"] .hero h1{font-size:clamp(1.15rem,4.5vw,1.6rem);line-height:1.42}
   .hero p{margin-top:14px}
   .notice{margin-block:10px}
   .menu .mlede{margin-bottom:9px}
@@ -1652,8 +1699,8 @@ html[data-font="deva"] .appc h3{font-family:Montserrat,system-ui,sans-serif}
 .bnl article:nth-child(4n+4){--tab:#FBE16B}
 .bnl article:nth-child(4n+4) h3{color:#14101C}
 html[data-font="nastaliq"] .bnl p{line-height:2.05}
-html[data-font="nastaliq"] .bnl p b{margin:0 0 2px;line-height:1.9}
-html[data-font="nastaliq"] .vsrow > span{line-height:1.9}
+html[data-font="nastaliq"] .bnl p b{margin:0 0 2px;line-height:1.55}
+html[data-font="nastaliq"] .vsrow > span{line-height:1.55}
 html[data-font="nastaliq"] .vs .vsnote{line-height:2}
 .acts{margin:6px 0 0;padding:0;list-style:none;max-width:var(--measure)}
 .acts li{position:relative;padding-inline-start:18px;margin:6px 0;line-height:1.55}
@@ -2520,9 +2567,9 @@ html.portaapen.iabvis #port .prows > :last-child{margin-bottom:auto}
 #port .prow + .prow{border-top:1px solid rgba(244,242,247,.08)}
 #port .pg{font:800 clamp(2rem,9.5vw,3rem)/1.15 "Archivo","Montserrat",sans-serif;font-stretch:88%;letter-spacing:-.01em}
 #port [data-f="deva"] .pg{font-family:"Noto Sans Devanagari",sans-serif;font-weight:800;font-stretch:normal}
-#port [data-f="naskh"] .pg{font-family:"Noto Naskh Arabic",serif;font-weight:700;font-stretch:normal;line-height:1.5}
-#port [lang="ur"] .pg,#port [data-f="nastaliq"] .pg{font-family:"Noto Nastaliq Urdu",serif;font-weight:700;font-stretch:normal;line-height:1.9;font-size:clamp(1.7rem,8vw,2.5rem)}
-#port .pn{font:500 .82rem/1.3 "Montserrat","Noto Sans Devanagari","Noto Naskh Arabic","Noto Nastaliq Urdu",sans-serif;color:rgba(244,242,247,.5)}
+#port [data-f="naskh"] .pg{font-family:"Noto Sans Arabic","Noto Sans",sans-serif;font-weight:700;font-stretch:normal;line-height:1.4}
+#port [lang="ur"] .pg,#port [data-f="nastaliq"] .pg{font-family:"Noto Nastaliq Urdu",serif;font-weight:700;font-stretch:normal;line-height:1.55;font-size:clamp(1.35rem,6.2vw,2rem)}
+#port .pn{font:500 .82rem/1.3 "Montserrat","Noto Sans Devanagari","Noto Sans Arabic","Noto Nastaliq Urdu",sans-serif;color:rgba(244,242,247,.5)}
 #port .prow::after,#port .phalf::after{content:"";position:absolute;inset-inline:auto;right:auto;left:26px;bottom:8px;height:2px;width:0;
   background:linear-gradient(90deg,#15D8C4,#1B4FD8,#C21FBF);transition:width .38s cubic-bezier(.2,.8,.3,1)}
 #port .prow:hover::after,#port .prow:focus-visible::after,#port .valgt::after,#port .phalf:hover::after{width:calc(100% - 98px)}
@@ -2530,7 +2577,7 @@ html.portaapen.iabvis #port .prows > :last-child{margin-bottom:auto}
 #port .bort{opacity:0;max-height:0;padding-block:0;overflow:hidden;pointer-events:none;transition:opacity .25s,max-height .35s,padding .35s}
 #port .prow{max-height:9rem}
 #port .psq{display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 22px 18px;text-align:center}
-#port .psq b{font:700 1.35rem/1.9 "Noto Nastaliq Urdu","Noto Naskh Arabic",serif;color:#F4F2F7}
+#port .psq b{font:700 1.2rem/1.55 "Noto Nastaliq Urdu","Noto Sans Arabic",serif;color:#F4F2F7}
 #port .psq span{font:600 .95rem/1.3 "Montserrat",sans-serif;color:rgba(244,242,247,.78)}
 /* pulslinja krysser spoersmaalet - en mork halo holder teksten lesbar oppaa den */
 #port .psq{position:relative;z-index:2}
@@ -3518,7 +3565,12 @@ html.touraapen,html.touraapen body{overflow:hidden;overscroll-behavior:none}
 #tour .tbak,#tour .thopp{border:1.5px solid var(--rule);background:transparent;color:var(--chalk)}
 /* #202 (founder «skip knappen må komme tydligere det var langt unna»): rett under «Neste», hele bredden */
 #tour .thopp{display:block;width:100%;margin-top:10px;min-height:44px;font-size:.95rem}
-html[data-font="nastaliq"] #tour .tkort p{line-height:2.1}
+/* AIM-239v2: tour card was lh 2.1 — messy vs Hindi; keep air without ballooning. */
+html[data-font="nastaliq"] #tour .tkort h3{font-size:1.05rem;line-height:1.4;font-weight:700}
+html[data-font="nastaliq"] #tour .tkort p{font-size:.9rem;line-height:1.6;font-weight:400}
+html[data-font="nastaliq"] #tour button{font-size:.88rem;font-weight:700;min-height:44px;padding:0 18px}
+html[data-font="nastaliq"] #tour .thopp{font-size:.82rem;min-height:40px}
+html[data-font="nastaliq"] #tour .tnr{font-size:.78rem}
 @media (prefers-reduced-motion:reduce){#tour .ring,#tour .tkort{transition:none}}
 #tour{pointer-events:none}
 #tour .tsperre{position:fixed;inset:0;pointer-events:auto;background:transparent}
@@ -3895,7 +3947,10 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .sec > h2
 .vhead::after{display:none}
 .vhead .vic{display:none}
 .vhead .vtx b{font-family:"Archivo",var(--display);font-stretch:88%;font-weight:900;font-size:2.15rem;line-height:1.22;letter-spacing:-.018em;word-spacing:.08em}
-html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .vhead .vtx b{font-family:var(--face);font-stretch:normal;font-size:1.7rem;line-height:1.4}
+html[data-font="deva"] .vhead .vtx b{font-family:var(--face);font-stretch:normal;font-size:1.7rem;line-height:1.4}
+/* AIM-239: script folder titles stay denser than Hindi display (no 1.7rem wall). */
+html[data-font="nastaliq"] .vhead .vtx b{font-family:var(--face);font-stretch:normal;font-size:clamp(1.08rem,3.6vw,1.28rem);line-height:1.4}
+html[data-font="naskh"] .vhead .vtx b{font-family:var(--face);font-stretch:normal;font-size:clamp(1.22rem,4.3vw,1.5rem);line-height:1.35}
 .vhead .vtx span{font-size:.95rem;max-width:34ch}
 .vhead .spark{display:none}
 .shchips{gap:0;border-block:1px solid var(--rule)}
@@ -4413,6 +4468,35 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
 .shell[data-view="start"][data-dest="community"] .cmtips li{
   display:grid;grid-template-columns:1.4rem 1fr;gap:8px;padding:8px 2px;border:0;background:none}
 .shell[data-view="start"][data-dest="community"] .eljoin{margin-top:var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--rule)}
+/* AIM-239v2 — Tools/Markets Nastaliq: chips + status must not dominate Hindi bar. */
+html[data-font="nastaliq"] .shell[data-view="tools"] .jump button,
+html[data-font="nastaliq"] .shell[data-view="tools"] .topbar .jump button{
+  font-size:.68rem;line-height:1.3;font-weight:500;padding:8px 6px 9px;
+  gap:4px;overflow:visible}
+html[data-font="nastaliq"] .shell[data-view="tools"] .jump button .ji,
+html[data-font="nastaliq"] .shell[data-view="tools"] .jump button svg{width:16px;height:16px}
+html[data-font="nastaliq"] .shell[data-view="tools"] :is(#s-market,#s-sessions) .lede,
+html[data-font="nastaliq"] .shell[data-view="tools"] #mk-now,
+html[data-font="nastaliq"] .shell[data-view="tools"] .mknow,
+html[data-font="nastaliq"] .shell[data-view="tools"] .oekt,
+html[data-font="nastaliq"] .shell[data-view="tools"] .oekt p,
+html[data-font="nastaliq"] .shell[data-view="tools"] .oekt li{
+  font-size:.84rem;line-height:1.55;font-weight:400}
+html[data-font="nastaliq"] .shell[data-view="tools"] :is(#s-market,#s-sessions) > h2,
+html[data-font="nastaliq"] .shell[data-view="tools"] #s-growth .grh{
+  font-size:.78rem;line-height:1.4;font-weight:600}
+html[data-font="nastaliq"] .shell[data-view="tools"] .sess,
+html[data-font="nastaliq"] .shell[data-view="tools"] .sess b,
+html[data-font="nastaliq"] .shell[data-view="tools"] .sess span,
+html[data-font="nastaliq"] .shell[data-view="tools"] .mkrow,
+html[data-font="nastaliq"] .shell[data-view="tools"] .mkrow b,
+html[data-font="nastaliq"] .shell[data-view="tools"] .mkrow span{
+  font-size:.8rem;line-height:1.5;font-weight:500}
+html[data-font="nastaliq"] .shell[data-view="tools"] .sess span,
+html[data-font="nastaliq"] .shell[data-view="tools"] .mkrow span{font-weight:400;font-size:.74rem;line-height:1.45}
+html[data-font="nastaliq"] .mk-box > summary{font-size:.8rem;line-height:1.4;font-weight:500}
+html[data-font="nastaliq"] .langbtn{font-size:.78rem;line-height:1.3;font-weight:500}
+
 /* Tools: quieter jump; progress + markets use label grammar. */
 .shell[data-view="tools"] .jump button,
 .shell[data-view="tools"] .topbar .jump button{
@@ -5726,7 +5810,7 @@ html{scroll-padding-bottom:var(--tab-clear);scroll-padding-top:8px}
   .pgrid-corridor.pshelf .pcta{max-width:100%}
   /* Long tab labels: allow slightly smaller without clipping glyphs. */
   html .tabbar .tbrow .tbb span{font-size:.58rem}
-  html[data-font="nastaliq"] .tbb span,
+  html[data-font="nastaliq"] .tbb span{font-size:var(--fs-nav);line-height:1.35;margin-top:0;padding-block:2px 3px;overflow:visible}
   html[data-font="naskh"] .tbb span{font-size:var(--fs-nav);line-height:1.25;margin-top:0;padding-block:1px 2px;overflow:visible}
 }
 /* Short old phones (SE / Galaxy J) — reclaim vertical chrome first. */
@@ -5788,7 +5872,7 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
   </section>
   <!-- #100: toppen staar ferdig i HTML-en og faar riktig spraak/tema/retning her, foer det store
        skriptet nederst er lastet - saa telefonen kan tegne den mens resten fortsatt kommer. -->
-  <script>(function(){try{var H={"en":["Learn trading here.","Ask who shared this.","Academy — honest lessons and calm setup — risk in plain sight. No advice. No income promises.","ltr","en","latin"],"no":["Lær trading her.","Spør den som delte.","Academy — ærlige leksjoner og rolig oppsett — risikoen synlig. Ingen råd. Ingen inntektsløfter.","ltr","no","latin"],"hi":["Trading यहाँ सीखें।","जिसने share किया, उनसे पूछें।","Academy — ईमानदार lessons और शांत setup — जोखिम साफ़ सामने। सलाह नहीं। आय का वादा नहीं।","ltr","hi","deva"],"ar":["تعلّم التداول هنا.","اسأل من شارك الرابط.","Academy — دروس صادقة وإعداد هادئ — المخاطر واضحة. لا نصيحة. لا وعود بدخل.","rtl","ar","naskh"],"ur":["Trading یہاں سیکھیں۔","جس نے شیئر کیا، اُس سے پوچھیں۔","Academy — ایماندار سبق اور پرسکون setup — خطرہ صاف سامنے۔ مشورہ نہیں۔ کمائی کا وعدہ نہیں۔","rtl","ur","naskh"],"ar_rm":["Ta'allam at-tadawul huna.","Is'al man sharaka ar-rabit.","Academy — durus sadiqa wa i'dad hadi' — al-makhatir wadiha. La nasiha. La wu'ud bi-dakhl.","ltr","ar-Latn","latin"],"ur_rm":["Trading yahin seekhein.","Jis ne share kiya, us se poochein.","Academy — imandaar sabaq aur pur-sukoon setup — khatra saaf saamne. Mashwara nahi. Kamai ka wada nahi.","ltr","ur-Latn","latin"]},d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},L=g("aimpire.lang"),t=g("aimpire.theme.v2");try{var q=new URLSearchParams(location.search).get("lang");if(q&&H[q])L=q}catch(e){}if(!H[L]){var n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||""];for(var i=0;i<n.length&&!H[L];i++){var x=String(n[i]||"").toLowerCase().replace(/^(nb|nn)(?=-|$)/,"no");for(var c in H){if(x===c||x.indexOf(c+"-")===0){L=c;break}}}}if(!H[L])L="en";if(t)d.setAttribute("data-theme",t);var h=H[L];d.lang=h[4];d.dir=h[3];d.setAttribute("data-font",h[5]);document.getElementById("h1").textContent=h[0];document.getElementById("h2").textContent=h[1];document.getElementById("hsub").textContent=h[2]}catch(e){}})();</script>
+  <script>(function(){try{var H={"en":["Learn trading here.","Ask who shared this.","Academy — honest lessons and calm setup — risk in plain sight. No advice. No income promises.","ltr","en","latin"],"no":["Lær trading her.","Spør den som delte.","Academy — ærlige leksjoner og rolig oppsett — risikoen synlig. Ingen råd. Ingen inntektsløfter.","ltr","no","latin"],"hi":["Trading यहाँ सीखें।","जिसने share किया, उनसे पूछें।","Academy — ईमानदार lessons और शांत setup — जोखिम साफ़ सामने। सलाह नहीं। आय का वादा नहीं।","ltr","hi","deva"],"ar":["تعلّم التداول هنا.","اسأل من شارك الرابط.","Academy — دروس صادقة وإعداد هادئ — المخاطر واضحة. لا نصيحة. لا وعود بدخل.","rtl","ar","naskh"],"ur":["Trading یہاں سیکھیں۔","جس نے شیئر کیا، اُس سے پوچھیں۔","Academy — ایماندار سبق اور پرسکون setup — خطرہ صاف سامنے۔ مشورہ نہیں۔ کمائی کا وعدہ نہیں۔","rtl","ur","nastaliq"],"ar_rm":["Ta'allam at-tadawul huna.","Is'al man sharaka ar-rabit.","Academy — durus sadiqa wa i'dad hadi' — al-makhatir wadiha. La nasiha. La wu'ud bi-dakhl.","ltr","ar-Latn","latin"],"ur_rm":["Trading yahin seekhein.","Jis ne share kiya, us se poochein.","Academy — imandaar sabaq aur pur-sukoon setup — khatra saaf saamne. Mashwara nahi. Kamai ka wada nahi.","ltr","ur-Latn","latin"]},d=document.documentElement,g=function(k){try{return localStorage.getItem(k)}catch(e){return null}},L=g("aimpire.lang"),t=g("aimpire.theme.v2");try{var q=new URLSearchParams(location.search).get("lang");if(q&&H[q])L=q}catch(e){}if(!H[L]){var n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||""];for(var i=0;i<n.length&&!H[L];i++){var x=String(n[i]||"").toLowerCase().replace(/^(nb|nn)(?=-|$)/,"no");for(var c in H){if(x===c||x.indexOf(c+"-")===0){L=c;break}}}}if(!H[L])L="en";if(t)d.setAttribute("data-theme",t);var h=H[L];d.lang=h[4];d.dir=h[3];d.setAttribute("data-font",h[5]);document.getElementById("h1").textContent=h[0];document.getElementById("h2").textContent=h[1];document.getElementById("hsub").textContent=h[2]}catch(e){}})();</script>
 
   <div class="notices" id="notices">
     <div class="notice" id="notice-none" hidden>
@@ -6190,6 +6274,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.0bfa194f77.js" defer></script>
+<script src="app-m.b85b4a8272.js" defer></script>
 </body>
 </html>
