@@ -106,25 +106,26 @@ if(!treg){s.media="all";return;}document.documentElement.setAttribute("data-skri
   /* Aimpires egne farger, fra logoen: svart + gradienten blaa -> turkis ->
      magenta -> gul. IKKE AiTech (marine + himmelblaa) og IKKE Tag (lime).
      Lys modus: marine mist (Nesté grammar) — ikke kritt-hvit / ikke varm graa. */
-  /* AIM-115: boring white/plain → cool marine page + soft raised panels. #379 stays draft. */
-  --ink:#EEF3F8;
-  --ink-deep:#F5F9FC;
-  --ink-raise:#FAFCFE;
-  --paper:#F5F9FC;
+  /* AIM-115: boring white/plain → cool marine page + soft raised panels. #379 stays draft.
+     AIM-226: soft light scroll comfort — less pure wash, chalk not near-black (migraine). */
+  --ink:#E2E8F0;
+  --ink-deep:#E8EEF5;
+  --ink-raise:#EEF2F7;
+  --paper:#E8EEF5;
   --gold:#A3159F;           /* FLATE: knapp, aktiv fane, marg - magenta 10:1 med hvit tekst */
   --gold-soft:#0B7C72;      /* TEKSTaksent: dyp turkis, 5,1:1              */
   --gold-deep:#A3159F;
   --lime:#0F7A4A; --red:#C0392B;
-  --chalk:#12141A;          /* broedtekst: nøytral, ikke lilla-undertone    */
-  --chalk-dim:#4A4E58;      /* guidetekst                                  */
-  --rule:#D5DEE8;
-  --edge-ui:#7A7F8A;
+  --chalk:#2A303A;          /* broedtekst: soft charcoal — comfortable on mist */
+  --chalk-dim:#5A6170;      /* guidetekst                                  */
+  --rule:#C5CFDB;
+  --edge-ui:#6E7584;
   --ember:#C24F15;
   --gold-metal:#FBE16B;     /* FLATE: markoerer og stegtall - merke-gult   */
   --on-gold:#14101C;        /* tekst PAA gult, samme i begge temaer: 15:1  */
   --gold-ink:#7A5410;
-  --jet:#14101C;
-  --jet-on:#FFFFFF;
+  --jet:#1A2230;
+  --jet-on:#F4F6F9;
   /* Design architecture (AIM-212): logo stops are first-class tokens.
      Brand gold = BRAND.md. --gold remains magenta FILL (legacy — do not rename here).
      Siblings rebase Home/Products/Academy onto these — never invent parallel hex. */
@@ -144,8 +145,8 @@ if(!treg){s.media="all";return;}document.documentElement.setAttribute("data-skri
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
   --display:"Archivo","Montserrat",system-ui,sans-serif;
   --nav-wash:rgba(21,216,196,.16);
-  --nav-wash-light:rgba(11,143,132,.12);
-  --focus-ring:var(--teal-live);
+  --nav-wash-light:rgba(11,143,132,.10);
+  --focus-ring:var(--teal-ink);
   --live-dot:var(--teal-live);
   /* AIM-224: fluid type/space — phone-first clamps; desktop ceiling unchanged. */
   --fs-display:clamp(1.55rem,5.8vw + .7rem,3.05rem);
@@ -176,11 +177,11 @@ if(!treg){s.media="all";return;}document.documentElement.setAttribute("data-skri
   /* Radius + CTA roles (was a second :root — consolidated AIM-202). */
   --aim:var(--grad-ink);
   --r-card:16px;--r-btn:14px;--r-tool:12px;--r-pill:999px;--r-chip:12px;--r-in:12px;
-  --cta-shadow:0 10px 22px -16px rgba(12,127,120,.28);
+  --cta-shadow:0 8px 18px -14px rgba(26,34,48,.22);
   --cta-primary-bg:var(--jet);
   --cta-primary-fg:var(--jet-on);
   --cta-primary-tick:var(--aim);
-  --cta-quiet-border:color-mix(in srgb,var(--chalk) 28%,transparent);
+  --cta-quiet-border:color-mix(in srgb,var(--chalk) 22%,transparent);
   --cta-quiet-bg:transparent;
 }
 :root[data-theme="dark"]{
@@ -224,15 +225,15 @@ html[lang="ur"][data-font="naskh"] :is(.slab .t,.tneste,button){letter-spacing:0
 .sky{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;contain:strict;clip-path:inset(0)}   /* clip-path: Safari klipper animerte lag i faste lag paalitelig */
 .sky .orb{position:absolute;border-radius:50%;will-change:transform;transform:translate3d(0,0,0)}
 .sky .o1{width:78vmax;height:78vmax;inset-inline-start:-30vmax;top:-34vmax;
-  background:radial-gradient(closest-side,color-mix(in srgb,var(--teal-live) 34%,transparent),transparent)}
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--teal-live) 22%,transparent),transparent);opacity:.55}
 .sky .o2{width:64vmax;height:64vmax;inset-inline-end:-26vmax;top:-20vmax;
-  background:radial-gradient(closest-side,rgba(27,79,216,.22),transparent);opacity:.4}
+  background:radial-gradient(closest-side,rgba(27,79,216,.12),transparent);opacity:.32}
 .sky .o3{width:58vmax;height:58vmax;inset-inline-start:18vw;top:42vh;
-  background:radial-gradient(closest-side,color-mix(in srgb,var(--brand-gold) 22%,transparent),transparent)}
-:root[data-theme="dark"] .sky .o1{background:radial-gradient(closest-side,rgba(27,79,216,.40),transparent)}
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--brand-gold) 12%,transparent),transparent);opacity:.45}
+:root[data-theme="dark"] .sky .o1{background:radial-gradient(closest-side,rgba(27,79,216,.40),transparent);opacity:1}
 :root[data-theme="dark"] .sky .o2{background:radial-gradient(closest-side,color-mix(in srgb,var(--teal-live) 18%,transparent),transparent);opacity:.32}
-:root[data-theme="dark"] .sky .o3{background:radial-gradient(closest-side,color-mix(in srgb,var(--teal-live) 16%,transparent),transparent)}
-.skyline{position:absolute;z-index:-1;pointer-events:none;overflow:hidden;contain:paint;inset-inline:0;top:112px;height:120px;opacity:.55;
+:root[data-theme="dark"] .sky .o3{background:radial-gradient(closest-side,color-mix(in srgb,var(--teal-live) 16%,transparent),transparent);opacity:1}
+.skyline{position:absolute;z-index:-1;pointer-events:none;overflow:hidden;contain:paint;inset-inline:0;top:112px;height:120px;opacity:.28;
   -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%);
           mask-image:linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%);
   background:repeating-linear-gradient(180deg,transparent 0 29px,rgba(20,16,28,.07) 29px 30px)}
@@ -279,7 +280,7 @@ html[dir="rtl"] .skyline{transform:scaleX(-1)}
 .nt2 svg{opacity:.7}
 .nc .cu{fill:#16C784;stroke:#16C784}.nc .cd{fill:#EA3943;stroke:#EA3943}
 .nc rect{opacity:.10}.nc line{stroke-width:1;opacity:.12;vector-effect:non-scaling-stroke}
-.neon{opacity:.5}
+.neon{opacity:.28}
 :root[data-theme="dark"] .neon{opacity:.8}
 html[dir="rtl"] .neon{transform:scaleX(-1)}
 @keyframes neonpuls{0%,100%{opacity:.75}50%{opacity:1}}
@@ -416,6 +417,10 @@ html[data-font="nastaliq"] .hero h1{font-size:clamp(1.6rem,6.4vw,2.5rem);line-he
    og to toner leser som ett utsagn i stedet for to. */
 /* Andre linje i logoens egen gradient - lys modus uten den gule, som forsvinner paa hvitt. */
 .hero h1 span:last-child{background:var(--grad-ink);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* AIM-226: light hero accent — blue→teal only (no magenta glow on mist). */
+:root:not([data-theme="dark"]) .hero h1 span:last-child{
+  background:linear-gradient(110deg,var(--brand-blue) 0%,#0B8F84 72%,#0E7A72 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
 .hero p{margin:26px 0 0;max-width:var(--measure);color:var(--chalk-dim);font-size:1.02rem}
 @media (prefers-reduced-motion:no-preference){
   .hero h1{animation:rise .55s cubic-bezier(.2,.7,.3,1) backwards}
@@ -516,11 +521,10 @@ html[data-font="deva"] .slab .t,html[data-font="nastaliq"] .slab .t,html[data-fo
 .slab.reg:focus-visible{outline:3px solid rgba(94,230,214,.55);outline-offset:3px}
 :root:not([data-theme="dark"]) .slab.reg{
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.35),
-    inset 0 1px 0 rgba(255,255,255,.6),
-    0 2px 6px rgba(26,16,30,.18),
-    0 8px 18px -6px rgba(163,21,159,.28),
-    0 18px 40px -14px rgba(16,150,140,.25)}
+    inset 0 0 0 1px rgba(255,255,255,.22),
+    inset 0 1px 0 rgba(255,255,255,.35),
+    0 2px 5px rgba(26,34,48,.10),
+    0 8px 16px -8px rgba(26,34,48,.18)}
 .slab:hover,.slab:focus-visible{filter:brightness(1.12)}
 /* Egen lenke: samme slab-form, men omriss - sekundaer handling, aldri doed flate. */
 .slab.own{color:var(--chalk);border:1.5px solid transparent;
@@ -1740,7 +1744,7 @@ html[data-page="leaders"] .out .bio button{background:transparent !important;col
   display:grid;gap:0;margin-top:10px;padding:0;overflow:hidden;
   border:1px solid var(--rule);border-radius:var(--r-card);
   background:var(--ink-raise)}
-html[data-theme="light"] .asksheet{background:#fff}
+html[data-theme="light"] .asksheet{background:var(--ink-raise)}
 .asksheet-hint{
   margin:0;padding:14px 16px 6px;max-width:var(--measure);
   font:500 .82rem/1.45 var(--face);color:var(--chalk-dim)}
@@ -2335,7 +2339,7 @@ html[dir="rtl"] .portalbtn .pa{transform:scaleX(-1)}
   background:var(--ink-raise, #1A1A22);color:var(--jet);border-top:1px solid var(--rule, rgba(255,255,255,.12));
   border-radius:20px 20px 0 0;box-shadow:0 -18px 40px -18px rgba(0,0,0,.45);transform:translateY(105%);
   transition:transform .38s cubic-bezier(.2,.8,.3,1)}
-:root:not([data-theme="dark"]) #tema{background:#FFFFFF}
+:root:not([data-theme="dark"]) #tema{background:var(--ink-raise)}
 #tema.vis{transform:none}
 /* #148 Velkomstporten: svart flate, hilsenene som en avgangstavle i hver sin skrift, én tynn
    neonlinje som tegnes under valget. Ingen kort, ingen rammer rundt hvert valg. */
@@ -3684,10 +3688,10 @@ body.has-tabbar #back{display:none}
 :root[data-theme="dark"] .tbb[aria-current="page"]{color:#0B1020}
 :root[data-theme="dark"] .tbring{background:#0B1020}
 :root[data-theme="dark"] .tbb .dot{box-shadow:0 0 0 2px #F3F5FA}
-:root:not([data-theme="dark"]) .tabbar{background:var(--ink-deep);border-top:0;box-shadow:0 -6px 24px rgba(10,16,40,.25)}
-:root:not([data-theme="dark"]) .tbb{color:#4B5270}
-:root:not([data-theme="dark"]) .tbb[aria-current="page"]{color:#0B1020}
-:root:not([data-theme="dark"]) .tbring{background:#0E1326}
+:root:not([data-theme="dark"]) .tabbar{background:var(--ink-deep);border-top:0;box-shadow:0 -4px 18px rgba(26,34,48,.14)}
+:root:not([data-theme="dark"]) .tbb{color:#5A6170}
+:root:not([data-theme="dark"]) .tbb[aria-current="page"]{color:#1A2230}
+:root:not([data-theme="dark"]) .tbring{background:#1A2230}
 :root:not([data-theme="dark"]) .tbb .dot{box-shadow:0 0 0 2px var(--ink-deep)}
 html[data-font="nastaliq"] .tbb span,html[data-font="naskh"] .tbb span{line-height:1.9;overflow:visible;font-size:.74rem;margin-top:-4px}
 html[data-font="nastaliq"] .tbb,html[data-font="naskh"] .tbb{padding-bottom:4px}
@@ -3700,7 +3704,7 @@ body.has-tabbar #pille{bottom:calc(var(--tab-clear) + 6px)}
   max-width:560px;margin-inline:auto}
 @media (min-width:600px){.tabbar{inset-inline:0;width:min(560px,calc(100% - 20px))}}
 :root[data-theme="dark"] .tabbar{box-shadow:0 10px 30px -6px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.08)}
-:root:not([data-theme="dark"]) .tabbar{box-shadow:0 10px 30px -8px rgba(10,16,40,.45)}
+:root:not([data-theme="dark"]) .tabbar{box-shadow:0 8px 22px -10px rgba(26,34,48,.28)}
 .tbb{min-height:var(--tab-min-h);padding:6px 1px 5px;gap:2px}
 .tbb[aria-current="page"]::before{display:none}
 .tbb:not(.tbhome)::after{content:"";position:absolute;top:5px;left:50%;width:42px;height:26px;margin-left:-21px;border-radius:13px;
@@ -3965,11 +3969,11 @@ body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;ba
 body::after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.028;background:
   repeating-linear-gradient(-12deg,transparent 0 2px,rgba(255,255,255,.5) 2px 3px);mix-blend-mode:overlay}
 :root:not([data-theme="dark"]) body::before{background:
-  radial-gradient(90% 50% at 50% -10%,rgba(27,79,216,.09),transparent 55%),
-  radial-gradient(65% 38% at 100% 8%,rgba(14,143,134,.06),transparent 52%),
-  radial-gradient(100% 70% at 50% 100%,rgba(11,35,65,.05),transparent 52%),
-  linear-gradient(180deg,#E6ECF5 0%,#EEF3F8 38%,#E4EBF3 100%)}
-:root:not([data-theme="dark"]) body::after{opacity:.02;mix-blend-mode:multiply}
+  radial-gradient(90% 50% at 50% -10%,rgba(27,79,216,.05),transparent 55%),
+  radial-gradient(65% 38% at 100% 8%,rgba(14,143,134,.04),transparent 52%),
+  radial-gradient(100% 70% at 50% 100%,rgba(11,35,65,.04),transparent 52%),
+  linear-gradient(180deg,#DCE3EC 0%,#E2E8F0 42%,#D8E0EA 100%)}
+:root:not([data-theme="dark"]) body::after{opacity:.015;mix-blend-mode:multiply}
 body{background:transparent}
 
 /* Språk/tema: B-049 ≤2 piller — behold. Øvrig chrome → tool-radius (kill pill clusters). */
@@ -4014,8 +4018,8 @@ html.fx .topbar{
    Reassert opposite-theme pill so #396 idle ink (#4B5270) has contrast again. */
 :root[data-theme="dark"] .tabbar{background:#F3F5FA !important}
 /* LIGHT menu ink vs solid white/marine pill (live white-on-white). Dark untouched. */
-:root:not([data-theme="dark"]) .tabbar .tbb{color:#4B5270}
-:root:not([data-theme="dark"]) .tabbar .tbb[aria-current="page"]{color:#0B1020}
+:root:not([data-theme="dark"]) .tabbar .tbb{color:#5A6170}
+:root:not([data-theme="dark"]) .tabbar .tbb[aria-current="page"]{color:#1A2230}
 #port .psplit{background:rgba(7,10,18,.94) !important}
 
 /* Keep/clip: solid panel, not glass-pill. */
@@ -4104,7 +4108,7 @@ html[data-page="leaders"] .slab.reg::after,
 :root:not([data-theme="dark"]) .out,
 :root:not([data-theme="dark"]) .sslist li,
 :root:not([data-theme="dark"]) .portalbtn{
-  box-shadow:0 1px 0 rgba(255,255,255,.55) inset,0 8px 20px -18px rgba(11,35,65,.18)}
+  box-shadow:0 1px 0 rgba(255,255,255,.28) inset,0 6px 16px -16px rgba(26,34,48,.14)}
 :root[data-theme="dark"] .rows,
 :root[data-theme="dark"] .learn details,
 :root[data-theme="dark"] .places > li,
@@ -4704,14 +4708,14 @@ html:not([data-theme="dark"]):has(.shell[data-view="menu"]) body::before{
 .shell[data-view="menu"] #spon > .slab.reg:active{
   transform:translateY(1px) scale(.992);filter:brightness(.98)}
 
-/* Portals — first viewport under hero (AIM-218/219). Begin setup is secondary below. */
+/* AIM-225: short newcomer CTA under hero, then portals (Share first from #443). */
 .shell[data-view="menu"] .hero{padding:18px 0 4px}
 .shell[data-view="menu"] .hero h1{
   font-size:clamp(1.5rem,6vw,2.1rem);line-height:1.12}
 .shell[data-view="menu"] .hero h1::after{margin-top:6px}
 .shell[data-view="menu"] .hero p#hsub{margin:6px 0 0;max-width:36ch;font-size:.86rem;line-height:1.4}
 .shell[data-view="menu"] #home-tree.htree{
-  margin:10px 0 0;padding:0;max-width:100%;box-sizing:border-box}
+  margin:8px 0 0;padding:0;max-width:100%;box-sizing:border-box}
 .shell[data-view="menu"] #menu-nav{
   margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);
   max-width:100%;overflow-x:clip}
@@ -4731,7 +4735,7 @@ html:not([data-theme="dark"]):has(.shell[data-view="menu"]) body::before{
   min-height:44px;margin:0 0 4px;padding:8px 10px 8px 8px;
   border:1px solid var(--rule);border-radius:var(--r-btn);
   background:var(--ink-raise);color:inherit;font:inherit;text-align:start;text-decoration:none;cursor:pointer;
-  box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 55%,transparent);
+  box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 28%,transparent);
   transition:border-color .18s ease,background .18s ease,transform .15s ease}
 .shell[data-view="menu"] .htree .hta:first-of-type{border-top:1px solid var(--rule)}
 .shell[data-view="menu"] .htree .hta:last-of-type{margin-bottom:0}
@@ -4747,25 +4751,25 @@ html:not([data-theme="dark"]):has(.shell[data-view="menu"]) body::before{
 html[dir="rtl"] .shell[data-view="menu"] .htree .htref{padding:0 46px 0 2px}
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
   .shell[data-view="menu"] .htree .htref{font-size:.8rem;line-height:1.5;max-width:46ch}
-/* Begin setup / newcomer CTA secondary once portals own first paint.
-   AIM-220: CTA first so it peeks under portals @360×780; copy follows. */
+/* Short newcomer CTA — under hero, above portals (AIM-225). Supersedes AIM-220 peek. */
 .shell[data-view="menu"] #notice-none{
-  padding:10px 2px 8px;margin:2px 0 0;
-  display:flex;flex-direction:column}
-.shell[data-view="menu"] #notice-none .slab.reg#nn-chat{
-  order:-1;min-height:44px;padding:10px 14px;margin:0 0 8px;
-  background:transparent;
-  border:1px solid var(--rule);
-  box-shadow:none !important}
-.shell[data-view="menu"] #notice-none .slab.reg#nn-chat .t{
-  font:700 .92rem/1.2 var(--display) !important}
+  padding:10px 2px 6px;margin:2px 0 0}
 .shell[data-view="menu"] #notice-none h2{
-  font-size:.92rem;line-height:1.25;margin:0 0 4px;max-width:28ch;
-  color:var(--chalk-dim);font-weight:650}
+  font-size:1.05rem;line-height:1.25;margin:0 0 6px;max-width:24ch}
 .shell[data-view="menu"] #notice-none p#nn-b{
-  margin:0 0 6px;max-width:38ch;font-size:.8rem;line-height:1.35}
+  margin:0 0 10px;max-width:40ch;font-size:.86rem;line-height:1.4}
+.shell[data-view="menu"] #notice-none p#nn-f:empty{display:none}
 .shell[data-view="menu"] #notice-none p#nn-f{
-  margin:0;font-size:.74rem;line-height:1.35;color:var(--chalk-dim)}
+  margin:0 0 8px;font-size:.78rem;line-height:1.4;color:var(--chalk-dim)}
+.shell[data-view="menu"] #notice-none .slab.reg#nn-chat{
+  min-height:46px;padding:11px 14px;margin:0;
+  background:var(--cta-primary-bg) !important;
+  color:var(--cta-primary-fg) !important;
+  border:0 !important;
+  box-shadow:var(--cta-shadow) !important}
+.shell[data-view="menu"] #notice-none .slab.reg#nn-chat .t{
+  font:800 .95rem/1.2 var(--display) !important;
+  color:var(--cta-primary-fg) !important}
 :root[data-theme="dark"] .shell[data-view="menu"] .htree .hta{
   background:color-mix(in srgb,var(--ink-raise) 88%,#0A1220);
   box-shadow:inset 0 1px 0 color-mix(in srgb,var(--teal-live) 8%,transparent)}
@@ -4791,28 +4795,35 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
   border:1px solid color-mix(in srgb,var(--teal-live) 32%,var(--rule))}
 :root[data-theme="dark"] .shell[data-view="menu"] .htree .htg{color:var(--teal-live)}
 /* Share first + stand out — brand gold weight, no glow / no purple Claude tell.
-   Compact-safe (AIM-224 320 pass): only +2px over sibling rows, gold does the spotting. */
+   Compact-safe (AIM-224 320 pass). AIM-226: quieter gold wash on light. */
 .shell[data-view="menu"] .htree .hta.htshare,
 .shell[data-view="menu"] .htree .hta[data-k="share"]{
   min-height:46px;margin:0 0 6px;padding:9px 10px 9px 8px;
-  border-color:color-mix(in srgb,var(--brand-gold) 52%,var(--rule));
-  background:color-mix(in srgb,var(--brand-gold) 11%,var(--ink-raise));
-  box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 65%,transparent)}
+  border-color:color-mix(in srgb,var(--brand-gold) 40%,var(--rule));
+  background:color-mix(in srgb,var(--brand-gold) 8%,var(--ink-raise));
+  box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 30%,transparent)}
 :root[data-theme="dark"] .shell[data-view="menu"] .htree .hta.htshare,
 :root[data-theme="dark"] .shell[data-view="menu"] .htree .hta[data-k="share"]{
+  border-color:color-mix(in srgb,var(--brand-gold) 52%,var(--rule));
   background:color-mix(in srgb,var(--brand-gold) 10%,var(--ink-raise));
   box-shadow:inset 0 1px 0 color-mix(in srgb,var(--brand-gold) 14%,transparent)}
 .shell[data-view="menu"] .htree .hta.htshare:hover,
 .shell[data-view="menu"] .htree .hta.htshare:focus-visible,
 .shell[data-view="menu"] .htree .hta[data-k="share"]:hover,
 .shell[data-view="menu"] .htree .hta[data-k="share"]:focus-visible{
+  border-color:color-mix(in srgb,var(--brand-gold) 58%,var(--rule));
+  background:color-mix(in srgb,var(--brand-gold) 12%,var(--ink-raise))}
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta.htshare:hover,
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta.htshare:focus-visible,
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta[data-k="share"]:hover,
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta[data-k="share"]:focus-visible{
   border-color:color-mix(in srgb,var(--brand-gold) 72%,var(--rule));
   background:color-mix(in srgb,var(--brand-gold) 16%,var(--ink-raise))}
 .shell[data-view="menu"] .htree .hta.htshare .hti.glyph,
 .shell[data-view="menu"] .htree .hta[data-k="share"] .hti.glyph{
   width:32px;height:32px;
-  background:color-mix(in srgb,var(--brand-gold) 18%,var(--ink-deep));
-  border-color:color-mix(in srgb,var(--brand-gold) 48%,var(--rule));
+  background:color-mix(in srgb,var(--brand-gold) 14%,var(--ink-deep));
+  border-color:color-mix(in srgb,var(--brand-gold) 40%,var(--rule));
   color:var(--brand-gold-deep);font-size:.78rem}
 :root[data-theme="dark"] .shell[data-view="menu"] .htree .hta.htshare .hti.glyph,
 :root[data-theme="dark"] .shell[data-view="menu"] .htree .hta[data-k="share"] .hti.glyph{
@@ -4846,7 +4857,7 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
   min-height:58px !important;margin:0 0 8px !important;padding:12px 12px 12px 14px !important;
   border:1px solid var(--rule) !important;border-radius:var(--r-btn) !important;
   background:var(--ink-raise) !important;
-  box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 55%,transparent) !important}
+  box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 28%,transparent) !important}
 
 /* Specialist bar — metal ring, no purple multi-glow Claude tell. */
 .tbb.tbhome .tbring{
@@ -5664,6 +5675,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.35b7f1e4f7.js" defer></script>
+<script src="app-m.bb9b343bb1.js" defer></script>
 </body>
 </html>
