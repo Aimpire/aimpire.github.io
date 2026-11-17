@@ -4721,22 +4721,25 @@ html:not([data-theme="dark"]):has(.shell[data-view="menu"]) body::before{
 html[dir="rtl"] .shell[data-view="menu"] .htree .htref{padding:0 46px 0 2px}
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
   .shell[data-view="menu"] .htree .htref{font-size:.8rem;line-height:1.5;max-width:46ch}
-/* Begin setup block is secondary once portals own first paint. */
+/* Begin setup / newcomer CTA secondary once portals own first paint.
+   AIM-220: CTA first so it peeks under portals @360×780; copy follows. */
 .shell[data-view="menu"] #notice-none{
-  padding:14px 2px 8px;margin:4px 0 0}
-.shell[data-view="menu"] #notice-none h2{
-  font-size:1rem;line-height:1.25;margin:0 0 6px;max-width:28ch}
-.shell[data-view="menu"] #notice-none p#nn-b{
-  margin:0 0 8px;max-width:38ch;font-size:.86rem;line-height:1.4}
-.shell[data-view="menu"] #notice-none p#nn-f{
-  margin:0 0 8px;font-size:.78rem;line-height:1.4;color:var(--chalk-dim)}
+  padding:10px 2px 8px;margin:2px 0 0;
+  display:flex;flex-direction:column}
 .shell[data-view="menu"] #notice-none .slab.reg#nn-chat{
-  min-height:44px;padding:10px 14px;margin:0;
+  order:-1;min-height:44px;padding:10px 14px;margin:0 0 8px;
   background:transparent;
   border:1px solid var(--rule);
   box-shadow:none !important}
 .shell[data-view="menu"] #notice-none .slab.reg#nn-chat .t{
   font:700 .92rem/1.2 var(--display) !important}
+.shell[data-view="menu"] #notice-none h2{
+  font-size:.92rem;line-height:1.25;margin:0 0 4px;max-width:28ch;
+  color:var(--chalk-dim);font-weight:650}
+.shell[data-view="menu"] #notice-none p#nn-b{
+  margin:0 0 6px;max-width:38ch;font-size:.8rem;line-height:1.35}
+.shell[data-view="menu"] #notice-none p#nn-f{
+  margin:0;font-size:.74rem;line-height:1.35;color:var(--chalk-dim)}
 :root[data-theme="dark"] .shell[data-view="menu"] .htree .hta{
   background:color-mix(in srgb,var(--ink-raise) 88%,#0A1220);
   box-shadow:inset 0 1px 0 color-mix(in srgb,var(--teal-live) 8%,transparent)}
@@ -5135,9 +5138,10 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
   <section class="sec" id="s-community" data-cat="start">
     <h2 id="cm-t"></h2>
     <p class="lede" id="cm-lede"></p>
+    <!-- AIM-220: store-first Join CTA before rooms/tips (Home→Element glide). -->
+    <div class="eljoin cmgo" id="cm-go"></div>
     <ul class="cmrooms" id="cm-rooms"></ul>
     <ol class="cmtips" id="cm-tips"></ol>
-    <div class="eljoin cmgo" id="cm-go"></div>
     <p class="vnote" id="cm-note"></p>
   </section>
 
@@ -5459,6 +5463,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.404b18740f.js" defer></script>
+<script src="app-l.18fc5ce0ef.js" defer></script>
 </body>
 </html>
