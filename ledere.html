@@ -147,19 +147,26 @@ if(!treg){s.media="all";return;}document.documentElement.setAttribute("data-skri
   --nav-wash-light:rgba(11,143,132,.12);
   --focus-ring:var(--teal-live);
   --live-dot:var(--teal-live);
-  --fs-display:clamp(2.15rem,8vw,3.05rem);
-  --fs-folder:1.85rem;
-  --fs-folder-sticky:1.55rem;
-  --fs-folder-script:1.55rem;
-  --fs-section:1.6rem;
-  --fs-lede:.95rem;
-  --fs-body:1rem;
-  --fs-nav:.72rem;
-  --fs-label:.78rem;
-  --fs-chip:.62rem;
+  /* AIM-224: fluid type/space — phone-first clamps; desktop ceiling unchanged. */
+  --fs-display:clamp(1.55rem,5.8vw + .7rem,3.05rem);
+  --fs-folder:clamp(1.35rem,3.2vw + .85rem,1.85rem);
+  --fs-folder-sticky:clamp(1.2rem,2.4vw + .75rem,1.55rem);
+  --fs-folder-script:clamp(1.2rem,2.6vw + .7rem,1.55rem);
+  --fs-section:clamp(1.2rem,2.8vw + .7rem,1.6rem);
+  --fs-lede:clamp(.86rem,.35vw + .78rem,.95rem);
+  --fs-body:clamp(.94rem,.25vw + .88rem,1rem);
+  --fs-nav:clamp(.62rem,.2vw + .56rem,.72rem);
+  --fs-label:clamp(.68rem,.2vw + .62rem,.78rem);
+  --fs-chip:clamp(.56rem,.15vw + .52rem,.62rem);
   --lh-display:1.05;
   --lh-body:1.45;
-  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:22px;--space-6:50px;
+  --space-1:4px;--space-2:clamp(6px,.8vw,8px);--space-3:clamp(8px,1.6vw,12px);
+  --space-4:clamp(10px,2.2vw,16px);--space-5:clamp(14px,3vw,22px);--space-6:clamp(28px,6vw,50px);
+  --shell-pad-x:clamp(12px,4.2vw,40px);
+  --tap-min:44px;
+  --tab-min-h:clamp(48px,12vw,58px);
+  --tab-ring:clamp(38px,10vw,48px);
+  --tab-clear:calc(var(--tab-min-h) + 18px + env(safe-area-inset-bottom,0px));
   --folder-vhead-m:4px 0 10px;
   --folder-vhead-p:4px 0 2px;
   --folder-hair-w:2.25rem;
@@ -330,7 +337,7 @@ html[data-font="nastaliq"] .sec > h2,html[data-font="nastaliq"] .short > h2{font
 html[data-font="nastaliq"] .plate .t{font-size:1.04rem;line-height:1.55}
 html[data-font="nastaliq"] .plate[data-cat="start"] .t{font-size:1.12rem}
 html[data-font="nastaliq"] .plate .d{font-size:.92rem;line-height:1.85}
-.shell{max-width:46rem;margin:0 auto;padding:0 clamp(18px,5vw,40px) 72px}
+.shell{max-width:46rem;margin:0 auto;padding:0 var(--shell-pad-x) 72px}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
 [hidden]{display:none !important}
@@ -3658,7 +3665,7 @@ html[dir="rtl"] .prodview .ptools-door .pdoor-go{transform:scaleX(-1)}
 /* AIM-123 owns tabbar invert (#146). Do not reassert .tabbar background here —
    AIM-115 `.tabbar{background:var(--ink-deep)!important}` currently flattens the invert. */
 .tbb.tbhome svg{display:none}
-.tbring{display:grid;place-items:center;width:46px;height:46px;margin-top:-20px;border-radius:50%;
+.tbring{display:grid;place-items:center;width:var(--tab-ring,46px);height:var(--tab-ring,46px);margin-top:calc(var(--tab-ring,46px) * -.42);border-radius:50%;
   background:var(--ink-raise);box-shadow:0 0 0 1.5px color-mix(in srgb,var(--teal-live) 55%,transparent),0 6px 18px -6px rgba(11,35,65,.55);transition:box-shadow .2s}
 .tbring img{width:26px;height:26px}
 /* Shared home ring = teal metal only (no purple multi-glow). Home craft #434 may refine further. */
@@ -3684,8 +3691,8 @@ body.has-tabbar #back{display:none}
 :root:not([data-theme="dark"]) .tbb .dot{box-shadow:0 0 0 2px var(--ink-deep)}
 html[data-font="nastaliq"] .tbb span,html[data-font="naskh"] .tbb span{line-height:1.9;overflow:visible;font-size:.74rem;margin-top:-4px}
 html[data-font="nastaliq"] .tbb,html[data-font="naskh"] .tbb{padding-bottom:4px}
-body.has-tabbar{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
-body.has-tabbar #pille{bottom:calc(90px + env(safe-area-inset-bottom))}
+body.has-tabbar{padding-bottom:var(--tab-clear)}
+body.has-tabbar #pille{bottom:calc(var(--tab-clear) + 6px)}
 /* #178 (founder 19.10 03:45 «menyen nederst … dårlig tech, folk ser den ikke alltid, men ikke gigantisk»):
    flytende, avrundet linje litt inn fra kantene - skiller seg tydelig fra innholdet uten aa bli stoerre.
    Aktiv fane faar en myk «pille» bak ikon og tekst, saa man ser hvor man er uten aa lete etter en strek. */
@@ -3694,16 +3701,16 @@ body.has-tabbar #pille{bottom:calc(90px + env(safe-area-inset-bottom))}
 @media (min-width:600px){.tabbar{inset-inline:0;width:min(560px,calc(100% - 20px))}}
 :root[data-theme="dark"] .tabbar{box-shadow:0 10px 30px -6px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.08)}
 :root:not([data-theme="dark"]) .tabbar{box-shadow:0 10px 30px -8px rgba(10,16,40,.45)}
-.tbb{min-height:58px;padding:8px 2px 7px;gap:3px}
+.tbb{min-height:var(--tab-min-h);padding:6px 1px 5px;gap:2px}
 .tbb[aria-current="page"]::before{display:none}
-.tbb:not(.tbhome)::after{content:"";position:absolute;top:6px;left:50%;width:46px;height:28px;margin-left:-23px;border-radius:14px;
+.tbb:not(.tbhome)::after{content:"";position:absolute;top:5px;left:50%;width:42px;height:26px;margin-left:-21px;border-radius:13px;
   background:transparent;transition:background .2s;z-index:-1}
 .tbb{isolation:isolate}
 /* AIM-188: active tab wash = teal brand (not purple-blue Claude pill). */
 :root[data-theme="dark"] .tbb[aria-current="page"]:not(.tbhome)::after{background:var(--nav-wash)}
 :root:not([data-theme="dark"]) .tbb[aria-current="page"]:not(.tbhome)::after{background:var(--nav-wash-light)}
 .tbb[aria-current="page"] span{font-weight:800}
-.tbring{margin-top:-18px;width:48px;height:48px}
+.tbring{margin-top:calc(var(--tab-ring) * -.38);width:var(--tab-ring);height:var(--tab-ring)}
 .tabbar .tbprog{top:auto;bottom:3px;inset-inline:26px;height:2px;border-radius:2px;overflow:hidden}
 @media (prefers-reduced-motion:no-preference){.tbb svg{transition:transform .15s ease}}
 #pille{position:fixed;left:50%;bottom:max(22px,env(safe-area-inset-bottom));z-index:99;pointer-events:none;
@@ -5062,6 +5069,181 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) #academy 
 @media (max-width:380px){
   #academy.acorridor > details > summary{gap:12px;padding-inline:2px !important}
 }
+
+/* =============================================================================
+   AIM-224 — small-phone / old-phone mobile pass (live hub only; never #379).
+   Own shared tokens + chrome density. Feature copy/layout → AIM-220–223.
+   Measure: 320 · 360 · 390 × short heights · EN+UR · light/dark.
+   ============================================================================= */
+
+/* Portals (#home-tree) are Home-only. Measured on Start @320: tree stayed
+   visible (440 px) under sticky #vhead → clipped guide-lede + fake “home on
+   every tab”. Hide off menu; leave Share/portal markup to AIM-222. */
+.shell:not([data-view="menu"]) #home-tree,
+.shell:not([data-view="menu"]) .htree{display:none !important}
+/* Short phones: sticky folder heads eat the first lede after tab scroll
+   (measured Start @320: vhead 92 overlays guide-lede top 15). Keep sticky
+   on taller viewports; on SE/J-class use in-flow compact heads. */
+@media (max-height:700px){
+  .shell[data-view="start"] #vhead,
+  .shell[data-view="learn"] #vhead,
+  .shell[data-view="faq"] #vhead,
+  .shell[data-view="tools"] #vhead,
+  .shell[data-view="earn"] #vhead,
+  .prodview .vhead{
+    position:static;top:auto;-webkit-backdrop-filter:none;backdrop-filter:none;
+    padding:6px 2px 8px;margin:0 0 8px}
+}
+.shell[data-view="start"] #vhead{padding:8px 2px 8px;margin-bottom:6px}
+.shell[data-view="start"] #s-guide{padding-top:2px;padding-bottom:var(--space-4)}
+.shell[data-view="start"] #guide,
+.shell[data-view="start"] #s-guide .setupvids,
+.shell[data-view="learn"] #academy,
+.shell[data-view="faq"] .qa,
+.prodview{
+  padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+html{scroll-padding-bottom:var(--tab-clear);scroll-padding-top:8px}
+/* More sheet: clear floating tab without crushing last rows. */
+.mspanel{
+  bottom:calc(max(8px,env(safe-area-inset-bottom,0px)) + var(--tab-min-h) + 8px);
+  max-height:min(72dvh, calc(100dvh - var(--tab-clear) - 24px))}
+
+@media (max-width:390px){
+  :root{
+    --folder-vhead-m:2px 0 8px;
+    --folder-vhead-p:2px 0 0;
+    --folder-hair-w:1.85rem;
+    --folder-hair-h:2px;
+    --folder-sub-max:34ch;
+    --r-card:14px;--r-btn:12px;--r-tool:11px;
+  }
+  .shell{padding-bottom:calc(56px + env(safe-area-inset-bottom,0px))}
+  .mast{padding-top:max(10px,env(safe-area-inset-top,0px));gap:6px}
+  .mast .wordmark{padding-bottom:8px;gap:8px}
+  .switch .langbtn{padding:6px 9px}
+  .switch .thm{padding:6px 9px;min-width:36px}
+  /* Tabbar: keep ≥44 tap without giant chrome on SE/320. */
+  .tabbar .tbrow .tbb{padding:7px 0 6px;gap:2px}
+  html .tabbar .tbrow .tbb span{
+    font-size:var(--fs-nav);line-height:1.15;max-width:100%;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tbring img{width:22px;height:22px}
+  .mspanel{
+    inset-inline:8px;bottom:calc(max(6px,env(safe-area-inset-bottom)) + 58px);
+    max-height:min(74dvh,calc(100dvh - 86px));padding:8px;border-radius:18px}
+  .msb{min-height:var(--tap-min);padding:8px 10px}
+  .mgruppe{margin:var(--space-3) 0 var(--space-1);padding-top:var(--space-2);gap:6px}
+  /* Folder heads / products / academy — inherit fluid tokens, contain frame. */
+  .shell[data-view="learn"] #vhead .vtx b,
+  .shell[data-view="faq"] #vhead .vtx b,
+  .shell[data-view="tools"] #vhead .vtx b,
+  .shell[data-view="earn"] #vhead .vtx b,
+  .shell[data-view="start"] #vhead .vtx b,
+  .prodview .vhead .vtx b{font-size:var(--fs-folder);max-width:min(16ch,100%)}
+  .prodview .vhead .vtx span,
+  .shell[data-view="learn"] #vhead .vtx span,
+  .shell[data-view="faq"] #vhead .vtx span,
+  .shell[data-view="start"] #vhead .vtx span{font-size:var(--fs-lede);max-width:var(--folder-sub-max)}
+  .pgrid-corridor.pshelf > .pcard.pfeat{padding:16px 14px 14px}
+  .pgrid-corridor.pshelf > .pcard.pstep{padding:14px 12px}
+  .pgrid-corridor.pshelf .pcard .pt{font-size:clamp(1.15rem,4.5vw,1.45rem)}
+  .pgrid-corridor.pshelf .pcard .pd{font-size:clamp(.9rem,3.2vw,1.02rem);line-height:1.45}
+  .pgrid-corridor.pshelf .pcta{min-height:var(--tap-min);padding:10px 14px;font-size:.92rem}
+  #academy.acorridor > details > summary{gap:10px;padding:12px 2px 12px !important}
+  #academy .ltx .lt{font-size:clamp(.95rem,3.6vw,1.06rem)}
+  #academy .ltx .sub{font-size:clamp(.82rem,3vw,.9rem)}
+  #academy .lic{width:1.6rem;height:1.6rem;border-radius:8px;font-size:.64rem}
+  .shell[data-view="menu"] .htree .hta{
+    min-height:var(--tap-min);padding:7px 8px 7px 7px;gap:8px;
+    grid-template-columns:32px minmax(0,1fr) auto;margin-bottom:3px}
+  .shell[data-view="menu"] .htree .hti,
+  .shell[data-view="menu"] .htree .hti.glyph{width:28px;height:28px;border-radius:8px}
+  .shell[data-view="menu"] .htree .htn b{font-size:.88rem}
+  .shell[data-view="menu"] .htree .htn span{font-size:.7rem}
+  .shell[data-view="menu"] .htree .htref{padding-inline-start:40px;font-size:.68rem;margin:-2px 0 4px}
+  html[dir="rtl"] .shell[data-view="menu"] .htree .htref{padding-inline-start:2px;padding-inline-end:40px}
+  .shell[data-view="menu"] .hero{padding:12px 0 2px}
+  .shell[data-view="menu"] .hero h1{font-size:clamp(1.35rem,5.6vw,1.85rem)}
+  .shell[data-view="menu"] .hero p#hsub{margin-top:4px;font-size:.8rem;line-height:1.35;max-width:34ch}
+  .shell[data-view="menu"] .apstage{width:44px;height:44px}
+  .shell[data-view="menu"] .apstage .mono{width:34px;height:34px}
+  .shell[data-view="menu"] .wordmark .wm{font-size:18px}
+  .shell[data-view="faq"] .qa summary,
+  .qa summary{padding-block:12px}
+  .guide > li{padding-inline:0}
+  .prodview{padding-bottom:var(--tab-clear)}
+  .shell[data-view="start"] #guide > li,
+  .shell[data-view="start"] .guide > li{scroll-margin-bottom:var(--tab-clear)}
+}
+@media (max-width:360px){
+  :root{
+    --shell-pad-x:clamp(10px,3.4vw,14px);
+    --tab-min-h:50px;
+    --tab-ring:40px;
+    --tab-clear:calc(72px + env(safe-area-inset-bottom,0px));
+  }
+  .tabbar{padding-inline:2px}
+  html .tabbar .tbrow .tbb span{letter-spacing:-.02em}
+  .shell[data-view="menu"] #notice-none{padding:10px 0 6px}
+  .shell[data-view="menu"] #notice-none .slab.reg,
+  .shell[data-view="menu"] #spon > .slab.reg{min-height:var(--tap-min);padding:10px 12px}
+  .pgrid-corridor.pshelf .pfacts .pf{font-size:.8rem}
+  .mspanel{inset-inline:6px;padding:6px}
+  .msgrid{gap:5px}
+}
+@media (max-width:320px){
+  :root{
+    --shell-pad-x:10px;
+    --fs-nav:.58rem;
+    --tab-min-h:48px;
+    --tab-ring:36px;
+    --tab-clear:calc(68px + env(safe-area-inset-bottom,0px));
+    --space-5:12px;
+  }
+  .shell[data-view="menu"] .apstage{width:40px;height:40px}
+  .shell[data-view="menu"] .apstage .mono{width:30px;height:30px}
+  .shell[data-view="menu"] .htree .hta{
+    grid-template-columns:28px minmax(0,1fr) auto;gap:6px;padding:6px 6px}
+  .shell[data-view="menu"] .htree .hti,
+  .shell[data-view="menu"] .htree .hti.glyph{width:26px;height:26px}
+  .shell[data-view="menu"] .htree .htg{width:20px;height:20px;font-size:.8rem}
+  .tbring img{width:20px;height:20px}
+  .pgrid-corridor.pshelf > .pcard.pfeat{padding:14px 12px 12px}
+  .pgrid-corridor.pshelf .pcta{max-width:100%}
+  /* Long tab labels: allow slightly smaller without clipping glyphs. */
+  html .tabbar .tbrow .tbb span{font-size:.58rem}
+  html[data-font="nastaliq"] .tbb span,
+  html[data-font="naskh"] .tbb span{font-size:.62rem;line-height:1.55;margin-top:-2px}
+}
+/* Short old phones (SE / Galaxy J) — reclaim vertical chrome first. */
+@media (max-height:640px){
+  .shell[data-view="menu"] .mast .wordmark{padding-bottom:6px}
+  .shell[data-view="menu"] .hero{padding:8px 0 0}
+  .shell[data-view="menu"] .hero h1::after{margin-top:4px}
+  .shell[data-view="menu"] .htree{margin-top:6px}
+  .shell[data-view="menu"] #home-tree.htree{margin-top:6px}
+  html:has(.shell[data-view="menu"]) .skyline{top:72px;height:100px;opacity:.55}
+  .shell[data-view="learn"] #vhead,
+  .shell[data-view="faq"] #vhead,
+  .shell[data-view="start"] #vhead,
+  .prodview .vhead{margin-top:2px}
+  .mspanel{max-height:min(70dvh,calc(100dvh - 78px))}
+}
+@media (max-height:568px){
+  :root{--tab-clear:calc(70px + env(safe-area-inset-bottom,0px))}
+  .shell[data-view="menu"] .hero p#hsub{display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .shell[data-view="menu"] .htree .hta{min-height:40px;padding-block:5px}
+  .shell[data-view="menu"] .htree .htn span{display:none} /* subtitles eat the fold on SE */
+  .mspanel{max-height:min(68dvh,calc(100dvh - 72px))}
+}
+/* Universal overflow guards — siblings’ feature blocks still fit the frame. */
+.shell,.shell .htree,.shell .prodview,.shell #academy,.mspanel,.msb,.pcard,.hta{
+  max-width:100%;box-sizing:border-box}
+.shell .hta,.shell .msb,.shell .pcta,.shell .slab.reg,.tbb{
+  min-width:0}
+.shell[data-view] #vhead .vtx b,
+.prodview .vhead .vtx b{
+  overflow-wrap:anywhere;word-break:break-word}
 </style>
 </head>
 <body>
