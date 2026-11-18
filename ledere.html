@@ -4291,14 +4291,15 @@ body{background:transparent}
   background:color-mix(in srgb,var(--ink-deep) 92%,#B8C6D8) !important;
   border-color:var(--rule);
   box-shadow:0 8px 18px -16px rgba(31,42,60,.28) !important}
+/* AIM-252: light Home portals are hairline (not raised mist cards) — see craft block below. */
 :root:not([data-theme="dark"]) .shell[data-view="menu"] .htree .hta{
-  background:var(--ink-raise);
-  border-color:color-mix(in srgb,var(--rule) 65%,var(--chalk) 12%);
-  box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 6px 14px -12px rgba(31,42,60,.2)}
+  background:transparent;
+  border-color:var(--rule);
+  box-shadow:none}
 :root:not([data-theme="dark"]) .shell[data-view="menu"] .htree .hta.htshare,
 :root:not([data-theme="dark"]) .shell[data-view="menu"] .htree .hta[data-k="share"]{
-  border-color:color-mix(in srgb,var(--brand-gold) 38%,var(--rule));
-  background:color-mix(in srgb,var(--brand-gold) 6%,var(--ink-raise))}
+  border-color:transparent;
+  background:color-mix(in srgb,var(--brand-gold) 5%,transparent)}
 :root:not([data-theme="dark"]) .learn details,
 :root:not([data-theme="dark"]) .qa,
 :root:not([data-theme="dark"]) .plate,
@@ -5682,6 +5683,127 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
   .shell[data-view="menu"] .hero h1::after{width:2.75rem}
 }
 
+/* =============================================================================
+   AIM-252 — Home portals + Start/Element trail (post-#464/#465)
+   Hairline corridor (match Academy/Ask), light comfort, portal hierarchy,
+   phase `.view` when on Element. Never #379. No YouTube.
+   ============================================================================= */
+.shell[data-view="menu"] .htree .hta,
+.shell[data-view="menu"] .htree .hta:first-of-type,
+.shell[data-view="menu"] .htree .hta:last-of-type{
+  display:grid !important;grid-template-columns:32px minmax(0,1fr) auto !important;
+  align-items:center;gap:12px;
+  width:100%;max-width:100%;box-sizing:border-box;
+  min-height:48px;margin:0 !important;padding:12px 2px !important;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;
+  box-shadow:none !important;transform:none}
+.shell[data-view="menu"] .htree .hta:first-of-type{
+  border-top:1px solid var(--rule) !important}
+.shell[data-view="menu"] .htree .hta:hover,
+.shell[data-view="menu"] .htree .hta:focus-visible{
+  background:color-mix(in srgb,var(--teal-live) 5%,transparent) !important;
+  border-color:var(--rule) !important;transform:none}
+.shell[data-view="menu"] .htree .hta:active{
+  opacity:.78;transform:none !important}
+.shell[data-view="menu"] .htree .hti,
+.shell[data-view="menu"] .htree .hti.glyph{
+  width:28px !important;height:28px !important;border-radius:8px;
+  box-shadow:none}
+.shell[data-view="menu"] .htree .htn b{
+  font:700 .94rem/1.25 "Archivo",var(--display);letter-spacing:-.015em}
+.shell[data-view="menu"] .htree .htn span{
+  font:500 .78rem/1.35 var(--face);color:var(--chalk-dim)}
+.shell[data-view="menu"] .htree .htg{
+  width:auto !important;height:auto !important;min-width:0;padding:0;
+  border:0 !important;border-radius:0 !important;background:transparent !important;
+  font:600 1.05rem/1 var(--display);color:var(--chalk-dim);opacity:.7}
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta{
+  background:transparent !important;box-shadow:none !important}
+/* Share lead — gold inset tick, not a raised card. */
+.shell[data-view="menu"] .htree .hta.htshare,
+.shell[data-view="menu"] .htree .hta[data-k="share"]{
+  min-height:52px !important;padding:13px 2px 13px 10px !important;
+  border-inline-start:2px solid var(--brand-gold) !important;
+  background:color-mix(in srgb,var(--brand-gold) 5%,transparent) !important;
+  box-shadow:none !important}
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta.htshare,
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta[data-k="share"]{
+  border-inline-start-color:var(--brand-gold) !important;
+  background:color-mix(in srgb,var(--brand-gold) 8%,transparent) !important}
+.shell[data-view="menu"] .htree .hta.htshare:hover,
+.shell[data-view="menu"] .htree .hta.htshare:focus-visible,
+.shell[data-view="menu"] .htree .hta[data-k="share"]:hover,
+.shell[data-view="menu"] .htree .hta[data-k="share"]:focus-visible{
+  background:color-mix(in srgb,var(--brand-gold) 10%,transparent) !important;
+  border-color:var(--rule) !important}
+.shell[data-view="menu"] .htree .hta.htshare .htn b,
+.shell[data-view="menu"] .htree .hta[data-k="share"] .htn b{
+  font:800 .98rem/1.22 "Archivo",var(--display);letter-spacing:-.02em}
+.shell[data-view="menu"] .htree .hta.htshare .htg,
+.shell[data-view="menu"] .htree .hta[data-k="share"] .htg{
+  color:var(--brand-gold-deep);opacity:.95;background:transparent !important;border:0 !important}
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta.htshare .htg,
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta[data-k="share"] .htg{
+  color:var(--brand-gold)}
+/* Hierarchy: login → stay → optional. Gap only at group start. */
+.shell[data-view="menu"] .htree .hta[data-g="stay"],
+.shell[data-view="menu"] .htree .hta[data-g="more"]{
+  margin-top:6px !important;padding-top:14px !important}
+.shell[data-view="menu"] .htree .hta[data-g="stay"] + .hta[data-g="stay"],
+.shell[data-view="menu"] .htree .hta[data-g="more"] + .hta[data-g="more"]{
+  margin-top:0 !important;padding-top:12px !important}
+.shell[data-view="menu"] .htree .htref{
+  margin:2px 0 4px;padding:0 2px 0 42px;font:500 .74rem/1.4 var(--face);
+  color:var(--chalk-dim);max-width:40ch}
+html[dir="rtl"] .shell[data-view="menu"] .htree .htref{padding:0 42px 0 2px}
+/* Light comfort — quieter newcomer plate under hero. */
+html[data-theme="light"] .shell[data-view="menu"] #notice-none{
+  padding:8px 2px 4px}
+html[data-theme="light"] .shell[data-view="menu"] #notice-none p#nn-b{
+  color:color-mix(in srgb,var(--chalk) 78%,var(--chalk-dim));font-size:.84rem;line-height:1.45}
+html[data-theme="light"] .shell[data-view="menu"] .htree .htt{
+  opacity:.85}
+html[data-theme="light"] .shell[data-view="menu"] .htree .htn span{
+  color:color-mix(in srgb,var(--chalk-dim) 92%,#5a6578)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="menu"] .htree .htn b{font-family:var(--face);font-weight:700}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="menu"] .htree .hta.htshare .htn b,
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="menu"] .htree .hta[data-k="share"] .htn b{
+  font-family:var(--face);font-weight:800}
+
+/* Start: softer light wash + phase `.view` (Element trail). */
+html[data-theme="light"] .shell[data-view="start"] #s-guide{
+  border-radius:12px;border-color:color-mix(in srgb,var(--chalk) 6%,var(--rule));
+  background:color-mix(in srgb,#F4F6F9 88%,#fff);
+  box-shadow:0 6px 18px -12px rgba(31,42,60,.18)}
+.shell[data-view="start"] #s-guide .shpath li.view .e{
+  background:color-mix(in srgb,var(--teal-live) 22%,var(--ink-raise));
+  color:var(--teal-ink);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--teal-live) 42%,var(--rule))}
+:root[data-theme="dark"] .shell[data-view="start"] #s-guide .shpath li.view .e{
+  color:var(--teal-live);
+  background:color-mix(in srgb,var(--teal-live) 16%,var(--ink-raise))}
+.shell[data-view="start"] #s-guide .shpath li.view .t{
+  color:var(--teal-live);font-weight:800}
+.shell[data-view="start"] #s-guide .shpath .t{
+  font:650 .6rem/1.2 var(--face);white-space:normal;overflow:visible;text-overflow:clip;
+  display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical}
+/* Element own step — store doors calm teal (not rainbow Claude border). */
+.shell[data-view="start"] #guide > li.current .eljoin .apps a,
+.shell[data-view="start"] #st-18 .eljoin .apps a{
+  border:1px solid color-mix(in srgb,var(--teal-live) 38%,var(--rule)) !important;
+  background:color-mix(in srgb,var(--teal-live) 6%,var(--ink-raise)) !important;
+  box-shadow:none !important;color:var(--chalk) !important}
+html[data-theme="light"] .shell[data-view="start"] #guide > li.current .eljoin .apps a,
+html[data-theme="light"] .shell[data-view="start"] #st-18 .eljoin .apps a{
+  background:color-mix(in srgb,var(--teal-live) 5%,#fff) !important}
+/* Folder path sub: mark current phase word when synced. */
+.shell[data-view="start"] #vhead .vtx span .vpath-on{
+  color:var(--teal-live);font-weight:700}
+
 /* Hard contain — CTAs/portals never escape 360 frame. */
 .shell[data-view="menu"] .notices,
 .shell[data-view="menu"] #notice-none,
@@ -6620,6 +6742,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.3eafc880af.js" defer></script>
+<script src="app-l.c25139c58c.js" defer></script>
 </body>
 </html>
