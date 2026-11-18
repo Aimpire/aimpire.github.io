@@ -5804,7 +5804,186 @@ html[data-theme="light"] .shell[data-view="start"] #st-18 .eljoin .apps a{
 .shell[data-view="start"] #vhead .vtx span .vpath-on{
   color:var(--teal-live);font-weight:700}
 
-/* Hard contain — CTAs/portals never escape 360 frame. */
+/* =============================================================================
+   AIM-253 — More→Tools / journal / market hours + Products chrome leftovers
+   after #466 Home hairline + #461 Sonic kept-value. Match Academy/Ask/Home
+   corridor grammar: no raised jump pills, no soft product cards.
+   Never #379. No YouTube.
+   ============================================================================= */
+
+/* Tools jump — flush hairline strip (not floating 14px pill bar). */
+.shell[data-view="tools"] #topbar{
+  top:0 !important;margin:0 !important;margin-inline:0 !important;
+  padding-block:6px !important;padding-inline:0 !important;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;
+  box-shadow:none !important;
+  -webkit-backdrop-filter:none !important;backdrop-filter:none !important}
+:root:not([data-theme="dark"]) .shell[data-view="tools"] #topbar,
+html[data-theme="light"] .shell[data-view="tools"] #topbar{
+  background:transparent !important;box-shadow:none !important}
+.shell[data-view="tools"] .topbar .jump,
+.shell[data-view="tools"] #jump,
+html[dir="rtl"] .shell[data-view="tools"] .topbar .jump{
+  display:grid !important;grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  grid-auto-flow:unset !important;grid-auto-columns:unset !important;
+  gap:0 !important;padding:0 !important;margin:0 !important;
+  border:0;border-block:1px solid var(--rule);background:transparent;
+  -webkit-mask-image:none !important;mask-image:none !important;overflow:visible}
+.shell[data-view="tools"] .jump button,
+.shell[data-view="tools"] .topbar .jump button{
+  flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  min-height:52px !important;padding:8px 3px 10px !important;
+  border:0 !important;border-inline-end:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;
+  box-shadow:none !important;color:var(--chalk-dim) !important;
+  font-weight:650 !important;font-size:.66rem !important;line-height:1.2 !important;
+  letter-spacing:-.02em !important;hyphens:manual !important;-webkit-hyphens:none !important}
+.shell[data-view="tools"] .topbar .jump button .tl{
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;
+  overflow:hidden;overflow-wrap:normal;word-break:normal;white-space:normal;max-width:100%}
+.shell[data-view="tools"] .jump button:last-child,
+.shell[data-view="tools"] .topbar .jump button:last-child{border-inline-end:0 !important}
+.shell[data-view="tools"] .topbar .jump button .ti{font-size:1.15rem;line-height:1;opacity:.88}
+.shell[data-view="tools"] .jump button[aria-selected="true"],
+.shell[data-view="tools"] .topbar .jump button[aria-selected="true"]{
+  color:var(--chalk) !important;font-weight:750 !important;
+  background:color-mix(in srgb,var(--teal-live) 6%,transparent) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+.shell[data-view="tools"] .jump button[aria-selected="true"] .ti,
+.shell[data-view="tools"] .topbar .jump button[aria-selected="true"] .ti{
+  opacity:1;color:var(--teal-live)}
+html[data-theme="light"] .shell[data-view="tools"] .jump button[aria-selected="true"],
+html[data-theme="light"] .shell[data-view="tools"] .topbar .jump button[aria-selected="true"]{
+  background:color-mix(in srgb,var(--teal-live) 8%,transparent) !important}
+html[data-font="nastaliq"] .shell[data-view="tools"] .topbar .jump button,
+html[data-font="naskh"] .shell[data-view="tools"] .topbar .jump button{
+  min-height:56px !important;padding-block:8px 10px !important}
+
+/* Market hours — timeline is lanes, not a raised mist card. */
+.shell[data-view="tools"][data-tab="hours"] .ssbar{
+  margin:2px 0 10px !important;padding:10px 2px 8px !important;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+.shell[data-view="tools"][data-tab="hours"] .ssbar .lane .tr{
+  height:9px;border-radius:3px;
+  background:color-mix(in srgb,var(--rule) 70%,transparent)}
+.shell[data-view="tools"][data-tab="hours"] .ssbar .lane.on .tr i{
+  box-shadow:none;opacity:1}
+.shell[data-view="tools"][data-tab="hours"] .sslist li.on{
+  border-inline-start:2px solid var(--c);
+  background:color-mix(in srgb,var(--c) 6%,transparent);
+  padding-inline-start:10px}
+.shell[data-view="tools"][data-tab="hours"] .ssnow,
+.shell[data-view="tools"][data-tab="hours"] .ssyou{
+  font:650 .86rem/1.4 var(--face);color:var(--chalk-dim);margin:0 0 6px}
+html[data-theme="light"] .shell[data-view="tools"][data-tab="hours"] .ssbar .nowl{
+  background:#1F2A3C;box-shadow:none}
+html[data-theme="light"] .shell[data-view="tools"][data-tab="hours"] #s-market > h2,
+html[data-theme="light"] .shell[data-view="tools"][data-tab="hours"] #s-sessions > h2{
+  color:color-mix(in srgb,var(--chalk-dim) 92%,#5a6578)}
+
+/* Journal — growth figure + form stay hairline; empty list quiet. */
+.shell[data-view="tools"][data-tab="journal"] #s-growth .grfig,
+.shell[data-view="tools"][data-tab="journal"] #s-growth .grfig img{
+  border-radius:0;border:0;border-block:1px solid var(--rule);background:transparent}
+.shell[data-view="tools"][data-tab="journal"] #s-growth .grout{
+  font:800 1.08rem/1.3 "Archivo",var(--display);letter-spacing:-.02em;color:var(--chalk)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="tools"][data-tab="journal"] #s-growth .grout{font-family:var(--face)}
+.shell[data-view="tools"][data-tab="journal"] #s-journal .jnlist:empty::after,
+.shell[data-view="tools"][data-tab="journal"] #s-journal .jnempty{
+  display:block;padding:14px 2px;border-bottom:1px solid var(--rule);
+  font:500 .86rem/1.45 var(--face);color:var(--chalk-dim)}
+.shell[data-view="tools"][data-tab="journal"] .psinst{
+  display:flex;flex-wrap:wrap;gap:0;margin:0 0 var(--space-2);
+  border-block:1px solid var(--rule)}
+.shell[data-view="tools"][data-tab="journal"] .psinst button{
+  flex:1 1 auto;min-width:4.5rem;border-radius:0 !important;border:0 !important;
+  border-inline-end:1px solid var(--rule) !important;background:transparent !important;
+  min-height:40px;box-shadow:none}
+.shell[data-view="tools"][data-tab="journal"] .psinst button:last-child{border-inline-end:0 !important}
+.shell[data-view="tools"][data-tab="journal"] .psinst button[aria-pressed="true"]{
+  color:var(--chalk) !important;
+  background:color-mix(in srgb,var(--teal-live) 8%,transparent) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+html[data-theme="light"] .shell[data-view="tools"][data-tab="journal"] #s-growth .grol{
+  color:color-mix(in srgb,var(--chalk-dim) 90%,#5a6578)}
+
+/* Products chrome — Sonic stage + Tools door match Home hairline (not mist cards). */
+.pgrid-corridor.pshelf > .pcard.pstep,
+.pgrid-corridor.pshelf > .pcard.pfeat{
+  margin:0;padding:16px 2px 14px !important;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+:root:not([data-theme="dark"]) .pgrid-corridor.pshelf > .pcard.pstep,
+:root:not([data-theme="dark"]) .pgrid-corridor.pshelf > .pcard.pfeat,
+html[data-theme="light"] .pgrid-corridor.pshelf > .pcard.pstep,
+html[data-theme="light"] .pgrid-corridor.pshelf > .pcard.pfeat{
+  background:transparent !important;box-shadow:none !important;
+  border-color:var(--rule) !important}
+:root[data-theme="dark"] .pgrid-corridor.pshelf > .pcard.pstep,
+:root[data-theme="dark"] .pgrid-corridor.pshelf > .pcard.pfeat{
+  background:transparent !important;box-shadow:none !important}
+.pgrid-corridor.pshelf > .pcard.pfeat{
+  padding-top:18px !important;
+  border-inline-start:2px solid var(--brand-gold) !important;
+  padding-inline-start:12px !important;
+  background:color-mix(in srgb,var(--brand-gold) 5%,transparent) !important}
+:root[data-theme="dark"] .pgrid-corridor.pshelf > .pcard.pfeat{
+  border-inline-start-color:var(--brand-gold) !important;
+  background:color-mix(in srgb,var(--brand-gold) 7%,transparent) !important}
+.pgrid-corridor.pshelf > .pcard.pfeat::before{display:none !important;content:none !important}
+.pgrid-corridor.pshelf .plive{
+  border-radius:0;padding:4px 0;background:transparent;
+  color:var(--teal-live);letter-spacing:.04em}
+:root:not([data-theme="dark"]) .pgrid-corridor.pshelf .plive{color:#09665E}
+.pgrid-corridor.pshelf .plive i{width:6px;height:6px}
+.pgrid-corridor.pshelf .pcta{
+  max-width:100%;margin-top:8px;border-radius:var(--r-btn)}
+.pgrid-corridor.pshelf .prisk{margin-top:8px;max-width:40ch}
+.prodview .ppath{
+  margin:0 0 8px;padding:0 0 10px;border-bottom:1px solid var(--rule);
+  font:650 var(--fs-chip)/1.4 var(--face);color:var(--chalk-dim)}
+/* Tools door — hairline row (door, not second product card). */
+.prodview .ptools-door{
+  display:grid !important;grid-template-columns:minmax(0,1fr) auto !important;
+  align-items:center;column-gap:12px;
+  margin:4px 0 0 !important;padding:14px 2px !important;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;
+  box-shadow:none !important}
+:root:not([data-theme="dark"]) .prodview .ptools-door,
+:root[data-theme="dark"] .prodview .ptools-door,
+html[data-theme="light"] .prodview .ptools-door{
+  background:transparent !important;border-color:var(--rule) !important}
+.prodview .ptools-door:hover,
+.prodview .ptools-door:focus-visible{
+  background:color-mix(in srgb,var(--teal-live) 5%,transparent) !important}
+.prodview .ptools-door .pt{
+  font:700 .94rem/1.25 "Archivo",var(--display);letter-spacing:-.015em}
+.prodview .ptools-door .pd{
+  font:500 .78rem/1.35 var(--face);color:var(--chalk-dim);max-width:36ch}
+.prodview .ptools-door .pdoor-go{
+  width:auto !important;height:auto !important;min-width:0;padding:0;
+  border:0 !important;border-radius:0 !important;background:transparent !important;
+  font:600 1.05rem/1 var(--display);color:var(--chalk-dim);opacity:.7}
+html[dir="rtl"] .prodview .ptools-door .pdoor-go{transform:scaleX(-1)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .prodview .ptools-door .pt{font-family:var(--face);font-weight:700}
+@media (max-width:360px){
+  .shell[data-view="tools"] .topbar .jump button{min-height:50px !important;font-size:.64rem !important}
+  .pgrid-corridor.pshelf > .pcard.pfeat{padding-inline-start:10px !important}
+}
+@media (prefers-reduced-motion:no-preference){
+  .shell[data-view="tools"] .jump button,
+  .shell[data-view="tools"] .topbar .jump button{
+    transition:background .15s ease,box-shadow .15s ease,color .15s ease}
+  .prodview .ptools-door{transition:background .15s ease}
+  .pgrid-corridor.pshelf > .pcard.pfeat{animation:none}
+}
+
+/* Hard contain — CTAs/portals never escape 360 frame. */}
 .shell[data-view="menu"] .notices,
 .shell[data-view="menu"] #notice-none,
 .shell[data-view="menu"] #menu-nav,
