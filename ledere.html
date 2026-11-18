@@ -5983,6 +5983,180 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
   .pgrid-corridor.pshelf > .pcard.pfeat{animation:none}
 }
 
+/* =============================================================================
+   AIM-254 — Invite/IB commission + FAQ More inners after #467.
+   Chips → segmented hairline (no pill cluster). Unlock / equality / ladder /
+   Ali·Sara avatars flatten to corridor grammar. FAQ secondary quieter.
+   Honest B-030 line stays. Never #379. No YouTube.
+   ============================================================================= */
+
+/* IB jump chips — Tools jump grammar, not rounded pill rail. */
+.shell[data-view="ib"] #iq-chips{
+  display:flex !important;flex-wrap:nowrap;gap:0 !important;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  margin:4px 0 12px !important;padding:0 !important;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important}
+.shell[data-view="ib"] #iq-chips::-webkit-scrollbar{display:none}
+.shell[data-view="ib"] .iqchip{
+  flex:1 0 auto;min-width:4.8rem;max-width:9.5rem;
+  min-height:44px !important;padding:8px 8px 10px !important;
+  border:0 !important;border-inline-end:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;
+  box-shadow:none !important;color:var(--chalk-dim) !important;
+  font:650 .7rem/1.2 var(--face) !important;letter-spacing:-.01em;
+  white-space:normal;text-align:center;overflow-wrap:anywhere}
+.shell[data-view="ib"] .iqchip:last-child{border-inline-end:0 !important}
+.shell[data-view="ib"] .iqchip:hover,
+.shell[data-view="ib"] .iqchip:focus-visible{
+  color:var(--chalk) !important;
+  background:color-mix(in srgb,var(--teal-live) 6%,transparent) !important;
+  outline:none}
+.shell[data-view="ib"] .iqchip:focus-visible{
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+.shell[data-view="ib"] .iqchip:active{
+  color:var(--chalk) !important;
+  background:color-mix(in srgb,var(--teal-live) 8%,transparent) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important;transform:none}
+html[data-theme="light"] .shell[data-view="ib"] .iqchip:hover,
+html[data-theme="light"] .shell[data-view="ib"] .iqchip:focus-visible,
+html[data-theme="light"] .shell[data-view="ib"] .iqchip:active{
+  background:color-mix(in srgb,var(--teal-live) 8%,transparent) !important}
+html:is([data-font="nastaliq"],[data-font="naskh"]) .shell[data-view="ib"] .iqchip{
+  min-height:48px !important;font-size:.74rem !important;line-height:1.35 !important}
+
+/* IB example / tree / unlock / equality — hairline, not mist cards or pills. */
+.shell[data-view="ib"] .iqex,
+.shell[data-view="ib"] .iqtree{
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;
+  padding:12px 2px !important;box-shadow:none !important}
+.shell[data-view="ib"] .iqwho .avi{
+  width:32px;height:32px;flex:0 0 32px;border-radius:0 !important;
+  background:color-mix(in srgb,var(--teal-live) 14%,transparent) !important;
+  color:var(--chalk) !important;font:800 .85rem/1 var(--display) !important;
+  border:1px solid color-mix(in srgb,var(--teal-live) 35%,var(--rule))}
+.shell[data-view="ib"] .iqic{
+  width:28px !important;height:28px !important;border-radius:0 !important;
+  background:color-mix(in srgb,var(--teal-live) 10%,transparent) !important;
+  color:var(--chalk) !important;border:1px solid var(--rule)}
+.shell[data-view="ib"] .iq-coin .iqic{
+  background:color-mix(in srgb,var(--brand-gold) 16%,transparent) !important;
+  border-color:color-mix(in srgb,var(--brand-gold) 40%,var(--rule));color:var(--chalk) !important}
+.shell[data-view="ib"] .iqic svg{width:16px;height:16px}
+.shell[data-view="ib"] .iqucard{
+  border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;
+  padding:12px 2px !important;gap:10px}
+.shell[data-view="ib"] .iqucard .lock{font-size:1.1rem;opacity:.7}
+.shell[data-view="ib"] .iqva{
+  gap:0;margin-top:10px;border-block:1px solid var(--rule);padding:4px 0}
+.shell[data-view="ib"] .iqvc{
+  border:0 !important;border-radius:0 !important;background:transparent !important;
+  padding:12px 6px !important}
+.shell[data-view="ib"] .iqvc .pic .big{
+  width:40px;height:40px;border-radius:0 !important;
+  background:color-mix(in srgb,var(--teal-live) 12%,transparent) !important;
+  color:var(--chalk) !important;border:1px solid var(--rule)}
+.shell[data-view="ib"] .iqveq{
+  margin-top:4px;border-radius:0 !important;padding:10px 2px !important;
+  background:transparent !important;border-top:1px solid var(--rule);
+  color:var(--chalk) !important;font:750 .88rem/1.3 var(--face) !important;
+  box-shadow:inset 0 -2px 0 0 color-mix(in srgb,var(--brand-gold) 70%,transparent)}
+.shell[data-view="ib"] .iqrow .bar,
+.shell[data-view="ib"] .iqrow .bar i{
+  border-radius:2px !important;height:9px}
+.shell[data-view="ib"] .iqtrack{
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;padding:12px 2px !important}
+.shell[data-view="ib"] .iqtrack .step i{border-radius:2px 2px 0 0}
+.shell[data-view="ib"] .iqbtn{
+  border-radius:var(--r-btn) !important;min-height:44px;
+  box-shadow:none !important}
+.shell[data-view="ib"] .iqbtn.ghost{
+  background:transparent !important;border:1px solid var(--cta-quiet-border) !important;
+  color:var(--chalk) !important}
+.shell[data-view="ib"] .iqlvrow .dot{
+  border-radius:2px !important;width:10px;height:10px}
+.shell[data-view="ib"] .iqlvrow .dot.me{
+  width:28px;height:28px;border-radius:0 !important;
+  background:color-mix(in srgb,var(--teal-live) 14%,transparent) !important;
+  border:1px solid var(--rule);color:var(--chalk)}
+.shell[data-view="ib"] #iq-honest{
+  margin:var(--space-4) 0 0;padding:12px 2px;
+  border:0;border-top:1px solid var(--rule);
+  font:500 .86rem/1.5 var(--face);color:var(--chalk-dim);
+  max-width:40ch;text-wrap:pretty}
+/* Reinforce IB foyer tick so commission page matches Academy/Ask. */
+.shell[data-view="ib"] #vhead .vtx b::after{
+  content:"";display:block;width:2.75rem;height:3px;margin-top:10px;border-radius:2px;
+  background:linear-gradient(90deg,var(--brand-gold),color-mix(in srgb,var(--teal-live) 45%,var(--brand-gold))) !important;
+  opacity:1 !important}
+html[dir="rtl"] .shell[data-view="ib"] #vhead .vtx b::after{margin-inline-start:auto}
+
+/* FAQ secondary under Ask — hairline rows, no padded cards / width-stair tiers. */
+.shell[data-view="faq"] #s-help,
+.shell[data-view="faq"] #s-docs,
+.shell[data-view="faq"] #s-values{
+  margin-top:var(--space-5);padding-top:var(--space-3);border-top:1px solid var(--rule)}
+.shell[data-view="faq"] :is(#s-help,#s-docs,#s-values) > h2{
+  margin:0 0 var(--space-2);
+  font:800 var(--fs-label)/1.3 "Archivo",var(--display);font-stretch:90%;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-dim)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="faq"] :is(#s-help,#s-docs,#s-values) > h2{
+  font-family:var(--face);font-stretch:normal;text-transform:none;letter-spacing:0}
+.shell[data-view="faq"] :is(#help-links,#docs-links) .row{
+  margin:0;padding:13px 2px !important;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+.shell[data-view="faq"] :is(#help-links,#docs-links) .row:last-child{border-bottom:0 !important}
+.shell[data-view="faq"] :is(#help-links,#docs-links) .row .t{
+  font:700 .95rem/1.35 var(--face);color:var(--chalk)}
+.shell[data-view="faq"] :is(#help-links,#docs-links) .row .s{
+  font:500 .82rem/1.4 var(--face);color:var(--chalk-dim);max-width:36ch}
+.shell[data-view="faq"] .tiers{margin:0;padding:0;display:grid;gap:0}
+.shell[data-view="faq"] .tiers > li{
+  width:100% !important;margin:0 !important;padding:14px 2px !important;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;
+  border-inline-start:2px solid var(--rule) !important;padding-inline-start:10px !important;
+  gap:10px}
+.shell[data-view="faq"] .tiers > li:nth-child(1){border-inline-start-color:var(--v1) !important}
+.shell[data-view="faq"] .tiers > li:nth-child(2){border-inline-start-color:var(--v2) !important}
+.shell[data-view="faq"] .tiers > li:nth-child(3){border-inline-start-color:var(--v3) !important}
+.shell[data-view="faq"] .tiers > li:nth-child(4){border-inline-start-color:var(--v4) !important}
+.shell[data-view="faq"] .tiers > li:last-child{border-bottom:0 !important}
+.shell[data-view="faq"] .tiers h3{
+  margin:0 0 4px;font:750 .95rem/1.3 var(--face);letter-spacing:-.01em}
+.shell[data-view="faq"] .tiers p{
+  margin:0;font:500 .86rem/1.45 var(--face);color:var(--chalk-dim);max-width:40ch}
+/* FAQ gold tick stays visible (folder solid can win over AIM-251 gradient). */
+.shell[data-view="faq"] #vhead .vtx b::after{
+  width:2.75rem !important;height:3px !important;border-radius:2px;
+  background:linear-gradient(90deg,var(--brand-gold),color-mix(in srgb,var(--teal-live) 50%,var(--brand-gold))) !important;
+  opacity:1 !important}
+html[data-theme="light"] .shell[data-view="faq"] :is(#help-links,#docs-links) .row,
+html[data-theme="light"] .shell[data-view="faq"] .tiers > li,
+html[data-theme="light"] .shell[data-view="ib"] .iqucard,
+html[data-theme="light"] .shell[data-view="ib"] .iqex,
+html[data-theme="light"] .shell[data-view="ib"] .iqtree{
+  background:transparent !important}
+@media (max-width:360px){
+  .shell[data-view="ib"] .iqchip{min-width:4.4rem;max-width:8.2rem;padding:8px 6px 10px !important;font-size:.66rem !important}
+}
+@media (prefers-reduced-motion:no-preference){
+  .shell[data-view="ib"] .iqchip{
+    transition:background .15s ease,box-shadow .15s ease,color .15s ease}
+  .shell[data-view="ib"] #vhead .vtx b::after,
+  .shell[data-view="faq"] #vhead .vtx b::after{
+    animation:brandTickAca .65s .12s cubic-bezier(.2,.7,.3,1) both}
+}
+@media (prefers-reduced-motion:reduce){
+  .shell[data-view="ib"] #vhead .vtx b::after,
+  .shell[data-view="faq"] #vhead .vtx b::after{animation:none !important;width:2.75rem !important}
+}
+
 /* Hard contain — CTAs/portals never escape 360 frame. */}
 .shell[data-view="menu"] .notices,
 .shell[data-view="menu"] #notice-none,
