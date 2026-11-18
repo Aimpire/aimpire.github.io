@@ -863,17 +863,36 @@ html[data-font="nastaliq"] .shell[data-view="learn"] #aca-lede{font-size:1.05rem
 .learn summary .sub{display:block;order:3;flex:1 1 100%;width:auto;height:auto;margin-top:2px;
 
   border:0;border-radius:0;background:none;box-shadow:none;font-weight:400;font-size:.85rem;color:var(--chalk-dim)}
-/* Ordlista som brikker (founder 17.10 20:24 «design og forenkling»): ord-pillene ligger i rader;
-   den som aapnes, legger seg over hele bredden. */
-#learn-list{display:flex !important;flex-wrap:wrap;gap:8px}
-#learn-list > details{flex:0 0 auto;border-radius:999px !important;margin:0 !important;
-  background:linear-gradient(var(--ink-deep),var(--ink-deep)) padding-box,var(--grad) border-box;border:1.5px solid transparent !important}
-#learn-list > details > summary{padding:9px 15px !important;font-size:.9rem !important;border:0 !important}
-#learn-list > details > summary .sub{display:none !important}
-#learn-list > details > summary::after{content:none !important}
-#learn-list > details[open]{flex:1 1 100%;border-radius:16px !important;background:var(--ink-deep);border:1px solid var(--rule) !important}
-#learn-list > details[open] > summary{font-size:1rem !important}
-#learn-list > details[open] > summary::after{content:"\2212" !important;margin-inline-start:auto}
+/* Dictionary corridor — hairline rows (AIM-251). Pill chips retired: prefs ban pill clusters. */
+#learn-list{display:flex !important;flex-direction:column;flex-wrap:nowrap;gap:0;
+  margin:0 0 8px;border-bottom:1px solid var(--rule);max-width:100%;overflow-x:clip}
+#learn-list > details,
+#learn-list > details:not([open]),
+#learn-list > details[open],
+.learn#learn-list > details,
+:root:not([data-theme="dark"]) #learn-list > details,
+:root[data-theme="dark"] #learn-list > details{
+  flex:none !important;margin:0 !important;border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+#learn-list > details:last-child{border-bottom:0 !important}
+#learn-list > details > summary{
+  display:flex !important;flex-wrap:nowrap !important;align-items:flex-start;gap:12px;
+  padding:13px 2px 14px !important;border:0 !important;min-height:0;cursor:pointer}
+#learn-list > details > summary .sub{
+  display:block !important;order:unset;flex:none;width:auto;height:auto;margin:4px 0 0;padding:0;
+  border:0;border-radius:0;background:none;box-shadow:none;
+  font:500 .88rem/1.45 var(--face) !important;color:var(--chalk-dim);max-width:40ch}
+#learn-list > details > summary::after{
+  content:"+" !important;order:4;margin-inline-start:auto;margin-top:2px;
+  color:var(--chalk-dim);font-weight:500;font-size:1rem;line-height:1.5;opacity:.85}
+#learn-list > details[open]{
+  flex:none !important;border-radius:0 !important;background:transparent !important;
+  border-color:color-mix(in srgb,var(--teal-live) 22%,var(--rule)) !important}
+#learn-list > details[open] > summary{
+  font-size:inherit !important;
+  background:color-mix(in srgb,var(--teal-live) 5%,transparent)}
+#learn-list > details[open] > summary::after{content:"\2212" !important;color:var(--teal-ink);opacity:.9}
+:root[data-theme="dark"] #learn-list > details[open] > summary::after{color:var(--teal-live)}
 
 .learn .les .fx{margin:8px 0 0;padding:9px 12px;font-family:var(--mono);font-size:.84rem;line-height:1.6;color:var(--chalk);
   background:var(--ink);border:1px solid var(--rule);border-inline-start:3px solid var(--gold-metal);border-radius:0 5px 5px 0;
@@ -1324,6 +1343,30 @@ html[dir="rtl"] .iqsteps li{padding:14px 58px 14px 14px}
 .sncalc .row.big{margin-top:12px}
 .sncalc .row.big b{font-size:1.6rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .sncalc .cslide{width:100%;margin:10px 0 0}
+/* AIM-245: Sonic kept-preview — same visual weight as Calculator .cbig (value story first). */
+.sncalc.snkept{padding:16px 16px 14px;border-radius:16px;background:var(--ink-deep);border:1px solid var(--rule);
+  display:grid;gap:6px;box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 6%,transparent)}
+:root:not([data-theme="dark"]) .sncalc.snkept{
+  background:#fff;border-color:color-mix(in srgb,var(--rule) 70%,var(--teal-ink));
+  box-shadow:0 1px 0 rgba(255,255,255,.85) inset,0 16px 32px -22px rgba(11,35,65,.2)}
+.sncalc.snkept .row.dep span{font:650 .82rem/1.3 var(--face);color:var(--chalk-dim)}
+.sncalc.snkept .row.dep b{font:800 1.15rem/1 var(--display);color:var(--chalk)}
+.sncalc.snkept .cper{margin:4px 0 2px;justify-content:flex-start}
+.sncalc.snkept .kept-lab{font:650 .8rem/1.3 var(--face);color:var(--chalk-dim);margin-top:6px}
+.sncalc.snkept .kept-val{font:800 2rem/1.05 var(--display);letter-spacing:-.02em;color:var(--chalk);font-variant-numeric:tabular-nums}
+.sncalc.snkept .kept-delta{font:700 .92rem/1.2 var(--display);font-style:normal;justify-self:start}
+.sncalc.snkept .kept-delta.opp{color:#16C784}.sncalc.snkept .kept-delta.ned{color:#EA3943}
+.sncalc.snkept .snmini{display:flex;align-items:flex-end;gap:2px;height:56px;margin:8px 0 2px}
+.sncalc.snkept .snmini i{flex:1 1 0;min-width:0;border-radius:2px 2px 1px 1px;background:linear-gradient(180deg,#15D8C4,#1B4FD8);opacity:.92}
+.sncalc.snkept .row.trade{margin-top:8px;padding-top:10px;border-top:1px solid var(--rule)}
+.sncalc.snkept .row.trade b{font-size:1.05rem;color:var(--chalk-dim);font-weight:700}
+.sncalc.snkept .iqnote{margin:4px 0 0;font-size:.82rem}
+.snkept-go{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;
+  min-height:44px;padding:10px 14px;width:100%;border-radius:var(--r-btn,12px);border:1.5px solid var(--rule);
+  background:transparent;color:var(--chalk);font:800 .9rem/1.15 var(--display);cursor:pointer;text-align:center}
+.snkept-go:active{transform:scale(.985)}
+.snkept-go:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+.shell[data-view="earn"][data-tab="sonic"] .shchip:first-child b{color:var(--gold-soft)}
 .snbar{position:relative;height:14px;margin-top:10px;border-radius:7px;background:var(--grad);opacity:.9;overflow:hidden}
 .snbar i{position:absolute;inset-block:0;inset-inline-start:0;background:#fff;border-radius:7px 0 0 7px;box-shadow:0 0 10px rgba(255,255,255,.7)}
 .snsplit{display:flex;height:64px;border-radius:16px;overflow:hidden}
@@ -1333,6 +1376,31 @@ html[dir="rtl"] .iqsteps li{padding:14px 58px 14px 14px}
 .snsplit b{font:900 1.2rem/1 var(--display)}
 .snsplit span{font-size:.75rem;font-weight:700}
 @media (prefers-reduced-motion:reduce){.snspark i{animation:none}}
+/* AIM-245: Sonic family — results / calc / withdraw share kept-first craft. */
+.shell[data-view="earn"][data-tab="results"] .rsstat div{
+  border-radius:12px;padding:12px 12px 11px;
+  background:color-mix(in srgb,var(--ink-deep) 92%,var(--teal-live))}
+:root:not([data-theme="dark"]) .shell[data-view="earn"][data-tab="results"] .rsstat div{background:#fff}
+.shell[data-view="earn"][data-tab="results"] .rsstat dd{font-size:1.2rem;letter-spacing:-.015em}
+.shell[data-view="earn"][data-tab="results"] .rsfig{
+  margin:8px 0 6px;padding:10px 8px 6px;border-radius:14px;border:1px solid var(--rule);
+  background:var(--ink-deep)}
+:root:not([data-theme="dark"]) .shell[data-view="earn"][data-tab="results"] .rsfig{background:#fff}
+.shell[data-view="earn"][data-tab="calc"] .cbig.cterm{
+  border-radius:16px;padding:16px 16px 18px;
+  box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 6%,transparent)}
+:root:not([data-theme="dark"]) .shell[data-view="earn"][data-tab="calc"] .cbig.cterm{
+  background:#fff;box-shadow:0 1px 0 rgba(255,255,255,.85) inset,0 16px 32px -22px rgba(11,35,65,.18)}
+.shell[data-view="earn"][data-tab="calc"] .cbig.cterm strong{font-size:2.25rem;letter-spacing:-.025em}
+.shell[data-view="earn"][data-tab="withdraw"] .rail > li{
+  padding-bottom:22px}
+.shell[data-view="earn"][data-tab="withdraw"] .rail > li::before{
+  width:28px;height:28px;border-radius:9px;font:800 .82rem/28px var(--display);
+  background:color-mix(in srgb,var(--teal-live) 16%,var(--ink-deep));color:var(--chalk);
+  border:1px solid color-mix(in srgb,var(--teal-live) 35%,var(--rule))}
+.shell[data-view="earn"][data-tab="withdraw"] .shchip:first-child b{color:var(--gold-soft)}
+.kept-hint{margin:8px 0 0;font:650 .86rem/1.4 var(--face);color:var(--chalk-dim);
+  padding:10px 0 0;border-top:1px solid var(--rule)}
 
 .shpath{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(6,1fr);gap:4px;position:relative}
 .shpath::before{content:"";position:absolute;top:21px;inset-inline:8%;height:2px;background:var(--grad);opacity:.5}
@@ -1395,8 +1463,11 @@ html[data-page="leaders"] .tape2,html[data-page="leaders"] .nradar,html[data-pag
 .shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify > p.lede{margin-bottom:8px}
 .shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify .iqflow{margin-top:8px}
 .shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify .iqflow > .iqnode{padding-block:4px}
-.shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify .shchips{margin-top:8px}
-.shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify .shchip{padding-block:8px}
+.shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify .shchips{margin-top:10px}
+.shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify .shchip{padding-block:10px}
+.shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify .sncalc.snkept{margin-top:4px}
+.shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify .snkept-go{margin-bottom:4px}
+.shell[data-view="earn"][data-tab="sonic"] #sh-s-amplify .snsplit{margin-top:4px;height:58px}
 /* #254 (founder 20.10 02:54 «mye som skjer på toppen … mer passe psyken til folk»): Hjem er for å komme i gang, ikke en
    tradingterminal. Kurser, økter og nyhetsradar står på trading-fanene (Verktøy, Produkter); på Hjem samler «Markedene nå»
    det i ett rolig kort lenger ned. Røde/grønne tall øverst er det første en nybegynner ser - det vekker uro, ikke tillit. */
@@ -3442,7 +3513,11 @@ html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
 /* AIM-230: [hidden] must collapse off Home. Old reserve rules kept ~160 px of ghost chrome
    on Tools (sizing/journal/toolkit) even when tape/radar were "off". */
 .tape2[hidden]{display:none !important}
-.shell[data-view="menu"] .tape2[hidden]{display:block !important;visibility:hidden;min-height:41px}
+/* Home CLS reserve: keep height, but never the full-bleed -16px margins — those made
+   document.scrollWidth 364 at 360 viewport (AIM-246 glide post-#461). */
+.shell[data-view="menu"] .tape2[hidden]{
+  display:block !important;visibility:hidden;min-height:41px;
+  margin-inline:0;width:100%;max-width:100%;overflow:hidden;pointer-events:none}
 #switch{min-height:48px}   /* #100: språkknappene bygges av skriptet - plassen holdes, ellers skyves alt ned (CLS 0,17 på lenke-veien) */   /* #100: plassen holdes fra start - ellers skyver kursene innholdet ned (CLS) */
 .tape2 .trk{display:flex;width:max-content;gap:0}
 .tape2 .grp{display:flex;gap:26px;padding-inline-end:26px}
@@ -3469,7 +3544,9 @@ html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
   border:0;border-bottom:1px solid var(--rule);background:color-mix(in srgb,var(--ink) 70%,transparent);color:var(--chalk);
   font:700 .84rem/1.2 var(--face);text-align:start;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .oekt[hidden]{display:none !important}
-.shell[data-view="menu"] .oekt[hidden]{display:grid !important;visibility:hidden}
+.shell[data-view="menu"] .oekt[hidden]{
+  display:grid !important;visibility:hidden;
+  margin-inline:0;width:100%;max-width:100%;overflow:hidden;pointer-events:none}
 .oekt .r1{grid-column:1;display:flex;align-items:center;gap:7px;min-width:0;overflow:hidden;white-space:nowrap;
   padding:6px 0 6px 8px;margin:-6px 0 -6px -8px}   /* plass til pulsringen innenfor overflow:hidden */
 html[dir="rtl"] .oekt .r1{padding:6px 8px 6px 0;margin:-6px -8px -6px 0}
@@ -3495,7 +3572,9 @@ html[dir="rtl"] .oekt .go{transform:scaleX(-1)}
   -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;background:color-mix(in srgb,var(--ink) 70%,transparent)}
 .nradar::-webkit-scrollbar{display:none}
 .nradar[hidden]{display:none !important}
-.shell[data-view="menu"] .nradar[hidden]{display:block !important;visibility:hidden;height:61px}
+.shell[data-view="menu"] .nradar[hidden]{
+  display:block !important;visibility:hidden;height:61px;
+  margin-inline:0;width:100%;max-width:100%;overflow:hidden;pointer-events:none}
 .nradar{height:61px;box-sizing:border-box}.tape2{min-height:41px;box-sizing:border-box}   /* fast høyde også når de er tomme - ingen hopp */   /* #100: samme for nyhetsraden */
 .nrtrk{display:flex;align-items:stretch;width:max-content;padding:8px 16px;gap:0}
 .nrlab{scroll-snap-align:start;align-self:center;font:800 .74rem/1 var(--display);color:var(--chalk-dim);padding-inline-end:14px;white-space:nowrap}
@@ -3960,6 +4039,8 @@ html[data-font="naskh"] .vhead .vtx b{font-family:var(--face);font-stretch:norma
 .shchip + .shchip{border-inline-start:1px solid var(--rule)}
 .shchip b{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--chalk);font-family:"Archivo",var(--display);font-stretch:85%;font-size:1.7rem}
 .sncalc .row.big b{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--gold-soft)}
+.sncalc.snkept .kept-val{color:var(--gold-soft)}
+.sncalc.snkept .cseg{margin-bottom:6px}
 .short .iqic.emo{background:none;border:0}
 .snspark{border:0;padding:10px 0;border-radius:0}
 .iqtree,.iqtrack{border:0;padding:6px 0;border-radius:0}
@@ -5722,25 +5803,36 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) #academy 
   margin:16px 0 6px;font:800 1.02rem/1.28 var(--display);letter-spacing:-.012em}
 #academy .les p{font-size:.93rem;line-height:1.58;max-width:42ch}
 
-/* Dictionary under corridor — quiet chips, not gradient 999px Claude pills. */
+/* Dictionary under corridor — hairline terms (AIM-251), not chips/pills/cards. */
 #s-learn > #t-learn{
-  margin:26px 0 6px;
-  font:800 .95rem/1.25 var(--display);letter-spacing:-.01em;color:var(--chalk)}
-#s-learn > #learn-lede{font:500 .9rem/1.45 var(--face);color:var(--chalk-dim);max-width:40ch}
-#learn-list{gap:8px;max-width:100%}
-#learn-list > details:not([open]){
-  border-radius:var(--r-chip) !important;
-  background:var(--ink-raise) !important;
-  border:1px solid var(--rule) !important;
-  box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 40%,transparent)}
-:root[data-theme="dark"] #learn-list > details:not([open]){
-  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--teal-live) 6%,transparent)}
-#learn-list > details:not([open]) > summary{
-  padding:9px 13px !important;font:650 .88rem/1.25 var(--face) !important}
-#learn-list > details[open]{
-  border-radius:var(--r-card) !important;
-  border-color:color-mix(in srgb,var(--brand-gold) 45%,var(--rule)) !important;
-  background:var(--ink-deep) !important}
+  margin:28px 0 6px;padding-top:18px;border-top:1px solid var(--rule);
+  font:800 .78rem/1.3 "Archivo",var(--display);font-stretch:90%;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-dim)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) #s-learn > #t-learn{
+  font-family:var(--face);font-stretch:normal;text-transform:none;letter-spacing:0;
+  font-size:.92rem;font-weight:700}
+#s-learn > #learn-lede{font:500 .9rem/1.45 var(--face);color:var(--chalk-dim);max-width:40ch;margin:0 0 8px}
+#learn-list .ltx{display:flex;flex-direction:column;gap:0;flex:1;min-width:0;order:1}
+#learn-list .ltx .lt{
+  font:800 1.02rem/1.25 var(--display);letter-spacing:-.012em;color:var(--chalk)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) #learn-list .ltx .lt{
+  font-family:var(--face);font-weight:700}
+#learn-list > details > .body,
+#learn-list > details > .les{
+  padding:4px 2px 16px !important;border-top:1px solid color-mix(in srgb,var(--teal-live) 14%,var(--rule));
+  background:transparent !important}
+#learn-list .body p.one,
+#learn-list .les p.one{margin:0 0 10px;font:500 .92rem/1.55 var(--face);color:var(--chalk-dim);max-width:42ch}
+#learn-list dl{margin:0;display:grid;gap:2px}
+#learn-list dt{
+  margin:12px 0 2px;font:800 .72rem/1.3 "Archivo",var(--display);font-stretch:90%;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-dim)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) #learn-list dt{
+  font-family:var(--face);font-stretch:normal;text-transform:none;letter-spacing:0;font-size:.8rem}
+#learn-list dd{margin:0;font:500 .9rem/1.5 var(--face);color:var(--chalk-dim);max-width:42ch}
+#learn-list dd.ex,#learn-list dd.fx{
+  margin-top:4px;padding:10px 2px;border:0;border-block:1px solid var(--rule);
+  border-radius:0;background:transparent;box-shadow:none}
 
 /* Intentional motion — brand tick + corridor rise. */
 @keyframes acaRowIn{
@@ -5774,6 +5866,152 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) #academy 
 @media (max-width:380px){
   #academy.acorridor > details > summary{gap:12px;padding-inline:2px !important}
 }
+
+/* =============================================================================
+   AIM-251 — Academy dictionary + Ask folder + More leftovers (live hub).
+   Expensive calm hairline grammar. Never #379. No Start videos / Home Telegram.
+   ============================================================================= */
+
+/* Halal under Academy — hairline facts, not emoji cards. */
+.shell[data-view="learn"] #s-halal{margin-top:22px;padding-top:16px;border-top:1px solid var(--rule)}
+.shell[data-view="learn"] #s-halal > h2{
+  margin:0 0 6px;font:800 .78rem/1.3 "Archivo",var(--display);font-stretch:90%;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--chalk-dim)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="learn"] #s-halal > h2{
+  font-family:var(--face);font-stretch:normal;text-transform:none;letter-spacing:0;
+  font-size:.95rem;font-weight:700}
+.shell[data-view="learn"] #s-halal > .lede{
+  margin:0 0 8px;font:500 .9rem/1.45 var(--face);color:var(--chalk-dim);max-width:40ch;text-wrap:pretty}
+.shell[data-view="learn"] .hlgrid{display:grid;gap:0;margin:0}
+.shell[data-view="learn"] .hlk{
+  display:grid;gap:4px;padding:13px 2px;border:0;border-bottom:1px solid var(--rule);
+  border-radius:0;background:transparent;box-shadow:none;align-items:start}
+.shell[data-view="learn"] .hlk:last-child{border-bottom:0}
+.shell[data-view="learn"] .hlk .e{display:none !important}
+.shell[data-view="learn"] .hlk b{
+  font:750 .98rem/1.3 var(--display);letter-spacing:-.01em;color:var(--chalk);margin:0}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="learn"] .hlk b{font-family:var(--face);font-weight:700}
+.shell[data-view="learn"] .hlk p{
+  margin:0;font:500 .88rem/1.45 var(--face);color:var(--chalk-dim);max-width:40ch}
+
+/* Ask folder — same marine foyer + gold tick grammar as Academy. */
+html:has(.shell[data-view="faq"]) .skyline{
+  top:88px;height:110px;opacity:.5;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 48%,transparent);
+  mask-image:linear-gradient(180deg,#000 0%,#000 48%,transparent)}
+html[data-theme="dark"]:has(.shell[data-view="faq"]) .skyline{opacity:.64}
+html:not([data-theme="dark"]):has(.shell[data-view="faq"]) body::before{
+  background:
+    radial-gradient(88% 40% at 8% -10%,rgba(21,216,196,.06),transparent 55%),
+    radial-gradient(68% 34% at 100% 0%,rgba(27,79,216,.05),transparent 52%),
+    linear-gradient(180deg,#C8D4E4 0%,#D0DAE6 42%,#C5D2E2 100%)}
+html[data-theme="dark"]:has(.shell[data-view="faq"]) body::before{
+  background:
+    radial-gradient(78% 42% at 12% -8%,color-mix(in srgb,var(--teal-live) 12%,transparent),transparent 56%),
+    radial-gradient(62% 36% at 100% 0%,rgba(27,79,216,.09),transparent 52%),
+    linear-gradient(180deg,#09111F 0%,#070B14 42%,#05080F 100%)}
+.shell[data-view="faq"] #vhead{
+  margin:6px 0 12px;padding:2px 0 4px;max-width:100%}
+.shell[data-view="faq"] #vhead .vtx b{
+  font-family:"Archivo",var(--display);font-stretch:88%;font-weight:900;
+  font-size:clamp(1.55rem,6.8vw,1.95rem);letter-spacing:-.02em;line-height:var(--lh-display);
+  color:var(--chalk);max-width:16ch}
+.shell[data-view="faq"] #vhead .vtx b::after{
+  content:"";display:block;width:2.75rem;height:3px;margin-top:10px;border-radius:2px;
+  background:linear-gradient(90deg,var(--brand-gold),color-mix(in srgb,var(--teal-live) 50%,var(--brand-gold)))}
+html[dir="rtl"] .shell[data-view="faq"] #vhead .vtx b::after{margin-inline-start:auto}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="faq"] #vhead .vtx b{
+  font-family:var(--face);font-stretch:normal;font-size:clamp(1.35rem,6.2vw,1.65rem);
+  line-height:1.45;max-width:none}
+.shell[data-view="faq"] #vhead .vtx span{
+  margin-top:2px;max-width:36ch;font:500 .92rem/1.45 var(--face);color:var(--chalk-dim)}
+/* Search: quiet field, not soft pill glass. */
+.shell[data-view="faq"] #faq-q{
+  width:100%;min-height:44px;margin:2px 0 12px;padding:11px 2px 10px;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;border-radius:0 !important;
+  background:transparent !important;color:var(--chalk);font:500 .94rem/1.35 var(--face);
+  box-shadow:none !important}
+.shell[data-view="faq"] #faq-q:focus{
+  outline:none;border-bottom-color:color-mix(in srgb,var(--teal-live) 55%,var(--rule)) !important}
+.shell[data-view="faq"] #faq-q::placeholder{color:var(--chalk-dim);opacity:.85}
+.shell[data-view="faq"] .faql,
+.shell[data-view="faq"] #s-faq{
+  border-top:1px solid var(--rule);padding-top:2px;max-width:100%;overflow-x:clip}
+.shell[data-view="faq"] .qa{
+  border:0;border-bottom:1px solid var(--rule);border-radius:0;background:transparent;
+  box-shadow:none;margin:0}
+.shell[data-view="faq"] .qa > summary{
+  position:relative;display:flex !important;align-items:flex-start;gap:10px;
+  padding:13px 2px !important;padding-inline-end:1.4rem !important;
+  font:750 .98rem/1.4 var(--display) !important;letter-spacing:-.01em;color:var(--chalk)}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="faq"] .qa > summary{font-family:var(--face);font-weight:700}
+.shell[data-view="faq"] .qa > summary::after{
+  content:"+" !important;position:static !important;inset:auto !important;top:auto !important;
+  width:auto !important;height:auto !important;margin:2px 0 0 auto !important;
+  border:0 !important;transform:none !important;
+  color:var(--chalk-dim) !important;font:500 1rem/1 var(--face) !important;opacity:.85}
+.shell[data-view="faq"] .qa[open] > summary{
+  background:color-mix(in srgb,var(--teal-live) 5%,transparent)}
+.shell[data-view="faq"] .qa[open] > summary::after{
+  content:"\2212" !important;transform:none !important;color:var(--teal-ink) !important}
+:root[data-theme="dark"] .shell[data-view="faq"] .qa[open] > summary::after{color:var(--teal-live) !important}
+.shell[data-view="faq"] .qa > p{
+  margin:0 0 14px;padding:0 2px 2px;font:500 .9rem/1.55 var(--face);
+  color:var(--chalk-dim);max-width:40ch;text-wrap:pretty}
+@media (prefers-reduced-motion:no-preference){
+  .shell[data-view="faq"] #vhead .vtx b::after{
+    animation:brandTickAca .65s .12s cubic-bezier(.2,.7,.3,1) both}
+  #learn-list > details{
+    animation:acaRowIn .42s cubic-bezier(.2,.7,.3,1) both}
+  #learn-list > details:nth-of-type(2){animation-delay:.04s}
+  #learn-list > details:nth-of-type(3){animation-delay:.08s}
+  #learn-list > details:nth-of-type(4){animation-delay:.12s}
+  #learn-list > details:nth-of-type(5){animation-delay:.16s}
+}
+@media (prefers-reduced-motion:reduce){
+  .shell[data-view="faq"] #vhead .vtx b::after,
+  #learn-list > details{animation:none !important}
+  .shell[data-view="faq"] #vhead .vtx b::after{width:2.75rem}
+}
+
+/* More sheet leftovers — invite findable without a card; theme = segment, not pills. */
+.mspanel .mstitle{
+  margin:0 0 10px;font:900 1.45rem/1.15 "Archivo",var(--display);font-stretch:88%;
+  letter-spacing:-.02em;color:var(--chalk)}
+.mspanel .mstitle::after{
+  content:"";display:block;width:2.4rem;height:3px;margin-top:8px;border-radius:2px;
+  background:linear-gradient(90deg,var(--brand-gold),color-mix(in srgb,var(--teal-live) 45%,var(--brand-gold)))}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .mspanel .mstitle{
+  font-family:var(--face);font-stretch:normal;font-size:1.25rem;line-height:1.4}
+html[dir="rtl"] .mspanel .mstitle::after{margin-inline-start:auto}
+.mstema{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;margin:0 0 10px;padding:0;
+  border:1px solid var(--rule);border-radius:var(--r-btn);overflow:hidden;background:transparent}
+.mstema button{
+  flex:none;min-height:40px;border-radius:0 !important;border:0 !important;
+  border-inline-end:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important;
+  font:650 .86rem/1.2 var(--face);color:var(--chalk-dim)}
+.mstema button:last-child{border-inline-end:0 !important}
+.mstema button[aria-pressed="true"]{
+  color:var(--chalk) !important;
+  background:color-mix(in srgb,var(--teal-live) 10%,transparent) !important;
+  border-color:transparent !important}
+.msb[data-k="ib"]{
+  margin:0 !important;padding:12px 2px !important;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:inset 3px 0 0 color-mix(in srgb,var(--teal-live) 70%,transparent) !important}
+html[dir="rtl"] .msb[data-k="ib"]{
+  box-shadow:inset -3px 0 0 color-mix(in srgb,var(--teal-live) 70%,transparent) !important}
+html[data-theme="light"] .msb[data-k="ib"]{
+  background:transparent !important;border-color:var(--rule) !important}
+.msb[data-k="ib"] .mst{font-weight:750;color:var(--chalk)}
+.msb[data-k="ib"] .msg{opacity:.85;color:var(--teal-live)}
 
 /* =============================================================================
    AIM-224 — small-phone / old-phone mobile pass (live hub only; never #379).
@@ -6382,6 +6620,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.2271622134.js" defer></script>
+<script src="app-l.3eafc880af.js" defer></script>
 </body>
 </html>
