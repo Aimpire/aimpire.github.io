@@ -7140,6 +7140,116 @@ html[data-theme="light"] .shell[data-view="ib"] .iqtree{
   .shell[data-view="faq"] #vhead .vtx b::after{animation:none !important;width:2.75rem !important}
 }
 
+/* =============================================================================
+   AIM-276 — Highest-value leftovers after #487.
+   1) Tour #tour .tneste/.thopp — Claude rainbow 999 pills → green square /
+      hairline (match stegreg / #tour-igjen). Kill gradient + purple.
+   2) Tour card shell + risk check — soft 20/12 → square corridor.
+   3) Home .nshare — soft 12 → square hairline teal tick.
+   4) IB .slab.own — soft --r-btn → square hairline corridor.
+   5) Tools .oekt — 360 bleed (calc 100%+32 / -16 margin) + soft okchips →
+      contained square session strip.
+   6) Mast #q-open.sbtn — soft 11 search tick → square hairline (softVis clean).
+   Keep: B-049 langbtn/temabunn pills · no Fresh · no-referral · IB→CopyX ·
+   outbound-hop funn:0 · never #379 · no YouTube.
+   ============================================================================= */
+
+/* Tour CTAs — no Claude rainbow, no 999. */
+#tour .tkort{
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  box-shadow:0 20px 50px -10px rgba(0,0,0,.55) !important}
+#tour .tbunn{border-radius:0 !important}
+#tour button:not(.tdots button){
+  border-radius:0 !important;min-height:46px;padding:0 18px !important;
+  font:800 .95rem/1.15 var(--display) !important}
+#tour .tneste,
+#tour button.tneste{
+  border:0 !important;color:#fff !important;
+  background:#16C784 !important;background-image:none !important;
+  box-shadow:inset 0 -2px 0 0 color-mix(in srgb,#0E9A64 70%,#16C784) !important;
+  filter:none !important}
+#tour .tneste:hover,
+#tour .tneste:focus-visible,
+#tour button.tneste:hover,
+#tour button.tneste:focus-visible{
+  filter:brightness(1.06) !important;transform:none !important}
+#tour .tbak,
+#tour .thopp,
+#tour button.thopp,
+#tour button.tbak{
+  border:1px solid var(--rule) !important;background:transparent !important;
+  color:var(--chalk) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+#tour .thopp:hover,
+#tour .thopp:focus-visible,
+#tour .tbak:hover,
+#tour .tbak:focus-visible{
+  border-color:color-mix(in srgb,var(--teal-live) 45%,var(--rule)) !important;
+  color:var(--chalk) !important}
+#tour .trok{
+  border-radius:0 !important;
+  box-shadow:inset 0 -2px 0 0 transparent !important}
+#tour .trok.klar{
+  box-shadow:inset 0 -2px 0 0 color-mix(in srgb,#E5484D 55%,transparent) !important}
+#tour .tdots i.on{
+  background:var(--teal-live) !important;background-image:none !important;
+  border-radius:0 !important;width:16px !important}
+html[data-theme="light"] #tour .tneste,
+html[data-theme="light"] #tour button.tneste,
+:root:not([data-theme="dark"]) #tour .tneste{
+  background:#16C784 !important;color:#fff !important}
+html:is([data-font="nastaliq"],[data-font="naskh"]) #tour button:not(.tdots button){
+  font-family:var(--face) !important;font-weight:700 !important}
+
+/* Home news share — square hairline. */
+.nshare,
+button.nshare{
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;color:var(--chalk) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+.nshare:hover,
+.nshare:focus-visible,
+button.nshare:hover,
+button.nshare:focus-visible{
+  border-color:color-mix(in srgb,var(--teal-live) 45%,var(--rule)) !important}
+
+/* IB share-with-friends — square corridor (was soft --r-btn). */
+.shell[data-view="ib"] .slab.own,
+.ib .slab.own{
+  border-radius:0 !important;
+  border:1px solid var(--rule) !important;
+  background:transparent !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important;
+  padding:13px 14px !important}
+.shell[data-view="ib"] .slab.own:hover,
+.shell[data-view="ib"] .slab.own:focus-visible,
+.ib .slab.own:hover,
+.ib .slab.own:focus-visible{
+  filter:none !important;
+  border-color:color-mix(in srgb,var(--teal-live) 45%,var(--rule)) !important}
+
+/* Markets session strip — contain 360 bleed + square chips. */
+.shell[data-view="tools"] .oekt,
+.shell[data-view="tools"] #oekt.oekt,
+.oekt{
+  width:100% !important;max-width:100% !important;
+  margin-inline:0 !important;box-sizing:border-box !important;
+  border-radius:0 !important;overflow:hidden}
+.shell[data-view="tools"] .oekt .okchip,
+.oekt .okchip{
+  border-radius:0 !important;padding:3px 7px 3px 5px !important}
+.shell[data-view="tools"] .oekt .bar,
+.oekt .bar{border-radius:0 !important}
+.shell[data-view="tools"] .oekt .bar b,
+.oekt .bar b{border-radius:0 !important}
+
+/* Mast search — square hairline (was soft 11 circle). */
+#q-open.sbtn,
+.mast .sbtn#q-open{
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;
+  box-shadow:inset 0 -2px 0 0 color-mix(in srgb,var(--teal-live) 55%,transparent) !important}
+
 /* Hard contain — CTAs/portals never escape 360 frame. */
 .shell[data-view="menu"] .notices,
 .shell[data-view="menu"] #notice-none,
