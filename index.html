@@ -7362,6 +7362,52 @@ html[data-theme="light"] .eljoin.eljoin-home .apps a{
 .shell[data-view="start"] #s-community #cm-go .joinbtn{
   border-radius:0 !important}
 
+/* =============================================================================
+   AIM-278 — Highest-value leftovers after #489.
+   SoftVis walk @360 EN+UR light/dark: only remaining soft chrome was
+   Tools/earn `.cslide` Claude rainbow track (teal→blue→magenta + #1B4FD8 thumb)
+   and Markets/Tools `.nrall` circular news door. Kill Claude look; keep corridor.
+   Keep: B-049 langbtn/temabunn pills · no Fresh · no-referral · IB→CopyX ·
+   outbound-hop funn:0 · never #379 · no YouTube.
+   ============================================================================= */
+
+/* Calculator + Sonic amount slider — corridor track (no Claude rainbow). */
+.cslide{
+  border-radius:0 !important;
+  background:color-mix(in srgb,var(--teal-live) 28%,var(--rule)) !important;
+  background-image:none !important;
+  opacity:1 !important;
+  accent-color:var(--teal-live) !important}
+.cslide::-webkit-slider-thumb{
+  border-radius:50% !important;
+  background:#fff !important;
+  border:3px solid var(--teal-live,#15D8C4) !important;
+  box-shadow:0 1px 4px color-mix(in srgb,var(--chalk) 22%,transparent) !important}
+.cslide::-moz-range-thumb{
+  border-radius:50% !important;
+  background:#fff !important;
+  border:3px solid var(--teal-live,#15D8C4) !important;
+  box-shadow:none !important}
+html[data-theme="light"] .cslide,
+:root:not([data-theme="dark"]) .cslide{
+  background:color-mix(in srgb,var(--teal-live) 22%,var(--paper,#DCE4EE)) !important;
+  background-image:none !important}
+.sncalc .cslide{
+  border-radius:0 !important;
+  background:color-mix(in srgb,var(--teal-live) 28%,var(--rule)) !important;
+  background-image:none !important}
+
+/* Markets/Tools news «all» door — square hairline (was 50% pill). */
+.nrall{
+  border-radius:0 !important;
+  border:1px solid var(--rule) !important;
+  background:transparent !important;
+  color:var(--chalk) !important;
+  box-shadow:inset 0 -2px 0 0 color-mix(in srgb,var(--teal-live) 55%,transparent) !important}
+.nrall:hover,.nrall:focus-visible{
+  border-color:color-mix(in srgb,var(--teal-live) 45%,var(--rule)) !important;
+  outline:none}
+
 /* Hard contain — CTAs/portals never escape 360 frame. */
 .shell[data-view="menu"] .notices,
 .shell[data-view="menu"] #notice-none,
