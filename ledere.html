@@ -6499,11 +6499,225 @@ html[dir="rtl"] .shell[data-view="start"] #guide ul.acts.vnote{
   box-shadow:inset 0 -2px 0 0 color-mix(in srgb,#0E9A64 70%,#16C784) !important}
 
 /* =============================================================================
+   AIM-271 — Full live-hub audit leftovers after #481 Start + #482 Fresh drop.
+   Soft Claude cards still on Products (iqsteps/iqex/shmore/calc.cterm/crisk),
+   Tools fib·margin shells, Academy sendv pills + quiz cards, earn topbar.
+   Match corridor hairline + teal tick. Home = IB→CopyX (AIM-270); no-referral.
+   Never #379. No YouTube.
+   ============================================================================= */
+
+/* Earn jump / topbar — match Tools segmented hairline (was soft 14px pill bar). */
+.shell[data-view="earn"] #topbar{
+  margin:0 0 10px;padding:0 !important;
+  border-radius:0 !important;background:transparent !important;
+  box-shadow:none !important;border:0 !important;
+  border-block:1px solid var(--rule) !important}
+.shell[data-view="earn"] .topbar .jump,
+.shell[data-view="earn"] #jump,
+.shell[data-view="earn"] .jump{
+  display:flex !important;flex-wrap:nowrap;gap:0 !important;
+  margin:0 !important;padding:0 !important;
+  border-radius:0 !important;background:transparent !important;
+  box-shadow:none !important;border:0 !important;overflow-x:auto}
+.shell[data-view="earn"] .jump button,
+.shell[data-view="earn"] .topbar .jump button{
+  flex:1 0 auto;min-width:4.2rem;min-height:44px !important;
+  border-radius:0 !important;border:0 !important;
+  border-inline-end:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important;
+  color:var(--chalk-dim) !important;padding:8px 6px !important}
+.shell[data-view="earn"] .jump button:last-child,
+.shell[data-view="earn"] .topbar .jump button:last-child{border-inline-end:0 !important}
+.shell[data-view="earn"] .jump button[aria-selected="true"],
+.shell[data-view="earn"] .topbar .jump button[aria-selected="true"]{
+  color:var(--chalk) !important;
+  background:color-mix(in srgb,var(--teal-live) 8%,transparent) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+
+/* Sonic overview — step cards / short / more / video shells → corridor. */
+.shell[data-view="earn"] .iqsteps{gap:0}
+.shell[data-view="earn"] .iqsteps li{
+  margin:0;padding:14px 2px 14px 3rem !important;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+html[dir="rtl"] .shell[data-view="earn"] .iqsteps li{
+  padding:14px 3rem 14px 2px !important}
+.shell[data-view="earn"] .iqsteps li:last-child{border-bottom:0 !important}
+.shell[data-view="earn"] .iqsteps li::before{
+  inset-inline-start:2px !important;top:14px;
+  width:26px;height:26px;border-radius:0 !important;
+  background:color-mix(in srgb,var(--teal-live) 12%,transparent) !important;
+  color:var(--chalk) !important;border:1px solid var(--rule);
+  font:800 .8rem/26px "Archivo",var(--display);text-align:center}
+.shell[data-view="earn"] .iqex,
+.shell[data-view="earn"] .short .iqex{
+  margin:8px 0;padding:14px 2px !important;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+.shell[data-view="earn"] .ibmore,
+.shell[data-view="earn"] .shmore.ibmore,
+.shell[data-view="earn"] details.ibmore,
+.shell[data-view="earn"] details.shmore{
+  margin:10px 0 4px;padding:0 2px !important;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+.shell[data-view="earn"] .ibmore > summary,
+.shell[data-view="earn"] .shmore > summary{
+  min-height:48px;padding:10px 2px;border-radius:0 !important}
+.shell[data-view="earn"] .vs{
+  margin:8px 0;padding:14px 2px 10px !important;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+.shell[data-view="earn"] .vnote,
+.shell[data-view="earn"] .warn{
+  margin:10px 0 0;padding:12px 2px 12px 12px !important;
+  border-radius:0 !important;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-inline-start:2px solid var(--ember,#F5A524) !important;
+  background:transparent !important;box-shadow:none !important}
+html[dir="rtl"] .shell[data-view="earn"] .vnote,
+html[dir="rtl"] .shell[data-view="earn"] .warn{
+  padding:12px 12px 12px 2px !important}
+.shell[data-view="earn"] .vnote::before,
+.shell[data-view="earn"] .warn::before{display:none !important;content:none !important}
+.shell[data-view="earn"] .portalbtn,
+.shell[data-view="earn"] .portalbtn.srcbtn{
+  width:100%;max-width:100%;margin:8px 0 12px;padding:12px 14px !important;
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;color:var(--chalk) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important;transform:none !important}
+.shell[data-view="earn"] .portalbtn .pi{
+  border-radius:0 !important;width:22px;height:22px;flex-basis:22px}
+.shell[data-view="earn"][data-tab="withdraw"] .rail > li{
+  padding:14px 2px 18px 2.8rem !important;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important}
+.shell[data-view="earn"][data-tab="withdraw"] .rail > li::before{
+  border-radius:0 !important;
+  background:color-mix(in srgb,var(--teal-live) 12%,transparent) !important;
+  border:1px solid var(--rule);color:var(--chalk)}
+
+/* Calculator panel leftovers — AIM-267 hit .cbig/.cinw, not outer .calc.cterm. */
+.shell[data-view="earn"][data-tab="calc"] .cterm,
+.shell[data-view="earn"][data-tab="calc"] .calc.cterm,
+.shell[data-view="earn"][data-tab="results"] .cterm,
+.shell[data-view="earn"][data-tab="sonic"] .cterm{
+  margin:0 0 10px;padding:14px 2px !important;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+.shell[data-view="earn"][data-tab="calc"] .crisk{
+  margin:0 0 12px;padding:12px 2px 12px 12px !important;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-inline-start:2px solid var(--ember,#F5A524) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+html[dir="rtl"] .shell[data-view="earn"][data-tab="calc"] .crisk{
+  padding:12px 12px 12px 2px !important}
+.shell[data-view="earn"][data-tab="calc"] .cstats{gap:0;border-block:1px solid var(--rule)}
+.shell[data-view="earn"][data-tab="calc"] .cst{
+  border-radius:0 !important;border:0 !important;
+  border-inline-end:1px solid var(--rule) !important;
+  background:transparent !important;padding:10px 8px;box-shadow:none !important}
+.shell[data-view="earn"][data-tab="calc"] .cst:last-child{border-inline-end:0 !important}
+.shell[data-view="earn"][data-tab="calc"] .cshb{
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  box-shadow:none !important}
+.shell[data-view="earn"][data-tab="calc"] .cshb:not(.cshi){
+  background:transparent !important;color:var(--chalk) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+.shell[data-view="earn"][data-tab="calc"] .cshb.cshi{
+  background:transparent !important;border:1px solid var(--rule) !important}
+
+/* Tools — Fibonacci / margin calc shells + notes (sizing hairline left these). */
+.shell[data-view="tools"] .cterm,
+.shell[data-view="tools"] .calc.cterm,
+.shell[data-view="tools"] .fbcalc.cterm,
+.shell[data-view="tools"] .mgcalc.cterm,
+.shell[data-view="tools"] .calc.cterm.fbcalc,
+.shell[data-view="tools"] .calc.cterm.mgcalc{
+  margin:0 0 10px;padding:14px 2px !important;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+.shell[data-view="tools"] .vnote,
+.shell[data-view="tools"] .warn{
+  margin:10px 0 0;padding:12px 2px 12px 12px !important;
+  border-radius:0 !important;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-inline-start:2px solid var(--ember,#F5A524) !important;
+  background:transparent !important;box-shadow:none !important}
+html[dir="rtl"] .shell[data-view="tools"] .vnote,
+html[dir="rtl"] .shell[data-view="tools"] .warn{
+  padding:12px 12px 12px 2px !important}
+.shell[data-view="tools"] .vnote::before,
+.shell[data-view="tools"] .warn::before{display:none !important;content:none !important}
+.shell[data-view="tools"][data-tab="journal"] input,
+.shell[data-view="tools"][data-tab="journal"] textarea,
+.shell[data-view="tools"][data-tab="sizing"] input,
+.shell[data-view="tools"][data-tab="sizing"] textarea{
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important}
+.shell[data-view="tools"][data-tab="journal"] .skrun,
+.shell[data-view="tools"][data-tab="journal"] .jnadd{
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;color:var(--chalk) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+
+/* Academy — lesson share pills + quiz cards → corridor (not 999 Claude pills). */
+.shell[data-view="learn"] .sendv,
+#prog-n .alldsh .sendv{
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;color:var(--chalk) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important;min-height:44px}
+.shell[data-view="learn"] .qz{
+  margin:12px 0 0;padding:12px 2px !important;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+.shell[data-view="learn"] .qzb{
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important}
+.shell[data-view="learn"] .qzb[aria-pressed="true"]{
+  border-color:color-mix(in srgb,var(--teal-live) 55%,var(--rule)) !important;
+  background:color-mix(in srgb,var(--teal-live) 8%,transparent) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+
+/* Products landing CTA — square corridor (soft 12px leftover). */
+.shell[data-view="prod"] .pcta{
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;color:var(--chalk) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+
+/* Start non-current steps + store apps — square after AIM-268 current-only. */
+.shell[data-view="start"] #guide > li:not(.current){
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+.shell[data-view="start"] .apps a,
+.shell[data-view="start"] .eljoin .apps a{
+  border-radius:0 !important}
+
+html[data-theme="light"] .shell[data-view="earn"] .iqsteps li,
+html[data-theme="light"] .shell[data-view="earn"] .iqex,
+html[data-theme="light"] .shell[data-view="earn"] .vs,
+html[data-theme="light"] .shell[data-view="earn"] .cterm,
+html[data-theme="light"] .shell[data-view="earn"] .calc.cterm,
+html[data-theme="light"] .shell[data-view="earn"] .cst,
+html[data-theme="light"] .shell[data-view="tools"] .cterm,
+html[data-theme="light"] .shell[data-view="tools"] .calc.cterm,
+html[data-theme="light"] .shell[data-view="learn"] .qz,
+:root:not([data-theme="dark"]) .shell[data-view="earn"] .iqex,
+:root:not([data-theme="dark"]) .shell[data-view="earn"] .calc.cterm{
+  background:transparent !important;box-shadow:none !important}
+
+@media (max-width:360px){
+  .shell[data-view="earn"] .jump button,
+  .shell[data-view="earn"] .topbar .jump button{
+    min-width:3.6rem;padding:8px 4px !important;font-size:.72rem}
+  .shell[data-view="earn"] .iqsteps li{padding-inline-start:2.6rem !important}
+}
+
+/* =============================================================================
    AIM-254 — Invite/IB commission + FAQ More inners after #467.
    Chips → segmented hairline (no pill cluster). Unlock / equality / ladder /
    Ali·Sara avatars flatten to corridor grammar. FAQ secondary quieter.
    Honest B-030 line stays. Never #379. No YouTube.
-   ============================================================================= */
+   ============================================================================= */}
 
 /* IB jump chips — Tools jump grammar, not rounded pill rail. */
 .shell[data-view="ib"] #iq-chips{
