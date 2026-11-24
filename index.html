@@ -3453,9 +3453,10 @@ html[dir="rtl"] .fbs{justify-self:start}
 .lesopp{display:inline-flex;align-items:center;gap:6px;margin:10px 8px 0 0;padding:10px 14px;border-radius:999px;border:1px solid var(--rule);
   background:var(--ink-raise);color:var(--chalk);font:700 .85rem/1.2 var(--display);cursor:pointer}
 .lesopp::before{content:"\1F50A"}
-.askspon{display:inline-flex;align-items:center;gap:8px;margin:10px 0 0;padding:10px 16px;border-radius:999px;border:1px solid #15D8C4;
-  background:color-mix(in srgb,#15D8C4 10%,transparent);color:var(--chalk);font:700 .88rem/1.2 var(--display);cursor:pointer}
-.askspon::before{content:"\1F4AC"}
+/* AIM-272: askspon base → green corridor (full rules in AIM-272 block). */
+.askspon{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin:10px 0 0;padding:10px 12px;
+  border-radius:0;border:0;background:#16C784;color:#fff;font:700 .9rem/1.2 var(--face);cursor:pointer}
+.askspon::before{content:none}
 /* Mentorboble (K-120) */
 .qans.mentor{position:relative;padding-inline-start:52px;border-radius:6px 18px 18px 18px}
 html[dir="rtl"] .qans.mentor{border-radius:18px 6px 18px 18px}
@@ -4897,14 +4898,14 @@ html[data-theme="light"] .shell[data-view="tools"] .psout .k{
   background:transparent;color:var(--chalk)}
 html[data-theme="light"] .shell[data-view="faq"] #faq-q{
   background:color-mix(in srgb,var(--ink-deep) 55%,transparent);border-color:var(--rule)}
-/* AIM-261: More sheet light mist (was cool #D0DAE6 chrome). */
+/* AIM-261 → AIM-272: More sheet light = paper hairline (mist retired). */
 html[data-theme="light"] .mspanel{
-  background:color-mix(in srgb,var(--paper) 78%,#E8EEF4);
-  box-shadow:0 18px 40px -14px rgba(11,35,65,.14);
-  border:1px solid color-mix(in srgb,var(--rule) 70%,transparent)}
+  background:var(--paper,#DCE4EE);
+  box-shadow:0 12px 28px -16px rgba(11,35,65,.16);
+  border:1px solid var(--rule)}
 html[data-theme="light"] .msb[data-k="ib"]{
-  background:color-mix(in srgb,var(--teal-live) 6%,var(--ink));
-  border-color:color-mix(in srgb,var(--teal-live) 32%,var(--rule)) !important}
+  background:transparent;
+  border-color:var(--rule) !important}
 /* 320–390: jump labels wrap cleanly; no mid-word break. */
 @media (max-width:390px){
   .shell[data-view="tools"] .topbar .jump button .tl{font-size:.68rem;line-height:1.15}
@@ -5150,37 +5151,14 @@ a.hsb:first-of-type{border-color:color-mix(in srgb,#15D8C4 45%,var(--rule));back
 .htree .htn span{font:500 .76rem/1.35 var(--face);color:var(--chalk-dim)}
 .htree .htg{flex:0 0 auto;color:var(--chalk-dim);font-size:1.05rem;line-height:1}
 html[dir="rtl"] .htree .htg{transform:scaleX(-1)}
-/* AIM-261: AiTech path (Fresh + IB) is its own block — never nest under CopyX. */
-.htree .hta.htfresh .htn b{letter-spacing:-.015em}
+/* AIM-261/270: AiTech IB is its own block — never nest under CopyX. Fresh gone. */
 @media (prefers-reduced-motion:reduce){.htree .hta{transition:none}}
-/* Fresh = AiTech Partner primary; IB = AiTech portal; CopyX login quieter after. */
-.shell[data-view="menu"] .htree.htree-has-fresh .hta.htfresh,
-.shell[data-view="menu"] .htree .hta.htfresh{
-  padding-inline-start:10px !important;
-  border-inline-start:2px solid var(--teal-live) !important;
-  background:color-mix(in srgb,var(--teal-live) 6%,transparent) !important}
-:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta.htfresh{
-  background:color-mix(in srgb,var(--teal-live) 10%,transparent) !important}
-.shell[data-view="menu"] .htree .hta.htfresh .htn b{font-weight:800}
-.shell[data-view="menu"] .htree .hta.htfresh .htg{color:var(--teal-ink);opacity:.95}
-:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta.htfresh .htg{color:var(--teal-live)}
 .shell[data-view="menu"] .htree .hta.htib{
   padding-inline-start:10px !important;
   border-inline-start:2px solid color-mix(in srgb,var(--teal-live) 50%,var(--rule)) !important}
-.shell[data-view="menu"] .htree.htree-has-fresh .hta.htcopyx{
-  opacity:.92}
-.shell[data-view="menu"] .htree.htree-has-fresh .hta.htcopyx .htn b{
-  font-weight:650;color:color-mix(in srgb,var(--chalk) 88%,var(--chalk-dim))}
-/* Fresh→IB AiTech pair (tip may sit between); never Fresh→CopyX pair. */
-.shell[data-view="menu"] .htree .hta.htfresh + .hta.htib,
-.shell[data-view="menu"] .htree .htref.htref-fresh + .hta.htib{
-  margin-top:0 !important;padding-top:10px !important;
-  border-top:0 !important}
-.shell[data-view="menu"] .htree .htref.htref-fresh,
 .shell[data-view="menu"] .htree .htref.htref-hint{
   margin:0 0 6px;padding:4px 2px 8px 42px;font:500 .74rem/1.4 var(--face);
   color:var(--chalk-dim);max-width:42ch;text-wrap:pretty}
-html[dir="rtl"] .shell[data-view="menu"] .htree .htref.htref-fresh,
 html[dir="rtl"] .shell[data-view="menu"] .htree .htref.htref-hint{
   padding:4px 42px 8px 2px}
 /* AIM-258 Ask/Academy/More glide: lesson number is the affordance — drop duplicate +. */
@@ -5892,9 +5870,7 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
   .shell[data-view="menu"] .htree .hta.htshare .htn b,
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
-  .shell[data-view="menu"] .htree .hta[data-k="share"] .htn b,
-html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
-  .shell[data-view="menu"] .htree .hta.htfresh .htn b{
+  .shell[data-view="menu"] .htree .hta[data-k="share"] .htn b{
   font-family:var(--face);font-weight:800}
 
 /* Start: softer light wash + phase `.view` (Element trail). */
@@ -6711,6 +6687,84 @@ html[data-theme="light"] .shell[data-view="learn"] .qz,
     min-width:3.6rem;padding:8px 4px !important;font-size:.72rem}
   .shell[data-view="earn"] .iqsteps li{padding-inline-start:2.6rem !important}
 }
+
+/* =============================================================================
+   AIM-272 — Leftovers after #482 Fresh drop + #483 full-audit.
+   Light More sheet still mist/soft radius; Start askspon 999 pill vs green
+   corridor; dead Home Fresh CSS. Prefs: green primary CTAs · no pill clusters ·
+   no-referral · IB→CopyX · never #379 · no YouTube.
+   ============================================================================= */
+
+/* More sheet — hairline panel (kill soft mist + 18–22 Claude radius). */
+.mspanel{
+  border-radius:12px !important;
+  background:var(--ink-raise,var(--ink)) !important;
+  border:1px solid var(--rule) !important;
+  box-shadow:0 14px 32px -16px rgba(6,10,24,.42) !important}
+html[data-theme="light"] .mspanel,
+:root:not([data-theme="dark"]) .mspanel{
+  background:var(--paper,#DCE4EE) !important;
+  border:1px solid var(--rule) !important;
+  box-shadow:0 12px 28px -16px rgba(11,35,65,.16) !important}
+@media (max-width:390px){
+  .mspanel{border-radius:10px !important;padding:8px}
+}
+@media (max-width:360px){
+  .mspanel{border-radius:8px !important;inset-inline:6px;padding:6px}
+}
+/* Theme segment — square hairline (never soft 999 / gradient pills). */
+.mstema{
+  display:grid !important;grid-template-columns:1fr 1fr !important;gap:0 !important;
+  margin:0 0 10px !important;padding:0 !important;
+  border:1px solid var(--rule) !important;border-radius:0 !important;
+  overflow:hidden !important;background:transparent !important;
+  border-bottom:1px solid var(--rule) !important}
+.mstema button{
+  flex:none !important;min-height:40px !important;border-radius:0 !important;
+  border:0 !important;border-inline-end:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important;
+  font:650 .86rem/1.2 var(--face) !important;color:var(--chalk-dim) !important}
+.mstema button:last-child{border-inline-end:0 !important}
+.mstema button[aria-pressed="true"]{
+  color:var(--chalk) !important;
+  background:color-mix(in srgb,var(--teal-live) 10%,transparent) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+html[data-theme="light"] .mstema button[aria-pressed="true"]{
+  background:color-mix(in srgb,var(--teal-live) 8%,transparent) !important}
+
+/* Start askspon — same green corridor as stegreg (drop 999 teal pill + emoji). */
+.askspon{
+  display:flex !important;align-items:center;justify-content:center;gap:8px;
+  width:calc(100% - 16px);max-width:calc(100% - 16px);min-width:0;box-sizing:border-box;
+  margin:10px 8px 0 !important;padding:10px 12px !important;min-height:44px;
+  border-radius:0 !important;border:0 !important;
+  background:#16C784 !important;color:#fff !important;
+  font:700 .9rem/1.3 var(--face) !important;
+  box-shadow:inset 0 -2px 0 0 color-mix(in srgb,#0E9A64 70%,#16C784) !important;
+  cursor:pointer}
+.askspon::before{content:none !important;display:none !important}
+.askspon:hover,.askspon:focus-visible{filter:brightness(1.06)}
+html[data-theme="light"] .askspon{
+  background:#16C784 !important;color:#fff !important}
+.shell[data-view="start"] #guide > li.current .askspon{
+  display:flex !important;margin-inline:8px !important}
+/* Community cmgo join — square green corridor (not soft 12px pill). */
+.shell[data-view="start"] #s-community .eljoin .joinbtn,
+.shell[data-view="start"] #s-community #cm-go .joinbtn,
+.cmgo .joinbtn{
+  border-radius:0 !important;
+  background:#16C784 !important;color:#fff !important;border:0 !important;
+  box-shadow:inset 0 -2px 0 0 color-mix(in srgb,#0E9A64 70%,#16C784) !important}
+.shell[data-view="start"] #s-community .eljoin .apps a,
+.shell[data-view="start"] #s-community #cm-go .apps a,
+.cmgo .apps a{
+  border-radius:0 !important}
+
+/* Dead Fresh Home chrome (AIM-270) — no-op if markup returns; keep IB→CopyX. */
+.htree .hta.htfresh,
+.shell[data-view="menu"] .htree .hta.htfresh,
+.shell[data-view="menu"] .htree.htree-has-fresh .hta.htfresh{display:none !important}
+.shell[data-view="menu"] .htree .htref.htref-fresh{display:none !important}
 
 /* =============================================================================
    AIM-254 — Invite/IB commission + FAQ More inners after #467.
@@ -7901,6 +7955,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.ed2fd0727d.js" defer></script>
+<script src="app-m.72502f42c3.js" defer></script>
 </body>
 </html>
