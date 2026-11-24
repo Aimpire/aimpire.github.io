@@ -373,7 +373,8 @@ html[data-font="nastaliq"]{
   --fs-folder-script:clamp(.98rem,1.8vw + .5rem,1.2rem);
   --fs-section:clamp(1rem,2vw + .5rem,1.28rem);
   --fs-lede:clamp(.8rem,.25vw + .72rem,.88rem);
-  --fs-nav:clamp(.55rem,.15vw + .5rem,.64rem);
+  /* AIM-257: nav in px — rem under 12.75 root shrank tabs to ~7px vs Hindi/Roman ~10px. */
+  --fs-nav:10px;
 }
 html[data-font="nastaliq"] .shell,
 html[data-font="naskh"] .shell{overflow-x:clip}
@@ -417,14 +418,14 @@ html[data-font="nastaliq"] :is(.switch button,.jump button,.cper button,.langbtn
   line-height:1.4;padding-block:8px;overflow:visible}
 html[data-font="naskh"] :is(.switch button,.jump button,.cper button,.langbtn){
   line-height:1.3;padding-block:7px;overflow:visible}
-/* Tab labels: same --fs-nav as latin; Nastaliq hair more lh, never 1.9. */
+/* Tab labels: Nastaliq/Arabic use --tbfs (px from tbTilpass) so density matches Hindi/Roman. */
 html[data-font="nastaliq"] .tbb span,
 html[data-font="nastaliq"] .tabbar .tbrow .tbb span{
-  font-size:var(--fs-nav);line-height:1.3;margin-top:0;padding-block:1px 2px;
+  font-size:var(--tbfs,var(--fs-nav));line-height:1.35;margin-top:0;padding-block:2px 3px;
   overflow:visible;max-height:none;font-weight:500}
 html[data-font="naskh"] .tbb span,
 html[data-font="naskh"] .tabbar .tbrow .tbb span{
-  font-size:var(--fs-nav);line-height:1.25;margin-top:0;padding-block:1px 2px;
+  font-size:var(--tbfs,var(--fs-nav));line-height:1.25;margin-top:0;padding-block:1px 2px;
   overflow:visible;max-height:none}
 html[data-font="nastaliq"] .tbb{padding-bottom:5px}
 html[data-font="naskh"] .tbb{padding-bottom:4px}
@@ -1347,8 +1348,8 @@ html[dir="rtl"] .iqsteps li{padding:14px 58px 14px 14px}
 .sncalc.snkept{padding:16px 16px 14px;border-radius:16px;background:var(--ink-deep);border:1px solid var(--rule);
   display:grid;gap:6px;box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 6%,transparent)}
 :root:not([data-theme="dark"]) .sncalc.snkept{
-  background:#fff;border-color:color-mix(in srgb,var(--rule) 70%,var(--teal-ink));
-  box-shadow:0 1px 0 rgba(255,255,255,.85) inset,0 16px 32px -22px rgba(11,35,65,.2)}
+  background:var(--paper);border-color:color-mix(in srgb,var(--rule) 70%,var(--teal-ink));
+  box-shadow:0 1px 0 color-mix(in srgb,var(--ink-raise) 80%,transparent) inset,0 16px 32px -22px rgba(11,35,65,.18)}
 .sncalc.snkept .row.dep span{font:650 .82rem/1.3 var(--face);color:var(--chalk-dim)}
 .sncalc.snkept .row.dep b{font:800 1.15rem/1 var(--display);color:var(--chalk)}
 .sncalc.snkept .cper{margin:4px 0 2px;justify-content:flex-start}
@@ -1380,17 +1381,17 @@ html[dir="rtl"] .iqsteps li{padding:14px 58px 14px 14px}
 .shell[data-view="earn"][data-tab="results"] .rsstat div{
   border-radius:12px;padding:12px 12px 11px;
   background:color-mix(in srgb,var(--ink-deep) 92%,var(--teal-live))}
-:root:not([data-theme="dark"]) .shell[data-view="earn"][data-tab="results"] .rsstat div{background:#fff}
+:root:not([data-theme="dark"]) .shell[data-view="earn"][data-tab="results"] .rsstat div{background:var(--paper)}
 .shell[data-view="earn"][data-tab="results"] .rsstat dd{font-size:1.2rem;letter-spacing:-.015em}
 .shell[data-view="earn"][data-tab="results"] .rsfig{
   margin:8px 0 6px;padding:10px 8px 6px;border-radius:14px;border:1px solid var(--rule);
   background:var(--ink-deep)}
-:root:not([data-theme="dark"]) .shell[data-view="earn"][data-tab="results"] .rsfig{background:#fff}
+:root:not([data-theme="dark"]) .shell[data-view="earn"][data-tab="results"] .rsfig{background:var(--paper)}
 .shell[data-view="earn"][data-tab="calc"] .cbig.cterm{
   border-radius:16px;padding:16px 16px 18px;
   box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 6%,transparent)}
 :root:not([data-theme="dark"]) .shell[data-view="earn"][data-tab="calc"] .cbig.cterm{
-  background:#fff;box-shadow:0 1px 0 rgba(255,255,255,.85) inset,0 16px 32px -22px rgba(11,35,65,.18)}
+  background:var(--paper);box-shadow:0 1px 0 color-mix(in srgb,var(--ink-raise) 80%,transparent) inset,0 16px 32px -22px rgba(11,35,65,.16)}
 .shell[data-view="earn"][data-tab="calc"] .cbig.cterm strong{font-size:2.25rem;letter-spacing:-.025em}
 .shell[data-view="earn"][data-tab="withdraw"] .rail > li{
   padding-bottom:22px}
@@ -3983,7 +3984,7 @@ body.has-tabbar #back{display:none}
 :root:not([data-theme="dark"]) .tbb[aria-current="page"]{color:#1F2A3C}
 :root:not([data-theme="dark"]) .tbring{background:#1F2A3C}
 :root:not([data-theme="dark"]) .tbb .dot{box-shadow:0 0 0 2px var(--ink-deep)}
-html[data-font="nastaliq"] .tbb span,html[data-font="naskh"] .tbb span{line-height:1.25;overflow:visible;font-size:var(--fs-nav);margin-top:0;padding-block:1px 2px}
+html[data-font="nastaliq"] .tbb span,html[data-font="naskh"] .tbb span{line-height:1.3;overflow:visible;font-size:var(--tbfs,var(--fs-nav));margin-top:0;padding-block:1px 2px}
 html[data-font="nastaliq"] .tbb,html[data-font="naskh"] .tbb{padding-bottom:4px}
 body.has-tabbar{padding-bottom:var(--tab-clear)}
 body.has-tabbar #pille{bottom:calc(var(--tab-clear) + 6px)}
@@ -5779,8 +5780,8 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
 /* Start: softer light wash + phase `.view` (Element trail). */
 html[data-theme="light"] .shell[data-view="start"] #s-guide{
   border-radius:12px;border-color:color-mix(in srgb,var(--chalk) 6%,var(--rule));
-  background:color-mix(in srgb,#F4F6F9 88%,#fff);
-  box-shadow:0 6px 18px -12px rgba(31,42,60,.18)}
+  background:color-mix(in srgb,var(--ink-raise) 72%,var(--paper));
+  box-shadow:0 6px 18px -12px rgba(31,42,60,.16)}
 .shell[data-view="start"] #s-guide .shpath li.view .e{
   background:color-mix(in srgb,var(--teal-live) 22%,var(--ink-raise));
   color:var(--teal-ink);
@@ -6159,7 +6160,7 @@ html[data-theme="light"] .shell[data-view="ib"] .iqtree{
   .shell[data-view="faq"] #vhead .vtx b::after{animation:none !important;width:2.75rem !important}
 }
 
-/* Hard contain — CTAs/portals never escape 360 frame. */}
+/* Hard contain — CTAs/portals never escape 360 frame. */
 .shell[data-view="menu"] .notices,
 .shell[data-view="menu"] #notice-none,
 .shell[data-view="menu"] #menu-nav,
@@ -6632,8 +6633,8 @@ html{scroll-padding-bottom:var(--tab-clear);scroll-padding-top:8px}
   .pgrid-corridor.pshelf .pcta{max-width:100%}
   /* Long tab labels: allow slightly smaller without clipping glyphs. */
   html .tabbar .tbrow .tbb span{font-size:.58rem}
-  html[data-font="nastaliq"] .tbb span{font-size:var(--fs-nav);line-height:1.35;margin-top:0;padding-block:2px 3px;overflow:visible}
-  html[data-font="naskh"] .tbb span{font-size:var(--fs-nav);line-height:1.25;margin-top:0;padding-block:1px 2px;overflow:visible}
+  html[data-font="nastaliq"] .tbb span{font-size:var(--tbfs,var(--fs-nav));line-height:1.35;margin-top:0;padding-block:2px 3px;overflow:visible}
+  html[data-font="naskh"] .tbb span{font-size:var(--tbfs,var(--fs-nav));line-height:1.25;margin-top:0;padding-block:1px 2px;overflow:visible}
 }
 /* Short old phones (SE / Galaxy J) — reclaim vertical chrome first. */
 @media (max-height:640px){
@@ -6664,6 +6665,83 @@ html{scroll-padding-bottom:var(--tab-clear);scroll-padding-top:8px}
 .shell[data-view] #vhead .vtx b,
 .prodview .vhead .vtx b{
   overflow-wrap:anywhere;word-break:break-word}
+
+/* =============================================================================
+   AIM-257 — light comfort leftovers + Nastaliq/Arabic density vs Roman/Hindi.
+   After #468. Academy · Ask · Home. Tabs in px (--tbfs). Never #379. No YouTube.
+   ============================================================================= */
+
+/* Tab authority: script fonts stay on px --tbfs so they match Hindi/Roman (~10px). */
+html .tabbar .tbrow .tbb span{font-size:var(--tbfs,var(--fs-nav))}
+html[data-font="nastaliq"] .tabbar .tbrow .tbb span,
+html[data-font="naskh"] .tabbar .tbrow .tbb span{
+  font-size:var(--tbfs,var(--fs-nav)) !important;
+  line-height:1.35;overflow:visible;max-height:none}
+
+/* Light: kill remaining pure-white panels that fight mist paper (migraine). */
+html[data-theme="light"] .sncalc.snkept,
+html[data-theme="light"] .shell[data-view="earn"][data-tab="results"] .rsstat div,
+html[data-theme="light"] .shell[data-view="earn"][data-tab="results"] .rsfig,
+html[data-theme="light"] .shell[data-view="earn"][data-tab="calc"] .cbig.cterm{
+  background:var(--paper) !important}
+html[data-theme="light"] .shell[data-view="start"] #s-guide{
+  background:color-mix(in srgb,var(--ink-raise) 72%,var(--paper)) !important}
+
+/* Home light — quieter Share wash + portal titles on Nastaliq (hanging forms). */
+html[data-theme="light"] .shell[data-view="menu"] .htree .hta.htshare,
+html[data-theme="light"] .shell[data-view="menu"] .htree .hta[data-k="share"]{
+  background:color-mix(in srgb,var(--brand-gold) 4%,transparent) !important}
+html[data-font="nastaliq"] .shell[data-view="menu"] .htree .htn b{
+  font-size:.9rem;line-height:1.45}
+html[data-font="nastaliq"] .shell[data-view="menu"] .htree .hta.htshare .htn b,
+html[data-font="nastaliq"] .shell[data-view="menu"] .htree .hta[data-k="share"] .htn b{
+  font-size:.94rem;line-height:1.4}
+html[data-font="nastaliq"] .shell[data-view="menu"] .hero h1{
+  line-height:1.48;padding-block:4px 2px}
+html[data-font="nastaliq"] .shell[data-view="menu"] .hero p#hsub{
+  font-size:.88rem;line-height:1.65;margin-top:10px}
+html[data-font="naskh"] .shell[data-view="menu"] .htree .htn b{
+  font-size:.96rem;line-height:1.35}
+
+/* Academy light + Nastaliq — room for flourishes; dictionary stays hairline. */
+html[data-theme="light"]:has(.shell[data-view="learn"]) body::before{
+  background:
+    radial-gradient(90% 42% at 6% -10%,rgba(21,216,196,.05),transparent 55%),
+    radial-gradient(70% 36% at 100% 0%,rgba(27,79,216,.04),transparent 52%),
+    linear-gradient(180deg,#C5D2E2 0%,#D0DAE6 42%,#C2CFDF 100%)}
+html[data-font="nastaliq"] .shell[data-view="learn"] #vhead .vtx b{
+  font-size:clamp(1.28rem,5.8vw,1.55rem);line-height:1.5;padding-block:2px 0}
+html[data-font="nastaliq"] .shell[data-view="learn"] #vhead .vtx span{
+  font-size:.88rem;line-height:1.6}
+html[data-font="nastaliq"] #academy .ltx .lt{font-size:1rem;line-height:1.4}
+html[data-font="nastaliq"] #academy .ltx .sub{font-size:.86rem;line-height:1.55}
+html[data-font="nastaliq"] #learn-list .ltx .lt{font-size:.98rem;line-height:1.4}
+html[data-font="naskh"] .shell[data-view="learn"] #vhead .vtx b{
+  font-size:clamp(1.4rem,6.2vw,1.7rem);line-height:1.38}
+
+/* Ask light + Nastaliq — match Academy density; search underline stays mist. */
+html[data-theme="light"]:has(.shell[data-view="faq"]) body::before{
+  background:
+    radial-gradient(88% 40% at 8% -10%,rgba(21,216,196,.045),transparent 55%),
+    radial-gradient(68% 34% at 100% 0%,rgba(27,79,216,.035),transparent 52%),
+    linear-gradient(180deg,#C5D2E2 0%,#D0DAE6 42%,#C2CFDF 100%)}
+html[data-font="nastaliq"] .shell[data-view="faq"] #vhead .vtx b{
+  font-size:clamp(1.28rem,5.8vw,1.5rem);line-height:1.5}
+html[data-font="nastaliq"] .shell[data-view="faq"] .qa > summary{
+  font-size:.94rem !important;line-height:1.5 !important;padding-block:14px !important}
+html[data-font="nastaliq"] .shell[data-view="faq"] #faq-q{
+  font-size:.9rem;line-height:1.45;padding-block:12px 11px}
+html[data-font="naskh"] .shell[data-view="faq"] .qa > summary{
+  font-size:.98rem !important;line-height:1.4 !important}
+
+/* Soft contain — Latin/Devanagari were measuring scrollWidth 364 @360
+   from sky orbs/neon SVG bleed. Clip page, keep atmosphere painted. */
+html,body{overflow-x:clip}
+.sky,.neon,.skyline{max-width:100%;overflow:hidden}
+.shell[data-view="menu"] .htree,
+.shell[data-view="learn"] #academy,
+.shell[data-view="faq"] #s-faq{
+  width:100%;max-width:100%;overflow-x:clip}
 </style>
 </head>
 <body>
