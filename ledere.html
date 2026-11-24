@@ -7408,6 +7408,55 @@ html[data-theme="light"] .cslide,
   border-color:color-mix(in srgb,var(--teal-live) 45%,var(--rule)) !important;
   outline:none}
 
+/* =============================================================================
+   AIM-279 — Highest-value leftovers after #490.
+   SoftVis/earn walk @360: Sonic `.snsplit .you` still Claude rainbow `--grad`
+   (blue→teal→magenta→gold); `.snmini i` / `.snspark i` still teal→#1B4FD8;
+   `.snbar` still soft rainbow + glow; Start `.prog .segs i.on` still teal→blue pill.
+   Kill Claude look; keep corridor teal. Keep: B-049 langbtn/temabunn pills ·
+   no Fresh · no-referral · IB→CopyX · outbound-hop funn:0 · never #379 · no YouTube.
+   ============================================================================= */
+
+/* Sonic fee split — «You keep» = solid teal corridor (not Claude rainbow). */
+.snsplit .you,
+.shell[data-view="earn"] .snsplit .you,
+.shell[data-view="earn"][data-tab="sonic"] .snsplit .you{
+  background:var(--teal-live,#15D8C4) !important;
+  background-image:none !important;
+  color:#08080B !important;
+  border-radius:0 !important;
+  filter:none !important}
+
+/* Sonic mini + 24-mo spark bars — teal depth only (no Claude blue ramp). */
+.sncalc.snkept .snmini i,
+.snmini i,
+.snspark i{
+  background:linear-gradient(180deg,var(--teal-live,#15D8C4),color-mix(in srgb,var(--teal-live,#15D8C4) 45%,#0A3D38)) !important;
+  background-image:linear-gradient(180deg,var(--teal-live,#15D8C4),color-mix(in srgb,var(--teal-live,#15D8C4) 45%,#0A3D38)) !important;
+  opacity:1 !important;
+  border-radius:2px 2px 0 0 !important}
+.snspark{
+  border-radius:0 !important;
+  padding-inline:0 !important}
+
+/* Sonic deposit bar — square teal track (was soft 7 + rainbow + white glow). */
+.snbar{
+  border-radius:0 !important;
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 32%,var(--rule)) !important;
+  background-image:none !important;
+  opacity:1 !important}
+.snbar i{
+  border-radius:0 !important;
+  background:var(--teal-live,#15D8C4) !important;
+  box-shadow:none !important}
+
+/* Start progress segments — square teal (was 99 pill + teal→#1B4FD8). */
+.prog .bar .segs i{
+  border-radius:0 !important}
+.prog .bar .segs i.on{
+  background:var(--teal-live,#15D8C4) !important;
+  background-image:none !important}
+
 /* Hard contain — CTAs/portals never escape 360 frame. */
 .shell[data-view="menu"] .notices,
 .shell[data-view="menu"] #notice-none,
