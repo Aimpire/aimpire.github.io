@@ -5090,9 +5090,55 @@ a.hsb:first-of-type{border-color:color-mix(in srgb,#15D8C4 45%,var(--rule));back
 .htree .htn span{font:500 .76rem/1.35 var(--face);color:var(--chalk-dim)}
 .htree .htg{flex:0 0 auto;color:var(--chalk-dim);font-size:1.05rem;line-height:1}
 html[dir="rtl"] .htree .htg{transform:scaleX(-1)}
-/* AIM-256: Fresh register (sponsor Partner URL) before CopyX login — same hairline row. */
+/* AIM-256/258: Fresh (new account) before CopyX login — paired hairline rows. */
 .htree .hta.htfresh .htn b{letter-spacing:-.015em}
 @media (prefers-reduced-motion:reduce){.htree .hta{transition:none}}
+/* AIM-258: register path reads primary; login-only CopyX stays quieter when paired. */
+.shell[data-view="menu"] .htree.htree-has-fresh .hta.htfresh,
+.shell[data-view="menu"] .htree .hta.htfresh{
+  padding-inline-start:10px !important;
+  border-inline-start:2px solid var(--teal-live) !important;
+  background:color-mix(in srgb,var(--teal-live) 6%,transparent) !important}
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta.htfresh{
+  background:color-mix(in srgb,var(--teal-live) 10%,transparent) !important}
+.shell[data-view="menu"] .htree .hta.htfresh .htn b{font-weight:800}
+.shell[data-view="menu"] .htree .hta.htfresh .htg{color:var(--teal-ink);opacity:.95}
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta.htfresh .htg{color:var(--teal-live)}
+.shell[data-view="menu"] .htree.htree-has-fresh .hta.htcopyx{
+  opacity:.92}
+.shell[data-view="menu"] .htree.htree-has-fresh .hta.htcopyx .htn b{
+  font-weight:650;color:color-mix(in srgb,var(--chalk) 88%,var(--chalk-dim))}
+.shell[data-view="menu"] .htree.htree-has-fresh .hta.htfresh + .hta.htcopyx{
+  margin-top:0 !important;padding-top:10px !important;
+  border-top:0 !important}
+.shell[data-view="menu"] .htree .htref.htref-fresh,
+.shell[data-view="menu"] .htree .htref.htref-hint{
+  margin:0 0 6px;padding:4px 2px 8px 42px;font:500 .74rem/1.4 var(--face);
+  color:var(--chalk-dim);max-width:42ch;text-wrap:pretty}
+html[dir="rtl"] .shell[data-view="menu"] .htree .htref.htref-fresh,
+html[dir="rtl"] .shell[data-view="menu"] .htree .htref.htref-hint{
+  padding:4px 42px 8px 2px}
+/* AIM-258 Ask/Academy/More glide: lesson number is the affordance — drop duplicate +. */
+#academy.acorridor > details > summary::after{content:none !important;display:none !important}
+#academy.acorridor > details > summary .lic{
+  background:color-mix(in srgb,var(--teal-live) 14%,var(--rule));color:var(--teal-ink)}
+:root[data-theme="dark"] #academy.acorridor > details > summary .lic{
+  color:var(--teal-live);background:color-mix(in srgb,var(--teal-live) 18%,var(--ink-raise))}
+/* Ask list + More sheet: same hairline open feel as Academy corridor. */
+.shell[data-view="faq"] #faq-list{margin-top:2px}
+.shell[data-view="faq"] .qa > summary{
+  padding:13px 2px 14px !important;min-height:48px}
+html[data-theme="light"] .shell[data-view="faq"] #faq-q{
+  background:transparent}
+.mersheet .msb{
+  min-height:48px;padding:12px 2px;border-radius:0 !important;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important}
+.mersheet .msb:last-child{border-bottom:0 !important}
+.mersheet .msb[data-k="ib"]{
+  border-inline-start:2px solid var(--teal-live) !important;
+  padding-inline-start:10px !important;
+  background:color-mix(in srgb,var(--teal-live) 5%,transparent) !important}
 /* AIM-182/194: member tools after foyer — below share first paint @360
    (CTA ~484px; tabbar ~56 → keep portals under usable fold). */
 .shell[data-view="menu"] #menu-nav{
@@ -5774,7 +5820,9 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
   .shell[data-view="menu"] .htree .hta.htshare .htn b,
 html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
-  .shell[data-view="menu"] .htree .hta[data-k="share"] .htn b{
+  .shell[data-view="menu"] .htree .hta[data-k="share"] .htn b,
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="menu"] .htree .hta.htfresh .htn b{
   font-family:var(--face);font-weight:800}
 
 /* Start: softer light wash + phase `.view` (Element trail). */
@@ -7175,6 +7223,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.2008d6edee.js" defer></script>
+<script src="app-l.fa7e6db610.js" defer></script>
 </body>
 </html>
