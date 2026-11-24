@@ -4593,6 +4593,46 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
 .shell[data-view="start"][data-dest="community"] .cmtips li{
   display:grid;grid-template-columns:1.4rem 1fr;gap:8px;padding:8px 2px;border:0;background:none}
 .shell[data-view="start"][data-dest="community"] .eljoin{margin-top:var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--rule)}
+/* AIM-261: More→Element community — same calm teal store doors as Start #st-18
+   (AIM-252). Base `.apps a` still paints rainbow `--grad` border; corridor must not. */
+.shell[data-view="start"][data-dest="community"] .eljoin .apps a,
+.shell[data-view="start"][data-dest="community"] #cm-go .apps a{
+  border:1px solid color-mix(in srgb,var(--teal-live) 38%,var(--rule)) !important;
+  background:color-mix(in srgb,var(--teal-live) 6%,var(--ink-raise)) !important;
+  box-shadow:none !important;color:var(--chalk) !important;
+  border-radius:12px !important;font-weight:750}
+html[data-theme="light"] .shell[data-view="start"][data-dest="community"] .eljoin .apps a,
+html[data-theme="light"] .shell[data-view="start"][data-dest="community"] #cm-go .apps a{
+  background:color-mix(in srgb,var(--teal-live) 5%,var(--paper,#DCE4EE)) !important;
+  border-color:color-mix(in srgb,var(--teal-live) 32%,var(--rule)) !important}
+.shell[data-view="start"][data-dest="community"] .eljoin .joinbtn,
+.shell[data-view="start"][data-dest="community"] #cm-go .joinbtn{
+  background:var(--cta-primary-bg) !important;color:var(--cta-primary-fg) !important;
+  border:0 !important;box-shadow:none !important;border-radius:12px !important}
+.shell[data-view="start"][data-dest="community"] .eljoin .joinbtn::after,
+.shell[data-view="start"][data-dest="community"] #cm-go .joinbtn::after{
+  background:linear-gradient(90deg,var(--brand-gold),var(--teal-live)) !important;
+  opacity:.9}
+html[data-theme="light"] .shell[data-view="start"][data-dest="community"] .cmrooms li{
+  border-bottom-color:color-mix(in srgb,var(--rule) 72%,transparent)}
+/* Tools → Links & apps: Element store doors same teal grammar (not rainbow). */
+.shell[data-view="tools"][data-tab="toolkit"] .apps a,
+.shell[data-view="tools"] #s-apps .apps a{
+  border:1px solid color-mix(in srgb,var(--teal-live) 38%,var(--rule)) !important;
+  background:color-mix(in srgb,var(--teal-live) 6%,var(--ink-raise)) !important;
+  box-shadow:none !important;color:var(--chalk) !important}
+html[data-theme="light"] .shell[data-view="tools"][data-tab="toolkit"] .apps a,
+html[data-theme="light"] .shell[data-view="tools"] #s-apps .apps a{
+  background:color-mix(in srgb,var(--teal-live) 5%,var(--paper,#DCE4EE)) !important}
+/* AIM-261 light comfort: hub share sheet — mist paper (More panel updated below). */
+html[data-theme="light"] .hspanel{
+  background:color-mix(in srgb,var(--paper) 85%,#E8EEF4) !important;
+  box-shadow:0 16px 36px -12px rgba(11,35,65,.16) !important}
+html[data-theme="light"] .hsb{
+  background:color-mix(in srgb,var(--teal-live) 3%,transparent);
+  border-color:color-mix(in srgb,var(--rule) 85%,transparent)}
+html[data-theme="light"] a.hsb:first-of-type{
+  background:color-mix(in srgb,var(--teal-live) 8%,var(--paper)) !important}
 /* AIM-239v2 — Tools/Markets Nastaliq: chips + status must not dominate Hindi bar. */
 html[data-font="nastaliq"] .shell[data-view="tools"] .jump button,
 html[data-font="nastaliq"] .shell[data-view="tools"] .topbar .jump button{
@@ -4840,8 +4880,11 @@ html[data-theme="light"] .shell[data-view="tools"] .psout .k{
   background:transparent;color:var(--chalk)}
 html[data-theme="light"] .shell[data-view="faq"] #faq-q{
   background:color-mix(in srgb,var(--ink-deep) 55%,transparent);border-color:var(--rule)}
+/* AIM-261: More sheet light mist (was cool #D0DAE6 chrome). */
 html[data-theme="light"] .mspanel{
-  background:var(--ink);box-shadow:0 18px 40px -14px rgba(11,35,65,.18)}
+  background:color-mix(in srgb,var(--paper) 78%,#E8EEF4);
+  box-shadow:0 18px 40px -14px rgba(11,35,65,.14);
+  border:1px solid color-mix(in srgb,var(--rule) 70%,transparent)}
 html[data-theme="light"] .msb[data-k="ib"]{
   background:color-mix(in srgb,var(--teal-live) 6%,var(--ink));
   border-color:color-mix(in srgb,var(--teal-live) 32%,var(--rule)) !important}
@@ -5090,10 +5133,10 @@ a.hsb:first-of-type{border-color:color-mix(in srgb,#15D8C4 45%,var(--rule));back
 .htree .htn span{font:500 .76rem/1.35 var(--face);color:var(--chalk-dim)}
 .htree .htg{flex:0 0 auto;color:var(--chalk-dim);font-size:1.05rem;line-height:1}
 html[dir="rtl"] .htree .htg{transform:scaleX(-1)}
-/* AIM-256/258: Fresh (new account) before CopyX login — paired hairline rows. */
+/* AIM-261: AiTech path (Fresh + IB) is its own block — never nest under CopyX. */
 .htree .hta.htfresh .htn b{letter-spacing:-.015em}
 @media (prefers-reduced-motion:reduce){.htree .hta{transition:none}}
-/* AIM-258: register path reads primary; login-only CopyX stays quieter when paired. */
+/* Fresh = AiTech Partner primary; IB = AiTech portal; CopyX login quieter after. */
 .shell[data-view="menu"] .htree.htree-has-fresh .hta.htfresh,
 .shell[data-view="menu"] .htree .hta.htfresh{
   padding-inline-start:10px !important;
@@ -5104,11 +5147,16 @@ html[dir="rtl"] .htree .htg{transform:scaleX(-1)}
 .shell[data-view="menu"] .htree .hta.htfresh .htn b{font-weight:800}
 .shell[data-view="menu"] .htree .hta.htfresh .htg{color:var(--teal-ink);opacity:.95}
 :root[data-theme="dark"] .shell[data-view="menu"] .htree .hta.htfresh .htg{color:var(--teal-live)}
+.shell[data-view="menu"] .htree .hta.htib{
+  padding-inline-start:10px !important;
+  border-inline-start:2px solid color-mix(in srgb,var(--teal-live) 50%,var(--rule)) !important}
 .shell[data-view="menu"] .htree.htree-has-fresh .hta.htcopyx{
   opacity:.92}
 .shell[data-view="menu"] .htree.htree-has-fresh .hta.htcopyx .htn b{
   font-weight:650;color:color-mix(in srgb,var(--chalk) 88%,var(--chalk-dim))}
-.shell[data-view="menu"] .htree.htree-has-fresh .hta.htfresh + .hta.htcopyx{
+/* Fresh→IB AiTech pair (tip may sit between); never Fresh→CopyX pair. */
+.shell[data-view="menu"] .htree .hta.htfresh + .hta.htib,
+.shell[data-view="menu"] .htree .htref.htref-fresh + .hta.htib{
   margin-top:0 !important;padding-top:10px !important;
   border-top:0 !important}
 .shell[data-view="menu"] .htree .htref.htref-fresh,
@@ -5795,13 +5843,20 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
 :root[data-theme="dark"] .shell[data-view="menu"] .htree .hta.htshare .htg,
 :root[data-theme="dark"] .shell[data-view="menu"] .htree .hta[data-k="share"] .htg{
   color:var(--brand-gold)}
-/* Hierarchy: login → stay → optional. Gap only at group start. */
+/* Hierarchy: login → aitech → stay → optional. Gap only at group start. */
+.shell[data-view="menu"] .htree .hta[data-g="aitech"],
 .shell[data-view="menu"] .htree .hta[data-g="stay"],
 .shell[data-view="menu"] .htree .hta[data-g="more"]{
   margin-top:6px !important;padding-top:14px !important}
+.shell[data-view="menu"] .htree .hta[data-g="aitech"] + .hta[data-g="aitech"],
+.shell[data-view="menu"] .htree .htref + .hta[data-g="aitech"],
 .shell[data-view="menu"] .htree .hta[data-g="stay"] + .hta[data-g="stay"],
 .shell[data-view="menu"] .htree .hta[data-g="more"] + .hta[data-g="more"]{
   margin-top:0 !important;padding-top:12px !important}
+/* Separate CopyX login from the AiTech block above it. */
+.shell[data-view="menu"] .htree .hta[data-g="aitech"] + .hta.htcopyx,
+.shell[data-view="menu"] .htree .htref + .hta.htcopyx{
+  margin-top:6px !important;padding-top:14px !important}
 .shell[data-view="menu"] .htree .htref{
   margin:2px 0 4px;padding:0 2px 0 42px;font:500 .74rem/1.4 var(--face);
   color:var(--chalk-dim);max-width:40ch}
@@ -7223,6 +7278,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.e7b4ab7ea5.js" defer></script>
+<script src="app-m.0eca2bc127.js" defer></script>
 </body>
 </html>
