@@ -5993,10 +5993,6 @@ html[data-font="naskh"] .shell[data-view="tools"] .topbar .jump button{
   background:color-mix(in srgb,var(--rule) 70%,transparent)}
 .shell[data-view="tools"][data-tab="hours"] .ssbar .lane.on .tr i{
   box-shadow:none;opacity:1}
-.shell[data-view="tools"][data-tab="hours"] .sslist li.on{
-  border-inline-start:2px solid var(--c);
-  background:color-mix(in srgb,var(--c) 6%,transparent);
-  padding-inline-start:10px}
 .shell[data-view="tools"][data-tab="hours"] .ssnow,
 .shell[data-view="tools"][data-tab="hours"] .ssyou{
   font:650 .86rem/1.4 var(--face);color:var(--chalk-dim);margin:0 0 6px}
@@ -6005,6 +6001,89 @@ html[data-theme="light"] .shell[data-view="tools"][data-tab="hours"] .ssbar .now
 html[data-theme="light"] .shell[data-view="tools"][data-tab="hours"] #s-market > h2,
 html[data-theme="light"] .shell[data-view="tools"][data-tab="hours"] #s-sessions > h2{
   color:color-mix(in srgb,var(--chalk-dim) 92%,#5a6578)}
+
+/* AIM-264 — Markets leftovers after #476: session tiles + prices/news match Tools hairline.
+   Dial stays useful but compact (prefs: not huge / no glow stack). Home Fresh→IB→CopyX untouched. */
+.shell[data-view="tools"][data-tab="hours"] .ssdial{
+  max-width:220px;margin:2px auto 8px;padding:0;
+  border:0;border-radius:0;background:transparent;box-shadow:none}
+.shell[data-view="tools"][data-tab="hours"] .ssdial .glow,
+.shell[data-view="tools"][data-tab="hours"] .ssdial .ovl,
+.shell[data-view="tools"][data-tab="hours"] .ssdial .ping{display:none}
+.shell[data-view="tools"][data-tab="hours"] .ssdial .night{stroke-opacity:.22}
+.shell[data-view="tools"][data-tab="hours"] .ssdial .day{stroke-opacity:.2}
+.shell[data-view="tools"][data-tab="hours"] .ssdial .kl{font-size:15px}
+.shell[data-view="tools"][data-tab="hours"] .sslist{
+  gap:0;margin:0 0 8px;border-block:1px solid var(--rule);background:transparent}
+.shell[data-view="tools"][data-tab="hours"] .sslist li{
+  margin:0;padding:10px 10px 9px;gap:3px;
+  border:0 !important;border-radius:0 !important;
+  border-inline-end:1px solid var(--rule) !important;
+  border-bottom:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important;opacity:1}
+.shell[data-view="tools"][data-tab="hours"] .sslist li:nth-child(2n){border-inline-end:0 !important}
+.shell[data-view="tools"][data-tab="hours"] .sslist li:nth-last-child(-n+2){border-bottom:0 !important}
+.shell[data-view="tools"][data-tab="hours"] .sslist li.on{
+  border-color:transparent !important;
+  border-inline-start:2px solid var(--c) !important;
+  padding-inline-start:8px;
+  background:color-mix(in srgb,var(--c) 7%,transparent) !important;
+  box-shadow:none !important}
+.shell[data-view="tools"][data-tab="hours"] .sslist li.on .st{color:var(--chalk);font-weight:650}
+.shell[data-view="tools"][data-tab="hours"] .sslist .pg{
+  height:2px;margin-top:5px;border-radius:0;
+  background:color-mix(in srgb,var(--c) 14%,transparent)}
+.shell[data-view="tools"][data-tab="hours"] .sslist .pg b{border-radius:0}
+html[data-theme="light"] .shell[data-view="tools"][data-tab="hours"] .sslist li{
+  background:transparent !important}
+html[data-theme="light"] .shell[data-view="tools"][data-tab="hours"] .sslist li.on{
+  background:color-mix(in srgb,var(--c) 8%,transparent) !important}
+
+/* Prices & news — price tiles, next-news alert, chart, mid filter = corridor not soft cards. */
+.shell[data-view="tools"][data-tab="hours"] #s-market .mkpx{
+  gap:0;border-block:1px solid var(--rule)}
+.shell[data-view="tools"][data-tab="hours"] #s-market .mkk{
+  margin:0;padding:9px 10px;min-height:40px;
+  border:0 !important;border-radius:0 !important;
+  border-inline-end:1px solid var(--rule) !important;
+  border-bottom:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important}
+.shell[data-view="tools"][data-tab="hours"] #s-market .mkk:nth-child(2n){border-inline-end:0 !important}
+.shell[data-view="tools"][data-tab="hours"] #s-market .mkk:nth-last-child(-n+2){border-bottom:0 !important}
+.shell[data-view="tools"][data-tab="hours"] #s-market .mknext,
+.shell[data-view="tools"][data-tab="hours"] #s-market #mkt-next.mknext,
+.shell[data-view="tools"][data-tab="hours"] #s-market a.mknext{
+  margin:8px 0 0;padding:12px 2px 12px 12px;gap:4px;
+  border:0 !important;border-radius:0 !important;
+  border-block:1px solid var(--rule) !important;
+  border-inline-start:2px solid #F0506E !important;
+  background:color-mix(in srgb,#F0506E 5%,transparent) !important;
+  box-shadow:none !important}
+html[data-theme="light"] .shell[data-view="tools"][data-tab="hours"] #s-market a.mknext,
+html[data-theme="light"] .shell[data-view="tools"][data-tab="hours"] #s-market .mknext{
+  background:color-mix(in srgb,#F0506E 6%,transparent) !important}
+.shell[data-view="tools"][data-tab="hours"] #s-market .mknext small{letter-spacing:.04em}
+.shell[data-view="tools"][data-tab="hours"] #s-market .mkmid{
+  margin:8px 0 6px;padding:0 12px;min-height:40px;
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important}
+.shell[data-view="tools"][data-tab="hours"] #s-market .mkmid[aria-pressed="true"]{
+  background:color-mix(in srgb,#F5A524 10%,transparent) !important;
+  border-color:color-mix(in srgb,#F5A524 55%,var(--rule)) !important;
+  box-shadow:inset 0 -2px 0 0 #F5A524 !important;color:var(--chalk)}
+.shell[data-view="tools"][data-tab="hours"] #s-sessions .gchart,
+.shell[data-view="tools"][data-tab="hours"] #ss-chart .gchart,
+.shell[data-view="tools"][data-tab="hours"] #s-market .gchart,
+.shell[data-view="tools"][data-tab="growth"] #s-growth .gchart,
+.shell[data-view="tools"] #s-growth .gchart{
+  height:min(260px,48vw);margin:6px 0 8px;padding:0;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important;overflow:hidden}
+html[data-theme="light"] .shell[data-view="tools"][data-tab="hours"] #s-market .mkk,
+html[data-theme="light"] .shell[data-view="tools"][data-tab="hours"] #s-sessions .gchart,
+html[data-theme="light"] .shell[data-view="tools"][data-tab="hours"] #ss-chart .gchart,
+html[data-theme="light"] .shell[data-view="tools"][data-tab="hours"] #s-market .gchart{
+  background:transparent !important}
 
 /* Journal — growth figure + form stay hairline; empty list quiet. */
 .shell[data-view="tools"][data-tab="journal"] #s-growth .grfig,
