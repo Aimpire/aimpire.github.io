@@ -6938,6 +6938,64 @@ html:is([data-font="nastaliq"],[data-font="naskh"]) .shell[data-view="ib"] .iqch
   opacity:1 !important}
 html[dir="rtl"] .shell[data-view="ib"] #vhead .vtx b::after{margin-inline-start:auto}
 
+/* =============================================================================
+   AIM-274 — Highest-value leftovers after #485.
+   Home #nn-chat still Claude 999 (base .slab.reg !important beat calm override).
+   Footer #tour-igjen still soft 999 (not B-049 språk/tema). Prefs: green primary
+   CTAs · corridor. Keep: B-049 langbtn/temabunn pills · no Fresh · no-referral ·
+   IB→CopyX · outbound-hop funn:0 · never #379 · no YouTube.
+   ============================================================================= */
+
+/* Home Start here — green square corridor (match askspon / stegreg). */
+.shell[data-view="menu"] #notice-none .slab.reg#nn-chat,
+.shell[data-view="menu"] #notice-none a.slab.reg#nn-chat{
+  display:flex !important;align-items:center;justify-content:center;gap:8px;
+  width:100%;max-width:100%;min-width:0;box-sizing:border-box;
+  min-height:46px;padding:11px 14px !important;margin:0 !important;
+  border-radius:0 !important;border:0 !important;
+  background:#16C784 !important;background-image:none !important;
+  color:#fff !important;
+  box-shadow:inset 0 -2px 0 0 color-mix(in srgb,#0E9A64 70%,#16C784) !important;
+  transform:none !important;filter:none !important;overflow:visible}
+.shell[data-view="menu"] #notice-none .slab.reg#nn-chat::before,
+.shell[data-view="menu"] #notice-none .slab.reg#nn-chat::after{display:none !important;content:none !important}
+.shell[data-view="menu"] #notice-none .slab.reg#nn-chat .t{
+  font:800 .95rem/1.2 var(--display) !important;color:#fff !important;
+  text-transform:none !important;letter-spacing:.01em !important}
+.shell[data-view="menu"] #notice-none .slab.reg#nn-chat .s{color:rgba(255,255,255,.88) !important;opacity:1}
+.shell[data-view="menu"] #notice-none .slab.reg#nn-chat:hover,
+.shell[data-view="menu"] #notice-none .slab.reg#nn-chat:focus-visible{
+  filter:brightness(1.06) !important;transform:none !important;
+  box-shadow:inset 0 -2px 0 0 color-mix(in srgb,#0E9A64 70%,#16C784) !important}
+.shell[data-view="menu"] #notice-none .slab.reg#nn-chat:active{
+  filter:brightness(.97) !important;transform:none !important}
+html[data-theme="light"] .shell[data-view="menu"] #notice-none .slab.reg#nn-chat,
+:root:not([data-theme="dark"]) .shell[data-view="menu"] #notice-none .slab.reg#nn-chat,
+:root:not([data-theme="dark"]) .shell[data-view="menu"] #notice-none .slab.reg#nn-chat{
+  background:#16C784 !important;color:#fff !important;
+  box-shadow:inset 0 -2px 0 0 color-mix(in srgb,#0E9A64 70%,#16C784) !important}
+html:is([data-font="nastaliq"],[data-font="naskh"]) .shell[data-view="menu"] #notice-none .slab.reg#nn-chat .t{
+  font-family:var(--face) !important;font-weight:700 !important}
+
+/* Footer tour replay — square hairline (lang/tema stay B-049 pills). */
+.tourigjen button,
+#tour-igjen{
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;color:var(--chalk) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important;
+  min-height:40px;padding:10px 16px !important}
+.tourigjen button:hover,
+.tourigjen button:focus-visible,
+#tour-igjen:hover,
+#tour-igjen:focus-visible{
+  border-color:color-mix(in srgb,var(--teal-live) 45%,var(--rule)) !important;
+  color:var(--chalk) !important}
+html[data-theme="light"] .tourigjen button,
+html[data-theme="light"] #tour-igjen,
+:root:not([data-theme="dark"]) .tourigjen button,
+:root:not([data-theme="dark"]) #tour-igjen{
+  background:transparent !important}
+
 /* FAQ secondary under Ask — hairline rows, no padded cards / width-stair tiers. */
 .shell[data-view="faq"] #s-help,
 .shell[data-view="faq"] #s-docs,
@@ -8016,6 +8074,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.7994c06e29.js" defer></script>
+<script src="app-m.3f7a410288.js" defer></script>
 </body>
 </html>
