@@ -4592,29 +4592,46 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
 .shell[data-view="start"][data-dest="community"] .cmrooms span{font:500 .8rem/1.4 var(--face);color:var(--chalk-dim)}
 .shell[data-view="start"][data-dest="community"] .cmtips li{
   display:grid;grid-template-columns:1.4rem 1fr;gap:8px;padding:8px 2px;border:0;background:none}
-.shell[data-view="start"][data-dest="community"] .eljoin{margin-top:var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--rule)}
-/* AIM-261: More→Element community — same calm teal store doors as Start #st-18
-   (AIM-252). Base `.apps a` still paints rainbow `--grad` border; corridor must not. */
-.shell[data-view="start"][data-dest="community"] .eljoin .apps a,
-.shell[data-view="start"][data-dest="community"] #cm-go .apps a{
+/* AIM-262: join CTA is first after lede — no leftover hairline above it.
+   Hairline moves to rooms (what you meet after joining). */
+.shell[data-view="start"][data-dest="community"] #cm-go .eljoin,
+.shell[data-view="start"][data-dest="community"] .eljoin{
+  margin-top:0;padding-top:0;border-top:0}
+.shell[data-view="start"][data-dest="community"] .cmrooms{
+  margin-top:var(--space-3);padding-top:var(--space-1);
+  border-top:1px solid var(--rule)}
+/* AIM-261/262: Element community store doors — same calm teal as Start #st-18
+   (AIM-252). Apply on ALL #s-community (Start scroll + More corridor).
+   Base `.apps a` still paints rainbow `--grad` border; community must not. */
+.shell[data-view="start"] #s-community .eljoin .apps a,
+.shell[data-view="start"] #s-community #cm-go .apps a{
   border:1px solid color-mix(in srgb,var(--teal-live) 38%,var(--rule)) !important;
   background:color-mix(in srgb,var(--teal-live) 6%,var(--ink-raise)) !important;
   box-shadow:none !important;color:var(--chalk) !important;
   border-radius:12px !important;font-weight:750}
-html[data-theme="light"] .shell[data-view="start"][data-dest="community"] .eljoin .apps a,
-html[data-theme="light"] .shell[data-view="start"][data-dest="community"] #cm-go .apps a{
+html[data-theme="light"] .shell[data-view="start"] #s-community .eljoin .apps a,
+html[data-theme="light"] .shell[data-view="start"] #s-community #cm-go .apps a{
   background:color-mix(in srgb,var(--teal-live) 5%,var(--paper,#DCE4EE)) !important;
   border-color:color-mix(in srgb,var(--teal-live) 32%,var(--rule)) !important}
-.shell[data-view="start"][data-dest="community"] .eljoin .joinbtn,
-.shell[data-view="start"][data-dest="community"] #cm-go .joinbtn{
+.shell[data-view="start"] #s-community .eljoin .joinbtn,
+.shell[data-view="start"] #s-community #cm-go .joinbtn{
   background:var(--cta-primary-bg) !important;color:var(--cta-primary-fg) !important;
   border:0 !important;box-shadow:none !important;border-radius:12px !important}
-.shell[data-view="start"][data-dest="community"] .eljoin .joinbtn::after,
-.shell[data-view="start"][data-dest="community"] #cm-go .joinbtn::after{
+.shell[data-view="start"] #s-community .eljoin .joinbtn::after,
+.shell[data-view="start"] #s-community #cm-go .joinbtn::after{
   background:linear-gradient(90deg,var(--brand-gold),var(--teal-live)) !important;
   opacity:.9}
 html[data-theme="light"] .shell[data-view="start"][data-dest="community"] .cmrooms li{
   border-bottom-color:color-mix(in srgb,var(--rule) 72%,transparent)}
+/* AIM-262: after-join tips — quiet hairline list (no emoji-card chrome). */
+.shell[data-view="start"] #s-community .cmtips{
+  margin-top:var(--space-2);gap:0}
+.shell[data-view="start"] #s-community .cmtips li{
+  border-bottom:1px solid color-mix(in srgb,var(--rule) 70%,transparent);
+  padding:10px 2px;align-items:start}
+.shell[data-view="start"] #s-community .cmtips li:last-child{border-bottom:0}
+.shell[data-view="start"] #s-community .cmtips .e{
+  font-size:.95rem;line-height:1.35;opacity:.85}
 /* Tools → Links & apps: Element store doors same teal grammar (not rainbow). */
 .shell[data-view="tools"][data-tab="toolkit"] .apps a,
 .shell[data-view="tools"] #s-apps .apps a{
@@ -7278,6 +7295,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.1df1d057c3.js" defer></script>
+<script src="app-l.d02d10475d.js" defer></script>
 </body>
 </html>
