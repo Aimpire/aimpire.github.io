@@ -6284,6 +6284,136 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
   .pgrid-corridor.pshelf > .pcard.pfeat{animation:none}
 }
 
+/* AIM-267 — Products/Sonic calc+kept leftovers after #479 Size & risk hairline.
+   Same soft shells (.cinw/.cseg/.cbig/.sncalc) still Claude-look on earn while
+   Tools sizing is corridor. Match segmented hairline. Home no-referral +
+   Fresh→IB→CopyX untouched. Never #379. */
+.shell[data-view="earn"][data-tab="calc"] .cinw,
+.shell[data-view="earn"][data-tab="sonic"] .cinw,
+.shell[data-view="earn"][data-tab="results"] .cinw,
+.shell[data-view="earn"][data-tab="withdraw"] .cinw{
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important;padding:0 12px}
+.shell[data-view="earn"][data-tab="calc"] .cinw:focus-within,
+.shell[data-view="earn"][data-tab="sonic"] .cinw:focus-within{
+  border-color:color-mix(in srgb,var(--teal-live) 55%,var(--rule)) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+.shell[data-view="earn"][data-tab="calc"] .cseg,
+.shell[data-view="earn"][data-tab="sonic"] .cseg,
+.shell[data-view="earn"][data-tab="results"] .cseg{
+  gap:0;margin:0 0 12px;padding:0;
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important}
+.shell[data-view="earn"][data-tab="calc"] .cseg button,
+.shell[data-view="earn"][data-tab="sonic"] .cseg button,
+.shell[data-view="earn"][data-tab="results"] .cseg button{
+  border-radius:0 !important;border:0 !important;
+  border-inline-end:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important;
+  color:var(--chalk-dim) !important;min-height:40px !important;padding:10px 4px !important}
+.shell[data-view="earn"][data-tab="calc"] .cseg button:last-child,
+.shell[data-view="earn"][data-tab="sonic"] .cseg button:last-child,
+.shell[data-view="earn"][data-tab="results"] .cseg button:last-child{border-inline-end:0 !important}
+.shell[data-view="earn"][data-tab="calc"] .cseg button[aria-pressed="true"],
+.shell[data-view="earn"][data-tab="sonic"] .cseg button[aria-pressed="true"],
+.shell[data-view="earn"][data-tab="results"] .cseg button[aria-pressed="true"]{
+  color:var(--chalk) !important;
+  background:color-mix(in srgb,var(--teal-live) 8%,transparent) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+.shell[data-view="earn"][data-tab="calc"] .cper,
+.shell[data-view="earn"][data-tab="calc"] .cpre,
+.shell[data-view="earn"][data-tab="sonic"] .cper,
+.shell[data-view="earn"][data-tab="sonic"] .cpre,
+.shell[data-view="earn"][data-tab="results"] .cper,
+.shell[data-view="earn"][data-tab="results"] .cpre{
+  display:flex;flex-wrap:wrap;gap:0;margin:0 0 10px;
+  border-block:1px solid var(--rule)}
+.shell[data-view="earn"][data-tab="calc"] .cper button,
+.shell[data-view="earn"][data-tab="calc"] .cpre button,
+.shell[data-view="earn"][data-tab="sonic"] .cper button,
+.shell[data-view="earn"][data-tab="sonic"] .cpre button,
+.shell[data-view="earn"][data-tab="results"] .cper button,
+.shell[data-view="earn"][data-tab="results"] .cpre button{
+  flex:1 1 auto;min-width:3.2rem;min-height:40px;padding:8px 10px;
+  border-radius:0 !important;border:0 !important;
+  border-inline-end:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important;color:var(--chalk-dim)}
+.shell[data-view="earn"][data-tab="calc"] .cper button:last-child,
+.shell[data-view="earn"][data-tab="calc"] .cpre button:last-child,
+.shell[data-view="earn"][data-tab="sonic"] .cper button:last-child,
+.shell[data-view="earn"][data-tab="sonic"] .cpre button:last-child,
+.shell[data-view="earn"][data-tab="results"] .cper button:last-child,
+.shell[data-view="earn"][data-tab="results"] .cpre button:last-child{border-inline-end:0 !important}
+.shell[data-view="earn"][data-tab="calc"] .cper button[aria-pressed="true"],
+.shell[data-view="earn"][data-tab="calc"] .cpre button[aria-pressed="true"],
+.shell[data-view="earn"][data-tab="sonic"] .cper button[aria-pressed="true"],
+.shell[data-view="earn"][data-tab="sonic"] .cpre button[aria-pressed="true"],
+.shell[data-view="earn"][data-tab="results"] .cper button[aria-pressed="true"],
+.shell[data-view="earn"][data-tab="results"] .cpre button[aria-pressed="true"]{
+  color:var(--chalk) !important;
+  background:color-mix(in srgb,var(--teal-live) 8%,transparent) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important;
+  border-color:transparent !important}
+.shell[data-view="earn"][data-tab="calc"] .cbig,
+.shell[data-view="earn"][data-tab="calc"] .cbig.cterm,
+.shell[data-view="earn"][data-tab="results"] .cbig,
+.shell[data-view="earn"][data-tab="results"] .cbig.cterm{
+  margin:4px 0 10px;padding:12px 2px;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+.shell[data-view="earn"][data-tab="calc"] .cbig.cterm strong,
+.shell[data-view="earn"][data-tab="results"] .cbig.cterm strong{
+  font:800 2rem/1.05 "Archivo",var(--display);letter-spacing:-.025em}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="earn"][data-tab="calc"] .cbig.cterm strong,
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="earn"][data-tab="results"] .cbig.cterm strong{font-family:var(--face)}
+/* Sonic overview — kept preview + split = corridor, not soft mist cards. */
+.shell[data-view="earn"][data-tab="sonic"] .sncalc,
+.shell[data-view="earn"][data-tab="sonic"] .sncalc.snkept{
+  margin:6px 0 8px;padding:14px 2px 12px;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+.shell[data-view="earn"][data-tab="sonic"] .sncalc.snkept .kept-val{
+  font:800 1.85rem/1.05 "Archivo",var(--display);letter-spacing:-.02em}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="earn"][data-tab="sonic"] .sncalc.snkept .kept-val{font-family:var(--face)}
+.shell[data-view="earn"][data-tab="sonic"] .snsplit{
+  height:56px;margin:6px 0 8px;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;overflow:hidden}
+.shell[data-view="earn"][data-tab="sonic"] .snsplit .fee{
+  border-radius:0 !important;border:0 !important;
+  border-inline-start:1px solid var(--rule) !important;
+  background:transparent !important;color:var(--chalk)}
+.shell[data-view="earn"][data-tab="sonic"] .snsplit .you{
+  border-radius:0 !important}
+.shell[data-view="earn"][data-tab="sonic"] .snkept-go{
+  margin:8px 0 6px;min-height:44px;
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;color:var(--chalk) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+.shell[data-view="earn"][data-tab="results"] .rsstat div{
+  border-radius:0 !important;padding:12px 2px 11px;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important}
+.shell[data-view="earn"][data-tab="results"] .rsfig{
+  margin:6px 0 8px;padding:10px 2px 6px;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+html[data-theme="light"] .shell[data-view="earn"][data-tab="calc"] .cinw,
+html[data-theme="light"] .shell[data-view="earn"][data-tab="calc"] .cseg,
+html[data-theme="light"] .shell[data-view="earn"][data-tab="calc"] .cbig,
+html[data-theme="light"] .shell[data-view="earn"][data-tab="sonic"] .cinw,
+html[data-theme="light"] .shell[data-view="earn"][data-tab="sonic"] .cseg,
+html[data-theme="light"] .shell[data-view="earn"][data-tab="sonic"] .sncalc,
+html[data-theme="light"] .shell[data-view="earn"][data-tab="sonic"] .sncalc.snkept,
+html[data-theme="light"] .shell[data-view="earn"][data-tab="results"] .rsstat div,
+html[data-theme="light"] .shell[data-view="earn"][data-tab="results"] .rsfig,
+:root:not([data-theme="dark"]) .shell[data-view="earn"][data-tab="calc"] .cbig.cterm,
+:root:not([data-theme="dark"]) .shell[data-view="earn"][data-tab="sonic"] .sncalc.snkept{
+  background:transparent !important;box-shadow:none !important}
+
 /* =============================================================================
    AIM-254 — Invite/IB commission + FAQ More inners after #467.
    Chips → segmented hairline (no pill cluster). Unlock / equality / ladder /
