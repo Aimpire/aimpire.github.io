@@ -6977,24 +6977,105 @@ html[data-theme="light"] .shell[data-view="menu"] #notice-none .slab.reg#nn-chat
 html:is([data-font="nastaliq"],[data-font="naskh"]) .shell[data-view="menu"] #notice-none .slab.reg#nn-chat .t{
   font-family:var(--face) !important;font-weight:700 !important}
 
-/* Footer tour replay — square hairline (lang/tema stay B-049 pills). */
-.tourigjen button,
+/* Footer tour replay — square hairline. ONLY #tour-igjen (AIM-275: never .tourigjen button —
+   that also matched B-049 #tema-bunn.temabunn and squared the pill). */
 #tour-igjen{
   border-radius:0 !important;border:1px solid var(--rule) !important;
   background:transparent !important;color:var(--chalk) !important;
   box-shadow:inset 0 -2px 0 0 var(--teal-live) !important;
   min-height:40px;padding:10px 16px !important}
-.tourigjen button:hover,
-.tourigjen button:focus-visible,
 #tour-igjen:hover,
 #tour-igjen:focus-visible{
   border-color:color-mix(in srgb,var(--teal-live) 45%,var(--rule)) !important;
   color:var(--chalk) !important}
-html[data-theme="light"] .tourigjen button,
 html[data-theme="light"] #tour-igjen,
-:root:not([data-theme="dark"]) .tourigjen button,
 :root:not([data-theme="dark"]) #tour-igjen{
   background:transparent !important}
+
+/* B-049 restore — footer theme stays a pill (langbtn sibling). */
+#tema-bunn.temabunn,
+.temabunn{
+  border-radius:999px !important;border:1px solid var(--rule) !important;
+  background:transparent !important;color:var(--chalk-dim) !important;
+  box-shadow:none !important;min-height:40px;padding:10px 16px !important}
+#tema-bunn.temabunn:hover,
+#tema-bunn.temabunn:focus-visible,
+.temabunn:hover,
+.temabunn:focus-visible{
+  border-color:color-mix(in srgb,var(--teal-live) 40%,var(--rule)) !important;
+  color:var(--chalk) !important}
+
+/* =============================================================================
+   AIM-275 — Highest-value leftovers after #486.
+   1) B-049 #tema-bunn restored above (AIM-274 .tourigjen button leak).
+   2) Markets .mknext — 14 soft off-hours-tab → square ember tick always.
+   3) Start .stegreg — non-current still Claude 999 (base .slab.reg !important);
+      mark-done .markd still soft 12 — square green / hairline corridor.
+   4) #tema .valg kept square (sheet path retired to silent system apply, but
+      CSS stays so a resurrected sheet is not Claude cards).
+   Keep: B-049 langbtn/temabunn pills · no Fresh · no-referral · IB→CopyX ·
+   outbound-hop funn:0 · never #379 · no YouTube.
+   ============================================================================= */
+
+/* Theme sheet defense — square corridor if #tema is ever recreated. */
+#tema{border-radius:12px 12px 0 0 !important}
+#tema .valg button{
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;
+  box-shadow:inset 0 -2px 0 0 transparent !important;
+  gap:10px;padding:12px 10px !important}
+#tema .valg button[aria-pressed="true"]{
+  border-color:color-mix(in srgb,var(--teal-live) 55%,var(--rule)) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+#tema .valg button:hover,
+#tema .valg button:focus-visible{
+  border-color:color-mix(in srgb,var(--teal-live) 40%,var(--rule)) !important}
+html[data-theme="light"] #tema .valg button,
+:root:not([data-theme="dark"]) #tema .valg button{
+  background:transparent !important}
+
+/* Markets next-news — square ember tick on every tab (hours override already 0). */
+.mknext,
+a.mknext,
+#mkt-next.mknext{
+  border-radius:0 !important;border:0 !important;
+  border-block:1px solid var(--rule) !important;
+  border-inline-start:2px solid #F0506E !important;
+  background:color-mix(in srgb,#F0506E 5%,transparent) !important;
+  padding:12px 2px 12px 12px !important;box-shadow:none !important}
+html[data-theme="light"] .mknext,
+html[data-theme="light"] a.mknext,
+html[data-theme="light"] #mkt-next.mknext{
+  background:color-mix(in srgb,#F0506E 6%,transparent) !important}
+
+/* Start CTAs — every stegreg green square (not only .current; base 999 !important). */
+.shell[data-view="start"] #guide .stegreg.slab.reg,
+.shell[data-view="start"] #guide button.stegreg.slab.reg,
+.shell[data-view="start"] #guide a.stegreg.slab.reg{
+  display:flex !important;align-items:center;justify-content:center;gap:8px;
+  width:calc(100% - 16px);max-width:calc(100% - 16px);min-width:0;box-sizing:border-box;
+  margin:10px 8px 0 !important;min-height:46px;padding:11px 14px !important;
+  border-radius:0 !important;border:0 !important;
+  background:#16C784 !important;background-image:none !important;color:#fff !important;
+  box-shadow:inset 0 -2px 0 0 color-mix(in srgb,#0E9A64 70%,#16C784) !important;
+  transform:none !important;filter:none !important;overflow:visible}
+.shell[data-view="start"] #guide .stegreg.slab.reg::before,
+.shell[data-view="start"] #guide .stegreg.slab.reg::after{display:none !important;content:none !important}
+.shell[data-view="start"] #guide .stegreg.slab.reg .t{
+  font:800 .95rem/1.2 var(--display) !important;color:#fff !important;
+  text-transform:none !important;letter-spacing:.01em !important}
+.shell[data-view="start"] #guide .stegreg.slab.reg .s{color:rgba(255,255,255,.88) !important}
+.shell[data-view="start"] #guide .stegreg.slab.reg:hover,
+.shell[data-view="start"] #guide .stegreg.slab.reg:focus-visible{
+  filter:brightness(1.06) !important;transform:none !important}
+html[data-theme="light"] .shell[data-view="start"] #guide .stegreg.slab.reg,
+:root:not([data-theme="dark"]) .shell[data-view="start"] #guide .stegreg.slab.reg{
+  background:#16C784 !important;color:#fff !important}
+
+/* Start mark-done — square hairline (was soft 12). */
+.shell[data-view="start"] #guide .markd{
+  border-radius:0 !important;
+  box-shadow:inset 0 -2px 0 0 color-mix(in srgb,var(--teal-live) 55%,transparent) !important}
 
 /* FAQ secondary under Ask — hairline rows, no padded cards / width-stair tiers. */
 .shell[data-view="faq"] #s-help,
