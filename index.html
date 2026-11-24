@@ -4609,7 +4609,7 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
   border:1px solid color-mix(in srgb,var(--teal-live) 38%,var(--rule)) !important;
   background:color-mix(in srgb,var(--teal-live) 6%,var(--ink-raise)) !important;
   box-shadow:none !important;color:var(--chalk) !important;
-  border-radius:12px !important;font-weight:750}
+  border-radius:0 !important;font-weight:750}
 html[data-theme="light"] .shell[data-view="start"] #s-community .eljoin .apps a,
 html[data-theme="light"] .shell[data-view="start"] #s-community #cm-go .apps a{
   background:color-mix(in srgb,var(--teal-live) 5%,var(--paper,#DCE4EE)) !important;
@@ -4617,7 +4617,7 @@ html[data-theme="light"] .shell[data-view="start"] #s-community #cm-go .apps a{
 .shell[data-view="start"] #s-community .eljoin .joinbtn,
 .shell[data-view="start"] #s-community #cm-go .joinbtn{
   background:var(--cta-primary-bg) !important;color:var(--cta-primary-fg) !important;
-  border:0 !important;box-shadow:none !important;border-radius:12px !important}
+  border:0 !important;box-shadow:none !important;border-radius:0 !important}
 .shell[data-view="start"] #s-community .eljoin .joinbtn::after,
 .shell[data-view="start"] #s-community #cm-go .joinbtn::after{
   background:linear-gradient(90deg,var(--brand-gold),var(--teal-live)) !important;
@@ -7249,6 +7249,118 @@ button.nshare:focus-visible{
   border-radius:0 !important;border:1px solid var(--rule) !important;
   background:transparent !important;
   box-shadow:inset 0 -2px 0 0 color-mix(in srgb,var(--teal-live) 55%,transparent) !important}
+
+/* =============================================================================
+   AIM-277 — Highest-value leftovers after #488.
+   Home sponsor/welcome Element join (fillElementJoin compact): App Store still
+   Claude rainbow `.slab.reg` 999; secondary Play still `--grad` soft 12; invite
+   `.dlink.regsmall` still inherits `--r-btn`. First paint for ?l= members.
+   Also kill AIM-261 community store `12px !important` leftover (Start #s-community).
+   Keep: B-049 langbtn/temabunn pills · no Fresh · no-referral · IB→CopyX ·
+   outbound-hop funn:0 · never #379 · no YouTube.
+   ============================================================================= */
+
+/* Home compact Element — primary store = green square corridor (match nn-chat). */
+#nn-eljoin .eljoin-home > a.slab.reg,
+#spon .eljoin-home > a.slab.reg,
+.eljoin.eljoin-home > a.slab.reg{
+  display:flex !important;align-items:center;justify-content:center;gap:8px;
+  width:100%;max-width:100%;min-width:0;box-sizing:border-box;
+  min-height:46px;padding:11px 14px !important;margin:0 !important;
+  border-radius:0 !important;border:0 !important;
+  background:#16C784 !important;background-image:none !important;
+  color:#fff !important;
+  box-shadow:inset 0 -2px 0 0 color-mix(in srgb,#0E9A64 70%,#16C784) !important;
+  transform:none !important;filter:none !important;overflow:visible}
+#nn-eljoin .eljoin-home > a.slab.reg::before,
+#nn-eljoin .eljoin-home > a.slab.reg::after,
+#spon .eljoin-home > a.slab.reg::before,
+#spon .eljoin-home > a.slab.reg::after,
+.eljoin.eljoin-home > a.slab.reg::before,
+.eljoin.eljoin-home > a.slab.reg::after{display:none !important;content:none !important}
+#nn-eljoin .eljoin-home > a.slab.reg .t,
+#spon .eljoin-home > a.slab.reg .t,
+.eljoin.eljoin-home > a.slab.reg .t{
+  font:800 .95rem/1.2 var(--display) !important;color:#fff !important;
+  text-transform:none !important;letter-spacing:.01em !important}
+#nn-eljoin .eljoin-home > a.slab.reg:hover,
+#nn-eljoin .eljoin-home > a.slab.reg:focus-visible,
+#spon .eljoin-home > a.slab.reg:hover,
+#spon .eljoin-home > a.slab.reg:focus-visible,
+.eljoin.eljoin-home > a.slab.reg:hover,
+.eljoin.eljoin-home > a.slab.reg:focus-visible{
+  filter:brightness(1.06) !important;transform:none !important}
+html[data-theme="light"] #nn-eljoin .eljoin-home > a.slab.reg,
+html[data-theme="light"] #spon .eljoin-home > a.slab.reg,
+html[data-theme="light"] .eljoin.eljoin-home > a.slab.reg,
+:root:not([data-theme="dark"]) #nn-eljoin .eljoin-home > a.slab.reg,
+:root:not([data-theme="dark"]) #spon .eljoin-home > a.slab.reg{
+  background:#16C784 !important;color:#fff !important}
+html:is([data-font="nastaliq"],[data-font="naskh"]) #nn-eljoin .eljoin-home > a.slab.reg .t,
+html:is([data-font="nastaliq"],[data-font="naskh"]) #spon .eljoin-home > a.slab.reg .t,
+html:is([data-font="nastaliq"],[data-font="naskh"]) .eljoin.eljoin-home > a.slab.reg .t{
+  font-family:var(--face) !important;font-weight:700 !important}
+
+/* Home compact Element — secondary store: square hairline (kill rainbow --grad). */
+#nn-eljoin .eljoin-home .apps a,
+#spon .eljoin-home .apps a,
+.eljoin.eljoin-home .apps a{
+  border-radius:0 !important;
+  border:1px solid var(--rule) !important;
+  background:transparent !important;background-image:none !important;
+  color:var(--chalk) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important;
+  filter:none !important}
+#nn-eljoin .eljoin-home .apps a:hover,
+#nn-eljoin .eljoin-home .apps a:focus-visible,
+#spon .eljoin-home .apps a:hover,
+#spon .eljoin-home .apps a:focus-visible,
+.eljoin.eljoin-home .apps a:hover,
+.eljoin.eljoin-home .apps a:focus-visible{
+  border-color:color-mix(in srgb,var(--teal-live) 45%,var(--rule)) !important;
+  filter:none !important}
+html[data-theme="light"] #nn-eljoin .eljoin-home .apps a,
+html[data-theme="light"] #spon .eljoin-home .apps a,
+html[data-theme="light"] .eljoin.eljoin-home .apps a{
+  background:transparent !important}
+
+/* Home compact Element — invite: square hairline door (was soft --r-btn inherit). */
+#nn-eljoin .eljoin-invite,
+#spon .eljoin-invite,
+.eljoin.eljoin-home .eljoin-invite,
+#nn-eljoin .dlink.regsmall.eljoin-invite,
+#spon .dlink.regsmall.eljoin-invite{
+  display:flex !important;align-items:center;justify-content:center;
+  width:100%;max-width:100%;box-sizing:border-box;
+  min-height:44px;margin-top:8px !important;padding:10px 14px !important;
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;background-image:none !important;
+  color:var(--chalk) !important;text-decoration:none !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important;
+  font:700 .9rem/1.25 var(--face) !important}
+#nn-eljoin .eljoin-invite .rg,
+#spon .eljoin-invite .rg,
+.eljoin.eljoin-home .eljoin-invite .rg{
+  color:var(--chalk) !important;font-weight:700 !important;
+  text-decoration:none !important}
+#nn-eljoin .eljoin-invite:hover,
+#nn-eljoin .eljoin-invite:focus-visible,
+#spon .eljoin-invite:hover,
+#spon .eljoin-invite:focus-visible,
+.eljoin.eljoin-home .eljoin-invite:hover,
+.eljoin.eljoin-home .eljoin-invite:focus-visible{
+  border-color:color-mix(in srgb,var(--teal-live) 45%,var(--rule)) !important;
+  color:var(--chalk) !important}
+#nn-eljoin .eljoin-invite::after,
+#spon .eljoin-invite::after,
+.eljoin.eljoin-home .eljoin-invite::after{content:none !important}
+
+/* Start community store doors — square (override AIM-261 soft 12). */
+.shell[data-view="start"] #s-community .eljoin .apps a,
+.shell[data-view="start"] #s-community #cm-go .apps a,
+.shell[data-view="start"] #s-community .eljoin .joinbtn,
+.shell[data-view="start"] #s-community #cm-go .joinbtn{
+  border-radius:0 !important}
 
 /* Hard contain — CTAs/portals never escape 360 frame. */
 .shell[data-view="menu"] .notices,
