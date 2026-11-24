@@ -6112,6 +6112,105 @@ html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
 html[data-theme="light"] .shell[data-view="tools"][data-tab="journal"] #s-growth .grol{
   color:color-mix(in srgb,var(--chalk-dim) 90%,#5a6578)}
 
+/* AIM-265 — Size & risk leftovers after #477 Markets hairline (#478 no-referral kept).
+   Instrument pills + soft calc shells still Claude-look while Journal/Markets
+   are corridor. Match segmented hairline + news tick. Home Fresh→IB→CopyX untouched. */
+.shell[data-view="tools"][data-tab="sizing"] .psinst{
+  display:flex;flex-wrap:wrap;gap:0;margin:0 0 var(--space-2);
+  border-block:1px solid var(--rule)}
+.shell[data-view="tools"][data-tab="sizing"] .psinst button{
+  flex:1 1 auto;min-width:4.5rem;padding:8px 10px;
+  border-radius:0 !important;border:0 !important;
+  border-inline-end:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important;
+  min-height:40px;color:var(--chalk-dim)}
+.shell[data-view="tools"][data-tab="sizing"] .psinst button:last-child{border-inline-end:0 !important}
+.shell[data-view="tools"][data-tab="sizing"] .psinst button[aria-pressed="true"]{
+  color:var(--chalk) !important;
+  background:color-mix(in srgb,var(--teal-live) 8%,transparent) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important;
+  border-color:transparent !important}
+.shell[data-view="tools"][data-tab="sizing"] .psgrid{
+  gap:0;margin:4px 0 10px}
+.shell[data-view="tools"][data-tab="sizing"] .psgrid input,
+.shell[data-view="tools"][data-tab="sizing"] .psgrid textarea{
+  margin:0 0 8px;padding:10px 12px;min-height:44px;
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important;color:var(--chalk)}
+.shell[data-view="tools"][data-tab="sizing"] .psgrid .flab{
+  margin:10px 0 4px;font:650 .78rem/1.25 var(--face);color:var(--chalk-dim);
+  letter-spacing:.02em}
+.shell[data-view="tools"][data-tab="sizing"] .cinw{
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important;padding:0 12px}
+.shell[data-view="tools"][data-tab="sizing"] .cinw:focus-within{
+  border-color:color-mix(in srgb,var(--teal-live) 55%,var(--rule)) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+.shell[data-view="tools"][data-tab="sizing"] .cin .cinw input{
+  font:800 1.45rem/1.1 "Archivo",var(--display);padding:11px 0}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="tools"][data-tab="sizing"] .cin .cinw input{font-family:var(--face)}
+.shell[data-view="tools"][data-tab="sizing"] .cseg{
+  gap:0;margin:0 0 12px;padding:0;
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important}
+.shell[data-view="tools"][data-tab="sizing"] .cseg button{
+  border-radius:0 !important;border:0 !important;
+  border-inline-end:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important;
+  color:var(--chalk-dim) !important;min-height:40px !important;padding:10px 4px !important}
+.shell[data-view="tools"][data-tab="sizing"] .cseg button:last-child{border-inline-end:0 !important}
+.shell[data-view="tools"][data-tab="sizing"] .cseg button[aria-pressed="true"]{
+  color:var(--chalk) !important;
+  background:color-mix(in srgb,var(--teal-live) 8%,transparent) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+.shell[data-view="tools"][data-tab="sizing"] .cper,
+.shell[data-view="tools"][data-tab="sizing"] .cpre{
+  display:flex;flex-wrap:wrap;gap:0;margin:0 0 10px;
+  border-block:1px solid var(--rule)}
+.shell[data-view="tools"][data-tab="sizing"] .cper button,
+.shell[data-view="tools"][data-tab="sizing"] .cpre button{
+  flex:1 1 auto;min-width:3.2rem;min-height:40px;padding:8px 10px;
+  border-radius:0 !important;border:0 !important;
+  border-inline-end:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important;color:var(--chalk-dim)}
+.shell[data-view="tools"][data-tab="sizing"] .cper button:last-child,
+.shell[data-view="tools"][data-tab="sizing"] .cpre button:last-child{border-inline-end:0 !important}
+.shell[data-view="tools"][data-tab="sizing"] .cper button[aria-pressed="true"],
+.shell[data-view="tools"][data-tab="sizing"] .cpre button[aria-pressed="true"]{
+  color:var(--chalk) !important;
+  background:color-mix(in srgb,var(--teal-live) 8%,transparent) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important;
+  border-color:transparent !important}
+.shell[data-view="tools"][data-tab="sizing"] .nyvakt{
+  margin:6px 0 8px;padding:10px 2px 10px 12px;gap:2px;
+  border:0 !important;border-radius:0 !important;
+  border-block:1px solid var(--rule) !important;
+  border-inline-start:2px solid #F0506E !important;
+  background:color-mix(in srgb,#F0506E 5%,transparent) !important;
+  box-shadow:none !important}
+html[data-theme="light"] .shell[data-view="tools"][data-tab="sizing"] .nyvakt{
+  background:color-mix(in srgb,#F0506E 6%,transparent) !important}
+.shell[data-view="tools"][data-tab="sizing"] .cbig,
+.shell[data-view="tools"][data-tab="sizing"] .cbig.cterm{
+  margin:4px 0 10px;padding:12px 2px;
+  border:0 !important;border-block:1px solid var(--rule) !important;
+  border-radius:0 !important;background:transparent !important;box-shadow:none !important}
+.shell[data-view="tools"][data-tab="sizing"] .cbig strong{
+  font:800 1.85rem/1.1 "Archivo",var(--display);letter-spacing:-.02em}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"])
+  .shell[data-view="tools"][data-tab="sizing"] .cbig strong{font-family:var(--face)}
+.shell[data-view="tools"][data-tab="sizing"] .skrun{
+  width:100%;margin:8px 0 6px;min-height:44px;
+  border-radius:0 !important;border:1px solid var(--rule) !important;
+  background:transparent !important;color:var(--chalk) !important;
+  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+html[data-theme="light"] .shell[data-view="tools"][data-tab="sizing"] .psgrid input,
+html[data-theme="light"] .shell[data-view="tools"][data-tab="sizing"] .cinw,
+html[data-theme="light"] .shell[data-view="tools"][data-tab="sizing"] .cseg,
+html[data-theme="light"] .shell[data-view="tools"][data-tab="sizing"] .cbig{
+  background:transparent !important}
+
 /* Products chrome — Sonic stage + Tools door match Home hairline (not mist cards). */
 .pgrid-corridor.pshelf > .pcard.pstep,
 .pgrid-corridor.pshelf > .pcard.pfeat{
