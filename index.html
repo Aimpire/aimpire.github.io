@@ -7635,6 +7635,58 @@ html[data-theme="light"] .shell[data-view="start"] .cmrooms li{
   border-radius:0 !important}
 
 /* =============================================================================
+   AIM-282 — Highest-value leftovers after #493.
+   SoftVis/rainbow walk @360: Home hero `#h2` / `.hero h1 span:last-child` still
+   full Claude `--grad` text-clip in dark (AIM-226 only fixed light blue→teal).
+   Earn calc `.cbar` still soft 999 + Claude blue→teal / magenta fee / gold;
+   `#cc-amount` input still soft 10 inside squared `.cinw`. Kill Claude rainbow;
+   corridor teal / ember. Keep: B-049 langbtn/temabunn pills · no Fresh ·
+   no-referral · IB→CopyX · outbound-hop funn:0 · never #379 · no YouTube.
+   ============================================================================= */
+
+/* Home hero dark — solid teal corridor (AIM-226 light stays blue→teal;
+   dark full --grad was unreadable mid-tones + Claude magenta/gold). */
+html[data-theme="dark"] .hero h1 span:last-child,
+html[data-theme="dark"] .hero h1 #h2,
+:root[data-theme="dark"] .hero h1 span:last-child,
+:root[data-theme="dark"] .hero h1 #h2{
+  background:none !important;
+  background-image:none !important;
+  -webkit-background-clip:border-box !important;
+  background-clip:border-box !important;
+  color:var(--teal-live,#15D8C4) !important;
+  filter:none !important}
+
+/* Earn commission bar — square teal/ember corridor (not Claude rainbow pill). */
+.cbar,
+.shell[data-view="earn"] .cbar,
+.shell[data-view="earn"][data-tab="calc"] .cbar,
+#cc-bar.cbar{
+  border-radius:0 !important;
+  overflow:hidden}
+.cbar .k,
+.shell[data-view="earn"] .cbar .k{
+  background:var(--teal-live,#15D8C4) !important;
+  background-image:none !important}
+.cbar .fx,
+.shell[data-view="earn"] .cbar .fx{
+  background:repeating-linear-gradient(45deg,var(--teal-live,#15D8C4) 0 4px,color-mix(in srgb,var(--teal-live,#15D8C4) 35%,transparent) 4px 8px) !important}
+.cbar .f,
+.shell[data-view="earn"] .cbar .f{
+  background:var(--ember,#F5A524) !important;
+  background-image:none !important}
+.cbar .c,
+.shell[data-view="earn"] .cbar .c{
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--chalk)) !important;
+  background-image:none !important}
+
+/* Earn calc amount — square input (soft 10 leaked inside squared .cinw). */
+.shell[data-view="earn"][data-tab="calc"] .cinw input,
+.shell[data-view="earn"][data-tab="calc"] #cc-amount,
+.shell[data-view="earn"] .cin .cinw input{
+  border-radius:0 !important}
+
+/* =============================================================================
    AIM-209 Academy craft elevation — specialist bar (live hub only).
    Own learn corridor + dictionary. More sheet/menu → AIM-217 (do not touch).
    Leave Home (#434) and Products/Sonic (AIM-210) alone.
