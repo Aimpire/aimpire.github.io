@@ -7579,6 +7579,62 @@ html[data-theme="light"] .shell[data-view="start"] .cmrooms li{
   border-bottom-color:color-mix(in srgb,var(--rule) 72%,transparent)}
 
 /* =============================================================================
+   AIM-281 — Highest-value leftovers after #492.
+   SoftVis/rainbow walk @360: Tools `.mgrow.stor b` still Claude `--grad` text
+   (blue→teal→magenta→gold) on lot $ figure; `.portalbtn .pi` still Claude
+   teal→#1B4FD8→#C21FBF (earn squared radius only); Sonic `.vsnum span` still
+   blue→teal + magenta→gold clip; Home `.keep` closed still soft `--r-card` 14.
+   Kill Claude rainbow; corridor teal / ember. Keep: B-049 langbtn/temabunn
+   pills · no Fresh · no-referral · IB→CopyX · outbound-hop funn:0 · never #379 ·
+   no YouTube.
+   ============================================================================= */
+
+/* Tools lot figure — solid teal number (not Claude rainbow text-clip). */
+.mgrow.stor b,
+.shell[data-view="tools"] .mgrow.stor b,
+.shell[data-view="earn"] .mgrow.stor b{
+  background:none !important;
+  background-image:none !important;
+  -webkit-background-clip:border-box !important;
+  background-clip:border-box !important;
+  color:var(--teal-live,#15D8C4) !important;
+  filter:none !important}
+
+/* Portal door glyph — solid teal square (was Claude rainbow disc). */
+.portalbtn .pi,
+.shell[data-view="earn"] .portalbtn .pi,
+.shell[data-view="ib"] .portalbtn .pi,
+#ld-portal .pi{
+  background:var(--teal-live,#15D8C4) !important;
+  background-image:none !important;
+  border-radius:0 !important;
+  filter:none !important}
+
+/* Sonic amplify vs numbers — teal vs ember (honest contrast, no Claude ramp). */
+.vsnum span:first-child,
+.shell[data-view="earn"] .vsnum span:first-child{
+  background:none !important;
+  background-image:none !important;
+  -webkit-background-clip:border-box !important;
+  background-clip:border-box !important;
+  color:var(--teal-live,#15D8C4) !important}
+.vsnum span:last-child,
+.shell[data-view="earn"] .vsnum span:last-child,
+:root:not([data-theme="dark"]) .vsnum span:last-child{
+  background:none !important;
+  background-image:none !important;
+  -webkit-background-clip:border-box !important;
+  background-clip:border-box !important;
+  color:var(--ember,#F5A524) !important}
+
+/* Home install keep — square always (closed still leaked --r-card 14). */
+.keep,
+.shell[data-view="menu"] .keep,
+.keep.open,
+.shell[data-view="menu"] .keep.open{
+  border-radius:0 !important}
+
+/* =============================================================================
    AIM-209 Academy craft elevation — specialist bar (live hub only).
    Own learn corridor + dictionary. More sheet/menu → AIM-217 (do not touch).
    Leave Home (#434) and Products/Sonic (AIM-210) alone.
