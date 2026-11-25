@@ -7472,6 +7472,113 @@ html[data-theme="light"] .cslide,
 }
 
 /* =============================================================================
+   AIM-280 — Highest-value leftovers after #491.
+   SoftVis/rainbow walk @360: Invite programme (IB) still Claude `--grad` on
+   level `.dot.l1/l2/l3`, `.iqrow .bar i`, `.iqtrack .step i`, `.iqvc .pic.many i`,
+   `.pin`, `.keys li::before`. Start `.cmrooms li` still soft 14 mist cards unless
+   `data-dest=community` (base `.cmrooms li` beat #s-community hairline). Start/IB
+   `.vnote`/`.warn` still soft 12 (`!important` from #139). Kill Claude rainbow;
+   corridor teal. Keep: B-049 langbtn/temabunn pills · no Fresh · no-referral ·
+   IB→CopyX · outbound-hop funn:0 · never #379 · no YouTube.
+   ============================================================================= */
+
+/* IB level ladder — solid teal dots (AIM-273 squared .me only; l1–l3 still --grad). */
+.shell[data-view="ib"] .iqlvrow .dot,
+.shell[data-view="ib"] .iqlvrow .dot.l1,
+.shell[data-view="ib"] .iqlvrow .dot.l2,
+.shell[data-view="ib"] .iqlvrow .dot.l3{
+  background:var(--teal-live,#15D8C4) !important;
+  background-image:none !important;
+  border-radius:2px !important;
+  filter:none !important}
+.shell[data-view="ib"] .iqlvrow .dot.l2{opacity:.85}
+.shell[data-view="ib"] .iqlvrow .dot.l3{opacity:.65}
+.shell[data-view="ib"] .iqlvrow .dot.me{
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 14%,transparent) !important;
+  background-image:none !important;
+  color:var(--chalk) !important}
+
+/* IB share bars + deposit track + crowd dots — teal depth, not Claude rainbow. */
+.shell[data-view="ib"] .iqrow .bar i,
+.shell[data-view="ib"] .iqrow.on .bar i,
+.shell[data-view="ib"] .iqleg .on::before{
+  background:var(--teal-live,#15D8C4) !important;
+  background-image:none !important;
+  opacity:1 !important}
+.shell[data-view="ib"] .iqtrack .step i{
+  background:linear-gradient(180deg,var(--teal-live,#15D8C4),color-mix(in srgb,var(--teal-live,#15D8C4) 45%,#0A3D38)) !important;
+  background-image:linear-gradient(180deg,var(--teal-live,#15D8C4),color-mix(in srgb,var(--teal-live,#15D8C4) 45%,#0A3D38)) !important;
+  border-radius:2px 2px 0 0 !important}
+.shell[data-view="ib"] .iqvc .pic.many i{
+  background:var(--teal-live,#15D8C4) !important;
+  background-image:none !important;
+  border-radius:2px !important}
+
+/* IB map pin + numbered keys — solid teal (was --grad rainbow pills). */
+.shell[data-view="ib"] .pin,
+.shell[data-view="ib"] .keys li::before{
+  background:var(--teal-live,#15D8C4) !important;
+  background-image:none !important;
+  color:#08080B !important;
+  filter:none !important}
+.shell[data-view="ib"] .pin{
+  border-radius:0 !important}
+.shell[data-view="ib"] .pin::after{
+  border-color:color-mix(in srgb,var(--teal-live,#15D8C4) 55%,transparent) !important}
+
+/* IB / Start notes — square hairline (beat #139 soft 12 !important). */
+.shell[data-view="ib"] .vnote,
+.shell[data-view="ib"] .warn,
+.shell[data-view="start"] .vnote,
+.shell[data-view="start"] .warn,
+.shell[data-view="start"] #guide ul.acts.vnote{
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  border:0 !important;
+  border-block:1px solid var(--rule) !important;
+  border-inline-start:2px solid var(--ember,#F5A524) !important;
+  padding:12px 2px 12px 12px !important;
+  margin:10px 0 0}
+html[dir="rtl"] .shell[data-view="ib"] .vnote,
+html[dir="rtl"] .shell[data-view="ib"] .warn,
+html[dir="rtl"] .shell[data-view="start"] .vnote,
+html[dir="rtl"] .shell[data-view="start"] .warn{
+  padding:12px 12px 12px 2px !important;
+  border-inline-start:0 !important;
+  border-inline-end:2px solid var(--ember,#F5A524) !important}
+.shell[data-view="ib"] .vnote::before,
+.shell[data-view="ib"] .warn::before,
+.shell[data-view="start"] .vnote::before,
+.shell[data-view="start"] .warn::before{
+  display:none !important;content:none !important}
+.shell[data-view="ib"] .warn,
+.shell[data-view="start"] .warn{
+  border-inline-start-color:var(--ember,#F5A524) !important}
+
+/* Start Element rooms — corridor hairline always (not only data-dest=community). */
+.shell[data-view="start"] #s-community .cmrooms,
+.shell[data-view="start"] .cmrooms{
+  gap:0 !important;margin:8px 0 12px;padding:0}
+.shell[data-view="start"] #s-community .cmrooms li,
+.shell[data-view="start"] .cmrooms li{
+  display:grid;gap:2px;padding:12px 2px !important;
+  border-radius:0 !important;
+  border:0 !important;border-bottom:1px solid var(--rule) !important;
+  background:transparent !important;box-shadow:none !important}
+.shell[data-view="start"] #s-community .cmrooms li:last-child,
+.shell[data-view="start"] .cmrooms li:last-child{border-bottom:0 !important}
+.shell[data-view="start"] #s-community .cmrooms b,
+.shell[data-view="start"] .cmrooms b{
+  font:650 .92rem/1.3 var(--face)}
+.shell[data-view="start"] #s-community .cmrooms span,
+.shell[data-view="start"] .cmrooms span{
+  font:500 .8rem/1.4 var(--face);color:var(--chalk-dim)}
+html[data-theme="light"] .shell[data-view="start"] #s-community .cmrooms li,
+html[data-theme="light"] .shell[data-view="start"] .cmrooms li{
+  border-bottom-color:color-mix(in srgb,var(--rule) 72%,transparent)}
+
+/* =============================================================================
    AIM-209 Academy craft elevation — specialist bar (live hub only).
    Own learn corridor + dictionary. More sheet/menu → AIM-217 (do not touch).
    Leave Home (#434) and Products/Sonic (AIM-210) alone.
