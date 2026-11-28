@@ -8645,6 +8645,66 @@ details.akk > summary:focus-visible,
   gap:12px}
 .sosfelt{border-radius:8px}
 .sosfelt > summary{min-height:var(--tap-min,44px);gap:12px}
+
+/* =============================================================================
+   AIM-291 — More destinations + remaining doors (PR3).
+   Tools door + Home linktree › were dim opacity glyphs (same founder pain as
+   bare «+»). Same 28×28 teal square chip as AIM-290 / AIM-290b.
+   More sheet: clearer lede psychology (content). Never #379.
+   ============================================================================= */
+.prodview .ptools-door .pdoor-go,
+.htree .htg,
+.shell[data-view="menu"] .htree .htg{
+  display:grid !important;place-items:center !important;align-content:center !important;
+  box-sizing:border-box !important;
+  width:28px !important;height:28px !important;min-width:28px !important;min-height:28px !important;
+  flex:0 0 28px !important;
+  margin:0 !important;padding:0 !important;
+  border:2px solid color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important;
+  border-radius:8px !important;
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 11%,transparent) !important;
+  color:var(--teal-ink,#0B8F84) !important;
+  font:700 1rem/1 var(--face) !important;
+  opacity:1 !important;line-height:1 !important;
+  overflow:hidden !important}
+:root[data-theme="dark"] .prodview .ptools-door .pdoor-go,
+:root[data-theme="dark"] .htree .htg,
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .htg{
+  color:var(--teal-live,#15D8C4) !important;
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 14%,var(--ink-raise)) !important;
+  border-color:color-mix(in srgb,var(--teal-live,#15D8C4) 48%,var(--rule)) !important}
+/* Beat softVis hairline › kill + share gold-glyph exception — chip stays square. */
+.shell[data-view="menu"] .htree .hta.htshare .htg,
+.shell[data-view="menu"] .htree .hta[data-k="share"] .htg,
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta.htshare .htg,
+:root[data-theme="dark"] .shell[data-view="menu"] .htree .hta[data-k="share"] .htg{
+  width:28px !important;height:28px !important;min-width:28px !important;min-height:28px !important;
+  border:2px solid color-mix(in srgb,var(--brand-gold) 55%,var(--rule)) !important;
+  border-radius:8px !important;
+  background:color-mix(in srgb,var(--brand-gold) 12%,transparent) !important;
+  color:var(--brand-gold) !important;opacity:1 !important}
+.prodview .ptools-door:hover .pdoor-go,
+.prodview .ptools-door:focus-visible .pdoor-go,
+.htree .hta:hover .htg,
+.htree .hta:focus-visible .htg,
+.shell[data-view="menu"] .htree .hta:hover .htg,
+.shell[data-view="menu"] .htree .hta:focus-visible .htg{
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 18%,transparent) !important;
+  border-color:color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important}
+@media (max-width:360px){
+  .shell[data-view="menu"] .htree .htg,
+  .shell[data-view="menu"] .htree .hta.htshare .htg,
+  .shell[data-view="menu"] .htree .hta[data-k="share"] .htg{
+    width:28px !important;height:28px !important;min-width:28px !important;min-height:28px !important;font-size:1rem !important}
+}
+/* More rows — keep AIM-290 door chip; kill chalk-dim opacity leftover. */
+.msb .msg,
+.mersheet .msb .msg{opacity:1 !important}
+/* More lede — readable orientation under title. */
+.mslede{color:var(--chalk-dim);max-width:40ch}
+.mgruppe{letter-spacing:.03em;text-transform:uppercase;font-size:.72rem}
+html:is([data-font="deva"],[data-font="nastaliq"],[data-font="naskh"]) .mgruppe{
+  text-transform:none;letter-spacing:0;font-size:.78rem}
 </style>
 </head>
 <body>
@@ -9080,6 +9140,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.24d8fdcd27.js" defer></script>
+<script src="app-l.76fc9d8e2b.js" defer></script>
 </body>
 </html>
