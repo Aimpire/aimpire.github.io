@@ -8280,6 +8280,265 @@ html,body{overflow-x:clip}
 .shell[data-view="learn"] #academy,
 .shell[data-view="faq"] #s-faq{
   width:100%;max-width:100%;overflow-x:clip}
+
+/* =============================================================================
+   AIM-290 — Disclosure discoverability (PR1).
+   Founder pain: bare «+» reads as decoration; people miss Markets / FAQ /
+   dictionary / Start rooms. Shared square chip + pressable summary.
+   Scope: Home · Start · Academy dictionary · Ask · Products folds · guide.
+   Leave earn/ib/ibq/Invite chrome to parallel IB unlock worker.
+   Corridor grammar (teal hairline square) — not Claude pills/glow.
+   Keep: B-049 lang/tema pills · no Fresh · no-referral · never #379.
+   ============================================================================= */
+
+/* Shared chip geometry for disclosure glyphs (::after). */
+.mk-box > summary::after,
+#learn-list > details > summary::after,
+.shell[data-view="faq"] .qa > summary::after,
+.shell[data-view="start"] .plfold > summary::after,
+.shell[data-view="start"] .start-more > summary::after,
+.plfold > summary::after{
+  content:"+" !important;
+  display:grid !important;
+  place-items:center !important;
+  box-sizing:border-box !important;
+  width:28px !important;
+  height:28px !important;
+  min-width:28px !important;
+  flex:0 0 28px !important;
+  margin:0 0 0 auto !important;
+  margin-inline-start:auto !important;
+  margin-inline-end:0 !important;
+  padding:0 !important;
+  border:2px solid color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important;
+  border-radius:8px !important;
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 11%,transparent) !important;
+  color:var(--teal-ink,#0B8F84) !important;
+  font:700 .95rem/1 var(--face) !important;
+  opacity:1 !important;
+  position:static !important;
+  inset:auto !important;
+  top:auto !important;
+  transform:none !important;
+  align-self:center !important;
+  order:4;
+  transition:background .15s ease,border-color .15s ease,color .15s ease}
+:root[data-theme="dark"] .mk-box > summary::after,
+:root[data-theme="dark"] #learn-list > details > summary::after,
+:root[data-theme="dark"] .shell[data-view="faq"] .qa > summary::after,
+:root[data-theme="dark"] .shell[data-view="start"] .plfold > summary::after,
+:root[data-theme="dark"] .plfold > summary::after,
+:root[data-theme="dark"] .shell[data-view="start"] .start-more > summary::after{
+  color:var(--teal-live,#15D8C4) !important;
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 14%,var(--ink-raise)) !important;
+  border-color:color-mix(in srgb,var(--teal-live,#15D8C4) 48%,var(--rule)) !important}
+.mk-box[open] > summary::after,
+#learn-list > details[open] > summary::after,
+.shell[data-view="faq"] .qa[open] > summary::after,
+.shell[data-view="start"] .plfold[open] > summary::after,
+.plfold[open] > summary::after,
+.shell[data-view="start"] .start-more[open] > summary::after{
+  content:"\2212" !important;
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 18%,transparent) !important;
+  border-color:color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important}
+
+/* Pressable summary rows — whole row is the hit target. */
+.mk-box > summary,
+#learn-list > details > summary,
+.shell[data-view="faq"] .qa > summary,
+.shell[data-view="start"] .plfold > summary,
+.plfold > summary,
+.shell[data-view="start"] .start-more > summary{
+  min-height:var(--tap-min,44px);
+  cursor:pointer;
+  -webkit-user-select:none;user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  transition:background .15s ease}
+.mk-box > summary:hover,
+.mk-box > summary:focus-visible,
+#learn-list > details > summary:hover,
+#learn-list > details > summary:focus-visible,
+.shell[data-view="faq"] .qa > summary:hover,
+.shell[data-view="faq"] .qa > summary:focus-visible,
+.shell[data-view="start"] .plfold > summary:hover,
+.plfold > summary:hover,
+.shell[data-view="start"] .start-more > summary:hover{
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 6%,transparent)}
+.mk-box > summary:focus-visible,
+#learn-list > details > summary:focus-visible,
+.shell[data-view="faq"] .qa > summary:focus-visible,
+.plfold > summary:focus-visible,
+.shell[data-view="start"] .start-more > summary:focus-visible{
+  outline:2px solid var(--gold-soft,#5EE6D6);outline-offset:2px;border-radius:8px}
+
+/* Home Markets — was chalk-dim footnote + bare +. Label reads as a control. */
+.mk-box > summary{
+  color:var(--chalk) !important;
+  font:650 .92rem/1.35 var(--display) !important;
+  letter-spacing:.01em;
+  padding:12px 2px !important;
+  gap:12px}
+.mk-box[open] > summary{
+  color:var(--chalk);
+  border-bottom:1px solid color-mix(in srgb,var(--teal-live,#15D8C4) 22%,var(--rule));
+  margin-bottom:4px}
+
+/* Start rooms fold — chip on the trailing edge; title stays primary. */
+.shell[data-view="start"] .plfold > summary,
+.plfold > summary{
+  flex-wrap:nowrap !important;
+  align-items:center !important;
+  gap:10px 12px !important;
+  min-height:var(--tap-min,44px)}
+.shell[data-view="start"] .plfold > summary b,
+.plfold > summary b{flex:1 1 auto;min-width:0}
+.shell[data-view="start"] .plfold > summary span,
+.plfold > summary span{flex:1 1 100%;order:3;margin:0}
+
+/* Start-more (retired but keep chrome if re-enabled): row + chip, not + under text. */
+.shell[data-view="start"] .start-more > summary{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-areas:"title chip" "sub chip";
+  align-items:center;gap:2px 12px;padding:12px 2px !important}
+.shell[data-view="start"] .start-more > summary::after{grid-area:chip;margin:0 !important}
+.shell[data-view="start"] .start-more > summary span{grid-area:sub}
+
+/* Ask FAQ — kill absolute +; chip sits in the flex row. */
+.shell[data-view="faq"] .qa > summary{
+  display:flex !important;
+  align-items:flex-start !important;
+  gap:12px !important;
+  padding-inline-end:2px !important}
+.shell[data-view="faq"] .qa > summary::after{
+  margin-top:2px !important}
+.shell[data-view="faq"] .qa[open] > summary{
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 7%,transparent)}
+
+/* Academy dictionary — same chip; open wash already corridor. */
+#learn-list > details > summary::after{margin-top:2px !important}
+
+/* Guide folded step titles — tiny bare chevron → chip + inset chevron. */
+.guide > li.folded > h3{
+  position:relative;
+  min-height:var(--tap-min,44px);
+  padding:6px 0;
+  border-radius:8px;
+  -webkit-tap-highlight-color:transparent}
+.guide > li.folded > h3:hover,
+.guide > li.folded > h3:focus-visible{
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 6%,transparent)}
+.guide > li.folded > h3::after{
+  content:"" !important;
+  width:28px !important;height:28px !important;
+  margin-inline-start:auto;flex:0 0 28px;
+  box-sizing:border-box;
+  border:2px solid color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important;
+  border-radius:8px !important;
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 11%,transparent) !important;
+  transform:none !important}
+.guide > li.folded > h3::before{
+  content:"";position:absolute;inset-inline-end:calc(14px - 4px);top:50%;
+  width:8px;height:8px;margin-top:-6px;
+  border-inline-end:2px solid var(--teal-ink,#0B8F84);
+  border-block-end:2px solid var(--teal-ink,#0B8F84);
+  transform:rotate(45deg);pointer-events:none;z-index:1}
+:root[data-theme="dark"] .guide > li.folded > h3::before{border-color:var(--teal-live,#15D8C4)}
+html[dir="rtl"] .guide > li.folded > h3::before{inset-inline-end:auto;inset-inline-start:calc(14px - 4px)}
+.guide > li.folded.open > h3{color:var(--chalk)}
+.guide > li.folded.open > h3::before{transform:rotate(-135deg);margin-top:-2px}
+.guide > li.folded.open > h3::after{
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 18%,transparent) !important;
+  border-color:color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important}
+
+/* Products / install .fold — chevron lives inside a square chip. */
+.fold > summary::after{
+  width:28px !important;height:28px !important;
+  margin-inline-end:0 !important;
+  box-sizing:border-box;
+  border:2px solid color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important;
+  border-radius:8px !important;
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 11%,transparent) !important;
+  /* reset old border-chevron; redraw via ::before on summary */
+  border-inline-end-width:1.5px !important;
+  border-block-end-width:1.5px !important;
+  transform:none !important}
+.fold > summary{position:relative}
+.fold > summary::before{
+  content:"";position:absolute;inset-inline-end:calc(14px - 4px);top:50%;
+  width:8px;height:8px;margin-top:-6px;
+  border-inline-end:2px solid var(--teal-ink,#0B8F84);
+  border-block-end:2px solid var(--teal-ink,#0B8F84);
+  transform:rotate(45deg);pointer-events:none;z-index:1}
+:root[data-theme="dark"] .fold > summary::before{border-color:var(--teal-live,#15D8C4)}
+html[dir="rtl"] .fold > summary::before{inset-inline-end:auto;inset-inline-start:calc(14px - 4px)}
+.fold[open] > summary::before{transform:rotate(-135deg);margin-top:-2px}
+.fold[open] > summary::after{
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 18%,transparent) !important;
+  border-color:color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important}
+.fold > summary:hover,
+.fold > summary:focus-visible{
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 6%,transparent);border-radius:8px}
+
+/* Ask sheet «Other ways» — same chip grammar as hairline lists. */
+.asksheet-more > summary{
+  min-height:var(--tap-min,44px);
+  color:var(--chalk) !important}
+.asksheet-more > summary::after{
+  content:"" !important;
+  width:28px !important;height:28px !important;
+  margin:0 !important;flex:0 0 28px;
+  box-sizing:border-box;
+  border:2px solid color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important;
+  border-radius:8px !important;
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 11%,transparent) !important;
+  transform:none !important;opacity:1 !important;
+  position:relative}
+.asksheet-more{position:relative}
+.asksheet-more > summary{position:relative}
+.asksheet-more > summary > .ask-chev{display:none} /* reserved */
+.asksheet-more > summary::before{
+  content:"";position:absolute;inset-inline-end:calc(16px + 14px - 4px);top:50%;
+  width:8px;height:8px;margin-top:-6px;
+  border-inline-end:2px solid var(--teal-ink,#0B8F84);
+  border-block-end:2px solid var(--teal-ink,#0B8F84);
+  transform:rotate(45deg);pointer-events:none;z-index:1}
+:root[data-theme="dark"] .asksheet-more > summary::before{border-color:var(--teal-live,#15D8C4)}
+html[dir="rtl"] .asksheet-more > summary::before{
+  inset-inline-end:auto;inset-inline-start:calc(16px + 14px - 4px)}
+.asksheet-more[open] > summary::before{transform:rotate(-135deg);margin-top:-2px}
+.asksheet-more[open] > summary::after{
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 18%,transparent) !important;
+  border-color:color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important}
+
+/* More sheet — trailing › becomes a square door chip (was dim opacity .7 glyph). */
+.mersheet .msb .msg,
+.msb .msg{
+  display:grid !important;place-items:center !important;
+  box-sizing:border-box;
+  width:28px !important;height:28px !important;
+  flex:0 0 28px !important;
+  margin-inline-start:10px;
+  border:2px solid color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important;
+  border-radius:8px !important;
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 11%,transparent) !important;
+  color:var(--teal-ink,#0B8F84) !important;
+  font:700 1rem/1 var(--face) !important;
+  opacity:1 !important;
+  line-height:1 !important}
+:root[data-theme="dark"] .mersheet .msb .msg,
+:root[data-theme="dark"] .msb .msg{
+  color:var(--teal-live,#15D8C4) !important;
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 14%,var(--ink-raise)) !important}
+.mersheet .msb:hover .msg,
+.mersheet .msb:focus-visible .msg,
+.msb:hover .msg,
+.msb:focus-visible .msg{
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 18%,transparent) !important;
+  border-color:color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important}
+.msb[data-k="ib"] .msg{
+  color:var(--teal-live,#15D8C4) !important;
+  border-color:color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important}
 </style>
 </head>
 <body>
