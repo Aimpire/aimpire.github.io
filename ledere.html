@@ -6676,11 +6676,19 @@ html[dir="rtl"] .shell[data-view="tools"] .warn{
   background:color-mix(in srgb,var(--teal-live) 8%,transparent) !important;
   box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
 
-/* Products landing CTA — square corridor (soft 12px leftover). */
+/* AIM-292 — Products Sonic CTA: solid jet primary again.
+   Hairline/transparent left Open Sonic looking disabled vs Home Start here.
+   Keep square corridor corners; teal tick stays via .pcta::after. Never #379. */
 .shell[data-view="prod"] .pcta{
-  border-radius:0 !important;border:1px solid var(--rule) !important;
-  background:transparent !important;color:var(--chalk) !important;
-  box-shadow:inset 0 -2px 0 0 var(--teal-live) !important}
+  border-radius:0 !important;border:0 !important;
+  background:var(--cta-primary-bg) !important;color:var(--cta-primary-fg) !important;
+  box-shadow:var(--cta-shadow) !important}
+/* Risk line owns the 5% rule — hairline callout, not a second body paragraph. */
+.shell[data-view="prod"] .prisk{
+  margin-top:10px !important;padding:8px 0 8px 10px !important;
+  border-inline-start:2px solid #E8590C !important;max-width:42ch !important}
+:root[data-theme="dark"] .shell[data-view="prod"] .prisk{
+  border-inline-start-color:#F08A4B !important}
 
 /* Start non-current steps + store apps — square after AIM-268 current-only. */
 .shell[data-view="start"] #guide > li:not(.current){
@@ -9140,6 +9148,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.76fc9d8e2b.js" defer></script>
+<script src="app-l.cb5e7b9292.js" defer></script>
 </body>
 </html>
