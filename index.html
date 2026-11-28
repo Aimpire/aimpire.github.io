@@ -1262,19 +1262,33 @@ html[dir="rtl"] .iqsteps li{padding:14px 58px 14px 14px}
 .iqlvrow .lbl strong{font:800 .92rem/1.2 var(--display)}
 .iqlvrow .lbl span{font-size:.85rem;color:var(--chalk-dim)}
 @keyframes iqpop{from{transform:scale(0)}to{transform:scale(1)}}
-.iqun{display:grid;gap:8px}
+.iqun{display:grid;gap:10px}
+.iqpath-lede{margin:0;font:600 .95rem/1.45 var(--face);color:var(--chalk)}
+.iqpath-list{list-style:none;margin:0;padding:0;display:grid;gap:0;border-block:1px solid var(--rule)}
+.iqpath-step{display:grid;grid-template-columns:2rem 1fr;gap:10px 12px;align-items:start;padding:14px 2px;border-bottom:1px solid var(--rule)}
+.iqpath-step:last-child{border-bottom:0}
+.iqpath-step .num{
+  width:2rem;height:2rem;display:grid;place-items:center;
+  font:800 .85rem/1 var(--face);color:var(--chalk);
+  border:1px solid var(--rule);
+  background:color-mix(in srgb,var(--teal-live) 10%,transparent)}
+.iqpath-step strong{display:block;font:800 .98rem/1.25 var(--display);margin:0 0 4px}
+.iqpath-step p{margin:0;font:500 .9rem/1.45 var(--ui);color:var(--chalk-dim)}
 .iqucard{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--rule)}
 .iqucard .lock{font-size:1.5rem;line-height:1}
 .iqucard div{display:flex;flex-direction:column;gap:2px}
 .iqucard .if{font-size:.85rem;color:var(--chalk-dim)}
 .iqucard strong{font:800 .95rem/1.3 var(--display)}
-.iqutable-wrap{margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.iqutable-t{margin:0 0 6px;font:700 .9rem/1.3 var(--display);color:var(--chalk-dim)}
-.iqutable{width:100%;min-width:280px;border-collapse:collapse;font:500 .85rem/1.35 var(--ui)}
-.iqutable th,.iqutable td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:start;vertical-align:top}
+.iqutable-wrap{margin-top:4px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.iqutable-t{margin:0 0 8px;font:750 .95rem/1.3 var(--display);color:var(--chalk)}
+.iqutable{width:100%;min-width:280px;border-collapse:collapse;font:500 .88rem/1.4 var(--ui)}
+.iqutable th,.iqutable td{padding:10px 10px;border-bottom:1px solid var(--rule);text-align:start;vertical-align:top}
 .iqutable th{font:700 .78rem/1.2 var(--ui);letter-spacing:.02em;color:var(--chalk-dim);text-transform:none}
-.iqutable td:first-child,.iqutable th:first-child{white-space:nowrap;font-variant-numeric:tabular-nums}
+.iqutable td:first-child,.iqutable th:first-child{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:750}
 .iqutable td:last-child{white-space:nowrap;font-variant-numeric:tabular-nums}
+.iqutable tbody tr:first-child td{background:color-mix(in srgb,var(--teal-live) 7%,transparent)}
+.iqunportal{margin:8px 0 0}
+.iqunportal:empty{display:none}
 .iqstairs{display:grid;gap:12px}
 .iqtrack{padding:14px;border-radius:18px;border:1px solid var(--rule)}
 .iqchips{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;margin:6px 0 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
@@ -6891,6 +6905,11 @@ html:is([data-font="nastaliq"],[data-font="naskh"]) .shell[data-view="ib"] .iqch
   border-radius:0 !important;background:transparent !important;
   padding:12px 2px !important;gap:10px}
 .shell[data-view="ib"] .iqucard .lock{font-size:1.1rem;opacity:.7}
+.shell[data-view="ib"] .iqpath-step .num{
+  border-radius:0 !important;
+  background:color-mix(in srgb,var(--teal-live) 12%,transparent) !important}
+.shell[data-view="ib"] .iqutable tbody tr:first-child td{
+  background:color-mix(in srgb,var(--teal-live) 6%,transparent)}
 .shell[data-view="ib"] .iqva{
   gap:0;margin-top:10px;border-block:1px solid var(--rule);padding:4px 0}
 .shell[data-view="ib"] .iqvc{
@@ -8422,8 +8441,7 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
   <!-- Founder 17.10 17:53: inntjeningssiden var tung og skremmende. Kort versjon med bilder
        og ett eksempel foerst; alt det lange ligger samlet i «Alle detaljer» under. -->
   <section class="sec" id="s-ibq" data-cat="ib" hidden>
-    <!-- AIM-288: forstå -> nivåer (hvem) -> opplåsing (deck-tabell + portal-tellere) -> eksempel -> satser -> bonuser -> steg.
-         Opplåsing synlig (ikke i .iqdup). K-183: $250→1–3; N directs@$250 → 4–10. -->
+    <!-- AIM-289: path story → Ali example → glance table → portal. K-183 facts, plain language (not deck-dump). -->
     <h2 id="iq-t"></h2>
     <p class="lede" id="iq-lede"></p>
     <div class="iqflow" id="iq-flow"></div>
@@ -8433,9 +8451,11 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
     <p class="iqnote" id="iq-lvm"></p>
     <h3 class="iqh" id="iq-unt"></h3>
     <div id="iq-un"></div>
-    <p class="iqnote" id="iq-unn"></p>
     <h3 class="iqh" id="iq-et"></h3>
     <div class="iqex" id="iq-ex"></div>
+    <div id="iq-utable"></div>
+    <p class="iqnote" id="iq-unn"></p>
+    <p id="iq-unportal" class="iqunportal"></p>
     <h3 class="iqh" id="iq-lt"></h3>
     <div class="iqlad" id="iq-lad" dir="ltr"></div>
     <p class="iqnote" id="iq-lcap"></p>
@@ -8695,6 +8715,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-m.e7a989e64e.js" defer></script>
+<script src="app-m.01d7db2fe0.js" defer></script>
 </body>
 </html>
