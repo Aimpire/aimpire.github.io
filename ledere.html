@@ -3913,7 +3913,7 @@ button.pcard::after{content:"";position:absolute;inset-inline:0;top:0;height:3px
   box-shadow:var(--cta-shadow);position:relative;text-decoration:none !important}
 .pgrid-corridor.pshelf .pcta::after{
   content:"";position:absolute;inset-inline:14px;bottom:7px;height:2px;border-radius:2px;
-  background:var(--cta-primary-tick);opacity:.95}
+  background:var(--teal-live,#15D8C4);opacity:.95} /* AIM-290b: solid teal tick — not --grad-ink rainbow */
 html[dir="rtl"] .pgrid-corridor.pshelf .pcta{font-family:var(--face)}
 /* Risk beside / under CTA — same viewport weight as the action (B-030). */
 .pgrid-corridor.pshelf .prisk{
@@ -8286,7 +8286,7 @@ html,body{overflow-x:clip}
    Founder pain: bare «+» reads as decoration; people miss Markets / FAQ /
    dictionary / Start rooms. Shared square chip + pressable summary.
    Scope: Home · Start · Academy dictionary · Ask · Products folds · guide.
-   Leave earn/ib/ibq/Invite chrome to parallel IB unlock worker.
+   PR2 (AIM-290b) extends chips to Invite/ibq/earn + Academy lessons.
    Corridor grammar (teal hairline square) — not Claude pills/glow.
    Keep: B-049 lang/tema pills · no Fresh · no-referral · never #379.
    ============================================================================= */
@@ -8539,6 +8539,112 @@ html[dir="rtl"] .asksheet-more > summary::before{
 .msb[data-k="ib"] .msg{
   color:var(--teal-live,#15D8C4) !important;
   border-color:color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important}
+
+/* =============================================================================
+   AIM-290b — Invite / IB / Earn / Academy lesson / social chips (PR2).
+   Same 28×28px teal square grammar as AIM-290. #501 unlock path is live;
+   Invite disclosures were bare «+» again. Never #379.
+   ============================================================================= */
+.ibmore > summary::after,
+#ibmore-in details.akk > summary::after,
+details.akk > summary::after,
+.sosfelt > summary::after,
+.shell[data-view="earn"] .ibmore > summary::after,
+.shell[data-view="earn"] .shmore > summary::after,
+.shell[data-view="ib"] .ibmore > summary::after,
+#academy summary::after{
+  content:"+" !important;
+  display:grid !important;
+  place-items:center !important;
+  box-sizing:border-box !important;
+  width:28px !important;
+  height:28px !important;
+  min-width:28px !important;
+  flex:0 0 28px !important;
+  margin:0 0 0 auto !important;
+  margin-inline-start:auto !important;
+  margin-inline-end:0 !important;
+  padding:0 !important;
+  border:2px solid color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important;
+  border-radius:8px !important;
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 11%,transparent) !important;
+  color:var(--teal-ink,#0B8F84) !important;
+  font:700 .95rem/1 var(--face) !important;
+  opacity:1 !important;
+  position:static !important;
+  inset:auto !important;
+  top:auto !important;
+  transform:none !important;
+  align-self:center !important;
+  order:4;
+  transition:background .15s ease,border-color .15s ease,color .15s ease}
+:root[data-theme="dark"] .ibmore > summary::after,
+:root[data-theme="dark"] #ibmore-in details.akk > summary::after,
+:root[data-theme="dark"] details.akk > summary::after,
+:root[data-theme="dark"] .sosfelt > summary::after,
+:root[data-theme="dark"] .shell[data-view="earn"] .ibmore > summary::after,
+:root[data-theme="dark"] .shell[data-view="earn"] .shmore > summary::after,
+:root[data-theme="dark"] .shell[data-view="ib"] .ibmore > summary::after,
+:root[data-theme="dark"] #academy summary::after{
+  color:var(--teal-live,#15D8C4) !important;
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 14%,var(--ink-raise)) !important;
+  border-color:color-mix(in srgb,var(--teal-live,#15D8C4) 48%,var(--rule)) !important}
+.ibmore[open] > summary::after,
+#ibmore-in details.akk[open] > summary::after,
+details.akk[open] > summary::after,
+.sosfelt[open] > summary::after,
+.shell[data-view="earn"] .ibmore[open] > summary::after,
+.shell[data-view="earn"] .shmore[open] > summary::after,
+.shell[data-view="ib"] .ibmore[open] > summary::after,
+#academy details[open] > summary::after{
+  content:"\2212" !important;
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 18%,transparent) !important;
+  border-color:color-mix(in srgb,var(--teal-live,#15D8C4) 55%,var(--rule)) !important}
+
+.ibmore > summary,
+#ibmore-in details.akk > summary,
+details.akk > summary,
+.sosfelt > summary,
+.shell[data-view="earn"] .ibmore > summary,
+.shell[data-view="earn"] .shmore > summary,
+#academy summary{
+  cursor:pointer;
+  -webkit-user-select:none;user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  transition:background .15s ease}
+.ibmore > summary:hover,
+.ibmore > summary:focus-visible,
+#ibmore-in details.akk > summary:hover,
+#ibmore-in details.akk > summary:focus-visible,
+details.akk > summary:hover,
+details.akk > summary:focus-visible,
+.sosfelt > summary:hover,
+.sosfelt > summary:focus-visible,
+#academy summary:hover,
+#academy summary:focus-visible{
+  background:color-mix(in srgb,var(--teal-live,#15D8C4) 6%,transparent)}
+.ibmore > summary:focus-visible,
+#ibmore-in details.akk > summary:focus-visible,
+details.akk > summary:focus-visible,
+.sosfelt > summary:focus-visible,
+#academy summary:focus-visible{
+  outline:2px solid var(--gold-soft,#5EE6D6);outline-offset:2px;border-radius:8px}
+
+/* Academy lessons — chip sits trailing; keep numbered .lic primary. */
+#academy summary::after{margin-top:2px !important;align-self:flex-start !important}
+
+
+/* Academy lessons: corridor keeps numbered .lic as the door (AIM-138/softVis).
+   AIM-290b chip selectors above would fight #academy.acorridor — restore kill. */
+#academy.acorridor > details > summary::after{content:none !important;display:none !important}
+/* Invite / IB more — pressable row, chip trailing (kill bare chalk-dim +). */
+.ibmore > summary,
+.shell[data-view="ib"] .ibmore > summary,
+.shell[data-view="earn"] .ibmore > summary,
+.shell[data-view="earn"] .shmore > summary{
+  gap:12px}
+.sosfelt{border-radius:8px}
+.sosfelt > summary{min-height:var(--tap-min,44px);gap:12px}
 </style>
 </head>
 <body>
@@ -8974,6 +9080,6 @@ try{ if((navigator.hardwareConcurrency || 2) >= 4 && (!navigator.deviceMemory ||
 </main>
 <nav class="tabbar" id="tabbar" aria-label="Aimpire" hidden><i class="tbprog" id="tbprog" aria-hidden="true"><b></b></i><div class="tbrow" id="tbrow"></div></nav>
 
-<script src="app-l.ca6068cff9.js" defer></script>
+<script src="app-l.24d8fdcd27.js" defer></script>
 </body>
 </html>
